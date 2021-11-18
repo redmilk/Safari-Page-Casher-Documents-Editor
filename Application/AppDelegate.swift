@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  Jiggle
+//  AirPrint
 //
 //  Created by Danyl Timofeyev on 18.11.2021.
 //
