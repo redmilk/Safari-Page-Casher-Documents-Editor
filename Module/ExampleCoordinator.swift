@@ -29,7 +29,8 @@ final class ExampleCoordinator: CoordinatorProtocol, ExampleCoordinatorProtocol 
     func start() {
         let viewModel = ExampleViewModel(coordinator: self)
         let controller = ExampleViewController(viewModel: viewModel)
-        window.rootViewController = controller
+        let navigation = UINavigationController(rootViewController: controller)
+        window.rootViewController = navigation
         window.makeKeyAndVisible()
     }
     

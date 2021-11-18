@@ -18,7 +18,8 @@ final class ExampleViewController: UIViewController {
     enum State {
         case dummyState
     }
-        
+    @IBOutlet var imageViews: [UIImageView]!
+    
     private let viewModel: ExampleViewModel
     private var bag = Set<AnyCancellable>()
     
@@ -42,6 +43,23 @@ final class ExampleViewController: UIViewController {
         super.viewDidLoad()
 
         handleStates()
+        configureView()
+    }
+}
+
+extension ExampleViewController: VNDocumentCameraViewControllerDelegate {
+    func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
+        // save scan
+        for index in 0 ..< scan.pageCount {
+            let image = scan.imageOfPage(at: index)
+            // save image
+            guard index < 4 else { return dismiss(animated: true, completion: nil) }
+            imageViews[index].image = image
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    func documentCameraViewControllerDidCancel(_ controller: VNDocumentCameraViewController) {
+        dismiss(animated: true, completion: nil)
     }
 }
 
@@ -58,5 +76,21 @@ private extension ExampleViewController {
             }
         })
         .store(in: &bag)
+    }
+    
+    func configureView() {
+        let scanButton = UIBarButtonItem(systemItem: .camera)
+        navigationItem.leftBarButtonItem = scanButton
+        scanButton.publisher().sink(receiveValue: { [weak self] _ in
+            self?.displayScanningController()
+        })
+        .store(in: &bag)
+    }
+    
+    func displayScanningController() {
+        guard VNDocumentCameraViewController.isSupported else { return }
+        let controller = VNDocumentCameraViewController()
+        controller.delegate = self
+        present(controller, animated: true)
     }
 }
