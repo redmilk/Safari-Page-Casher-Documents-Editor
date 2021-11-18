@@ -40,7 +40,10 @@
 		79F913A72746501500771FFE = {
 			isa = PBXGroup;
 			children = (
-				79F913B22746501500771FFE /* Jiggle */,
+				79F913C82746502300771FFE /* Application */,
+				79F913CD274652E200771FFE /* Source */,
+				79F913B22746501500771FFE /* Module */,
+				79F913C92746509E00771FFE /* Resources */,
 				79F913B12746501500771FFE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -53,18 +56,47 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		79F913B22746501500771FFE /* Jiggle */ = {
+		79F913B22746501500771FFE /* Module */ = {
+			isa = PBXGroup;
+			children = (
+				79F913CB274650C900771FFE /* New Group */,
+				79F913B72746501500771FFE /* ViewController.swift */,
+				79F913B92746501500771FFE /* Main.storyboard */,
+			);
+			path = Module;
+			sourceTree = "<group>";
+		};
+		79F913C82746502300771FFE /* Application */ = {
 			isa = PBXGroup;
 			children = (
 				79F913B32746501500771FFE /* AppDelegate.swift */,
 				79F913B52746501500771FFE /* SceneDelegate.swift */,
-				79F913B72746501500771FFE /* ViewController.swift */,
-				79F913B92746501500771FFE /* Main.storyboard */,
-				79F913BC2746501900771FFE /* Assets.xcassets */,
 				79F913BE2746501900771FFE /* LaunchScreen.storyboard */,
 				79F913C12746501900771FFE /* Info.plist */,
 			);
-			path = Jiggle;
+			path = Application;
+			sourceTree = "<group>";
+		};
+		79F913C92746509E00771FFE /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				79F913BC2746501900771FFE /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		79F913CB274650C900771FFE /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
+		79F913CD274652E200771FFE /* Source */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -288,7 +320,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = C23K8VGFDE;
-				INFOPLIST_FILE = Jiggle/Info.plist;
+				INFOPLIST_FILE = /Users/ikefir/Desktop/Jiggle/Application/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -307,7 +339,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = C23K8VGFDE;
-				INFOPLIST_FILE = Jiggle/Info.plist;
+				INFOPLIST_FILE = /Users/ikefir/Desktop/Jiggle/Application/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
