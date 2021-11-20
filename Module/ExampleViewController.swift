@@ -24,7 +24,9 @@ final class ExampleViewController: UIViewController {
     
     private let viewModel: ExampleViewModel
     private var bag = Set<AnyCancellable>()
+    /// pencil kit
     private var canvasView: PKCanvasView!
+    private let toolPicker = PKToolPicker()
     private var imgForMarkup: UIImage?
 
     init(viewModel: ExampleViewModel) {
@@ -130,45 +132,45 @@ private extension ExampleViewController {
     }
     
     func setSize() -> CGRect {
-        let containerRatio = self.imageView.frame.size.height/self.imageView.frame.size.width
-        let imageRatio = self.imgForMarkup!.size.height/self.imgForMarkup!.size.width
-        if containerRatio > imageRatio {
-            return self.getHeight()
-        } else {
-            return self.getWidth()
+        func getHeight() -> CGRect {
+            let containerView = self.imageView!
+            let image = self.imgForMarkup!
+            let ratio = containerView.frame.size.width / image.size.width
+            let newHeight = ratio * image.size.height
+            let size = CGSize(width: containerView.frame.width, height: newHeight)
+            var yPosition = (containerView.frame.size.height - newHeight) / 2
+            yPosition = (yPosition < 0 ? 0 : yPosition) + containerView.frame.origin.y
+            let origin = CGPoint.init(x: 0, y: yPosition)
+            return CGRect.init(origin: origin, size: size)
         }
-    }
-    
-    func getHeight() -> CGRect {
-        let containerView = self.imageView!
-        let image = self.imgForMarkup!
-        let ratio = containerView.frame.size.width / image.size.width
-        let newHeight = ratio * image.size.height
-        let size = CGSize(width: containerView.frame.width, height: newHeight)
-        var yPosition = (containerView.frame.size.height - newHeight) / 2
-        yPosition = (yPosition < 0 ? 0 : yPosition) + containerView.frame.origin.y
-        let origin = CGPoint.init(x: 0, y: yPosition)
-        return CGRect.init(origin: origin, size: size)
-    }
-
-    func getWidth() -> CGRect {
-        let containerView = self.imageView!
-        let image = self.imgForMarkup!
-        let ratio = containerView.frame.size.height / image.size.height
-        let newWidth = ratio * image.size.width
-        let size = CGSize(width: newWidth, height: containerView.frame.height)
-        let xPosition = ((containerView.frame.size.width - newWidth) / 2) + containerView.frame.origin.x
-        let yPosition = containerView.frame.origin.y
-        let origin = CGPoint.init(x: xPosition, y: yPosition)
-        return CGRect.init(origin: origin, size: size)
+        func getWidth() -> CGRect {
+            let containerView = self.imageView!
+            let image = self.imgForMarkup!
+            let ratio = containerView.frame.size.height / image.size.height
+            let newWidth = ratio * image.size.width
+            let size = CGSize(width: newWidth, height: containerView.frame.height)
+            let xPosition = ((containerView.frame.size.width - newWidth) / 2) + containerView.frame.origin.x
+            let yPosition = containerView.frame.origin.y
+            let origin = CGPoint.init(x: xPosition, y: yPosition)
+            return CGRect.init(origin: origin, size: size)
+        }
+        
+        let containerRatio = imageView.frame.size.height / imageView.frame.size.width
+        let imageRatio = imgForMarkup!.size.height / imgForMarkup!.size.width
+        if containerRatio > imageRatio {
+            return getHeight()
+        } else {
+            return getWidth()
+        }
     }
     
     func addPencilKitToCanvas() {
         self.canvasView?.drawing = PKDrawing()
-        if let window = self.view.window, let toolPicker = PKToolPicker.shared(for: window) {
+        if let window = self.view.window {
             toolPicker.setVisible(true, forFirstResponder: self.canvasView)
             toolPicker.addObserver(self.canvasView)
-            /// self.updateLayout(for: toolPicker)
+            //toolPicker
+            //self.updateLayout(for: toolPicker)
             self.canvasView.becomeFirstResponder()
         }
     }
