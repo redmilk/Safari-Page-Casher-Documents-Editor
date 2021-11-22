@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -19,29 +18,19 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="vrh-CV-Sum">
-                    <rect key="frame" x="20" y="108" width="374" height="690"/>
-                    <subviews>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="z2B-Zn-Ldc">
-                            <rect key="frame" x="0.0" y="0.0" width="374" height="690"/>
-                        </imageView>
-                    </subviews>
-                </stackView>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="z2B-Zn-Ldc">
+                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                </imageView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <color key="backgroundColor" systemColor="systemPurpleColor"/>
+            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="vrh-CV-Sum" secondAttribute="trailing" constant="20" id="JzC-VE-TWn"/>
-                <constraint firstItem="vrh-CV-Sum" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="Myw-Fo-dkV"/>
-                <constraint firstItem="vrh-CV-Sum" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="64" id="cUm-WQ-FmM"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="vrh-CV-Sum" secondAttribute="bottom" constant="64" id="fJo-dl-1sr"/>
+                <constraint firstItem="z2B-Zn-Ldc" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="HPD-H3-j5Q"/>
+                <constraint firstItem="z2B-Zn-Ldc" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="LI9-CQ-ua9"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="z2B-Zn-Ldc" secondAttribute="trailing" id="SRy-IS-byE"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="z2B-Zn-Ldc" secondAttribute="bottom" id="XiV-tT-zX0"/>
             </constraints>
             <point key="canvasLocation" x="139" y="153"/>
         </view>
     </objects>
-    <resources>
-        <systemColor name="systemPurpleColor">
-            <color red="0.68627450980392157" green="0.32156862745098042" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-    </resources>
 </document>

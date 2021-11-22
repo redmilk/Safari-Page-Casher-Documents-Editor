@@ -92,7 +92,7 @@ final class Logger {
         switch type {
         /// just comment unnecessary printing logs
         case .all:
-            print(str: " - LOGGER \(time) 🟨 " + string + "\nFunction: \((function as NSString).lastPathComponent), File: \((path as NSString).lastPathComponent), Line: \((line.description as NSString).lastPathComponent)")
+            print(str: " - LOGGER \(time) ⬜️⬜️⬜️ " + string + "\nFunction: \((function as NSString).lastPathComponent), File: \((path as NSString).lastPathComponent), Line: \((line.description as NSString).lastPathComponent)")
         case .responses:
             print(str:" - LOGGER \(time) ✅ Response " + string)
         case .requests:

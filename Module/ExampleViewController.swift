@@ -11,7 +11,7 @@ import UIKit
 import Combine
 import VisionKit
 import PencilKit
-
+import PDFKit
 
 // MARK: - ExampleViewController
 
@@ -25,7 +25,7 @@ final class ExampleViewController: UIViewController {
     private let viewModel: ExampleViewModel
     private var bag = Set<AnyCancellable>()
     /// pencil kit
-    private var canvasView: PKCanvasView!
+    private var canvasView: PKCanvasView?
     private let toolPicker = PKToolPicker()
     private var imgForMarkup: UIImage?
 
@@ -46,7 +46,18 @@ final class ExampleViewController: UIViewController {
         handleStates()
         configureView()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setPencilKitToolbarHidden(false)
+    }
 }
+
+// MARK: - Internal
+// TODO: Refactor
+
+#warning("NEED REFACTORING FOR ADOPTION OF CURRENT ARCHITECTURE")
+#warning("DECOMPOSE TO APROPRIATE SERVICES")
 
 extension ExampleViewController: VNDocumentCameraViewControllerDelegate {
     func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
@@ -58,7 +69,27 @@ extension ExampleViewController: VNDocumentCameraViewControllerDelegate {
             imgForMarkup = image
             imageView.image = image
             configureCanvasView()
-            canvasView.frame = setSize()
+            let size = setSize()
+            canvasView?.translatesAutoresizingMaskIntoConstraints = false
+            ///
+            switch size {
+            case .height(let heightRect):
+                Logger.log("Min Height: \(min(imageView.frame.height, heightRect.height).description)")
+                canvasView?.heightAnchor.constraint(equalToConstant: min(imageView.frame.height, heightRect.height)).isActive = true
+                canvasView?.widthAnchor.constraint(equalToConstant: imageView.frame.width).isActive = true
+
+            case .width(let widthRect):
+                Logger.log("Min Width: \(min(imageView.frame.width, widthRect.width).description)")
+                canvasView?.widthAnchor.constraint(equalToConstant: min(imageView.frame.width, widthRect.width)).isActive = true
+                canvasView?.heightAnchor.constraint(equalToConstant: imageView.frame.height).isActive = true
+            }
+                        
+            canvasView?.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
+            canvasView?.centerYAnchor.constraint(equalTo: imageView.centerYAnchor).isActive = true
+            
+            //canvasView?.backgroundColor = #colorLiteral(red: 0, green: 0.9768045545, blue: 0, alpha: 0.3474667406)
+            //imageView.backgroundColor = .black
+            addPencilKitToCanvas()
         }
         dismiss(animated: true, completion: nil)
     }
@@ -68,9 +99,6 @@ extension ExampleViewController: VNDocumentCameraViewControllerDelegate {
     }
 }
 
-// MARK: - Internal
-// TODO: Refactor
-#warning("NEED REFACTORING FOR ADOPTION OF CURRENT ARCHITECTURE")
 
 private extension ExampleViewController {
     
@@ -90,13 +118,14 @@ private extension ExampleViewController {
         navigationItem.leftBarButtonItem = scanButton
         scanButton.publisher().sink(receiveValue: { [weak self] _ in
             self?.displayScanningController()
+            self?.cleanDrawing()
         })
         .store(in: &bag)
         
         let clearButton = UIBarButtonItem(systemItem: .refresh)
         navigationItem.rightBarButtonItem = clearButton
         clearButton.publisher().sink(receiveValue: { [weak self] _ in
-            self?.canvasView.drawing = PKDrawing()
+            self?.cleanDrawing()
         })
         .store(in: &bag)
         
@@ -124,17 +153,26 @@ private extension ExampleViewController {
     /// PencilKit
     
     func configureCanvasView() {
+        removePencilKitFromCanvas()
         canvasView = PKCanvasView.init(frame: imageView.frame)
-        canvasView.isOpaque = false
-        //canvasView.allowsFingerDrawing = true
-        canvasView.drawingPolicy = .anyInput
-        view.addSubview(canvasView)
+        canvasView!.isOpaque = false
+        canvasView!.drawingPolicy = .anyInput
+        view.addSubview(canvasView!)
     }
     
-    func setSize() -> CGRect {
+    func cleanDrawing() {
+        canvasView?.drawing = PKDrawing()
+    }
+    
+    enum RatioSide {
+        case width(CGRect)
+        case height(CGRect)
+    }
+    
+    func setSize() -> RatioSide {
         func getHeight() -> CGRect {
-            let containerView = self.imageView!
-            let image = self.imgForMarkup!
+            let containerView = imageView!
+            let image = imgForMarkup!
             let ratio = containerView.frame.size.width / image.size.width
             let newHeight = ratio * image.size.height
             let size = CGSize(width: containerView.frame.width, height: newHeight)
@@ -144,8 +182,8 @@ private extension ExampleViewController {
             return CGRect.init(origin: origin, size: size)
         }
         func getWidth() -> CGRect {
-            let containerView = self.imageView!
-            let image = self.imgForMarkup!
+            let containerView = imageView!
+            let image = imgForMarkup!
             let ratio = containerView.frame.size.height / image.size.height
             let newWidth = ratio * image.size.width
             let size = CGSize(width: newWidth, height: containerView.frame.height)
@@ -154,25 +192,67 @@ private extension ExampleViewController {
             let origin = CGPoint.init(x: xPosition, y: yPosition)
             return CGRect.init(origin: origin, size: size)
         }
+        Logger.log("Width: \(getWidth())")
+        Logger.log("Height: \(getHeight())")
+        Logger.log("ImageView Frame: \(imageView.frame)")
         
         let containerRatio = imageView.frame.size.height / imageView.frame.size.width
         let imageRatio = imgForMarkup!.size.height / imgForMarkup!.size.width
+        
+        //return containerRatio > imageRatio ? .height(getHeight()) : .width(getWidth())
+        
         if containerRatio > imageRatio {
-            return getHeight()
+            return .height(getHeight())
         } else {
-            return getWidth()
+            return .width(getWidth())
         }
     }
     
     func addPencilKitToCanvas() {
         self.canvasView?.drawing = PKDrawing()
-        if let window = self.view.window {
-            toolPicker.setVisible(true, forFirstResponder: self.canvasView)
-            toolPicker.addObserver(self.canvasView)
-            //toolPicker
-            //self.updateLayout(for: toolPicker)
-            self.canvasView.becomeFirstResponder()
+        if sceneDelegate?.window != nil, let canvasView = canvasView {
+            toolPicker.setVisible(true, forFirstResponder: canvasView)
+            toolPicker.addObserver(canvasView)
+            canvasView.becomeFirstResponder()
         }
+    }
+    
+    func removePencilKitFromCanvas() {
+        canvasView?.resignFirstResponder()
+        if let canvasView = canvasView {
+            toolPicker.setVisible(false, forFirstResponder: canvasView)
+            toolPicker.removeObserver(canvasView)
+            canvasView.removeFromSuperview()
+            self.canvasView = nil
+        }
+    }
+    
+    func setPencilKitToolbarHidden(_ isHidden: Bool) {
+        if let canvasView = canvasView {
+            toolPicker.setVisible(!isHidden, forFirstResponder: canvasView)
+        }
+        if !isHidden {
+            canvasView?.becomeFirstResponder()
+        }
+    }
+    
+    // MARK: - Saving, printing
+   
+    func printPDFToLocalPrinter(_ pdf: PDFDocument, jobName: String) {
+        let printInfo = UIPrintInfo(dictionary: nil)
+        printInfo.jobName = jobName
+        printInfo.outputType = .general
+        let printController = UIPrintInteractionController.shared
+        printController.printInfo = printInfo
+        printController.showsNumberOfCopies = true
+        printController.printingItem = pdf
+        printController.showsPaperSelectionForLoadedPapers = true
+        setPencilKitToolbarHidden(true)
+        printController.present(animated: true, completionHandler: nil)
+    }
+    
+    func convertImagesToPDF(_ images: [UIImage]) -> PDFDocument? {
+        images.makePDF()
     }
     
     func saveDrawing() {
@@ -188,11 +268,10 @@ private extension ExampleViewController {
             }
             return newImage
         }
-        
-        let drawing = self.canvasView.drawing.image(from: self.canvasView.bounds, scale: 0)
-        if let markedupImage = saveImage(drawing: drawing) {
-            // Save the image or do whatever with the Marked up Image
-            Logger.log("Imaged saved", type: .all)
+        guard let canvasView = canvasView else { return }
+        let drawing = canvasView.drawing.image(from: canvasView.bounds, scale: 0)
+        if let markedupImage = saveImage(drawing: drawing), let pdf = convertImagesToPDF([markedupImage]) {
+           printPDFToLocalPrinter(pdf, jobName: "Test how to print")
         }
         self.navigationController?.popViewController(animated: true)
     }
