@@ -12,12 +12,12 @@ import UIKit.UINavigationController
 import Combine
 
 protocol ExampleCoordinatorProtocol {
-   
+    func displayPdfViewer(withPdfUrl url: URL)
 }
 
 final class ExampleCoordinator: CoordinatorProtocol, ExampleCoordinatorProtocol {
     var navigationController: UINavigationController?
-    let window: UIWindow
+    unowned let window: UIWindow
     
     init(window: UIWindow) {
         self.window = window
@@ -29,9 +29,14 @@ final class ExampleCoordinator: CoordinatorProtocol, ExampleCoordinatorProtocol 
     func start() {
         let viewModel = ExampleViewModel(coordinator: self)
         let controller = ExampleViewController(viewModel: viewModel)
-        let navigation = UINavigationController(rootViewController: controller)
-        window.rootViewController = navigation
+        navigationController = UINavigationController(rootViewController: controller)
+        window.rootViewController = navigationController
         window.makeKeyAndVisible()
+    }
+    
+    func displayPdfViewer(withPdfUrl url: URL) {
+        let coordinator = PdfViewerCoordinator(pdfUrl: url, navigationController: navigationController)
+        coordinator.start()
     }
     
     func end() {

@@ -10,6 +10,7 @@
 		79189E00274672900023628A /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79189DFF274672900023628A /* Logger.swift */; };
 		79280E44274BD57D001768A2 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79280E43274BD57D001768A2 /* UIViewController+Extensions.swift */; };
 		79280E48274BF759001768A2 /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79280E47274BF759001768A2 /* Array+Extensions.swift */; };
+		794DDDF1274D50FF00CF8255 /* ApplicationGlobalConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794DDDF0274D50FF00CF8255 /* ApplicationGlobalConfig.swift */; };
 		794F73E02746B31D00B07410 /* MarketBoardDisplayManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794F73DF2746B31D00B07410 /* MarketBoardDisplayManager.swift */; };
 		794F73E92746B36900B07410 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794F73E22746B36800B07410 /* UIView+Extensions.swift */; };
 		794F73EA2746B36900B07410 /* Collection+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794F73E32746B36900B07410 /* Collection+Extensions.swift */; };
@@ -24,6 +25,10 @@
 		799AFB85274680EB00C37A6D /* ExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799AFB81274680EB00C37A6D /* ExampleViewController.swift */; };
 		799AFB86274680EB00C37A6D /* ExampleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799AFB82274680EB00C37A6D /* ExampleViewModel.swift */; };
 		799AFB87274680EB00C37A6D /* ExampleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799AFB83274680EB00C37A6D /* ExampleViewController.xib */; };
+		79E46070274D495F00FD22E1 /* PdfViewerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E4606C274D495F00FD22E1 /* PdfViewerCoordinator.swift */; };
+		79E46071274D495F00FD22E1 /* PdfViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E4606D274D495F00FD22E1 /* PdfViewerViewController.swift */; };
+		79E46072274D495F00FD22E1 /* PdfViewerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E4606E274D495F00FD22E1 /* PdfViewerViewModel.swift */; };
+		79E46073274D495F00FD22E1 /* PdfViewerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79E4606F274D495F00FD22E1 /* PdfViewerViewController.xib */; };
 		79F913B42746501500771FFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F913B32746501500771FFE /* AppDelegate.swift */; };
 		79F913B62746501500771FFE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F913B52746501500771FFE /* SceneDelegate.swift */; };
 		79F913BD2746501900771FFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79F913BC2746501900771FFE /* Assets.xcassets */; };
@@ -34,6 +39,7 @@
 		79189DFF274672900023628A /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		79280E43274BD57D001768A2 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		79280E47274BF759001768A2 /* Array+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
+		794DDDF0274D50FF00CF8255 /* ApplicationGlobalConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationGlobalConfig.swift; sourceTree = "<group>"; };
 		794F73DF2746B31D00B07410 /* MarketBoardDisplayManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketBoardDisplayManager.swift; sourceTree = "<group>"; };
 		794F73E22746B36800B07410 /* UIView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		794F73E32746B36900B07410 /* Collection+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Collection+Extensions.swift"; sourceTree = "<group>"; };
@@ -55,6 +61,10 @@
 		799AFB81274680EB00C37A6D /* ExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleViewController.swift; sourceTree = "<group>"; };
 		799AFB82274680EB00C37A6D /* ExampleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleViewModel.swift; sourceTree = "<group>"; };
 		799AFB83274680EB00C37A6D /* ExampleViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExampleViewController.xib; sourceTree = "<group>"; };
+		79E4606C274D495F00FD22E1 /* PdfViewerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PdfViewerCoordinator.swift; sourceTree = "<group>"; };
+		79E4606D274D495F00FD22E1 /* PdfViewerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PdfViewerViewController.swift; sourceTree = "<group>"; };
+		79E4606E274D495F00FD22E1 /* PdfViewerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PdfViewerViewModel.swift; sourceTree = "<group>"; };
+		79E4606F274D495F00FD22E1 /* PdfViewerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PdfViewerViewController.xib; sourceTree = "<group>"; };
 		79F913B02746501500771FFE /* AirPrint.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AirPrint.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		79F913B32746501500771FFE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		79F913B52746501500771FFE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -80,6 +90,28 @@
 				79189DFF274672900023628A /* Logger.swift */,
 			);
 			path = Debug;
+			sourceTree = "<group>";
+		};
+		79408321274D488600DFCAD6 /* PdfViewer */ = {
+			isa = PBXGroup;
+			children = (
+				79E4606C274D495F00FD22E1 /* PdfViewerCoordinator.swift */,
+				79E4606D274D495F00FD22E1 /* PdfViewerViewController.swift */,
+				79E4606E274D495F00FD22E1 /* PdfViewerViewModel.swift */,
+				79E4606F274D495F00FD22E1 /* PdfViewerViewController.xib */,
+			);
+			path = PdfViewer;
+			sourceTree = "<group>";
+		};
+		79408322274D48C100DFCAD6 /* Scans */ = {
+			isa = PBXGroup;
+			children = (
+				799AFB80274680EB00C37A6D /* ExampleCoordinator.swift */,
+				799AFB81274680EB00C37A6D /* ExampleViewController.swift */,
+				799AFB82274680EB00C37A6D /* ExampleViewModel.swift */,
+				799AFB83274680EB00C37A6D /* ExampleViewController.xib */,
+			);
+			path = Scans;
 			sourceTree = "<group>";
 		};
 		794F73DB2746B1F500B07410 /* Services */ = {
@@ -118,21 +150,6 @@
 				79280E47274BF759001768A2 /* Array+Extensions.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		794F73F12746B54F00B07410 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				794F73F22746B55500B07410 /* Cells */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		794F73F22746B55500B07410 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Cells;
 			sourceTree = "<group>";
 		};
 		794F73F52746CEA000B07410 /* ModuleTemplates */ = {
@@ -187,11 +204,8 @@
 		79F913B22746501500771FFE /* Module */ = {
 			isa = PBXGroup;
 			children = (
-				799AFB80274680EB00C37A6D /* ExampleCoordinator.swift */,
-				799AFB81274680EB00C37A6D /* ExampleViewController.swift */,
-				799AFB82274680EB00C37A6D /* ExampleViewModel.swift */,
-				799AFB83274680EB00C37A6D /* ExampleViewController.xib */,
-				794F73F12746B54F00B07410 /* View */,
+				79408322274D48C100DFCAD6 /* Scans */,
+				79408321274D488600DFCAD6 /* PdfViewer */,
 			);
 			path = Module;
 			sourceTree = "<group>";
@@ -200,8 +214,9 @@
 			isa = PBXGroup;
 			children = (
 				79F913B32746501500771FFE /* AppDelegate.swift */,
-				79F913B52746501500771FFE /* SceneDelegate.swift */,
+				794DDDF0274D50FF00CF8255 /* ApplicationGlobalConfig.swift */,
 				7963FC4127466F6F007B8449 /* ApplicationCoordinator.swift */,
+				79F913B52746501500771FFE /* SceneDelegate.swift */,
 				79F913BE2746501900771FFE /* LaunchScreen.storyboard */,
 				79F913C12746501900771FFE /* Info.plist */,
 			);
@@ -290,6 +305,7 @@
 				79F913C02746501900771FFE /* LaunchScreen.storyboard in Resources */,
 				799AFB87274680EB00C37A6D /* ExampleViewController.xib in Resources */,
 				79F913BD2746501900771FFE /* Assets.xcassets in Resources */,
+				79E46073274D495F00FD22E1 /* PdfViewerViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,6 +316,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79E46072274D495F00FD22E1 /* PdfViewerViewModel.swift in Sources */,
 				794F73EB2746B36900B07410 /* UIBarButtonItem+Extensions.swift in Sources */,
 				79280E48274BF759001768A2 /* Array+Extensions.swift in Sources */,
 				79F913B42746501500771FFE /* AppDelegate.swift in Sources */,
@@ -307,6 +324,8 @@
 				799AFB86274680EB00C37A6D /* ExampleViewModel.swift in Sources */,
 				794F73E92746B36900B07410 /* UIView+Extensions.swift in Sources */,
 				79280E44274BD57D001768A2 /* UIViewController+Extensions.swift in Sources */,
+				79E46071274D495F00FD22E1 /* PdfViewerViewController.swift in Sources */,
+				794DDDF1274D50FF00CF8255 /* ApplicationGlobalConfig.swift in Sources */,
 				794F73EA2746B36900B07410 /* Collection+Extensions.swift in Sources */,
 				7963FC4627466FAD007B8449 /* CoordinatorProtocol.swift in Sources */,
 				79189E00274672900023628A /* Logger.swift in Sources */,
@@ -318,6 +337,7 @@
 				79F913B62746501500771FFE /* SceneDelegate.swift in Sources */,
 				7963FC4227466F6F007B8449 /* ApplicationCoordinator.swift in Sources */,
 				794F73EF2746B36900B07410 /* UIControl+Extensions.swift in Sources */,
+				79E46070274D495F00FD22E1 /* PdfViewerCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

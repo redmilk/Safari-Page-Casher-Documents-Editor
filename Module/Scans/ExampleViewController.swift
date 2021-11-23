@@ -12,6 +12,7 @@ import Combine
 import VisionKit
 import PencilKit
 import PDFKit
+import MobileCoreServices
 
 // MARK: - ExampleViewController
 
@@ -20,7 +21,8 @@ final class ExampleViewController: UIViewController {
         case dummyState
     }
     
-    @IBOutlet var imageView: UIImageView!
+    @IBOutlet private weak var imageView: UIImageView!
+    @IBOutlet private weak var bottomToolBar: UIToolbar!
     
     private let viewModel: ExampleViewModel
     private var bag = Set<AnyCancellable>()
@@ -135,12 +137,21 @@ private extension ExampleViewController {
         })
         .store(in: &bag)
         
+        let openDocumentsButton = UIBarButtonItem(systemItem: .add)
+        openDocumentsButton.publisher().sink(receiveValue: { [weak self] _ in
+            self?.displayDocumentsSelectionMenu()
+        })
+        .store(in: &bag)
+        
         let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 35))
         toolbar.widthAnchor.constraint(equalToConstant: 150).isActive = true
         let rightSpacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let leftSpacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         toolbar.setItems([leftSpacer, saveButton, rightSpacer], animated: false)
         navigationItem.titleView = toolbar
+        
+        
+        bottomToolBar.setItems([openDocumentsButton], animated: false)
     }
     
     func displayScanningController() {
@@ -274,5 +285,27 @@ private extension ExampleViewController {
            printPDFToLocalPrinter(pdf, jobName: "Test how to print")
         }
         self.navigationController?.popViewController(animated: true)
+    }
+}
+
+// MARK: - Open pdf files from iCloud or Dropbox
+
+extension ExampleViewController: UIDocumentPickerDelegate {
+    
+    func displayDocumentsSelectionMenu() {
+        let importMenu = UIDocumentPickerViewController(documentTypes: [kUTTypePDF as String], in: .import)
+        /// "public.composite-content" another option for pdf search
+        importMenu.delegate = self
+        present(importMenu, animated: true, completion: nil)
+    }
+    
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        guard let url = urls.first else { return }
+        urls.forEach { Logger.log($0.absoluteString) }
+        viewModel.input.send(.displayPdfViewer(url))
+    }
+    
+    func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+        
     }
 }
