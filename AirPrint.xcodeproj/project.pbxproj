@@ -93,7 +93,6 @@
 		7983ECDE2750B0D500B5C2AF /* AirPrint-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AirPrint-Bridging-Header.h"; sourceTree = "<group>"; };
 		7983ECDF2750B0D500B5C2AF /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
 		7983ECE02750B0D500B5C2AF /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
-		7983ECE12750B0D500B5C2AF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		799AFB80274680EB00C37A6D /* ExampleCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleCoordinator.swift; sourceTree = "<group>"; };
 		799AFB81274680EB00C37A6D /* ExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleViewController.swift; sourceTree = "<group>"; };
 		799AFB82274680EB00C37A6D /* ExampleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleViewModel.swift; sourceTree = "<group>"; };
@@ -254,7 +253,6 @@
 			children = (
 				7983ECDF2750B0D500B5C2AF /* iCarousel.h */,
 				7983ECE02750B0D500B5C2AF /* iCarousel.m */,
-				7983ECE12750B0D500B5C2AF /* Info.plist */,
 				7983ECDE2750B0D500B5C2AF /* AirPrint-Bridging-Header.h */,
 			);
 			path = CarouselView;
@@ -346,6 +344,14 @@
 			path = EditScreen;
 			sourceTree = "<group>";
 		};
+		79B7880B2750B67B009D7655 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7983ECDD2750B06400B5C2AF /* CarouselView */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		79F913A72746501500771FFE = {
 			isa = PBXGroup;
 			children = (
@@ -404,7 +410,7 @@
 		79F913CD274652E200771FFE /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				7983ECDD2750B06400B5C2AF /* CarouselView */,
+				79B7880B2750B67B009D7655 /* View */,
 				794F73F52746CEA000B07410 /* ModuleTemplates */,
 				794F73DE2746B2DE00B07410 /* Extensions */,
 				794F73DD2746B2CA00B07410 /* Examples */,
