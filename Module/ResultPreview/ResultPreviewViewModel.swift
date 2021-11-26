@@ -1,6 +1,6 @@
 //
 //  
-//  ScansPreviewViewModel.swift
+//  ResultPreviewViewModel.swift
 //  AirPrint
 //
 //  Created by Danyl Timofeyev on 26.11.2021.
@@ -10,18 +10,18 @@
 import Foundation
 import Combine
 
-final class ScansPreviewViewModel {
+final class ResultPreviewViewModel {
     enum Action {
         case dummyAction
     }
     
-    let input = PassthroughSubject<ScansPreviewViewModel.Action, Never>()
-    let output = PassthroughSubject<ScansPreviewViewController.State, Never>()
+    let input = PassthroughSubject<ResultPreviewViewModel.Action, Never>()
+    let output = PassthroughSubject<ResultPreviewViewController.State, Never>()
     
-    private let coordinator: ScansPreviewCoordinatorProtocol & CoordinatorProtocol
+    private let coordinator: ResultPreviewCoordinatorProtocol & CoordinatorProtocol
     private var bag = Set<AnyCancellable>()
 
-    init(coordinator: ScansPreviewCoordinatorProtocol & CoordinatorProtocol) {
+    init(coordinator: ResultPreviewCoordinatorProtocol & CoordinatorProtocol) {
         self.coordinator = coordinator
         dispatchActions()
     }
@@ -32,7 +32,7 @@ final class ScansPreviewViewModel {
 
 // MARK: - Internal
 
-private extension ScansPreviewViewModel {
+private extension ResultPreviewViewModel {
     
     /// Handle ViewController's actions
     private func dispatchActions() {

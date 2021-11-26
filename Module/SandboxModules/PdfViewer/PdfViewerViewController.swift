@@ -63,7 +63,7 @@ final class PdfViewerViewController: QLPreviewController {
         })
         .store(in: &bag)
         
-        self.setValue(<#T##value: Any?##Any?#>, forKey: <#T##String#>)
+        //self.setValue(<#T##value: Any?##Any?#>, forKey: <#T##String#>)
         b.publisher().receive(on: DispatchQueue.main).sink(receiveValue: { [unowned self] _ in
             //self?.navigationController?.setToolbarHidden(true, animated: true)
             //self?.navigationController?.setNavigationBarHidden(true, animated: true)

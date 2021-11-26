@@ -1,6 +1,6 @@
 //
 //  
-//  ScansPreviewCoordinator.swift
+//  EditScreenCoordinator.swift
 //  AirPrint
 //
 //  Created by Danyl Timofeyev on 26.11.2021.
@@ -11,11 +11,11 @@ import Foundation
 import UIKit.UINavigationController
 import Combine
 
-protocol ScansPreviewCoordinatorProtocol {
+protocol EditScreenCoordinatorProtocol {
    
 }
 
-final class ScansPreviewCoordinator: CoordinatorProtocol, ScansPreviewCoordinatorProtocol {
+final class EditScreenCoordinator: CoordinatorProtocol, EditScreenCoordinatorProtocol {
     var navigationController: UINavigationController?
     
     init() {
@@ -26,8 +26,8 @@ final class ScansPreviewCoordinator: CoordinatorProtocol, ScansPreviewCoordinato
     }
     
     func start() {
-        let viewModel = ScansPreviewViewModel(coordinator: self)
-        let controller = ScansPreviewViewController(viewModel: viewModel)
+        let viewModel = EditScreenViewModel(coordinator: self)
+        let controller = EditScreenViewController(viewModel: viewModel)
 
     }
     

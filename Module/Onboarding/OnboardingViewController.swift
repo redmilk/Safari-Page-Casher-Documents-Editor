@@ -1,6 +1,6 @@
 //
 //  
-//  ScansPreviewViewController.swift
+//  OnboardingViewController.swift
 //  AirPrint
 //
 //  Created by Danyl Timofeyev on 26.11.2021.
@@ -11,19 +11,19 @@ import UIKit
 import Combine
 
 
-// MARK: - ScansPreviewViewController
+// MARK: - OnboardingViewController
 
-final class ScansPreviewViewController: UIViewController {
+final class OnboardingViewController: UIViewController {
     enum State {
         case dummyState
     }
         
-    private let viewModel: ScansPreviewViewModel
+    private let viewModel: OnboardingViewModel
     private var bag = Set<AnyCancellable>()
     
-    init(viewModel: ScansPreviewViewModel) {
+    init(viewModel: OnboardingViewModel) {
         self.viewModel = viewModel
-        super.init(nibName: String(describing: ScansPreviewViewController.self), bundle: nil)
+        super.init(nibName: String(describing: OnboardingViewController.self), bundle: nil)
         /**
          CONNECT FILE'S OWNER TO SUPERVIEW IN XIB FILE
          CONNECT FILE'S OWNER TO SUPERVIEW IN XIB FILE
@@ -46,7 +46,7 @@ final class ScansPreviewViewController: UIViewController {
 
 // MARK: - Internal
 
-private extension ScansPreviewViewController {
+private extension OnboardingViewController {
     
     /// Handle ViewModel's states
     func handleStates() {

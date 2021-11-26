@@ -47,6 +47,7 @@ final class ExampleViewController: UIViewController {
 
         handleStates()
         configureView()
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
