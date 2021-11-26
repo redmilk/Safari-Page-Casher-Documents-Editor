@@ -15,20 +15,18 @@ import Combine
 
 final class ResultPreviewViewController: UIViewController {
     enum State {
-        case dummyState
+        case displaySessionData
     }
         
+    @IBOutlet weak var collectionView: UICollectionView!
+    
+    private lazy var displayManager = ResultPreviewCollectionManager(collectionView: collectionView)
     private let viewModel: ResultPreviewViewModel
     private var bag = Set<AnyCancellable>()
     
     init(viewModel: ResultPreviewViewModel) {
         self.viewModel = viewModel
         super.init(nibName: String(describing: ResultPreviewViewController.self), bundle: nil)
-        /**
-         CONNECT FILE'S OWNER TO SUPERVIEW IN XIB FILE
-         CONNECT FILE'S OWNER TO SUPERVIEW IN XIB FILE
-         CONNECT FILE'S OWNER TO SUPERVIEW IN XIB FILE
-         */
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -41,6 +39,7 @@ final class ResultPreviewViewController: UIViewController {
         super.viewDidLoad()
 
         handleStates()
+        configureView()
     }
 }
 
@@ -57,5 +56,9 @@ private extension ResultPreviewViewController {
             }
         })
         .store(in: &bag)
+    }
+    
+    func configureView() {
+        
     }
 }

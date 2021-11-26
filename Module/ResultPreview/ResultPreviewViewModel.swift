@@ -20,13 +20,20 @@ final class ResultPreviewViewModel {
     
     private let coordinator: ResultPreviewCoordinatorProtocol & CoordinatorProtocol
     private var bag = Set<AnyCancellable>()
+    
+    private let sessionData: PrintableDataBox
 
-    init(coordinator: ResultPreviewCoordinatorProtocol & CoordinatorProtocol) {
+    init(coordinator: ResultPreviewCoordinatorProtocol & CoordinatorProtocol, sessionData: PrintableDataBox) {
         self.coordinator = coordinator
+        self.sessionData = sessionData
         dispatchActions()
     }
     deinit {
         Logger.log(String(describing: self), type: .deinited)
+    }
+    
+    func makeSectionsFromSessionData() {
+        
     }
 }
 

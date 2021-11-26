@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ResultPreviewViewController" customModule="AirPrint" customModuleProvider="target">
             <connections>
+                <outlet property="collectionView" destination="KL2-XC-OKa" id="p2H-RP-wSe"/>
                 <outlet property="view" destination="iN0-l3-epB" id="MWQ-7k-eYt"/>
             </connections>
         </placeholder>
@@ -17,8 +18,26 @@
         <view contentMode="scaleToFill" id="iN0-l3-epB">
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="KL2-XC-OKa">
+                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Fnd-6V-kcM">
+                        <size key="itemSize" width="128" height="128"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
+            </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="KL2-XC-OKa" secondAttribute="bottom" id="Gc2-7f-6CM"/>
+                <constraint firstItem="KL2-XC-OKa" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="HdZ-KO-feJ"/>
+                <constraint firstItem="KL2-XC-OKa" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="ReJ-l9-TcN"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="KL2-XC-OKa" secondAttribute="trailing" id="bYU-Va-jLe"/>
+            </constraints>
             <point key="canvasLocation" x="139" y="153"/>
         </view>
     </objects>

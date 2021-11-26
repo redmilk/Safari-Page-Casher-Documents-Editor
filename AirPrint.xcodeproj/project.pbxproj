@@ -28,6 +28,11 @@
 		799AFB85274680EB00C37A6D /* ExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799AFB81274680EB00C37A6D /* ExampleViewController.swift */; };
 		799AFB86274680EB00C37A6D /* ExampleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799AFB82274680EB00C37A6D /* ExampleViewModel.swift */; };
 		799AFB87274680EB00C37A6D /* ExampleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799AFB83274680EB00C37A6D /* ExampleViewController.xib */; };
+		79A725A62750BE3B00D8B330 /* ResultPreviewCollectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A725A52750BE3B00D8B330 /* ResultPreviewCollectionManager.swift */; };
+		79A725AA2750BEA200D8B330 /* ResultPreviewSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A725A92750BEA200D8B330 /* ResultPreviewSection.swift */; };
+		79A725B12750C41700D8B330 /* ResultPreviewCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A725AF2750C41700D8B330 /* ResultPreviewCollectionCell.swift */; };
+		79A725B22750C41700D8B330 /* ResultPreviewCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79A725B02750C41700D8B330 /* ResultPreviewCollectionCell.xib */; };
+		79A725B72750C6C900D8B330 /* PrintableDataBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A725B62750C6C900D8B330 /* PrintableDataBox.swift */; };
 		79B787B52750B1E4009D7655 /* OnboardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B787B12750B1E4009D7655 /* OnboardingCoordinator.swift */; };
 		79B787B62750B1E4009D7655 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B787B22750B1E4009D7655 /* OnboardingViewController.swift */; };
 		79B787B72750B1E4009D7655 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B787B32750B1E4009D7655 /* OnboardingViewModel.swift */; };
@@ -97,6 +102,11 @@
 		799AFB81274680EB00C37A6D /* ExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleViewController.swift; sourceTree = "<group>"; };
 		799AFB82274680EB00C37A6D /* ExampleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleViewModel.swift; sourceTree = "<group>"; };
 		799AFB83274680EB00C37A6D /* ExampleViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExampleViewController.xib; sourceTree = "<group>"; };
+		79A725A52750BE3B00D8B330 /* ResultPreviewCollectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultPreviewCollectionManager.swift; sourceTree = "<group>"; };
+		79A725A92750BEA200D8B330 /* ResultPreviewSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultPreviewSection.swift; sourceTree = "<group>"; };
+		79A725AF2750C41700D8B330 /* ResultPreviewCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultPreviewCollectionCell.swift; sourceTree = "<group>"; };
+		79A725B02750C41700D8B330 /* ResultPreviewCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResultPreviewCollectionCell.xib; sourceTree = "<group>"; };
+		79A725B62750C6C900D8B330 /* PrintableDataBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintableDataBox.swift; sourceTree = "<group>"; };
 		79B787B12750B1E4009D7655 /* OnboardingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCoordinator.swift; sourceTree = "<group>"; };
 		79B787B22750B1E4009D7655 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		79B787B32750B1E4009D7655 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
@@ -181,8 +191,8 @@
 		794F73DB2746B1F500B07410 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				79A725B52750C66900D8B330 /* PDF */,
 				79763581274E88B9001D2155 /* InteractionFeedbackService.swift */,
-				7983ECCB275092AF00B5C2AF /* PDFService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -258,6 +268,32 @@
 			path = CarouselView;
 			sourceTree = "<group>";
 		};
+		79A725A82750BE6F00D8B330 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				79A725A92750BEA200D8B330 /* ResultPreviewSection.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		79A725AE2750C3C700D8B330 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				79A725AF2750C41700D8B330 /* ResultPreviewCollectionCell.swift */,
+				79A725B02750C41700D8B330 /* ResultPreviewCollectionCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		79A725B52750C66900D8B330 /* PDF */ = {
+			isa = PBXGroup;
+			children = (
+				7983ECCB275092AF00B5C2AF /* PDFService.swift */,
+				79A725B62750C6C900D8B330 /* PrintableDataBox.swift */,
+			);
+			path = PDF;
+			sourceTree = "<group>";
+		};
 		79B787BA2750B1ED009D7655 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -305,10 +341,13 @@
 		79B787ED2750B365009D7655 /* ResultPreview */ = {
 			isa = PBXGroup;
 			children = (
-				79B787E42750B360009D7655 /* ResultPreviewCoordinator.swift */,
 				79B787E52750B360009D7655 /* ResultPreviewViewController.swift */,
 				79B787E62750B360009D7655 /* ResultPreviewViewModel.swift */,
+				79A725A52750BE3B00D8B330 /* ResultPreviewCollectionManager.swift */,
+				79B787E42750B360009D7655 /* ResultPreviewCoordinator.swift */,
 				79B787E72750B360009D7655 /* ResultPreviewViewController.xib */,
+				79A725AE2750C3C700D8B330 /* View */,
+				79A725A82750BE6F00D8B330 /* Model */,
 			);
 			path = ResultPreview;
 			sourceTree = "<group>";
@@ -342,14 +381,6 @@
 				79B788022750B55C009D7655 /* EditScreenViewController.xib */,
 			);
 			path = EditScreen;
-			sourceTree = "<group>";
-		};
-		79B7880B2750B67B009D7655 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				7983ECDD2750B06400B5C2AF /* CarouselView */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		79F913A72746501500771FFE = {
@@ -410,7 +441,7 @@
 		79F913CD274652E200771FFE /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				79B7880B2750B67B009D7655 /* View */,
+				7983ECDD2750B06400B5C2AF /* CarouselView */,
 				794F73F52746CEA000B07410 /* ModuleTemplates */,
 				794F73DE2746B2DE00B07410 /* Extensions */,
 				794F73DD2746B2CA00B07410 /* Examples */,
@@ -481,6 +512,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				79B787CE2750B250009D7655 /* PrintingOptionsViewController.xib in Resources */,
+				79A725B22750C41700D8B330 /* ResultPreviewCollectionCell.xib in Resources */,
 				79F913C02746501900771FFE /* LaunchScreen.storyboard in Resources */,
 				79B787C42750B21D009D7655 /* AppSubscriptionViewController.xib in Resources */,
 				799AFB87274680EB00C37A6D /* ExampleViewController.xib in Resources */,
@@ -506,6 +538,7 @@
 				79B787EA2750B360009D7655 /* ResultPreviewViewModel.swift in Sources */,
 				79280E48274BF759001768A2 /* Array+Extensions.swift in Sources */,
 				79F913B42746501500771FFE /* AppDelegate.swift in Sources */,
+				79A725B12750C41700D8B330 /* ResultPreviewCollectionCell.swift in Sources */,
 				79B787C22750B21D009D7655 /* AppSubscriptionViewController.swift in Sources */,
 				794F73ED2746B36900B07410 /* Publisher+Extensions.swift in Sources */,
 				7983ECE22750B0D500B5C2AF /* iCarousel.m in Sources */,
@@ -519,6 +552,7 @@
 				7983ECCC275092AF00B5C2AF /* PDFService.swift in Sources */,
 				79B788032750B55C009D7655 /* EditScreenCoordinator.swift in Sources */,
 				79B787E12750B2FD009D7655 /* SettingsViewModel.swift in Sources */,
+				79A725B72750C6C900D8B330 /* PrintableDataBox.swift in Sources */,
 				79B787C32750B21D009D7655 /* AppSubscriptionViewModel.swift in Sources */,
 				79B787DF2750B2FD009D7655 /* SettingsCoordinator.swift in Sources */,
 				79B788042750B55C009D7655 /* EditScreenViewController.swift in Sources */,
@@ -542,7 +576,9 @@
 				79763582274E88B9001D2155 /* InteractionFeedbackService.swift in Sources */,
 				79B787B72750B1E4009D7655 /* OnboardingViewModel.swift in Sources */,
 				794F73EF2746B36900B07410 /* UIControl+Extensions.swift in Sources */,
+				79A725A62750BE3B00D8B330 /* ResultPreviewCollectionManager.swift in Sources */,
 				79B787CD2750B250009D7655 /* PrintingOptionsViewModel.swift in Sources */,
+				79A725AA2750BEA200D8B330 /* ResultPreviewSection.swift in Sources */,
 				79E46070274D495F00FD22E1 /* PdfViewerCoordinator.swift in Sources */,
 				79B787F82750B429009D7655 /* HomeScreenViewModel.swift in Sources */,
 				79B787E92750B360009D7655 /* ResultPreviewViewController.swift in Sources */,
