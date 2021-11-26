@@ -15,7 +15,7 @@ import QuickLook
 
 // MARK: - PdfViewerViewController
 
-final class PdfViewerViewController: UIViewController {
+final class PdfViewerViewController: QLPreviewController {
     enum State {
         case dummyState
         case renderPdf(PDFDocument)
@@ -39,8 +39,48 @@ final class PdfViewerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        //self.toolbarItems?.f
+        self.view.backgroundColor = .black
         handleStates()
+        dataSource = self
+        delegate = self
+        setEditing(false, animated: true)
+        let b = UIButton(frame: .init(x: 40, y: 140, width: 100, height: 100))
+        b.backgroundColor = .red
+        let clearButton = UIBarButtonItem(systemItem: .refresh)
+        navigationItem.rightBarButtonItem = clearButton
+        UIToolbar.appearance().barTintColor = .black
+        UIToolbar.appearance().tintColor = .black
+        
+        clearButton.publisher().sink(receiveValue: { [weak self] _ in
+            //self?.cleanDrawing()
+        })
+        .store(in: &bag)
+        
+        let saveButton = UIBarButtonItem(systemItem: .save)
+        saveButton.publisher().sink(receiveValue: { [weak self] _ in
+            //self?.saveDrawing()
+        })
+        .store(in: &bag)
+        
+        self.setValue(<#T##value: Any?##Any?#>, forKey: <#T##String#>)
+        b.publisher().receive(on: DispatchQueue.main).sink(receiveValue: { [unowned self] _ in
+            //self?.navigationController?.setToolbarHidden(true, animated: true)
+            //self?.navigationController?.setNavigationBarHidden(true, animated: true)
+            //print(self?.toolbarItems?.first.debugDescription)
+            //setEditing(true, animated: true)
+            //reloadInputViews()
+            setToolbarItems([clearButton, saveButton], animated: true)
+            
+            _ = self.editButtonItem.target!.perform(self.editButtonItem.action, with: nil)
+            
+            /// and
+            
+            UIApplication.shared.sendAction(self.editButtonItem.action!, to: self.editButtonItem.target, from: self, for: nil)
+            
+        })
+        .store(in: &bag)
+        self.view.addSubview(b)
     }
 }
 
@@ -57,11 +97,11 @@ private extension PdfViewerViewController {
             case .dummyState:
                 break
             case .renderPdf(let pdfDocument):
-                self?.pdfView.document = pdfDocument
-                self?.pdfView.autoScales = true
-                self?.pdfView.backgroundColor = UIColor.lightGray
+                //self?.pdfView.document = pdfDocument
+                //self?.pdfView.autoScales = true
+                //self?.pdfView.backgroundColor = UIColor.lightGray
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: { [weak self] in
-                    self?.editFile()
+                    //self?.editFile()
                 })
             }
         })
@@ -100,6 +140,12 @@ extension PdfViewerViewController: QLPreviewControllerDelegate {
 
     func previewController(_ controller: QLPreviewController, didSaveEditedCopyOf previewItem: QLPreviewItem, at modifiedContentsURL: URL) {
         print("SAVED at \(modifiedContentsURL)")
-        pdfView.document = PDFDocument(url: modifiedContentsURL)!
+        let document = PDFDocument(url: modifiedContentsURL)!
+        let page = document.page(at: 0)!
+        
+        let newPdf = PDFDocument()
+        newPdf.insert(page, at: 0)
+        
+        pdfView.document = newPdf//PDFDocument(url: modifiedContentsURL)!
     }
 }

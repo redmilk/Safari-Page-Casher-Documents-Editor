@@ -21,6 +21,12 @@
 		794F73EF2746B36900B07410 /* UIControl+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794F73E82746B36900B07410 /* UIControl+Extensions.swift */; };
 		7963FC4227466F6F007B8449 /* ApplicationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7963FC4127466F6F007B8449 /* ApplicationCoordinator.swift */; };
 		7963FC4627466FAD007B8449 /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7963FC4527466FAD007B8449 /* CoordinatorProtocol.swift */; };
+		79763582274E88B9001D2155 /* InteractionFeedbackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79763581274E88B9001D2155 /* InteractionFeedbackService.swift */; };
+		7983ECC62750912A00B5C2AF /* ScansPreviewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7983ECC22750912A00B5C2AF /* ScansPreviewCoordinator.swift */; };
+		7983ECC72750912A00B5C2AF /* ScansPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7983ECC32750912A00B5C2AF /* ScansPreviewViewController.swift */; };
+		7983ECC82750912A00B5C2AF /* ScansPreviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7983ECC42750912A00B5C2AF /* ScansPreviewViewModel.swift */; };
+		7983ECC92750912A00B5C2AF /* ScansPreviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7983ECC52750912A00B5C2AF /* ScansPreviewViewController.xib */; };
+		7983ECCC275092AF00B5C2AF /* PDFService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7983ECCB275092AF00B5C2AF /* PDFService.swift */; };
 		799AFB84274680EB00C37A6D /* ExampleCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799AFB80274680EB00C37A6D /* ExampleCoordinator.swift */; };
 		799AFB85274680EB00C37A6D /* ExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799AFB81274680EB00C37A6D /* ExampleViewController.swift */; };
 		799AFB86274680EB00C37A6D /* ExampleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799AFB82274680EB00C37A6D /* ExampleViewModel.swift */; };
@@ -57,6 +63,12 @@
 		794F73FD2746CEE200B07410 /* TemplateInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TemplateInfo.plist; sourceTree = "<group>"; };
 		7963FC4127466F6F007B8449 /* ApplicationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCoordinator.swift; sourceTree = "<group>"; };
 		7963FC4527466FAD007B8449 /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
+		79763581274E88B9001D2155 /* InteractionFeedbackService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractionFeedbackService.swift; sourceTree = "<group>"; };
+		7983ECC22750912A00B5C2AF /* ScansPreviewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScansPreviewCoordinator.swift; sourceTree = "<group>"; };
+		7983ECC32750912A00B5C2AF /* ScansPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScansPreviewViewController.swift; sourceTree = "<group>"; };
+		7983ECC42750912A00B5C2AF /* ScansPreviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScansPreviewViewModel.swift; sourceTree = "<group>"; };
+		7983ECC52750912A00B5C2AF /* ScansPreviewViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScansPreviewViewController.xib; sourceTree = "<group>"; };
+		7983ECCB275092AF00B5C2AF /* PDFService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFService.swift; sourceTree = "<group>"; };
 		799AFB80274680EB00C37A6D /* ExampleCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleCoordinator.swift; sourceTree = "<group>"; };
 		799AFB81274680EB00C37A6D /* ExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleViewController.swift; sourceTree = "<group>"; };
 		799AFB82274680EB00C37A6D /* ExampleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleViewModel.swift; sourceTree = "<group>"; };
@@ -117,6 +129,8 @@
 		794F73DB2746B1F500B07410 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				79763581274E88B9001D2155 /* InteractionFeedbackService.swift */,
+				7983ECCB275092AF00B5C2AF /* PDFService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -182,6 +196,17 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		79E0B0B52750906D00D275F1 /* ScansPreview */ = {
+			isa = PBXGroup;
+			children = (
+				7983ECC22750912A00B5C2AF /* ScansPreviewCoordinator.swift */,
+				7983ECC32750912A00B5C2AF /* ScansPreviewViewController.swift */,
+				7983ECC42750912A00B5C2AF /* ScansPreviewViewModel.swift */,
+				7983ECC52750912A00B5C2AF /* ScansPreviewViewController.xib */,
+			);
+			path = ScansPreview;
+			sourceTree = "<group>";
+		};
 		79F913A72746501500771FFE = {
 			isa = PBXGroup;
 			children = (
@@ -204,6 +229,7 @@
 		79F913B22746501500771FFE /* Module */ = {
 			isa = PBXGroup;
 			children = (
+				79E0B0B52750906D00D275F1 /* ScansPreview */,
 				79408322274D48C100DFCAD6 /* Scans */,
 				79408321274D488600DFCAD6 /* PdfViewer */,
 			);
@@ -305,6 +331,7 @@
 				79F913C02746501900771FFE /* LaunchScreen.storyboard in Resources */,
 				799AFB87274680EB00C37A6D /* ExampleViewController.xib in Resources */,
 				79F913BD2746501900771FFE /* Assets.xcassets in Resources */,
+				7983ECC92750912A00B5C2AF /* ScansPreviewViewController.xib in Resources */,
 				79E46073274D495F00FD22E1 /* PdfViewerViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -324,8 +351,10 @@
 				799AFB86274680EB00C37A6D /* ExampleViewModel.swift in Sources */,
 				794F73E92746B36900B07410 /* UIView+Extensions.swift in Sources */,
 				79280E44274BD57D001768A2 /* UIViewController+Extensions.swift in Sources */,
+				7983ECCC275092AF00B5C2AF /* PDFService.swift in Sources */,
 				79E46071274D495F00FD22E1 /* PdfViewerViewController.swift in Sources */,
 				794DDDF1274D50FF00CF8255 /* ApplicationGlobalConfig.swift in Sources */,
+				7983ECC82750912A00B5C2AF /* ScansPreviewViewModel.swift in Sources */,
 				794F73EA2746B36900B07410 /* Collection+Extensions.swift in Sources */,
 				7963FC4627466FAD007B8449 /* CoordinatorProtocol.swift in Sources */,
 				79189E00274672900023628A /* Logger.swift in Sources */,
@@ -336,7 +365,10 @@
 				794F73EC2746B36900B07410 /* UICollectionView+Extensions.swift in Sources */,
 				79F913B62746501500771FFE /* SceneDelegate.swift in Sources */,
 				7963FC4227466F6F007B8449 /* ApplicationCoordinator.swift in Sources */,
+				7983ECC72750912A00B5C2AF /* ScansPreviewViewController.swift in Sources */,
+				79763582274E88B9001D2155 /* InteractionFeedbackService.swift in Sources */,
 				794F73EF2746B36900B07410 /* UIControl+Extensions.swift in Sources */,
+				7983ECC62750912A00B5C2AF /* ScansPreviewCoordinator.swift in Sources */,
 				79E46070274D495F00FD22E1 /* PdfViewerCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
