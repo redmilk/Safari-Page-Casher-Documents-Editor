@@ -28,7 +28,7 @@ final class ResultPreviewCoordinator: CoordinatorProtocol, ResultPreviewCoordina
     }
     
     func start() {
-        let viewModel = ResultPreviewViewModel(coordinator: self)
+        let viewModel = ResultPreviewViewModel(coordinator: self, sessionData: sessionData)
         let controller = ResultPreviewViewController(viewModel: viewModel)
         navigationController?.pushViewController(controller, animated: true)
     }

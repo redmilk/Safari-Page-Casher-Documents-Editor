@@ -51,7 +51,7 @@ private extension ResultPreviewViewController {
     func handleStates() {
         viewModel.output.sink(receiveValue: { [weak self] state in
             switch state {
-            case .dummyState:
+            case .displaySessionData:
                 break
             }
         })

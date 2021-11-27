@@ -16,7 +16,7 @@ import MobileCoreServices
 
 // MARK: - ExampleViewController
 
-final class ExampleViewController: UIViewController {
+final class ExampleViewController: UIViewController, PdfServiceProvidable {
     enum State {
         case dummyState
     }
@@ -144,6 +144,12 @@ private extension ExampleViewController {
         })
         .store(in: &bag)
         
+        let openPhotoLibraryButton = UIBarButtonItem(systemItem: .add)
+        openPhotoLibraryButton.publisher().sink(receiveValue: { [weak self] _ in
+            self?.displayPhotoLibrary()
+        })
+        .store(in: &bag)
+        
         let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 35))
         toolbar.widthAnchor.constraint(equalToConstant: 150).isActive = true
         let rightSpacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
@@ -152,7 +158,7 @@ private extension ExampleViewController {
         navigationItem.titleView = toolbar
         
         
-        bottomToolBar.setItems([openDocumentsButton], animated: false)
+        bottomToolBar.setItems([openDocumentsButton, openPhotoLibraryButton], animated: false)
     }
     
     func displayScanningController() {
@@ -160,6 +166,13 @@ private extension ExampleViewController {
         let controller = VNDocumentCameraViewController()
         controller.delegate = self
         present(controller, animated: true)
+    }
+    
+    func displayPhotoLibrary() {
+        let picker = UIImagePickerController()
+        picker.allowsEditing = true
+        picker.delegate = self
+        present(picker, animated: true)
     }
     
     /// PencilKit
@@ -264,7 +277,7 @@ private extension ExampleViewController {
     }
     
     func convertImagesToPDF(_ images: [UIImage]) -> PDFDocument? {
-        images.makePDF()
+        pdfService.makePdfFilesFromImages(images).first
     }
     
     func saveDrawing() {
@@ -286,6 +299,28 @@ private extension ExampleViewController {
            printPDFToLocalPrinter(pdf, jobName: "Test how to print")
         }
         self.navigationController?.popViewController(animated: true)
+    }
+}
+
+// MARK: - Open photos from Photo Album
+
+extension ExampleViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let image = info[.editedImage] as? UIImage else { return }
+
+        let imageName = UUID().uuidString
+        let imagePath = getDocumentsDirectory().appendingPathComponent(imageName)
+
+        if let jpegData = image.jpegData(compressionQuality: 0.8) {
+            try? jpegData.write(to: imagePath)
+        }
+
+        dismiss(animated: true)
+    }
+
+    func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
     }
 }
 
