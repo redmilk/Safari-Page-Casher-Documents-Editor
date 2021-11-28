@@ -20,3 +20,10 @@ extension XibDesignable where Self: UIView {
     }
 }
 extension UIView: XibDesignable { }
+
+extension UIView {
+    func addCornerRadius(_ radius: CGFloat) {
+        self.clipsToBounds = true
+        self.layer.cornerRadius = radius
+    }
+}

@@ -17,9 +17,10 @@ protocol HomeScreenCoordinatorProtocol {
 
 final class HomeScreenCoordinator: CoordinatorProtocol, HomeScreenCoordinatorProtocol {
     var navigationController: UINavigationController?
+    unowned let window: UIWindow
     
-    init() {
-
+    init(window: UIWindow) {
+        self.window = window
     }
     deinit {
         Logger.log(String(describing: self), type: .deinited)
@@ -28,7 +29,9 @@ final class HomeScreenCoordinator: CoordinatorProtocol, HomeScreenCoordinatorPro
     func start() {
         let viewModel = HomeScreenViewModel(coordinator: self)
         let controller = HomeScreenViewController(viewModel: viewModel)
-
+        navigationController = UINavigationController(rootViewController: controller)
+        window.rootViewController = navigationController
+        window.makeKeyAndVisible()
     }
     
     func end() {

@@ -19,17 +19,17 @@ final class ApplicationCoordinator: CoordinatorProtocol {
     
     func start() {
         /// we fetch from somewhere if it's user's first app launch
-        var isFirstLaunch: Bool = true
+        let isFirstLaunch: Bool = false
         isFirstLaunch ? self.showAppTutorial() : self.showContent()
     }
     
     private func showAppTutorial() {
-        let appTutorialModule = ExampleCoordinator(window: window)
-        appTutorialModule.start()
+        let coordinator = ExampleCoordinator(window: window)
+        coordinator.start()
     }
     
     private func showContent() {
-//        let homeScreenModule = HomeScreenCoordinator(window: window)
-//        homeScreenModule.start()
+        let homeScreen = HomeScreenCoordinator(window: window)
+        homeScreen.start()
     }
 }

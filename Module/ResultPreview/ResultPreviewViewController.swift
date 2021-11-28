@@ -20,7 +20,6 @@ final class ResultPreviewViewController: UIViewController {
         
     @IBOutlet weak var collectionView: UICollectionView!
     
-    private lazy var displayManager = ResultPreviewCollectionManager(collectionView: collectionView)
     private let viewModel: ResultPreviewViewModel
     private var bag = Set<AnyCancellable>()
     

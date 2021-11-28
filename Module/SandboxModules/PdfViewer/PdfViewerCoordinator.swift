@@ -9,6 +9,7 @@
 
 import Foundation
 import UIKit.UINavigationController
+import PDFKit.PDFDocument
 
 protocol PdfViewerCoordinatorProtocol {
    
@@ -16,10 +17,10 @@ protocol PdfViewerCoordinatorProtocol {
 
 final class PdfViewerCoordinator: CoordinatorProtocol, PdfViewerCoordinatorProtocol {
     var navigationController: UINavigationController?
-    let pdfUrl: URL
+    let pdf: PDFDocument
     
-    init(pdfUrl: URL, navigationController: UINavigationController?) {
-        self.pdfUrl = pdfUrl
+    init(pdf: PDFDocument, navigationController: UINavigationController?) {
+        self.pdf = pdf
         self.navigationController = navigationController
     }
     deinit {
@@ -27,7 +28,7 @@ final class PdfViewerCoordinator: CoordinatorProtocol, PdfViewerCoordinatorProto
     }
     
     func start() {
-        let viewModel = PdfViewerViewModel(coordinator: self, pdfUrl: pdfUrl)
+        let viewModel = PdfViewerViewModel(coordinator: self, pdf: pdf)
         let controller = PdfViewerViewController(viewModel: viewModel)
         navigationController?.pushViewController(controller, animated: true)
     }

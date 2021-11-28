@@ -4,12 +4,12 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PdfViewerViewController" customModule="AirPrint" customModuleProvider="target">
             <connections>
-                <outlet property="pdfView" destination="RrU-Hl-HYF" id="jyy-To-sgi"/>
                 <outlet property="view" destination="iN0-l3-epB" id="xPi-s1-6Tp"/>
             </connections>
         </placeholder>
@@ -18,20 +18,25 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RrU-Hl-HYF" customClass="PDFView">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M2J-6q-6hr">
                     <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                    <color key="backgroundColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="RrU-Hl-HYF" secondAttribute="bottom" id="VAY-M4-7rc"/>
-                <constraint firstItem="RrU-Hl-HYF" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="b0R-aY-u3j"/>
-                <constraint firstItem="RrU-Hl-HYF" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="cQ1-og-z6J"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="RrU-Hl-HYF" secondAttribute="trailing" id="cit-x4-fcv"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="M2J-6q-6hr" secondAttribute="bottom" id="VHv-4G-V5K"/>
+                <constraint firstItem="M2J-6q-6hr" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="VnJ-DB-Cu9"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="M2J-6q-6hr" secondAttribute="trailing" id="qy2-Za-AKc"/>
+                <constraint firstItem="M2J-6q-6hr" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="tX2-TR-qWM"/>
             </constraints>
             <point key="canvasLocation" x="139" y="153"/>
         </view>
     </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

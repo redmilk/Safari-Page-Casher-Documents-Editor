@@ -30,6 +30,7 @@ final class ExampleViewController: UIViewController, PdfServiceProvidable {
     private var canvasView: PKCanvasView?
     private let toolPicker = PKToolPicker()
     private var imgForMarkup: UIImage?
+    private let importMenu = CustomDocumentPickerViewController(forOpeningContentTypes: [.pdf], asCopy: true)
 
     init(viewModel: ExampleViewModel) {
         self.viewModel = viewModel
@@ -168,13 +169,6 @@ private extension ExampleViewController {
         present(controller, animated: true)
     }
     
-    func displayPhotoLibrary() {
-        let picker = UIImagePickerController()
-        picker.allowsEditing = true
-        picker.delegate = self
-        present(picker, animated: true)
-    }
-    
     /// PencilKit
     
     func configureCanvasView() {
@@ -306,39 +300,58 @@ private extension ExampleViewController {
 
 extension ExampleViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        guard let image = info[.editedImage] as? UIImage else { return }
-
-        let imageName = UUID().uuidString
-        let imagePath = getDocumentsDirectory().appendingPathComponent(imageName)
-
-        if let jpegData = image.jpegData(compressionQuality: 0.8) {
-            try? jpegData.write(to: imagePath)
-        }
-
+        guard let image = info[.originalImage] as? UIImage else { return }
+        let pdf = pdfService.makePdfFilesFromImages([image])
+        
         dismiss(animated: true)
     }
 
-    func getDocumentsDirectory() -> URL {
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        return paths[0]
+    func displayPhotoLibrary() {
+        let picker = UIImagePickerController()
+        picker.view.subviews.forEach { $0.backgroundColor = .black }
+        //picker.allowsEditing = true
+        picker.delegate = self
+        picker.modalPresentationStyle = .fullScreen
+        present(picker, animated: true)
     }
 }
 
 // MARK: - Open pdf files from iCloud or Dropbox
 
-extension ExampleViewController: UIDocumentPickerDelegate {
+class CustomDocumentPickerViewController: UIDocumentPickerViewController {
+
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
     
+    
+  }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        tabBarController?.selectedIndex = 1
+        
+        Logger.logSubviews(view)
+
+    }
+
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+  }
+}
+
+extension ExampleViewController: UIDocumentPickerDelegate {
+
     func displayDocumentsSelectionMenu() {
-        let importMenu = UIDocumentPickerViewController(documentTypes: [kUTTypePDF as String], in: .import)
         /// "public.composite-content" another option for pdf search
         importMenu.delegate = self
+        importMenu.modalPresentationStyle = .fullScreen
         present(importMenu, animated: true, completion: nil)
     }
     
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-        guard let url = urls.first else { return }
+        guard let url = urls.first, let pdf = PDFDocument(url: url) else { return }
         urls.forEach { Logger.log($0.absoluteString) }
-        viewModel.input.send(.displayPdfViewer(url))
+        viewModel.input.send(.displayPdfViewer(pdf))
     }
     
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {

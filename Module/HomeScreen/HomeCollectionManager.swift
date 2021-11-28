@@ -11,7 +11,7 @@ import Foundation
 import UIKit
 import Combine
 
-final class ResultPreviewCollectionManager: NSObject, InteractionFeedbackService { /// NSObject for collection delegate
+final class HomeCollectionManager: NSObject, InteractionFeedbackService { /// NSObject for collection delegate
     enum Action {
         case didPressCell(IndexPath)
     }
@@ -19,7 +19,7 @@ final class ResultPreviewCollectionManager: NSObject, InteractionFeedbackService
     typealias DataSource = UICollectionViewDiffableDataSource<ResultPreviewSection, ResultPreviewSectionItem>
     typealias Snapshot = NSDiffableDataSourceSnapshot<ResultPreviewSection, ResultPreviewSectionItem>
     
-    let output = PassthroughSubject<ResultPreviewCollectionManager.Action, Never>()
+    let output = PassthroughSubject<HomeCollectionManager.Action, Never>()
     
     private unowned let collectionView: UICollectionView
     private var dataSource: DataSource!
@@ -48,7 +48,7 @@ final class ResultPreviewCollectionManager: NSObject, InteractionFeedbackService
 }
 
 // MARK: - Internal
-private extension ResultPreviewCollectionManager {
+private extension HomeCollectionManager {
     func applySnapshot(sections: [ResultPreviewSection], withIndexPath indexPath: IndexPath) {
         var newSnapshot = Snapshot()
         newSnapshot.appendSections(sections)
@@ -101,7 +101,7 @@ private extension ResultPreviewCollectionManager {
     }
 }
 
-extension ResultPreviewCollectionManager: UICollectionViewDelegate {
+extension HomeCollectionManager: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         generateInteractionFeedback()
         output.send(.didPressCell(indexPath))

@@ -23,11 +23,17 @@
 		79763582274E88B9001D2155 /* InteractionFeedbackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79763581274E88B9001D2155 /* InteractionFeedbackService.swift */; };
 		7983ECCC275092AF00B5C2AF /* PDFService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7983ECCB275092AF00B5C2AF /* PDFService.swift */; };
 		7983ECE22750B0D500B5C2AF /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7983ECE02750B0D500B5C2AF /* iCarousel.m */; };
+		7997DE342753F82A00B33300 /* SIL Open Font License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7997DE2E2753F82A00B33300 /* SIL Open Font License.txt */; };
+		7997DE352753F82A00B33300 /* Poppins-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7997DE2F2753F82A00B33300 /* Poppins-ExtraLight.otf */; };
+		7997DE362753F82A00B33300 /* Poppins-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7997DE302753F82A00B33300 /* Poppins-Light.otf */; };
+		7997DE372753F82A00B33300 /* Poppins-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7997DE312753F82A00B33300 /* Poppins-Medium.otf */; };
+		7997DE382753F82A00B33300 /* Poppins-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7997DE322753F82A00B33300 /* Poppins-SemiBold.otf */; };
+		7997DE392753F82A00B33300 /* Poppins-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7997DE332753F82A00B33300 /* Poppins-Regular.otf */; };
 		799AFB84274680EB00C37A6D /* ExampleCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799AFB80274680EB00C37A6D /* ExampleCoordinator.swift */; };
 		799AFB85274680EB00C37A6D /* ExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799AFB81274680EB00C37A6D /* ExampleViewController.swift */; };
 		799AFB86274680EB00C37A6D /* ExampleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799AFB82274680EB00C37A6D /* ExampleViewModel.swift */; };
 		799AFB87274680EB00C37A6D /* ExampleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799AFB83274680EB00C37A6D /* ExampleViewController.xib */; };
-		79A725A62750BE3B00D8B330 /* ResultPreviewCollectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A725A52750BE3B00D8B330 /* ResultPreviewCollectionManager.swift */; };
+		79A725A62750BE3B00D8B330 /* HomeCollectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A725A52750BE3B00D8B330 /* HomeCollectionManager.swift */; };
 		79A725AA2750BEA200D8B330 /* ResultPreviewSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A725A92750BEA200D8B330 /* ResultPreviewSection.swift */; };
 		79A725B12750C41700D8B330 /* ResultPreviewCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A725AF2750C41700D8B330 /* ResultPreviewCollectionCell.swift */; };
 		79A725B22750C41700D8B330 /* ResultPreviewCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79A725B02750C41700D8B330 /* ResultPreviewCollectionCell.xib */; };
@@ -65,6 +71,9 @@
 		79E46072274D495F00FD22E1 /* PdfViewerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E4606E274D495F00FD22E1 /* PdfViewerViewModel.swift */; };
 		79E46073274D495F00FD22E1 /* PdfViewerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79E4606F274D495F00FD22E1 /* PdfViewerViewController.xib */; };
 		79F80FBC2752A93C00081C7A /* ServicesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F80FBB2752A93C00081C7A /* ServicesContainer.swift */; };
+		79F80FC22752B00000081C7A /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F80FC12752B00000081C7A /* UIImage+Extensions.swift */; };
+		79F80FC62752B36B00081C7A /* PDFDocument+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F80FC52752B36B00081C7A /* PDFDocument+Extension.swift */; };
+		79F80FCC2752E62500081C7A /* ViewHierarchyDebugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F80FCB2752E62400081C7A /* ViewHierarchyDebugger.swift */; };
 		79F913B42746501500771FFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F913B32746501500771FFE /* AppDelegate.swift */; };
 		79F913B62746501500771FFE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F913B52746501500771FFE /* SceneDelegate.swift */; };
 		79F913BD2746501900771FFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79F913BC2746501900771FFE /* Assets.xcassets */; };
@@ -97,11 +106,17 @@
 		7983ECDE2750B0D500B5C2AF /* AirPrint-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AirPrint-Bridging-Header.h"; sourceTree = "<group>"; };
 		7983ECDF2750B0D500B5C2AF /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
 		7983ECE02750B0D500B5C2AF /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
+		7997DE2E2753F82A00B33300 /* SIL Open Font License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "SIL Open Font License.txt"; sourceTree = "<group>"; };
+		7997DE2F2753F82A00B33300 /* Poppins-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-ExtraLight.otf"; sourceTree = "<group>"; };
+		7997DE302753F82A00B33300 /* Poppins-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Light.otf"; sourceTree = "<group>"; };
+		7997DE312753F82A00B33300 /* Poppins-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Medium.otf"; sourceTree = "<group>"; };
+		7997DE322753F82A00B33300 /* Poppins-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-SemiBold.otf"; sourceTree = "<group>"; };
+		7997DE332753F82A00B33300 /* Poppins-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Regular.otf"; sourceTree = "<group>"; };
 		799AFB80274680EB00C37A6D /* ExampleCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleCoordinator.swift; sourceTree = "<group>"; };
 		799AFB81274680EB00C37A6D /* ExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleViewController.swift; sourceTree = "<group>"; };
 		799AFB82274680EB00C37A6D /* ExampleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleViewModel.swift; sourceTree = "<group>"; };
 		799AFB83274680EB00C37A6D /* ExampleViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExampleViewController.xib; sourceTree = "<group>"; };
-		79A725A52750BE3B00D8B330 /* ResultPreviewCollectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultPreviewCollectionManager.swift; sourceTree = "<group>"; };
+		79A725A52750BE3B00D8B330 /* HomeCollectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionManager.swift; sourceTree = "<group>"; };
 		79A725A92750BEA200D8B330 /* ResultPreviewSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultPreviewSection.swift; sourceTree = "<group>"; };
 		79A725AF2750C41700D8B330 /* ResultPreviewCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultPreviewCollectionCell.swift; sourceTree = "<group>"; };
 		79A725B02750C41700D8B330 /* ResultPreviewCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResultPreviewCollectionCell.xib; sourceTree = "<group>"; };
@@ -139,6 +154,9 @@
 		79E4606E274D495F00FD22E1 /* PdfViewerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PdfViewerViewModel.swift; sourceTree = "<group>"; };
 		79E4606F274D495F00FD22E1 /* PdfViewerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PdfViewerViewController.xib; sourceTree = "<group>"; };
 		79F80FBB2752A93C00081C7A /* ServicesContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesContainer.swift; sourceTree = "<group>"; };
+		79F80FC12752B00000081C7A /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
+		79F80FC52752B36B00081C7A /* PDFDocument+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDFDocument+Extension.swift"; sourceTree = "<group>"; };
+		79F80FCB2752E62400081C7A /* ViewHierarchyDebugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewHierarchyDebugger.swift; sourceTree = "<group>"; };
 		79F913B02746501500771FFE /* AirPrint.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AirPrint.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		79F913B32746501500771FFE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		79F913B52746501500771FFE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -158,10 +176,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		790E0D0F27540B1F0045B3EC /* UISubclasses */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UISubclasses;
+			sourceTree = "<group>";
+		};
 		79189DFE274672420023628A /* Debug */ = {
 			isa = PBXGroup;
 			children = (
 				79189DFF274672900023628A /* Logger.swift */,
+				79F80FCB2752E62400081C7A /* ViewHierarchyDebugger.swift */,
 			);
 			path = Debug;
 			sourceTree = "<group>";
@@ -198,13 +224,6 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
-		794F73DC2746B2BB00B07410 /* BaseClasses */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = BaseClasses;
-			sourceTree = "<group>";
-		};
 		794F73DD2746B2CA00B07410 /* Examples */ = {
 			isa = PBXGroup;
 			children = (
@@ -224,6 +243,8 @@
 				794F73E82746B36900B07410 /* UIControl+Extensions.swift */,
 				794F73E22746B36800B07410 /* UIView+Extensions.swift */,
 				79280E43274BD57D001768A2 /* UIViewController+Extensions.swift */,
+				79F80FC12752B00000081C7A /* UIImage+Extensions.swift */,
+				79F80FC52752B36B00081C7A /* PDFDocument+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -266,6 +287,27 @@
 				7983ECDE2750B0D500B5C2AF /* AirPrint-Bridging-Header.h */,
 			);
 			path = CarouselView;
+			sourceTree = "<group>";
+		};
+		7997DE2C2753F81C00B33300 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				7997DE2D2753F82A00B33300 /* poppins */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		7997DE2D2753F82A00B33300 /* poppins */ = {
+			isa = PBXGroup;
+			children = (
+				7997DE2E2753F82A00B33300 /* SIL Open Font License.txt */,
+				7997DE2F2753F82A00B33300 /* Poppins-ExtraLight.otf */,
+				7997DE302753F82A00B33300 /* Poppins-Light.otf */,
+				7997DE312753F82A00B33300 /* Poppins-Medium.otf */,
+				7997DE322753F82A00B33300 /* Poppins-SemiBold.otf */,
+				7997DE332753F82A00B33300 /* Poppins-Regular.otf */,
+			);
+			path = poppins;
 			sourceTree = "<group>";
 		};
 		79A725A82750BE6F00D8B330 /* Model */ = {
@@ -343,11 +385,8 @@
 			children = (
 				79B787E52750B360009D7655 /* ResultPreviewViewController.swift */,
 				79B787E62750B360009D7655 /* ResultPreviewViewModel.swift */,
-				79A725A52750BE3B00D8B330 /* ResultPreviewCollectionManager.swift */,
 				79B787E42750B360009D7655 /* ResultPreviewCoordinator.swift */,
 				79B787E72750B360009D7655 /* ResultPreviewViewController.xib */,
-				79A725AE2750C3C700D8B330 /* View */,
-				79A725A82750BE6F00D8B330 /* Model */,
 			);
 			path = ResultPreview;
 			sourceTree = "<group>";
@@ -366,8 +405,11 @@
 			children = (
 				79B787F22750B429009D7655 /* HomeScreenCoordinator.swift */,
 				79B787F32750B429009D7655 /* HomeScreenViewController.swift */,
+				79A725A52750BE3B00D8B330 /* HomeCollectionManager.swift */,
 				79B787F42750B429009D7655 /* HomeScreenViewModel.swift */,
 				79B787F52750B429009D7655 /* HomeScreenViewController.xib */,
+				79A725AE2750C3C700D8B330 /* View */,
+				79A725A82750BE6F00D8B330 /* Model */,
 			);
 			path = HomeScreen;
 			sourceTree = "<group>";
@@ -381,6 +423,13 @@
 				79B788022750B55C009D7655 /* EditScreenViewController.xib */,
 			);
 			path = EditScreen;
+			sourceTree = "<group>";
+		};
+		79F80FC02752AFD400081C7A /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		79F913A72746501500771FFE = {
@@ -433,6 +482,7 @@
 		79F913C92746509E00771FFE /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7997DE2C2753F81C00B33300 /* Fonts */,
 				79F913BC2746501900771FFE /* Assets.xcassets */,
 			);
 			path = Resources;
@@ -441,11 +491,12 @@
 		79F913CD274652E200771FFE /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				790E0D0F27540B1F0045B3EC /* UISubclasses */,
+				79F80FC02752AFD400081C7A /* Utils */,
 				7983ECDD2750B06400B5C2AF /* CarouselView */,
 				794F73F52746CEA000B07410 /* ModuleTemplates */,
 				794F73DE2746B2DE00B07410 /* Extensions */,
 				794F73DD2746B2CA00B07410 /* Examples */,
-				794F73DC2746B2BB00B07410 /* BaseClasses */,
 				794F73DB2746B1F500B07410 /* Services */,
 				79189DFE274672420023628A /* Debug */,
 				7963FC4427466F7C007B8449 /* Protocols */,
@@ -511,18 +562,24 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7997DE372753F82A00B33300 /* Poppins-Medium.otf in Resources */,
 				79B787CE2750B250009D7655 /* PrintingOptionsViewController.xib in Resources */,
+				7997DE362753F82A00B33300 /* Poppins-Light.otf in Resources */,
 				79A725B22750C41700D8B330 /* ResultPreviewCollectionCell.xib in Resources */,
 				79F913C02746501900771FFE /* LaunchScreen.storyboard in Resources */,
 				79B787C42750B21D009D7655 /* AppSubscriptionViewController.xib in Resources */,
+				7997DE392753F82A00B33300 /* Poppins-Regular.otf in Resources */,
 				799AFB87274680EB00C37A6D /* ExampleViewController.xib in Resources */,
 				79F913BD2746501900771FFE /* Assets.xcassets in Resources */,
+				7997DE342753F82A00B33300 /* SIL Open Font License.txt in Resources */,
 				79B787F92750B429009D7655 /* HomeScreenViewController.xib in Resources */,
 				79B787EB2750B360009D7655 /* ResultPreviewViewController.xib in Resources */,
+				7997DE352753F82A00B33300 /* Poppins-ExtraLight.otf in Resources */,
 				79B788062750B55C009D7655 /* EditScreenViewController.xib in Resources */,
 				79E46073274D495F00FD22E1 /* PdfViewerViewController.xib in Resources */,
 				79B787B82750B1E4009D7655 /* OnboardingViewController.xib in Resources */,
 				79B787E22750B2FD009D7655 /* SettingsViewController.xib in Resources */,
+				7997DE382753F82A00B33300 /* Poppins-SemiBold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -539,6 +596,7 @@
 				79F913B42746501500771FFE /* AppDelegate.swift in Sources */,
 				79A725B12750C41700D8B330 /* ResultPreviewCollectionCell.swift in Sources */,
 				79B787C22750B21D009D7655 /* AppSubscriptionViewController.swift in Sources */,
+				79F80FC62752B36B00081C7A /* PDFDocument+Extension.swift in Sources */,
 				794F73ED2746B36900B07410 /* Publisher+Extensions.swift in Sources */,
 				79F80FBC2752A93C00081C7A /* ServicesContainer.swift in Sources */,
 				7983ECE22750B0D500B5C2AF /* iCarousel.m in Sources */,
@@ -550,6 +608,7 @@
 				79B787F72750B429009D7655 /* HomeScreenViewController.swift in Sources */,
 				79B787C12750B21D009D7655 /* AppSubscriptionCoordinator.swift in Sources */,
 				7983ECCC275092AF00B5C2AF /* PDFService.swift in Sources */,
+				79F80FCC2752E62500081C7A /* ViewHierarchyDebugger.swift in Sources */,
 				79B788032750B55C009D7655 /* EditScreenCoordinator.swift in Sources */,
 				79B787E12750B2FD009D7655 /* SettingsViewModel.swift in Sources */,
 				79A725B72750C6C900D8B330 /* PrintableDataBox.swift in Sources */,
@@ -576,11 +635,12 @@
 				79763582274E88B9001D2155 /* InteractionFeedbackService.swift in Sources */,
 				79B787B72750B1E4009D7655 /* OnboardingViewModel.swift in Sources */,
 				794F73EF2746B36900B07410 /* UIControl+Extensions.swift in Sources */,
-				79A725A62750BE3B00D8B330 /* ResultPreviewCollectionManager.swift in Sources */,
+				79A725A62750BE3B00D8B330 /* HomeCollectionManager.swift in Sources */,
 				79B787CD2750B250009D7655 /* PrintingOptionsViewModel.swift in Sources */,
 				79A725AA2750BEA200D8B330 /* ResultPreviewSection.swift in Sources */,
 				79E46070274D495F00FD22E1 /* PdfViewerCoordinator.swift in Sources */,
 				79B787F82750B429009D7655 /* HomeScreenViewModel.swift in Sources */,
+				79F80FC22752B00000081C7A /* UIImage+Extensions.swift in Sources */,
 				79B787E92750B360009D7655 /* ResultPreviewViewController.swift in Sources */,
 				79B787B52750B1E4009D7655 /* OnboardingCoordinator.swift in Sources */,
 			);
@@ -725,6 +785,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = C23K8VGFDE;
 				INFOPLIST_FILE = "$(SRCROOT)/Application/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -747,6 +808,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = C23K8VGFDE;
 				INFOPLIST_FILE = "$(SRCROOT)/Application/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

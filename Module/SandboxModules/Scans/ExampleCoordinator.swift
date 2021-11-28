@@ -10,9 +10,10 @@
 import Foundation
 import UIKit.UINavigationController
 import Combine
+import PDFKit.PDFDocument
 
 protocol ExampleCoordinatorProtocol {
-    func displayPdfViewer(withPdfUrl url: URL)
+    func displayPdfViewer(withPdf pdf: PDFDocument)
 }
 
 final class ExampleCoordinator: CoordinatorProtocol, ExampleCoordinatorProtocol {
@@ -34,8 +35,8 @@ final class ExampleCoordinator: CoordinatorProtocol, ExampleCoordinatorProtocol 
         window.makeKeyAndVisible()
     }
     
-    func displayPdfViewer(withPdfUrl url: URL) {
-        let coordinator = PdfViewerCoordinator(pdfUrl: url, navigationController: navigationController)
+    func displayPdfViewer(withPdf pdf: PDFDocument) {
+        let coordinator = PdfViewerCoordinator(pdf: pdf, navigationController: navigationController)
         coordinator.start()
     }
     

@@ -9,7 +9,7 @@
 
 import Foundation
 import Combine
-import PDFKit
+import PDFKit.PDFDocument
 
 final class PdfViewerViewModel {
     enum Action {
@@ -22,12 +22,13 @@ final class PdfViewerViewModel {
     private let coordinator: PdfViewerCoordinatorProtocol & CoordinatorProtocol
     private var bag = Set<AnyCancellable>()
     
-    let pdfUrl: URL
+    let pdf: PDFDocument
+    var pdfUrl: URL { pdf.documentURL! } /// crash if generated from code and not saved
 
-    init(coordinator: PdfViewerCoordinatorProtocol & CoordinatorProtocol, pdfUrl: URL) {
+    init(coordinator: PdfViewerCoordinatorProtocol & CoordinatorProtocol, pdf: PDFDocument) {
         self.coordinator = coordinator
-        self.pdfUrl = pdfUrl
-        output.send(.renderPdf(PDFDocument(url: pdfUrl)!))
+        self.pdf = pdf
+        output.send(.renderPdf(pdf))
         dispatchActions()
     }
     deinit {

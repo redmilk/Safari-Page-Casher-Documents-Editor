@@ -9,19 +9,33 @@
 
 import UIKit
 import Combine
-import PDFKit
 import QuickLook
+import PDFKit.PDFDocument
+
+extension UIView {
+    var parentViewController: UIViewController? {
+        // Starts from next (As we know self is not a UIViewController).
+        var parentResponder: UIResponder? = self.next
+        while parentResponder != nil {
+            if let viewController = parentResponder as? UIViewController {
+                return viewController
+            }
+            parentResponder = parentResponder?.next
+        }
+        return nil
+    }
+}
 
 
 // MARK: - PdfViewerViewController
 
-final class PdfViewerViewController: QLPreviewController {
+final class PdfViewerViewController: QLPreviewController, PdfServiceProvidable {
     enum State {
         case dummyState
         case renderPdf(PDFDocument)
     }
-        
-    @IBOutlet private weak var pdfView: PDFView!
+            
+    private let resultStackView = UIStackView(frame: .zero)
     
     private let viewModel: PdfViewerViewModel
     private var bag = Set<AnyCancellable>()
@@ -36,51 +50,31 @@ final class PdfViewerViewController: QLPreviewController {
     deinit {
         Logger.log(String(describing: self), type: .deinited)
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        //self.toolbarItems?.f
-        self.view.backgroundColor = .black
+        
         handleStates()
         dataSource = self
         delegate = self
-        setEditing(false, animated: true)
-        let b = UIButton(frame: .init(x: 40, y: 140, width: 100, height: 100))
-        b.backgroundColor = .red
         let clearButton = UIBarButtonItem(systemItem: .refresh)
         navigationItem.rightBarButtonItem = clearButton
-        UIToolbar.appearance().barTintColor = .black
-        UIToolbar.appearance().tintColor = .black
         
         clearButton.publisher().sink(receiveValue: { [weak self] _ in
             //self?.cleanDrawing()
         })
         .store(in: &bag)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         
-        let saveButton = UIBarButtonItem(systemItem: .save)
-        saveButton.publisher().sink(receiveValue: { [weak self] _ in
-            //self?.saveDrawing()
-        })
-        .store(in: &bag)
-        
-        //self.setValue(<#T##value: Any?##Any?#>, forKey: <#T##String#>)
-        b.publisher().receive(on: DispatchQueue.main).sink(receiveValue: { [unowned self] _ in
-            //self?.navigationController?.setToolbarHidden(true, animated: true)
-            //self?.navigationController?.setNavigationBarHidden(true, animated: true)
-            //print(self?.toolbarItems?.first.debugDescription)
-            //setEditing(true, animated: true)
-            //reloadInputViews()
-            setToolbarItems([clearButton, saveButton], animated: true)
-            
-            _ = self.editButtonItem.target!.perform(self.editButtonItem.action, with: nil)
-            
-            /// and
-            
-            UIApplication.shared.sendAction(self.editButtonItem.action!, to: self.editButtonItem.target, from: self, for: nil)
-            
-        })
-        .store(in: &bag)
-        self.view.addSubview(b)
+        Logger.logSubviews(view)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        ViewHierarchyDebugger.paintEverythingToBlackWithinView(view)
     }
 }
 
@@ -135,7 +129,7 @@ extension PdfViewerViewController: QLPreviewControllerDataSource {
 extension PdfViewerViewController: QLPreviewControllerDelegate {
     
     func previewController(_ controller: QLPreviewController, editingModeFor previewItem: QLPreviewItem) -> QLPreviewItemEditingMode {
-        return .createCopy
+        return .updateContents
     }
 
     func previewController(_ controller: QLPreviewController, didSaveEditedCopyOf previewItem: QLPreviewItem, at modifiedContentsURL: URL) {
@@ -146,6 +140,10 @@ extension PdfViewerViewController: QLPreviewControllerDelegate {
         let newPdf = PDFDocument()
         newPdf.insert(page, at: 0)
         
-        pdfView.document = newPdf//PDFDocument(url: modifiedContentsURL)!
+        let newPage = newPdf.page(at: 0)!
+        let pageSize = newPage.bounds(for: .mediaBox)
+        let image: UIImage? = pdfService.makeImageFromPdfDocument(newPdf, withImageSize: pageSize.size, ofPageIndex: 0)
+        let imageView = UIImageView(image: image)
+        resultStackView.addArrangedSubview(imageView)
     }
 }

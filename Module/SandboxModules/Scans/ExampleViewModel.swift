@@ -9,11 +9,12 @@
 
 import Foundation
 import Combine
+import PDFKit.PDFDocument
 
 final class ExampleViewModel {
     enum Action {
         case dummyAction
-        case displayPdfViewer(URL)
+        case displayPdfViewer(PDFDocument)
     }
     
     let input = PassthroughSubject<ExampleViewModel.Action, Never>()
@@ -39,8 +40,8 @@ private extension ExampleViewModel {
     private func dispatchActions() {
         input.sink(receiveValue: { [weak self] action in
             switch action {
-            case .displayPdfViewer(let pdfUrl):
-                self?.coordinator.displayPdfViewer(withPdfUrl: pdfUrl)
+            case .displayPdfViewer(let pdf):
+                self?.coordinator.displayPdfViewer(withPdf: pdf)
             case .dummyAction: break
             }
         })

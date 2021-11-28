@@ -48,7 +48,17 @@ final class Logger {
             Swift.print(" ")
         }
     }
+    
+    static func logSubviews(_ view: UIView?) {
+        guard let view = view else { return }
+        Swift.print(" - LOGGER ⬜️⬜️⬜️ " + String(describing: type(of: view)))
+        view.subviews.forEach { Logger.logSubviews($0) }
+    }
 
+    static func print(_ string: String? = "") {
+        Logger.prepare("\(String(describing: string))", type: .all)
+    }
+    
     static func log(_ string: String? = "",
                     type: LoggerTypes = .all,
                     function: String = #function,
