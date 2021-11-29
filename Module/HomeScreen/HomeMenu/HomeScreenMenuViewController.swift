@@ -17,6 +17,7 @@ final class HomeScreenMenuViewController: UIViewController {
     enum State {
         case dummyState
     }
+    @IBOutlet weak var buttonsContainerView: UIView!
     @IBOutlet weak var scanDocumentButton: UIButton!
     @IBOutlet weak var printPhotoButton: UIButton!
     @IBOutlet weak var printDocumentButton: UIButton!
@@ -87,5 +88,6 @@ private extension HomeScreenMenuViewController {
         printPhotoButton.addCornerRadius(StylingConstants.cornerRadiusDefault)
         printPhotoButton.addBorder(1.0, .black)
         cancelButton.addCornerRadius(StylingConstants.cornerRadiusDefault)
+        buttonsContainerView.addCornerRadius(StylingConstants.cornerRadiusDefault)
     }
 }
