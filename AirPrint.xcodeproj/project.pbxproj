@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		79189E00274672900023628A /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79189DFF274672900023628A /* Logger.swift */; };
 		79280E44274BD57D001768A2 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79280E43274BD57D001768A2 /* UIViewController+Extensions.swift */; };
+		792D661127552DE300063F4B /* CameraScanManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792D661027552DE300063F4B /* CameraScanManager.swift */; };
 		793ADF552754DFAE00F58923 /* UserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793ADF542754DFAE00F58923 /* UserSession.swift */; };
 		793ADF5D2754E36100F58923 /* HomeScreenMenuCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793ADF592754E36100F58923 /* HomeScreenMenuCoordinator.swift */; };
 		793ADF5E2754E36100F58923 /* HomeScreenMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793ADF5A2754E36100F58923 /* HomeScreenMenuViewController.swift */; };
@@ -29,7 +30,6 @@
 		79763582274E88B9001D2155 /* InteractionFeedbackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79763581274E88B9001D2155 /* InteractionFeedbackService.swift */; };
 		7983ECCC275092AF00B5C2AF /* PDFService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7983ECCB275092AF00B5C2AF /* PDFService.swift */; };
 		7983ECE22750B0D500B5C2AF /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7983ECE02750B0D500B5C2AF /* iCarousel.m */; };
-		7997DE342753F82A00B33300 /* SIL Open Font License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7997DE2E2753F82A00B33300 /* SIL Open Font License.txt */; };
 		7997DE352753F82A00B33300 /* Poppins-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7997DE2F2753F82A00B33300 /* Poppins-ExtraLight.otf */; };
 		7997DE362753F82A00B33300 /* Poppins-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7997DE302753F82A00B33300 /* Poppins-Light.otf */; };
 		7997DE372753F82A00B33300 /* Poppins-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7997DE312753F82A00B33300 /* Poppins-Medium.otf */; };
@@ -86,6 +86,7 @@
 /* Begin PBXFileReference section */
 		79189DFF274672900023628A /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		79280E43274BD57D001768A2 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
+		792D661027552DE300063F4B /* CameraScanManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraScanManager.swift; sourceTree = "<group>"; };
 		793ADF542754DFAE00F58923 /* UserSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSession.swift; sourceTree = "<group>"; };
 		793ADF592754E36100F58923 /* HomeScreenMenuCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenMenuCoordinator.swift; sourceTree = "<group>"; };
 		793ADF5A2754E36100F58923 /* HomeScreenMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenMenuViewController.swift; sourceTree = "<group>"; };
@@ -115,7 +116,6 @@
 		7983ECDE2750B0D500B5C2AF /* AirPrint-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AirPrint-Bridging-Header.h"; sourceTree = "<group>"; };
 		7983ECDF2750B0D500B5C2AF /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
 		7983ECE02750B0D500B5C2AF /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
-		7997DE2E2753F82A00B33300 /* SIL Open Font License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "SIL Open Font License.txt"; sourceTree = "<group>"; };
 		7997DE2F2753F82A00B33300 /* Poppins-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-ExtraLight.otf"; sourceTree = "<group>"; };
 		7997DE302753F82A00B33300 /* Poppins-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Light.otf"; sourceTree = "<group>"; };
 		7997DE312753F82A00B33300 /* Poppins-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Medium.otf"; sourceTree = "<group>"; };
@@ -191,6 +191,28 @@
 			path = Debug;
 			sourceTree = "<group>";
 		};
+		792D660D27552D1D00063F4B /* ScanFlow */ = {
+			isa = PBXGroup;
+			children = (
+				792D661027552DE300063F4B /* CameraScanManager.swift */,
+			);
+			path = ScanFlow;
+			sourceTree = "<group>";
+		};
+		792D660E27552D3600063F4B /* PhotoAlbum */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = PhotoAlbum;
+			sourceTree = "<group>";
+		};
+		792D660F27552D4F00063F4B /* CloudStorage */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = CloudStorage;
+			sourceTree = "<group>";
+		};
 		793ADF532754DFA200F58923 /* UserSession */ = {
 			isa = PBXGroup;
 			children = (
@@ -199,7 +221,7 @@
 			path = UserSession;
 			sourceTree = "<group>";
 		};
-		793ADF582754E23900F58923 /* HomeMenu */ = {
+		793ADF582754E23900F58923 /* MainMenu */ = {
 			isa = PBXGroup;
 			children = (
 				793ADF5A2754E36100F58923 /* HomeScreenMenuViewController.swift */,
@@ -207,7 +229,7 @@
 				793ADF592754E36100F58923 /* HomeScreenMenuCoordinator.swift */,
 				793ADF5C2754E36100F58923 /* HomeScreenMenuViewController.xib */,
 			);
-			path = HomeMenu;
+			path = MainMenu;
 			sourceTree = "<group>";
 		};
 		79408321274D488600DFCAD6 /* PdfViewer */ = {
@@ -320,7 +342,6 @@
 		7997DE2D2753F82A00B33300 /* poppins */ = {
 			isa = PBXGroup;
 			children = (
-				7997DE2E2753F82A00B33300 /* SIL Open Font License.txt */,
 				7997DE2F2753F82A00B33300 /* Poppins-ExtraLight.otf */,
 				7997DE302753F82A00B33300 /* Poppins-Light.otf */,
 				7997DE312753F82A00B33300 /* Poppins-Medium.otf */,
@@ -427,7 +448,10 @@
 				79B787F52750B429009D7655 /* HomeScreenViewController.xib */,
 				79A725AE2750C3C700D8B330 /* View */,
 				79A725A82750BE6F00D8B330 /* Model */,
-				793ADF582754E23900F58923 /* HomeMenu */,
+				793ADF582754E23900F58923 /* MainMenu */,
+				792D660D27552D1D00063F4B /* ScanFlow */,
+				792D660F27552D4F00063F4B /* CloudStorage */,
+				792D660E27552D3600063F4B /* PhotoAlbum */,
 			);
 			path = HomeScreen;
 			sourceTree = "<group>";
@@ -580,7 +604,6 @@
 				7997DE392753F82A00B33300 /* Poppins-Regular.otf in Resources */,
 				799AFB87274680EB00C37A6D /* ExampleViewController.xib in Resources */,
 				79F913BD2746501900771FFE /* Assets.xcassets in Resources */,
-				7997DE342753F82A00B33300 /* SIL Open Font License.txt in Resources */,
 				793ADF602754E36100F58923 /* HomeScreenMenuViewController.xib in Resources */,
 				79B787F92750B429009D7655 /* HomeScreenViewController.xib in Resources */,
 				7997DE352753F82A00B33300 /* Poppins-ExtraLight.otf in Resources */,
@@ -608,6 +631,7 @@
 				79B787C22750B21D009D7655 /* AppSubscriptionViewController.swift in Sources */,
 				79F80FC62752B36B00081C7A /* PDFDocument+Extension.swift in Sources */,
 				794F73ED2746B36900B07410 /* Publisher+Extensions.swift in Sources */,
+				792D661127552DE300063F4B /* CameraScanManager.swift in Sources */,
 				79F80FBC2752A93C00081C7A /* ServicesContainer.swift in Sources */,
 				7983ECE22750B0D500B5C2AF /* iCarousel.m in Sources */,
 				799AFB86274680EB00C37A6D /* ExampleViewModel.swift in Sources */,

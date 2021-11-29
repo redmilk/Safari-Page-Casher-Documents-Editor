@@ -41,7 +41,7 @@ final class ___VARIABLE_productName:identifier___ViewController: UIViewControlle
     }
 }
 
-// MARK: - Internal
+// MARK: - Private
 
 private extension ___VARIABLE_productName:identifier___ViewController {
     

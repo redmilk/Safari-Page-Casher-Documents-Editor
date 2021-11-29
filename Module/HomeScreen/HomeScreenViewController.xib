@@ -76,7 +76,7 @@
                             </constraints>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" red="0.85491007569999999" green="0.8548915386" blue="0.85489517449999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <color key="backgroundColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="4Q8-A1-7v2" secondAttribute="trailing" constant="20" id="M7g-q0-awq"/>
                         <constraint firstItem="5Sr-pF-jf2" firstAttribute="leading" secondItem="SqB-k3-Rm0" secondAttribute="leading" constant="20" id="R4y-cJ-QHC"/>
@@ -115,7 +115,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Special Gift for you" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Fr-4I-z98">
                                                     <rect key="frame" x="44" y="12" width="238" height="32"/>
                                                     <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="14"/>
-                                                    <nil key="textColor"/>
+                                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="25A-zp-w1b">
@@ -130,7 +130,7 @@
                                                     </state>
                                                 </button>
                                             </subviews>
-                                            <color key="backgroundColor" red="0.85491007569999999" green="0.8548915386" blue="0.85489517449999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <color key="backgroundColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="56" id="09O-Cq-iRS"/>
                                                 <constraint firstItem="8Fr-4I-z98" firstAttribute="top" secondItem="Mn8-iC-QAh" secondAttribute="top" constant="12" id="1WM-Ke-heh"/>
@@ -164,7 +164,7 @@
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="500" text=" your first document, photo.." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zv3-cX-9KV">
                                                                     <rect key="frame" x="33" y="8" width="159" height="14"/>
                                                                     <fontDescription key="fontDescription" name="Poppins-Light" family="Poppins" pointSize="10"/>
-                                                                    <nil key="textColor"/>
+                                                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                             </subviews>
@@ -207,7 +207,7 @@
                                             </constraints>
                                         </view>
                                     </subviews>
-                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="wzP-ou-u7F" secondAttribute="bottom" id="26V-Ym-YEW"/>
                                         <constraint firstAttribute="trailing" secondItem="wzP-ou-u7F" secondAttribute="trailing" id="ECW-Ka-yqW"/>
@@ -246,7 +246,7 @@
                                     </state>
                                 </button>
                             </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="ASg-t1-B3o" firstAttribute="leading" secondItem="f8f-lO-4zj" secondAttribute="leading" constant="20" id="Xf1-IK-cvC"/>
                                 <constraint firstAttribute="trailing" secondItem="ASg-t1-B3o" secondAttribute="trailing" constant="20" id="Yq1-0V-Gx9"/>
@@ -268,7 +268,7 @@
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="SqB-k3-Rm0" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="2b2-3j-WPC"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="SqB-k3-Rm0" secondAttribute="trailing" id="AMz-69-xRw"/>

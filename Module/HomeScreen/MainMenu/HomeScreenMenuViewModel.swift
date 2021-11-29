@@ -27,7 +27,7 @@ final class HomeScreenMenuViewModel {
 
     init(coordinator: HomeScreenMenuCoordinatorProtocol & CoordinatorProtocol) {
         self.coordinator = coordinator
-        dispatchActions()
+        handleActions()
     }
     deinit {
         Logger.log(String(describing: self), type: .deinited)
@@ -38,19 +38,9 @@ final class HomeScreenMenuViewModel {
 
 private extension HomeScreenMenuViewModel {
     
-    /// Handle ViewController's actions
-    private func dispatchActions() {
+    private func handleActions() {
         input.sink(receiveValue: { [weak self] action in
-            switch action {
-            case .scanAction:
-                break
-            case .printPhoto:
-                break
-            case .printDocument:
-                break
-            case .closeAction:
-                self?.coordinator.end()
-            }
+            self?.coordinator.endWithSelectedAction(action)
         })
         .store(in: &bag)
     }

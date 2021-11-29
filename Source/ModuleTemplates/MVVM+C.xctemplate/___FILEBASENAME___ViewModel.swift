@@ -18,19 +18,18 @@ final class ___VARIABLE_productName:identifier___ViewModel {
 
     init(coordinator: ___VARIABLE_productName:identifier___CoordinatorProtocol & CoordinatorProtocol) {
         self.coordinator = coordinator
-        dispatchActions()
+        handleActions()
     }
     deinit {
         Logger.log(String(describing: self), type: .deinited)
     }
 }
 
-// MARK: - Internal
+// MARK: - Private
 
 private extension ___VARIABLE_productName:identifier___ViewModel {
     
-    /// Handle ViewController's actions
-    private func dispatchActions() {
+    private func handleActions() {
         input.sink(receiveValue: { [weak self] action in
             switch action {
             case .dummyAction:

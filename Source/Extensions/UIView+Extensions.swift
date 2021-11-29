@@ -31,10 +31,12 @@ extension UIView {
         self.layer.borderWidth = width
         self.layer.borderColor = color.cgColor
     }
-    func animateFadeInOut(_ duration: CGFloat, isFadeIn: Bool) {
+    func animateFadeInOut(_ duration: CGFloat, isFadeIn: Bool, completion: (() -> Void)?) {
         self.alpha = isFadeIn ? 0 : 1
         UIView.animate(withDuration: 0.3, delay: 0.0, options: [.curveEaseInOut], animations: {
             self.alpha = isFadeIn ? 1 : 0
-        }, completion: nil)
+        }, completion: { _ in
+            completion?()
+        })
     }
 }

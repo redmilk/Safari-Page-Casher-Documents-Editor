@@ -23,25 +23,39 @@ final class HomeScreenViewModel {
 
     init(coordinator: HomeScreenCoordinatorProtocol & CoordinatorProtocol) {
         self.coordinator = coordinator
-        dispatchActions()
+        handleActions()
     }
     deinit {
         Logger.log(String(describing: self), type: .deinited)
     }
 }
 
-// MARK: - Internal
+// MARK: - Private
 
 private extension HomeScreenViewModel {
     
-    /// Handle ViewController's actions
-    private func dispatchActions() {
+    func handleActions() {
         input.sink(receiveValue: { [weak self] action in
             switch action {
             case .openMenu:
-                self?.coordinator.showMenu()
+                self?.showMainMenuAndHandleActions()
             }
         })
         .store(in: &bag)
+    }
+    
+    func showMainMenuAndHandleActions() {
+        self.coordinator.showMenu().sink(receiveValue: { [weak self] homeMenuActionSelected in
+            switch homeMenuActionSelected {
+            case .scanAction:
+                self?.output.send(.shouldDisplayScanFlow)
+            case .printDocument:
+                self?.output.send(.shouldDisplayCloudStorage)
+            case .printPhoto:
+                self?.output.send(.shouldDisplayPhotoAlbum)
+            case _: break
+            }
+        })
+        .store(in: &self.bag)
     }
 }

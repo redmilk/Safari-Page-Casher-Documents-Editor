@@ -12,7 +12,9 @@ import Combine
 
 final class HomeScreenViewController: UIViewController {
     enum State {
-        case dummyState
+        case shouldDisplayCloudStorage
+        case shouldDisplayPhotoAlbum
+        case shouldDisplayScanFlow
     }
     
     // MARK: - Filled state controls
@@ -52,6 +54,7 @@ final class HomeScreenViewController: UIViewController {
     }()
     
     private lazy var displayManager = HomeCollectionManager(collectionView: collectionView)
+    private lazy var cameraScaner: CameraScanManager = CameraScanManagerImpl(parentController: self)
     private let viewModel: HomeScreenViewModel
     private var bag = Set<AnyCancellable>()
     
@@ -88,7 +91,11 @@ private extension HomeScreenViewController {
     func handleStates() {
         viewModel.output.sink(receiveValue: { [weak self] state in
             switch state {
-            case .dummyState:
+            case .shouldDisplayScanFlow:
+                self?.cameraScaner.displayScanningController()
+            case .shouldDisplayCloudStorage:
+                break
+            case .shouldDisplayPhotoAlbum:
                 break
             }
         })
@@ -98,6 +105,12 @@ private extension HomeScreenViewController {
     private func configureView() {
         plusButton.publisher().sink(receiveValue: { [weak self] _ in
             self?.viewModel.input.send(.openMenu)
+        })
+        .store(in: &bag)
+        
+        cameraScaner.output.sink(receiveValue: { [weak self] imageList in
+            print("SCANNED IMAGES COUNT")
+            print(imageList.count.description)
         })
         .store(in: &bag)
     }

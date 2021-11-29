@@ -3,7 +3,6 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -70,7 +69,7 @@
                         </stackView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mKP-1H-lbP">
                             <rect key="frame" x="20" y="245" width="374" height="60"/>
-                            <color key="backgroundColor" systemColor="labelColor"/>
+                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="60" id="Zg9-Nh-RGS"/>
                             </constraints>
@@ -80,7 +79,7 @@
                             </state>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="n2Z-pN-kUV" secondAttribute="trailing" constant="20" id="5Ny-Oj-wEO"/>
                         <constraint firstItem="n2Z-pN-kUV" firstAttribute="top" secondItem="N0z-el-oHM" secondAttribute="top" constant="25" id="6Ew-0b-4xx"/>
@@ -105,11 +104,5 @@
         <image name="button-home-menu-document" width="15" height="17"/>
         <image name="button-home-menu-photo" width="17" height="15"/>
         <image name="button-home-menu-scan" width="15" height="15"/>
-        <systemColor name="labelColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>
