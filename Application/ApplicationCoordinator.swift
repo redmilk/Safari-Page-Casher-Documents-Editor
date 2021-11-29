@@ -22,7 +22,8 @@ final class ApplicationCoordinator: CoordinatorProtocol {
         let isFirstLaunch: Bool = false
         isFirstLaunch ? self.showAppTutorial() : self.showContent()
     }
-    
+    func end() { }
+        
     private func showAppTutorial() {
         let coordinator = ExampleCoordinator(window: window)
         coordinator.start()

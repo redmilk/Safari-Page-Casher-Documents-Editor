@@ -40,6 +40,7 @@ final class HomeScreenMenuViewController: UIViewController {
         super.viewDidLoad()
 
         handleStates()
+        configureView()
         applyStyling()
     }
 }
@@ -59,10 +60,32 @@ private extension HomeScreenMenuViewController {
         .store(in: &bag)
     }
     
+    func configureView() {
+        scanDocumentButton.publisher().sink(receiveValue: { [weak self] _ in
+            self?.viewModel.input.send(.scanAction)
+        })
+        .store(in: &bag)
+        printPhotoButton.publisher().sink(receiveValue: { [weak self] _ in
+            self?.viewModel.input.send(.printPhoto)
+        })
+        .store(in: &bag)
+        printDocumentButton.publisher().sink(receiveValue: { [weak self] _ in
+            self?.viewModel.input.send(.printDocument)
+        })
+        .store(in: &bag)
+        cancelButton.publisher().sink(receiveValue: { [weak self] _ in
+            self?.viewModel.input.send(.closeAction)
+        })
+        .store(in: &bag)
+    }
+    
     func applyStyling() {
         scanDocumentButton.addCornerRadius(StylingConstants.cornerRadiusDefault)
+        scanDocumentButton.addBorder(1.0, .black)
         printDocumentButton.addCornerRadius(StylingConstants.cornerRadiusDefault)
+        printDocumentButton.addBorder(1.0, .black)
         printPhotoButton.addCornerRadius(StylingConstants.cornerRadiusDefault)
+        printPhotoButton.addBorder(1.0, .black)
         cancelButton.addCornerRadius(StylingConstants.cornerRadiusDefault)
     }
 }

@@ -96,7 +96,10 @@ private extension HomeScreenViewController {
     }
     
     private func configureView() {
-        
+        plusButton.publisher().sink(receiveValue: { [weak self] _ in
+            self?.viewModel.input.send(.openMenu)
+        })
+        .store(in: &bag)
     }
     
     private func applyStyling() {

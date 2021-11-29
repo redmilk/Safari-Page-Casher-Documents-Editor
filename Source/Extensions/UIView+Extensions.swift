@@ -26,4 +26,15 @@ extension UIView {
         self.clipsToBounds = true
         self.layer.cornerRadius = radius
     }
+    func addBorder(_ width: CGFloat, _ color: UIColor) {
+        self.clipsToBounds = true
+        self.layer.borderWidth = width
+        self.layer.borderColor = color.cgColor
+    }
+    func animateFadeInOut(_ duration: CGFloat, isFadeIn: Bool) {
+        self.alpha = isFadeIn ? 0 : 1
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: [.curveEaseInOut], animations: {
+            self.alpha = isFadeIn ? 1 : 0
+        }, completion: nil)
+    }
 }

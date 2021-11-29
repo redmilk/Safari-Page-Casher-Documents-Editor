@@ -10,4 +10,5 @@ import UIKit.UINavigationController
 protocol CoordinatorProtocol: AnyObject {
     var navigationController: UINavigationController? { get set }    
     func start()
+    func end()
 }

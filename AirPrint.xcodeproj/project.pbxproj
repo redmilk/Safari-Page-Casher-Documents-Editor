@@ -14,6 +14,7 @@
 		793ADF5E2754E36100F58923 /* HomeScreenMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793ADF5A2754E36100F58923 /* HomeScreenMenuViewController.swift */; };
 		793ADF5F2754E36100F58923 /* HomeScreenMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793ADF5B2754E36100F58923 /* HomeScreenMenuViewModel.swift */; };
 		793ADF602754E36100F58923 /* HomeScreenMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 793ADF5C2754E36100F58923 /* HomeScreenMenuViewController.xib */; };
+		7940AC862754F7890028B45F /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7940AC852754F7890028B45F /* UIButton+Extensions.swift */; };
 		794DDDF1274D50FF00CF8255 /* ApplicationGlobalConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794DDDF0274D50FF00CF8255 /* ApplicationGlobalConfig.swift */; };
 		794F73E02746B31D00B07410 /* MarketBoardDisplayManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794F73DF2746B31D00B07410 /* MarketBoardDisplayManager.swift */; };
 		794F73E92746B36900B07410 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794F73E22746B36800B07410 /* UIView+Extensions.swift */; };
@@ -90,6 +91,7 @@
 		793ADF5A2754E36100F58923 /* HomeScreenMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenMenuViewController.swift; sourceTree = "<group>"; };
 		793ADF5B2754E36100F58923 /* HomeScreenMenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenMenuViewModel.swift; sourceTree = "<group>"; };
 		793ADF5C2754E36100F58923 /* HomeScreenMenuViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeScreenMenuViewController.xib; sourceTree = "<group>"; };
+		7940AC852754F7890028B45F /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
 		794DDDF0274D50FF00CF8255 /* ApplicationGlobalConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationGlobalConfig.swift; sourceTree = "<group>"; };
 		794F73DF2746B31D00B07410 /* MarketBoardDisplayManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketBoardDisplayManager.swift; sourceTree = "<group>"; };
 		794F73E22746B36800B07410 /* UIView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
@@ -262,6 +264,7 @@
 				79280E43274BD57D001768A2 /* UIViewController+Extensions.swift */,
 				79F80FC12752B00000081C7A /* UIImage+Extensions.swift */,
 				79F80FC52752B36B00081C7A /* PDFDocument+Extension.swift */,
+				7940AC852754F7890028B45F /* UIButton+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -597,6 +600,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				79E46072274D495F00FD22E1 /* PdfViewerViewModel.swift in Sources */,
+				7940AC862754F7890028B45F /* UIButton+Extensions.swift in Sources */,
 				794F73EB2746B36900B07410 /* UIBarButtonItem+Extensions.swift in Sources */,
 				79F913B42746501500771FFE /* AppDelegate.swift in Sources */,
 				79B576FA2754EC76006969F5 /* StylingConstants.swift in Sources */,

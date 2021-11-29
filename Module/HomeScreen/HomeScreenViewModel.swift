@@ -12,7 +12,7 @@ import Combine
 
 final class HomeScreenViewModel {
     enum Action {
-        case dummyAction
+        case openMenu
     }
     
     let input = PassthroughSubject<HomeScreenViewModel.Action, Never>()
@@ -38,8 +38,8 @@ private extension HomeScreenViewModel {
     private func dispatchActions() {
         input.sink(receiveValue: { [weak self] action in
             switch action {
-            case .dummyAction:
-                break
+            case .openMenu:
+                self?.coordinator.showMenu()
             }
         })
         .store(in: &bag)

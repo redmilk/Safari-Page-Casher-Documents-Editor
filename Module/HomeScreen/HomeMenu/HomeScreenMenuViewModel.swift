@@ -12,7 +12,11 @@ import Combine
 
 final class HomeScreenMenuViewModel {
     enum Action {
-        case dummyAction
+        case scanAction
+        case printPhoto
+        case printDocument
+        
+        case closeAction
     }
     
     let input = PassthroughSubject<HomeScreenMenuViewModel.Action, Never>()
@@ -38,8 +42,14 @@ private extension HomeScreenMenuViewModel {
     private func dispatchActions() {
         input.sink(receiveValue: { [weak self] action in
             switch action {
-            case .dummyAction:
+            case .scanAction:
                 break
+            case .printPhoto:
+                break
+            case .printDocument:
+                break
+            case .closeAction:
+                self?.coordinator.end()
             }
         })
         .store(in: &bag)
