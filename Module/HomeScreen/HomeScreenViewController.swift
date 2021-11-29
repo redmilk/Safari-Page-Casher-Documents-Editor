@@ -18,19 +18,19 @@ final class HomeScreenViewController: UIViewController {
     }
     
     // MARK: - Filled state controls
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet private weak var collectionView: UICollectionView!
     // MARK: - Empty state controls
-    @IBOutlet weak var emptyStateContainer: UIView!
-    @IBOutlet weak var giftPanelContainer: UIView!
-    @IBOutlet weak var giftPanelOpenButton: UIButton!
-    @IBOutlet weak var plusButtonContainer: UIView!
-    @IBOutlet weak var plusButtonDescriptionContainer: UIStackView!
-    @IBOutlet weak var plusButton: UIButton!
+    @IBOutlet private weak var emptyStateContainer: UIView!
+    @IBOutlet private weak var giftPanelContainer: UIView!
+    @IBOutlet private weak var giftPanelOpenButton: UIButton!
+    @IBOutlet private weak var plusButtonContainer: UIView!
+    @IBOutlet private weak var plusButtonDescriptionContainer: UIStackView!
+    @IBOutlet private weak var plusButton: UIButton!
     // MARK: - Common state controls
-    @IBOutlet weak var bottomButton: UIButton!
-    @IBOutlet weak var navigationBarExtenderView: UIView!
-    @IBOutlet weak var settingsButton: UIButton!
-    @IBOutlet weak var logoView: UIView!
+    @IBOutlet private weak var bottomButton: UIButton!
+    @IBOutlet private weak var navigationBarExtenderView: UIView!
+    @IBOutlet private weak var settingsButton: UIButton!
+    @IBOutlet private weak var logoView: UIView!
     
     private lazy var dashedLineLayer: CAShapeLayer = {
         let layer = CAShapeLayer()
@@ -55,6 +55,9 @@ final class HomeScreenViewController: UIViewController {
     
     private lazy var displayManager = HomeCollectionManager(collectionView: collectionView)
     private lazy var cameraScaner: CameraScanManager = CameraScanManagerImpl(parentController: self)
+    private lazy var photoalbumManager: PhotoalbumManager = PhotoalbumManagerImpl(parentController: self)
+    private lazy var cloudFilesManager: CloudFilesManager = CloudFilesManagerImpl(parentController: self)
+    
     private let viewModel: HomeScreenViewModel
     private var bag = Set<AnyCancellable>()
     
@@ -94,9 +97,9 @@ private extension HomeScreenViewController {
             case .shouldDisplayScanFlow:
                 self?.cameraScaner.displayScanningController()
             case .shouldDisplayCloudStorage:
-                break
+                self?.cloudFilesManager.displayDocumentsSelectionMenu()
             case .shouldDisplayPhotoAlbum:
-                break
+                self?.photoalbumManager.displayPhotoLibrary()
             }
         })
         .store(in: &bag)
@@ -107,10 +110,19 @@ private extension HomeScreenViewController {
             self?.viewModel.input.send(.openMenu)
         })
         .store(in: &bag)
-        
         cameraScaner.output.sink(receiveValue: { [weak self] imageList in
             print("SCANNED IMAGES COUNT")
             print(imageList.count.description)
+        })
+        .store(in: &bag)
+        photoalbumManager.output.sink(receiveValue: { [weak self] image in
+            print("GOT IMAGE FROM PHOTOALBUM")
+            print(image.size.debugDescription)
+        })
+        .store(in: &bag)
+        cloudFilesManager.output.sink(receiveValue: { [weak self] pdf in
+            print("GOT PDF FROM CLOUS")
+            print(pdf.pageCount.description)
         })
         .store(in: &bag)
     }
