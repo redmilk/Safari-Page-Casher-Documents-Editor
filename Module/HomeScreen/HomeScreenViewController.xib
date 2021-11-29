@@ -53,7 +53,7 @@
                                 <constraint firstAttribute="width" secondItem="4Q8-A1-7v2" secondAttribute="height" multiplier="1:1" id="94p-na-OSx"/>
                                 <constraint firstAttribute="height" constant="40" id="jLa-tp-uze"/>
                             </constraints>
-                            <state key="normal" image="button-settings"/>
+                            <state key="normal" image="button-home-settings"/>
                         </button>
                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Sr-pF-jf2">
                             <rect key="frame" x="20" y="13" width="50" height="50"/>
@@ -183,7 +183,7 @@
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" secondItem="QPV-dX-F7R" secondAttribute="height" multiplier="1:1" id="KZh-fG-43V"/>
                                                                     </constraints>
-                                                                    <state key="normal" image="button-plus"/>
+                                                                    <state key="normal" image="button-home-plus"/>
                                                                 </button>
                                                             </subviews>
                                                             <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -283,8 +283,8 @@
         </view>
     </objects>
     <resources>
-        <image name="button-plus" width="34" height="34"/>
-        <image name="button-settings" width="17" height="17"/>
+        <image name="button-home-plus" width="34" height="34"/>
+        <image name="button-home-settings" width="17" height="17"/>
         <image name="icon-gift" width="29" height="26"/>
         <image name="logo-icon" width="103" height="42"/>
         <systemColor name="systemBackgroundColor">

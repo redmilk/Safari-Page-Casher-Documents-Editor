@@ -10,8 +10,6 @@
 import UIKit
 import Combine
 
-fileprivate let defaultCornerRadius: CGFloat = 17
-
 final class HomeScreenViewController: UIViewController {
     enum State {
         case dummyState
@@ -35,7 +33,7 @@ final class HomeScreenViewController: UIViewController {
     private lazy var dashedLineLayer: CAShapeLayer = {
         let layer = CAShapeLayer()
         let bounds = CGRect(x: 1, y: 1, width: plusButtonContainer.frame.width - 2, height: plusButtonContainer.frame.height - 2)
-        layer.path = UIBezierPath(roundedRect: bounds, byRoundingCorners: .allCorners, cornerRadii: CGSize(width: defaultCornerRadius, height: defaultCornerRadius)).cgPath
+        layer.path = UIBezierPath(roundedRect: bounds, byRoundingCorners: .allCorners, cornerRadii: CGSize(width: StylingConstants.cornerRadiusDefault, height: StylingConstants.cornerRadiusDefault)).cgPath
         layer.strokeColor = UIColor.black.cgColor
         layer.fillColor = nil
         layer.lineDashPattern = [8, 6]
@@ -72,6 +70,7 @@ final class HomeScreenViewController: UIViewController {
         super.viewDidLoad()
 
         handleStates()
+        configureView()
         applyStyling()
     }
     
@@ -96,14 +95,18 @@ private extension HomeScreenViewController {
         .store(in: &bag)
     }
     
+    private func configureView() {
+        
+    }
+    
     private func applyStyling() {
-        collectionView.addCornerRadius(defaultCornerRadius)
-        giftPanelContainer.addCornerRadius(defaultCornerRadius)
+        collectionView.addCornerRadius(StylingConstants.cornerRadiusDefault)
+        giftPanelContainer.addCornerRadius(StylingConstants.cornerRadiusDefault)
         giftPanelOpenButton.addCornerRadius(14)
         plusButtonDescriptionContainer.addCornerRadius(8)
-        plusButtonContainer.addCornerRadius(defaultCornerRadius)
+        plusButtonContainer.addCornerRadius(StylingConstants.cornerRadiusDefault)
         plusButton.addCornerRadius(38)
-        bottomButton.addCornerRadius(defaultCornerRadius)
+        bottomButton.addCornerRadius(StylingConstants.cornerRadiusDefault)
         navigationBarExtenderView.addCornerRadius(30)
         navigationBarExtenderView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         settingsButton.addCornerRadius(20.0)

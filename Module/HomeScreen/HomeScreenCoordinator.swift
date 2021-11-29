@@ -12,7 +12,7 @@ import UIKit.UINavigationController
 import Combine
 
 protocol HomeScreenCoordinatorProtocol {
-   
+    func showMenu()
 }
 
 final class HomeScreenCoordinator: CoordinatorProtocol, HomeScreenCoordinatorProtocol {
@@ -34,7 +34,12 @@ final class HomeScreenCoordinator: CoordinatorProtocol, HomeScreenCoordinatorPro
         window.makeKeyAndVisible()
     }
     
+    func showMenu() {
+        let coordinator = HomeScreenMenuCoordinator(navigationController: navigationController)
+        coordinator.start()
+    }
+    
     func end() {
-
+        
     }
 }

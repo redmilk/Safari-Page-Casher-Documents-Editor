@@ -36,6 +36,8 @@ final class ___VARIABLE_productName:identifier___ViewController: UIViewControlle
         super.viewDidLoad()
 
         handleStates()
+        configureView()
+        applyStyling()
     }
 }
 
@@ -53,4 +55,7 @@ private extension ___VARIABLE_productName:identifier___ViewController {
         })
         .store(in: &bag)
     }
+    
+    func configureView() { }
+    func applyStyling() { }
 }

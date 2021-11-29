@@ -13,8 +13,8 @@ protocol ___VARIABLE_productName:identifier___CoordinatorProtocol {
 final class ___VARIABLE_productName:identifier___Coordinator: CoordinatorProtocol, ___VARIABLE_productName:identifier___CoordinatorProtocol {
     var navigationController: UINavigationController?
     
-    init() {
-
+    init(navigationController: UINavigationController?) {
+        self.navigationController = navigationController
     }
     deinit {
         Logger.log(String(describing: self), type: .deinited)
