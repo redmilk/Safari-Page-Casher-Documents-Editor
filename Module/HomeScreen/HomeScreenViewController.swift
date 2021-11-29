@@ -32,7 +32,27 @@ final class HomeScreenViewController: UIViewController {
     @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var logoView: UIView!
     
-    private var layer: CAShapeLayer!
+    private lazy var dashedLineLayer: CAShapeLayer = {
+        let layer = CAShapeLayer()
+        let bounds = CGRect(x: 1, y: 1, width: plusButtonContainer.frame.width - 2, height: plusButtonContainer.frame.height - 2)
+        layer.path = UIBezierPath(roundedRect: bounds, byRoundingCorners: .allCorners, cornerRadii: CGSize(width: defaultCornerRadius, height: defaultCornerRadius)).cgPath
+        layer.strokeColor = UIColor.black.cgColor
+        layer.fillColor = nil
+        layer.lineDashPattern = [8, 6]
+        plusButtonContainer.layer.addSublayer(layer)
+        return layer
+    }()
+    
+    private lazy var dashedLineAnimation: CABasicAnimation = {
+        let animation = CABasicAnimation(keyPath: "lineDashPhase")
+        animation.fromValue = 0
+        animation.toValue = dashedLineLayer.lineDashPattern?.reduce(0) { $0 - $1.intValue } ?? 0
+        animation.duration = 2
+        animation.repeatCount = .infinity
+        animation.isRemovedOnCompletion = false
+        return animation
+    }()
+    
     private lazy var displayManager = HomeCollectionManager(collectionView: collectionView)
     private let viewModel: HomeScreenViewModel
     private var bag = Set<AnyCancellable>()
@@ -57,7 +77,7 @@ final class HomeScreenViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        addDashedLineAnimation()
+        dashedLineLayer.add(dashedLineAnimation, forKey: "line")
     }
 }
 
@@ -88,25 +108,5 @@ private extension HomeScreenViewController {
         navigationBarExtenderView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         settingsButton.addCornerRadius(20.0)
         logoView.addCornerRadius(25)
-    }
-    
-    private func addDashedLineAnimation() {
-        if layer != nil {
-            layer?.removeAllAnimations()
-            layer?.removeFromSuperlayer()
-        }
-        layer = CAShapeLayer()
-        let bounds = CGRect(x: 1, y: 1, width: plusButtonContainer.frame.width - 2, height: plusButtonContainer.frame.height - 2)
-        layer.path = UIBezierPath(roundedRect: bounds, byRoundingCorners: .allCorners, cornerRadii: CGSize(width: defaultCornerRadius, height: defaultCornerRadius)).cgPath
-        layer.strokeColor = UIColor.black.cgColor
-        layer.fillColor = nil
-        layer.lineDashPattern = [8, 6]
-        plusButtonContainer.layer.addSublayer(layer)
-        let animation = CABasicAnimation(keyPath: "lineDashPhase")
-        animation.fromValue = 0
-        animation.toValue = layer.lineDashPattern?.reduce(0) { $0 - $1.intValue } ?? 0
-        animation.duration = 2
-        animation.repeatCount = .infinity
-        layer.add(animation, forKey: "line")
     }
 }
