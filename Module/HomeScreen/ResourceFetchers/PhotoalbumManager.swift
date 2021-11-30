@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import PhotosUI
 
 protocol PhotoalbumManager {
     var output: AnyPublisher<UIImage, Never> { get }
@@ -25,19 +26,32 @@ final class PhotoalbumManagerImpl: NSObject, PhotoalbumManager {
     }
     
     func displayPhotoLibrary() {
-        let picker = UIImagePickerController()
-        picker.view.subviews.forEach { $0.backgroundColor = .black }
-        /// picker.allowsEditing = true
+        var configuration = PHPickerConfiguration()
+        configuration.selectionLimit = 10
+        configuration.filter = .any(of: [.livePhotos, .images])
+        configuration.preferredAssetRepresentationMode = .automatic
+        let picker = PHPickerViewController(configuration: configuration)
         picker.delegate = self
         picker.modalPresentationStyle = .fullScreen
-        parentController.present(picker, animated: true)
+        parentController.present(picker, animated: true, completion: nil)
     }
 }
 
-extension PhotoalbumManagerImpl: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        guard let image = info[.originalImage] as? UIImage else { return }
-        _output.send(image)
+extension PhotoalbumManagerImpl: PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         parentController.dismiss(animated: true)
+        let itemProviders = results.map(\.itemProvider)
+        for item in itemProviders {
+            if item.canLoadObject(ofClass: UIImage.self) {
+                item.loadObject(ofClass: UIImage.self) { [weak self] (image, error) in
+                    if let image = image as? UIImage {
+                        self?._output.send(image)
+                    }
+                    DispatchQueue.main.async {
+                        
+                    }
+                }
+            }
+        }
     }
 }
