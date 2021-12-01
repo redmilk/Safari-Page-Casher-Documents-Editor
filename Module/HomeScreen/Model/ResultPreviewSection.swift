@@ -8,12 +8,12 @@
 import Foundation
 import UIKit.UIImage
 
-struct ResultPreviewSection: Hashable {
+final class ResultPreviewSection: Hashable {
     var id: String?
     let title: String
-    let items: [ResultPreviewSectionItem]
+    let items: [PrintableDataBox]
     
-    init(items: [ResultPreviewSectionItem], title: String) {
+    init(items: [PrintableDataBox], title: String) {
         self.items = items
         self.title = title
     }
@@ -26,13 +26,5 @@ struct ResultPreviewSection: Hashable {
 
     static func == (lhs: ResultPreviewSection, rhs: ResultPreviewSection) -> Bool {
         lhs.title == rhs.title && lhs.items == rhs.items && lhs.id == rhs.id
-    }
-}
-
-struct ResultPreviewSectionItem: Hashable {
-    let thumbnail: UIImage
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(thumbnail)
     }
 }

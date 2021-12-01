@@ -11,21 +11,17 @@ import PhotosUI
 
 protocol PhotoalbumManager {
     var output: AnyPublisher<UIImage, Never> { get }
-    func displayPhotoLibrary()
+    func displayPhotoLibrary(_ parentController: UIViewController)
 }
 
 final class PhotoalbumManagerImpl: NSObject, PhotoalbumManager {
     
     var output: AnyPublisher<UIImage, Never> { _output.eraseToAnyPublisher() }
-    private unowned let parentController: UIViewController
+    private weak var parentController: UIViewController?
     private let _output = PassthroughSubject<UIImage, Never>()
+    private let queue = DispatchQueue(label: "image.picker.queue")
     
-    init(parentController: UIViewController) {
-        self.parentController = parentController
-        super.init()
-    }
-    
-    func displayPhotoLibrary() {
+    func displayPhotoLibrary(_ parentController: UIViewController) {
         var configuration = PHPickerConfiguration()
         configuration.selectionLimit = 10
         configuration.filter = .any(of: [.livePhotos, .images])
@@ -33,22 +29,20 @@ final class PhotoalbumManagerImpl: NSObject, PhotoalbumManager {
         let picker = PHPickerViewController(configuration: configuration)
         picker.delegate = self
         picker.modalPresentationStyle = .fullScreen
+        self.parentController = parentController
         parentController.present(picker, animated: true, completion: nil)
     }
 }
 
 extension PhotoalbumManagerImpl: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        parentController.dismiss(animated: true)
+        parentController?.dismiss(animated: true)
         let itemProviders = results.map(\.itemProvider)
         for item in itemProviders {
             if item.canLoadObject(ofClass: UIImage.self) {
                 item.loadObject(ofClass: UIImage.self) { [weak self] (image, error) in
                     if let image = image as? UIImage {
                         self?._output.send(image)
-                    }
-                    DispatchQueue.main.async {
-                        
                     }
                 }
             }

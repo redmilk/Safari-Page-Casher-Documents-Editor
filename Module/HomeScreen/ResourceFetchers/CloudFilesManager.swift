@@ -11,21 +11,16 @@ import Combine
 
 protocol CloudFilesManager {
     var output: AnyPublisher<PDFDocument, Never> { get }
-    func displayDocumentsSelectionMenu()
+    func displayDocumentsSelectionMenu(_ parentController: UIViewController)
 }
 
 final class CloudFilesManagerImpl: NSObject, CloudFilesManager {
     var output: AnyPublisher<PDFDocument, Never> { _output.eraseToAnyPublisher() }
 
-    private unowned let parentController: UIViewController
-    private let importMenu = UIDocumentPickerViewController(forOpeningContentTypes: [.pdf], asCopy: true)
     private let _output = PassthroughSubject<PDFDocument, Never>()
     
-    init(parentController: UIViewController) {
-        self.parentController = parentController
-    }
-    
-    func displayDocumentsSelectionMenu() {
+    func displayDocumentsSelectionMenu(_ parentController: UIViewController) {
+        let importMenu = UIDocumentPickerViewController(forOpeningContentTypes: [.pdf], asCopy: true)
         importMenu.delegate = self
         importMenu.modalPresentationStyle = .fullScreen
         parentController.present(importMenu, animated: true, completion: nil)

@@ -42,15 +42,15 @@ final class HomeScreenMenuCoordinator: CoordinatorProtocol, HomeScreenMenuCoordi
     func start() {
         let viewModel = HomeScreenMenuViewModel(coordinator: self)
         let controller = HomeScreenMenuViewController(viewModel: viewModel)
-        dimmView.animateFadeInOut(0.6, isFadeIn: true, completion: nil)
+//        dimmView.animateFadeInOut(0.6, isFadeIn: true, completion: nil)
         controller.isModalInPresentation = true
         navigationController?.present(controller, animated: true, completion: nil)
     }
     
     func endWithSelectedAction(_ action: HomeScreenMenuViewModel.Action) {
-        dimmView.animateFadeInOut(0.6, isFadeIn: false, completion: { [weak self] in
-            self?.dimmView.removeFromSuperview()
-        })
+//        dimmView.animateFadeInOut(0.6, isFadeIn: false, completion: { [weak self] in
+//            self?.dimmView.removeFromSuperview()
+//        })
         navigationController?.presentedViewController?.dismiss(animated: true, completion: { [weak self] in
             self?.output.send(action)
         })

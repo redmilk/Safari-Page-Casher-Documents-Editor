@@ -6,11 +6,37 @@
 //
 
 import Foundation
+import Combine
 
 protocol UserSession {
-    var sessionData: PrintableDataBox? { get } 
+    var input: PassthroughSubject<UserSessionImpl.Action, Never> { get }
+    var output: PassthroughSubject<[PrintableDataBox], Never> { get }
 }
 
 final class UserSessionImpl: UserSession {
-    var sessionData: PrintableDataBox?
+    enum Action {
+        case addItems([PrintableDataBox])
+        case deleteItem(PrintableDataBox)
+    }
+    
+    var input = PassthroughSubject<Action, Never>()
+    var output = PassthroughSubject<[PrintableDataBox], Never>()
+    
+    private var bag = Set<AnyCancellable>()
+    private var sessionData: [PrintableDataBox: PrintableDataBox] = [:]
+    
+    init() {
+        input.sink(receiveValue: { [weak self] action in
+            guard let self = self else { return }
+            switch action {
+            case .addItems(let data):
+                data.forEach { self.sessionData[$0] = $0 }
+                self.output.send(Array(self.sessionData.values))
+            case .deleteItem(let dataElement):
+                self.sessionData[dataElement] = nil
+                self.output.send(Array(self.sessionData.values))
+            }
+        })
+        .store(in: &bag)
+    }
 }

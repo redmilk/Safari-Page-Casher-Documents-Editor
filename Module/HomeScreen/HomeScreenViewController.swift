@@ -11,10 +11,9 @@ import UIKit
 import Combine
 
 final class HomeScreenViewController: UIViewController {
-    enum State {
-        case shouldDisplayCloudStorage
-        case shouldDisplayPhotoAlbum
-        case shouldDisplayScanFlow
+    enum State {        
+        case newCollectionData([PrintableDataBox])
+        case empty
     }
     
     // MARK: - Filled state controls
@@ -54,9 +53,6 @@ final class HomeScreenViewController: UIViewController {
     }()
     
     private lazy var displayManager = HomeCollectionManager(collectionView: collectionView)
-    private lazy var cameraScaner: CameraScanManager = CameraScanManagerImpl(parentController: self)
-    private lazy var photoalbumManager: PhotoalbumManager = PhotoalbumManagerImpl(parentController: self)
-    private lazy var cloudFilesManager: CloudFilesManager = CloudFilesManagerImpl(parentController: self)
     
     private let viewModel: HomeScreenViewModel
     private var bag = Set<AnyCancellable>()
@@ -78,10 +74,13 @@ final class HomeScreenViewController: UIViewController {
         handleStates()
         configureView()
         applyStyling()
+        displayManager.configure()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        viewModel.configureViewModel()
         dashedLineLayer.add(dashedLineAnimation, forKey: "line")
     }
 }
@@ -94,35 +93,34 @@ private extension HomeScreenViewController {
     func handleStates() {
         viewModel.output.sink(receiveValue: { [weak self] state in
             switch state {
-            case .shouldDisplayScanFlow:
-                self?.cameraScaner.displayScanningController()
-            case .shouldDisplayCloudStorage:
-                self?.cloudFilesManager.displayDocumentsSelectionMenu()
-            case .shouldDisplayPhotoAlbum:
-                self?.photoalbumManager.displayPhotoLibrary()
+            case .newCollectionData(let data):
+                self?.displayManager.applySnapshot(items: data)
+                self?.emptyStateContainer.isHidden = true
+            case .empty:
+                self?.collectionView.isHidden = true
+                self?.emptyStateContainer.isHidden = false
             }
         })
         .store(in: &bag)
     }
     
     private func configureView() {
+    
         plusButton.publisher().sink(receiveValue: { [weak self] _ in
-            self?.viewModel.input.send(.openMenu)
+            guard let self = self else { return }
+            self.viewModel.input.send(.openMenu(menuOptionsPresenter: self))
         })
         .store(in: &bag)
-        cameraScaner.output.sink(receiveValue: { [weak self] imageList in
-            print("SCANNED IMAGES COUNT")
-            print(imageList.count.description)
-        })
-        .store(in: &bag)
-        photoalbumManager.output.sink(receiveValue: { [weak self] image in
-            print("GOT IMAGE FROM PHOTOALBUM")
-            print(image.size.debugDescription)
-        })
-        .store(in: &bag)
-        cloudFilesManager.output.sink(receiveValue: { [weak self] pdf in
-            print("GOT PDF FROM CLOUS")
-            print(pdf.pageCount.description)
+        
+        displayManager.output.sink(receiveValue: { [weak self] action in
+            guard let self = self else { return }
+            switch action {
+            case .didPressCell(let indexPath) where indexPath.row == 0:
+                self.viewModel.input.send(.openMenu(menuOptionsPresenter: self))
+            case .deleteCell(let data):
+                self.viewModel.input.send(.deleteItem(data))
+            case _: break
+            }
         })
         .store(in: &bag)
     }
