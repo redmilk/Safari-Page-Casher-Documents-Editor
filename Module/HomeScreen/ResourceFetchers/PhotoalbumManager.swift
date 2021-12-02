@@ -16,8 +16,8 @@ protocol PhotoalbumManager {
 
 final class PhotoalbumManagerImpl: NSObject, PhotoalbumManager {
     
+    var picker: PHPickerViewController!
     var output: AnyPublisher<UIImage, Never> { _output.eraseToAnyPublisher() }
-    private weak var parentController: UIViewController?
     private let _output = PassthroughSubject<UIImage, Never>()
     private let queue = DispatchQueue(label: "image.picker.queue")
     
@@ -29,14 +29,13 @@ final class PhotoalbumManagerImpl: NSObject, PhotoalbumManager {
         let picker = PHPickerViewController(configuration: configuration)
         picker.delegate = self
         picker.modalPresentationStyle = .fullScreen
-        self.parentController = parentController
         parentController.present(picker, animated: true, completion: nil)
     }
 }
 
 extension PhotoalbumManagerImpl: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        parentController?.dismiss(animated: true)
+        picker.dismiss(animated: true)
         let itemProviders = results.map(\.itemProvider)
         for item in itemProviders {
             if item.canLoadObject(ofClass: UIImage.self) {

@@ -32,9 +32,11 @@ final class UserSessionImpl: UserSession {
             case .addItems(let data):
                 data.forEach { self.sessionData[$0] = $0 }
                 self.output.send(Array(self.sessionData.values))
+                Logger.log(self.sessionData.values.count.description)
             case .deleteItem(let dataElement):
                 self.sessionData[dataElement] = nil
                 self.output.send(Array(self.sessionData.values))
+                Logger.log(self.sessionData.values.count.description)
             }
         })
         .store(in: &bag)

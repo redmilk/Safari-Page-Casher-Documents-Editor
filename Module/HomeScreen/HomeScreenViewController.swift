@@ -108,7 +108,7 @@ private extension HomeScreenViewController {
     
         plusButton.publisher().sink(receiveValue: { [weak self] _ in
             guard let self = self else { return }
-            self.viewModel.input.send(.openMenu(menuOptionsPresenter: self))
+            self.viewModel.input.send(.openMenu)
         })
         .store(in: &bag)
         
@@ -116,7 +116,7 @@ private extension HomeScreenViewController {
             guard let self = self else { return }
             switch action {
             case .didPressCell(let indexPath) where indexPath.row == 0:
-                self.viewModel.input.send(.openMenu(menuOptionsPresenter: self))
+                self.viewModel.input.send(.openMenu)
             case .deleteCell(let data):
                 self.viewModel.input.send(.deleteItem(data))
             case _: break

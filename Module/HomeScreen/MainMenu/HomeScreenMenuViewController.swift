@@ -10,7 +10,6 @@
 import UIKit
 import Combine
 
-
 // MARK: - HomeScreenMenuViewController
 
 final class HomeScreenMenuViewController: UIViewController {

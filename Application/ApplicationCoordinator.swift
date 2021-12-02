@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit.UIWindow
+import UIKit.UINavigationController
 
 final class ApplicationCoordinator: CoordinatorProtocol {
     
@@ -30,7 +31,10 @@ final class ApplicationCoordinator: CoordinatorProtocol {
     }
     
     private func showContent() {
-        let homeScreen = HomeScreenCoordinator(window: window)
+        navigationController = UINavigationController()
+        window.rootViewController = navigationController
+        window.makeKeyAndVisible()
+        let homeScreen = HomeScreenCoordinator(navigationController: navigationController!)
         homeScreen.start()
     }
 }

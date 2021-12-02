@@ -12,13 +12,12 @@ import UIKit.UINavigationController
 import Combine
 
 protocol HomeScreenMenuCoordinatorProtocol {
-    var output: PassthroughSubject<HomeScreenMenuViewModel.Action, Never> { get }
     func endWithSelectedAction(_ action: HomeScreenMenuViewModel.Action)
+    func end()
 }
 
 final class HomeScreenMenuCoordinator: CoordinatorProtocol, HomeScreenMenuCoordinatorProtocol {
     var navigationController: UINavigationController?
-    
     var output = PassthroughSubject<HomeScreenMenuViewModel.Action, Never>()
 
     private lazy var dimmView: UIView = {
@@ -44,6 +43,9 @@ final class HomeScreenMenuCoordinator: CoordinatorProtocol, HomeScreenMenuCoordi
         let controller = HomeScreenMenuViewController(viewModel: viewModel)
 //        dimmView.animateFadeInOut(0.6, isFadeIn: true, completion: nil)
         controller.isModalInPresentation = true
+        navigationController?.topViewController?.dismiss(animated: false, completion: {
+            
+        })
         navigationController?.present(controller, animated: true, completion: nil)
     }
     
@@ -54,5 +56,9 @@ final class HomeScreenMenuCoordinator: CoordinatorProtocol, HomeScreenMenuCoordi
         navigationController?.presentedViewController?.dismiss(animated: true, completion: { [weak self] in
             self?.output.send(action)
         })
+    }
+    
+    func end() {
+        navigationController?.presentedViewController?.dismiss(animated: true, completion: nil)
     }
 }
