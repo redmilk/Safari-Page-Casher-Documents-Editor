@@ -17,10 +17,12 @@ final class HomeScreenMenuViewController: UIViewController {
         case dummyState
     }
     @IBOutlet weak var buttonsContainerView: UIView!
+    @IBOutlet weak var cancelButton: UIButton!
+
     @IBOutlet weak var scanDocumentButton: UIButton!
     @IBOutlet weak var printPhotoButton: UIButton!
     @IBOutlet weak var printDocumentButton: UIButton!
-    @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var printWebPage: UIButton!
     
     private let viewModel: HomeScreenMenuViewModel
     private var bag = Set<AnyCancellable>()
@@ -77,6 +79,10 @@ private extension HomeScreenMenuViewController {
             self?.viewModel.input.send(.closeAction)
         })
         .store(in: &bag)
+        printWebPage.publisher().sink(receiveValue: { [weak self] _ in
+            self?.viewModel.input.send(.printWebPage)
+        })
+        .store(in: &bag)
     }
     
     func applyStyling() {
@@ -88,5 +94,7 @@ private extension HomeScreenMenuViewController {
         printPhotoButton.addBorder(1.0, .black)
         cancelButton.addCornerRadius(StylingConstants.cornerRadiusDefault)
         buttonsContainerView.addCornerRadius(StylingConstants.cornerRadiusDefault)
+        printWebPage.addCornerRadius(StylingConstants.cornerRadiusDefault)
+        printWebPage.addBorder(1.0, .black)
     }
 }

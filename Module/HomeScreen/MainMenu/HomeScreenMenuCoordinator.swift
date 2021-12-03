@@ -13,7 +13,7 @@ import Combine
 
 protocol HomeScreenMenuCoordinatorProtocol {
     func endWithSelectedAction(_ action: HomeScreenMenuViewModel.Action)
-    func end()
+    func end(completion: @escaping VoidClosure)
 }
 
 final class HomeScreenMenuCoordinator: CoordinatorProtocol, HomeScreenMenuCoordinatorProtocol {
@@ -42,16 +42,16 @@ final class HomeScreenMenuCoordinator: CoordinatorProtocol, HomeScreenMenuCoordi
         let viewModel = HomeScreenMenuViewModel(coordinator: self)
         let controller = HomeScreenMenuViewController(viewModel: viewModel)
         controller.isModalInPresentation = true
-        navigationController?.present(controller, animated: true, completion: nil)
+        navigationController?.topViewController?.present(controller, animated: true, completion: nil)
     }
     
     func endWithSelectedAction(_ action: HomeScreenMenuViewModel.Action) {
-        navigationController?.presentedViewController?.dismiss(animated: true, completion: { [weak self] in
+        navigationController?.topViewController?.dismiss(animated: true, completion: { [weak self] in
             self?.output.send(action)
         })
     }
     
-    func end() {
-        navigationController?.presentedViewController?.dismiss(animated: true, completion: nil)
+    func end(completion: @escaping VoidClosure) {
+        navigationController?.topViewController?.dismiss(animated: true, completion: completion)
     }
 }

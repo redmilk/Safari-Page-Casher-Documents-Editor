@@ -11,7 +11,7 @@ import Combine
 
 protocol CameraScanManager {
     var output: AnyPublisher<[UIImage], Never> { get }
-    func displayScanningController(_ parentController: UIViewController)
+    func displayScanningController(_ parentController: UIViewController, presentationCallback: @escaping VoidClosure)
 }
 
 final class CameraScanManagerImpl: NSObject, CameraScanManager {
@@ -19,11 +19,11 @@ final class CameraScanManagerImpl: NSObject, CameraScanManager {
     var output: AnyPublisher<[UIImage], Never> { _output.eraseToAnyPublisher() }
     private let _output = PassthroughSubject<[UIImage], Never>()
     
-    func displayScanningController(_ parentController: UIViewController) {
+    func displayScanningController(_ parentController: UIViewController, presentationCallback: @escaping VoidClosure) {
         let controller = VNDocumentCameraViewController()
         guard VNDocumentCameraViewController.isSupported else { return }
         controller.delegate = self
-        parentController.present(controller, animated: true)
+        parentController.present(controller, animated: true, completion: presentationCallback)
     }
 }
 

@@ -30,6 +30,9 @@
 		794F73EF2746B36900B07410 /* UIControl+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794F73E82746B36900B07410 /* UIControl+Extensions.swift */; };
 		7963FC4227466F6F007B8449 /* ApplicationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7963FC4127466F6F007B8449 /* ApplicationCoordinator.swift */; };
 		7963FC4627466FAD007B8449 /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7963FC4527466FAD007B8449 /* CoordinatorProtocol.swift */; };
+		796B1AD2275A0973005864B0 /* WebpageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796B1AD1275A0973005864B0 /* WebpageManager.swift */; };
+		796B1AD6275A127F005864B0 /* ColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796B1AD5275A127F005864B0 /* ColorPalette.swift */; };
+		796B1AD9275A12A0005864B0 /* Typealias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796B1AD8275A12A0005864B0 /* Typealias.swift */; };
 		79763582274E88B9001D2155 /* InteractionFeedbackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79763581274E88B9001D2155 /* InteractionFeedbackService.swift */; };
 		7983ECCC275092AF00B5C2AF /* PDFService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7983ECCB275092AF00B5C2AF /* PDFService.swift */; };
 		7983ECE22750B0D500B5C2AF /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7983ECE02750B0D500B5C2AF /* iCarousel.m */; };
@@ -119,6 +122,9 @@
 		794F73FD2746CEE200B07410 /* TemplateInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TemplateInfo.plist; sourceTree = "<group>"; };
 		7963FC4127466F6F007B8449 /* ApplicationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCoordinator.swift; sourceTree = "<group>"; };
 		7963FC4527466FAD007B8449 /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
+		796B1AD1275A0973005864B0 /* WebpageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebpageManager.swift; sourceTree = "<group>"; };
+		796B1AD5275A127F005864B0 /* ColorPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPalette.swift; sourceTree = "<group>"; };
+		796B1AD8275A12A0005864B0 /* Typealias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typealias.swift; sourceTree = "<group>"; };
 		79763581274E88B9001D2155 /* InteractionFeedbackService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractionFeedbackService.swift; sourceTree = "<group>"; };
 		7983ECCB275092AF00B5C2AF /* PDFService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFService.swift; sourceTree = "<group>"; };
 		7983ECDE2750B0D500B5C2AF /* AirPrint-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AirPrint-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -207,6 +213,7 @@
 				792D661027552DE300063F4B /* CameraScanManager.swift */,
 				792D66142755394000063F4B /* PhotoalbumManager.swift */,
 				792D661727553D6D00063F4B /* CloudFilesManager.swift */,
+				796B1AD1275A0973005864B0 /* WebpageManager.swift */,
 			);
 			path = ResourceFetchers;
 			sourceTree = "<group>";
@@ -390,6 +397,8 @@
 			isa = PBXGroup;
 			children = (
 				79B576F92754EC76006969F5 /* StylingConstants.swift */,
+				796B1AD5275A127F005864B0 /* ColorPalette.swift */,
+				796B1AD8275A12A0005864B0 /* Typealias.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -652,6 +661,7 @@
 				79B787C12750B21D009D7655 /* AppSubscriptionCoordinator.swift in Sources */,
 				7983ECCC275092AF00B5C2AF /* PDFService.swift in Sources */,
 				79F80FCC2752E62500081C7A /* ViewHierarchyDebugger.swift in Sources */,
+				796B1AD9275A12A0005864B0 /* Typealias.swift in Sources */,
 				79B788032750B55C009D7655 /* EditScreenCoordinator.swift in Sources */,
 				79B787E12750B2FD009D7655 /* SettingsViewModel.swift in Sources */,
 				79A725B72750C6C900D8B330 /* PrintableDataBox.swift in Sources */,
@@ -679,12 +689,14 @@
 				7963FC4227466F6F007B8449 /* ApplicationCoordinator.swift in Sources */,
 				79B787CB2750B250009D7655 /* PrintingOptionsCoordinator.swift in Sources */,
 				79763582274E88B9001D2155 /* InteractionFeedbackService.swift in Sources */,
+				796B1AD2275A0973005864B0 /* WebpageManager.swift in Sources */,
 				793ADF552754DFAE00F58923 /* UserSession.swift in Sources */,
 				79B787B72750B1E4009D7655 /* OnboardingViewModel.swift in Sources */,
 				794F73EF2746B36900B07410 /* UIControl+Extensions.swift in Sources */,
 				793ADF5D2754E36100F58923 /* HomeScreenMenuCoordinator.swift in Sources */,
 				79A725A62750BE3B00D8B330 /* HomeCollectionManager.swift in Sources */,
 				79B787CD2750B250009D7655 /* PrintingOptionsViewModel.swift in Sources */,
+				796B1AD6275A127F005864B0 /* ColorPalette.swift in Sources */,
 				79A725AA2750BEA200D8B330 /* ResultPreviewSection.swift in Sources */,
 				79E46070274D495F00FD22E1 /* PdfViewerCoordinator.swift in Sources */,
 				79B787F82750B429009D7655 /* HomeScreenViewModel.swift in Sources */,

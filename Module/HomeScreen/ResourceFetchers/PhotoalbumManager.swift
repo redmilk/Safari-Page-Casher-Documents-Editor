@@ -11,7 +11,7 @@ import PhotosUI
 
 protocol PhotoalbumManager {
     var output: AnyPublisher<PrintableDataBox, Never> { get }
-    func displayPhotoLibrary(_ parentController: UIViewController)
+    func displayPhotoLibrary(_ parentController: UIViewController, presentationCallback: @escaping VoidClosure)
 }
 
 final class PhotoalbumManagerImpl: NSObject, PhotoalbumManager {
@@ -19,8 +19,10 @@ final class PhotoalbumManagerImpl: NSObject, PhotoalbumManager {
     var output: AnyPublisher<PrintableDataBox, Never> { _output.eraseToAnyPublisher() }
     private var picker: PHPickerViewController!
     private let _output = PassthroughSubject<PrintableDataBox, Never>()
+    private var finishCallback: VoidClosure!
     
-    func displayPhotoLibrary(_ parentController: UIViewController) {
+    func displayPhotoLibrary(_ parentController: UIViewController, presentationCallback: @escaping VoidClosure) {
+        finishCallback = presentationCallback
         var configuration = PHPickerConfiguration()
         configuration.selectionLimit = 10
         configuration.filter = .any(of: [.livePhotos, .images])
@@ -34,7 +36,7 @@ final class PhotoalbumManagerImpl: NSObject, PhotoalbumManager {
 
 extension PhotoalbumManagerImpl: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        picker.dismiss(animated: true)
+        picker.dismiss(animated: true, completion: finishCallback)
         let itemProviders = results.map { ($0.assetIdentifier, $0.itemProvider) }
         for item in itemProviders {
             if item.1.canLoadObject(ofClass: UIImage.self) {

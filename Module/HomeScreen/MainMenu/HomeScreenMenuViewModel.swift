@@ -15,6 +15,7 @@ final class HomeScreenMenuViewModel {
         case scanAction
         case printPhoto
         case printDocument
+        case printWebPage
         
         case closeAction
     }
@@ -32,11 +33,6 @@ final class HomeScreenMenuViewModel {
     deinit {
         Logger.log(String(describing: self), type: .deinited)
     }
-}
-
-// MARK: - Internal
-
-private extension HomeScreenMenuViewModel {
     
     private func handleActions() {
         input.sink(receiveValue: { [weak self] action in

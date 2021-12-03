@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -17,6 +17,7 @@
                 <outlet property="cancelButton" destination="mKP-1H-lbP" id="A17-Nd-Bv6"/>
                 <outlet property="printDocumentButton" destination="MgE-Zl-44o" id="GaS-6N-jTq"/>
                 <outlet property="printPhotoButton" destination="EEb-Pc-fgQ" id="TCQ-Ku-xlw"/>
+                <outlet property="printWebPage" destination="DFi-f8-sYa" id="Xdr-Uu-bk9"/>
                 <outlet property="scanDocumentButton" destination="PS8-al-TF7" id="OUV-hT-uHj"/>
                 <outlet property="view" destination="iN0-l3-epB" id="3oM-Dl-zhc"/>
             </connections>
@@ -27,10 +28,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N0z-el-oHM">
-                    <rect key="frame" x="0.0" y="551" width="414" height="345"/>
+                    <rect key="frame" x="0.0" y="481" width="414" height="415"/>
                     <subviews>
                         <stackView verifyAmbiguity="ignoreSizes" opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="n2Z-pN-kUV">
-                            <rect key="frame" x="20" y="25" width="374" height="200"/>
+                            <rect key="frame" x="20" y="25" width="374" height="270"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PS8-al-TF7">
                                     <rect key="frame" x="0.0" y="0.0" width="374" height="60"/>
@@ -65,10 +66,20 @@
                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </state>
                                 </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DFi-f8-sYa">
+                                    <rect key="frame" x="0.0" y="210" width="374" height="60"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="15"/>
+                                    <inset key="titleEdgeInsets" minX="100" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="imageEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <state key="normal" title="Print Web Page" image="button-home-menu-document">
+                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </state>
+                                </button>
                             </subviews>
                         </stackView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mKP-1H-lbP">
-                            <rect key="frame" x="20" y="245" width="374" height="60"/>
+                            <rect key="frame" x="20" y="315" width="374" height="60"/>
                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="60" id="Zg9-Nh-RGS"/>
