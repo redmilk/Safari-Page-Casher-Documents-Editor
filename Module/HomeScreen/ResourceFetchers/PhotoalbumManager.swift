@@ -16,10 +16,9 @@ protocol PhotoalbumManager {
 
 final class PhotoalbumManagerImpl: NSObject, PhotoalbumManager {
     
-    var picker: PHPickerViewController!
     var output: AnyPublisher<UIImage, Never> { _output.eraseToAnyPublisher() }
+    private var picker: PHPickerViewController!
     private let _output = PassthroughSubject<UIImage, Never>()
-    private let queue = DispatchQueue(label: "image.picker.queue")
     
     func displayPhotoLibrary(_ parentController: UIViewController) {
         var configuration = PHPickerConfiguration()

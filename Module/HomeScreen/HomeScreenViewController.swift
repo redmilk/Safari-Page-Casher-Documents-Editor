@@ -75,12 +75,12 @@ final class HomeScreenViewController: UIViewController {
         configureView()
         applyStyling()
         displayManager.configure()
+        viewModel.configureViewModel()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        viewModel.configureViewModel()
         dashedLineLayer.add(dashedLineAnimation, forKey: "line")
     }
 }
@@ -96,6 +96,7 @@ private extension HomeScreenViewController {
             case .newCollectionData(let data):
                 self?.displayManager.applySnapshot(items: data)
                 self?.emptyStateContainer.isHidden = true
+                self?.collectionView.isHidden = false
             case .empty:
                 self?.collectionView.isHidden = true
                 self?.emptyStateContainer.isHidden = false

@@ -9,29 +9,41 @@
 
 import Foundation
 import UIKit.UINavigationController
+import PDFKit.PDFDocument
 import Combine
 
 protocol HomeScreenCoordinatorProtocol {
+    var cameraScanerOutput: AnyPublisher<[UIImage], Never> { get }
+    var photoalbumOutput: AnyPublisher<UIImage, Never> { get }
+    var cloudFilesOutput: AnyPublisher<PDFDocument, Never> { get }
+    
     func showMainMenuAndHandleActions()
     func closeMenu()
-    func showCameraScaner() -> AnyPublisher<[UIImage], Never>
-    func showPhotoPicker() -> AnyPublisher<UIImage, Never>
-
-    var output: PassthroughSubject<HomeScreenMenuViewModel.Action, Never> { get }
+    func showCameraScaner()
+    func showPhotoPicker()
+    func showCloudFilesPicker()
 }
 
 final class HomeScreenCoordinator: CoordinatorProtocol, HomeScreenCoordinatorProtocol {
-    enum Response {
-        
-    }
+    
+    //var output = PassthroughSubject<HomeScreenMenuViewModel.Action, Never>()
+    
     var navigationController: UINavigationController?
-    weak var childCoordinator: HomeScreenMenuCoordinator?
+    
+    var cameraScanerOutput: AnyPublisher<[UIImage], Never> {
+        cameraScaner.output.eraseToAnyPublisher()
+    }
+    var photoalbumOutput: AnyPublisher<UIImage, Never> {
+        photoalbumManager.output.eraseToAnyPublisher()
+    }
+    var cloudFilesOutput: AnyPublisher<PDFDocument, Never> {
+        cloudFilesManager.output.eraseToAnyPublisher()
+    }
     
     private lazy var cameraScaner: CameraScanManager = CameraScanManagerImpl()
     private lazy var photoalbumManager: PhotoalbumManager = PhotoalbumManagerImpl()
     private lazy var cloudFilesManager: CloudFilesManager = CloudFilesManagerImpl()
-    
-    var output = PassthroughSubject<HomeScreenMenuViewModel.Action, Never>()
+    private var childCoordinator: HomeScreenMenuCoordinatorProtocol?
     private var bag = Set<AnyCancellable>()
     
     init(navigationController: UINavigationController) {
@@ -47,29 +59,39 @@ final class HomeScreenCoordinator: CoordinatorProtocol, HomeScreenCoordinatorPro
         navigationController?.pushViewController(controller, animated: true)
     }
     
-    func showCameraScaner() -> AnyPublisher<[UIImage], Never> {
+    func showCameraScaner() {
         cameraScaner.displayScanningController(navigationController!)
-        return cameraScaner.output
     }
     
-    func showPhotoPicker() -> AnyPublisher<UIImage, Never> {
+    func showPhotoPicker() {
         photoalbumManager.displayPhotoLibrary(navigationController!)
-        return photoalbumManager.output
+    }
+    
+    func showCloudFilesPicker() {
+        cloudFilesManager.displayDocumentsSelectionMenu(navigationController!)
     }
         
     func showMainMenuAndHandleActions() {
         let coordinator = HomeScreenMenuCoordinator(navigationController: navigationController)
         coordinator.start()
         childCoordinator = coordinator
-        coordinator.output.eraseToAnyPublisher()
+        coordinator.output
             .sink(receiveValue: { [weak self] homeMenuActionSelected in
-            self?.output.send(homeMenuActionSelected)
+                switch homeMenuActionSelected {
+                case .closeAction: break
+                case .printPhoto: self?.showPhotoPicker()
+                case .scanAction: break
+                case .printDocument: break
+                }
+
+            self?.closeMenu()
         })
         .store(in: &self.bag)
     }
     
     func closeMenu() {
         childCoordinator?.end()
+        childCoordinator = nil
     }
     
     func end() {

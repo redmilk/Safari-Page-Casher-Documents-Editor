@@ -25,6 +25,7 @@ final class PrintableDataBox: Hashable, Equatable {
     
     init(id: String, image: UIImage?, document: PDFDocument?) {
         self.id = id
+        print(id)
         self.image = image
         self.document = document
     }

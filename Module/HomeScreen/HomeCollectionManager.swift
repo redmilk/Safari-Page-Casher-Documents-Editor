@@ -38,20 +38,12 @@ final class HomeCollectionManager: NSObject, InteractionFeedbackService { /// NS
         collectionView.showsVerticalScrollIndicator = false
         dataSource = buildDataSource()
         layoutCollection()
-        //initialCollectionItemAndSectionSetup()
     }
-    
-    func applySnapshot1(items: [PrintableDataBox]) {
-        var snapshot = dataSource.snapshot()
-        snapshot.appendItems(items)
-        //sections.forEach { newSnapshot.appendItems($0.items, toSection: $0) }
-        dataSource?.apply(snapshot, animatingDifferences: false)
-    }
-    
+
     func applySnapshot(items: [PrintableDataBox]) {
         var snapshot = Snapshot()
         let section = ResultPreviewSection(items: [], title: "Main Section")
-        let item = PrintableDataBox(id: UUID().uuidString, image: nil, document: nil)
+        let item = PrintableDataBox(id: "1", image: nil, document: nil)
         item.isAddButton = true
         snapshot.appendSections([section])
         snapshot.appendItems([item])
@@ -63,16 +55,6 @@ final class HomeCollectionManager: NSObject, InteractionFeedbackService { /// NS
 
 // MARK: - Internal
 private extension HomeCollectionManager {
-    
-    func initialCollectionItemAndSectionSetup() {
-        var newSnapshot = Snapshot()
-        let item = PrintableDataBox(id: UUID().uuidString, image: nil, document: nil)
-        item.isAddButton = true
-        let section = ResultPreviewSection(items: [], title: "Main Section")
-        newSnapshot.appendSections([section])
-        newSnapshot.appendItems([item])
-        dataSource.apply(newSnapshot, animatingDifferences: false)
-    }
     
     func scrollToItem(withIndexPath indexPath: IndexPath) {
         Logger.log(indexPath.section.description + " " + indexPath.row.description, type: .all)

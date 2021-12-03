@@ -17,6 +17,7 @@ final class HomeScreenViewModel: UserSessionServiceProvidable {
     }
     
     let input = PassthroughSubject<HomeScreenViewModel.Action, Never>()
+
     let output = PassthroughSubject<HomeScreenViewController.State, Never>()
     
     private let coordinator: HomeScreenCoordinatorProtocol & CoordinatorProtocol
@@ -38,6 +39,7 @@ final class HomeScreenViewModel: UserSessionServiceProvidable {
 private extension HomeScreenViewModel {
     
     func handleActions() {
+        Logger.log("handleActions")
         input.sink(receiveValue: { [weak self] action in
             switch action {
             case .openMenu:
@@ -48,32 +50,18 @@ private extension HomeScreenViewModel {
         })
         .store(in: &bag)
         
-        coordinator.output.sink(receiveValue: { [weak self] action in
-            guard let self = self else { return }
-            switch action {
-            case .scanAction:
-                self.coordinator.showCameraScaner().sink(receiveValue: { imageList in
-                    print("SCANNED IMAGES COUNT")
-                    print(imageList.count.description)
-                    let data = imageList.map {
-                        PrintableDataBox(id: UUID().uuidString, image: $0, document: nil)
-                    }
-                    self.userSession.input.send(.addItems(data))
-                })
-                .store(in: &self.bag)
-            case .printDocument:
-                break
-            case .printPhoto:
-                self.coordinator.showPhotoPicker().receive(on: RunLoop.main)
-                    .sink(receiveValue: { image in
-                    print("GOT IMAGE FROM PHOTOALBUM")
-                    let data = PrintableDataBox(id: UUID().uuidString, image: image, document: nil)
-                    self.userSession.input.send(.addItems([data]))
-                })
-                .store(in: &self.bag)
-            case .closeAction:
-                self.coordinator.closeMenu()
+        coordinator.photoalbumOutput.receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] image in
+                let data = PrintableDataBox(id: Date().millisecondsSince1970.description, image: image, document: nil)
+            self?.userSession.input.send(.addItems([data]))
+        })
+        .store(in: &bag)
+        
+        coordinator.cameraScanerOutput.sink(receiveValue: { [weak self] imageList in
+            let data = imageList.map {
+                PrintableDataBox(id: Date().millisecondsSince1970.description, image: $0, document: nil)
             }
+            self?.userSession.input.send(.addItems(data))
         })
         .store(in: &bag)
         
