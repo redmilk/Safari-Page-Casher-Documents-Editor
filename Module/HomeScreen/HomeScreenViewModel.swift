@@ -51,9 +51,8 @@ private extension HomeScreenViewModel {
         .store(in: &bag)
         
         coordinator.photoalbumOutput.receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] image in
-                let data = PrintableDataBox(id: Date().millisecondsSince1970.description, image: image, document: nil)
-            self?.userSession.input.send(.addItems([data]))
+            .sink(receiveValue: { [weak self] dataBox in
+            self?.userSession.input.send(.addItems([dataBox]))
         })
         .store(in: &bag)
         

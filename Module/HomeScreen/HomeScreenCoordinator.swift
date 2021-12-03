@@ -14,7 +14,7 @@ import Combine
 
 protocol HomeScreenCoordinatorProtocol {
     var cameraScanerOutput: AnyPublisher<[UIImage], Never> { get }
-    var photoalbumOutput: AnyPublisher<UIImage, Never> { get }
+    var photoalbumOutput: AnyPublisher<PrintableDataBox, Never> { get }
     var cloudFilesOutput: AnyPublisher<PDFDocument, Never> { get }
     
     func showMainMenuAndHandleActions()
@@ -33,7 +33,7 @@ final class HomeScreenCoordinator: CoordinatorProtocol, HomeScreenCoordinatorPro
     var cameraScanerOutput: AnyPublisher<[UIImage], Never> {
         cameraScaner.output.eraseToAnyPublisher()
     }
-    var photoalbumOutput: AnyPublisher<UIImage, Never> {
+    var photoalbumOutput: AnyPublisher<PrintableDataBox, Never> {
         photoalbumManager.output.eraseToAnyPublisher()
     }
     var cloudFilesOutput: AnyPublisher<PDFDocument, Never> {
@@ -80,10 +80,9 @@ final class HomeScreenCoordinator: CoordinatorProtocol, HomeScreenCoordinatorPro
                 switch homeMenuActionSelected {
                 case .closeAction: break
                 case .printPhoto: self?.showPhotoPicker()
-                case .scanAction: break
+                case .scanAction: self?.showCameraScaner()
                 case .printDocument: break
                 }
-
             self?.closeMenu()
         })
         .store(in: &self.bag)

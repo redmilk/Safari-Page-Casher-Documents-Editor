@@ -10,15 +10,15 @@ import Combine
 import PhotosUI
 
 protocol PhotoalbumManager {
-    var output: AnyPublisher<UIImage, Never> { get }
+    var output: AnyPublisher<PrintableDataBox, Never> { get }
     func displayPhotoLibrary(_ parentController: UIViewController)
 }
 
 final class PhotoalbumManagerImpl: NSObject, PhotoalbumManager {
     
-    var output: AnyPublisher<UIImage, Never> { _output.eraseToAnyPublisher() }
+    var output: AnyPublisher<PrintableDataBox, Never> { _output.eraseToAnyPublisher() }
     private var picker: PHPickerViewController!
-    private let _output = PassthroughSubject<UIImage, Never>()
+    private let _output = PassthroughSubject<PrintableDataBox, Never>()
     
     func displayPhotoLibrary(_ parentController: UIViewController) {
         var configuration = PHPickerConfiguration()
@@ -35,12 +35,15 @@ final class PhotoalbumManagerImpl: NSObject, PhotoalbumManager {
 extension PhotoalbumManagerImpl: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         picker.dismiss(animated: true)
-        let itemProviders = results.map(\.itemProvider)
+        let itemProviders = results.map { ($0.assetIdentifier, $0.itemProvider) }
         for item in itemProviders {
-            if item.canLoadObject(ofClass: UIImage.self) {
-                item.loadObject(ofClass: UIImage.self) { [weak self] (image, error) in
+            if item.1.canLoadObject(ofClass: UIImage.self) {
+                item.1.loadObject(ofClass: UIImage.self) { [weak self] (image, error) in
                     if let image = image as? UIImage {
-                        self?._output.send(image)
+                        self?._output.send(
+                            PrintableDataBox(id: item.0 ?? Date().millisecondsSince1970.description,
+                                             image: image, document: nil)
+                        )
                     }
                 }
             }
