@@ -11,7 +11,7 @@ import PDFKit.PDFDocument
 final class PrintableDataBox: Hashable, Equatable {
     
     let id: String
-    var isAddButton: Bool = false
+    let isAddButton: Bool
     
     /// scan or photoalbum item
     var image: UIImage?
@@ -20,14 +20,12 @@ final class PrintableDataBox: Hashable, Equatable {
     var document: PDFDocument?
     var documentPage: Int?
     
-    var containsImage: Bool { image != nil }
-    var containsDocument: Bool { document != nil }
-    
-    init(id: String, image: UIImage?, document: PDFDocument?) {
+    init(id: String, image: UIImage?, document: PDFDocument?, isAddButton: Bool = false) {
         self.id = id
         print("PrintableDataBox id: \(id)")
         self.image = image
         self.document = document
+        self.isAddButton = isAddButton
     }
     
     func hash(into hasher: inout Hasher) {

@@ -20,6 +20,7 @@ protocol HomeScreenCoordinatorProtocol {
     
     func showMainMenuAndHandleActions()
     func closeMenu()
+    func displayPrintSettings()
 }
 
 final class HomeScreenCoordinator: CoordinatorProtocol, HomeScreenCoordinatorProtocol {
@@ -101,6 +102,11 @@ final class HomeScreenCoordinator: CoordinatorProtocol, HomeScreenCoordinatorPro
                 }
             })
         .store(in: &self.bag)
+    }
+    
+    func displayPrintSettings() {
+        let coordinator = PrintingOptionsCoordinator(navigationController: navigationController)
+        coordinator.start()
     }
     
     func closeMenu() {

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -23,7 +23,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeScreenViewController" customModule="AirPrint" customModuleProvider="target">
             <connections>
-                <outlet property="bottomButton" destination="ASg-t1-B3o" id="tVE-di-gbi"/>
                 <outlet property="collectionView" destination="zTA-bp-dXM" id="XbD-Qb-W32"/>
                 <outlet property="emptyStateContainer" destination="WcU-ea-gpP" id="lD8-OL-TGB"/>
                 <outlet property="giftPanelContainer" destination="Mn8-iC-QAh" id="0Pw-ZQ-xw2"/>
@@ -33,6 +32,7 @@
                 <outlet property="plusButton" destination="QPV-dX-F7R" id="5JB-uh-fko"/>
                 <outlet property="plusButtonContainer" destination="wzP-ou-u7F" id="GQN-Xa-duS"/>
                 <outlet property="plusButtonDescriptionContainer" destination="Sci-Gt-Z0J" id="dhg-SK-Iwu"/>
+                <outlet property="printButton" destination="ASg-t1-B3o" id="tVE-di-gbi"/>
                 <outlet property="settingsButton" destination="4Q8-A1-7v2" id="eh0-tS-hNX"/>
                 <outlet property="view" destination="iN0-l3-epB" id="QdU-Od-Sam"/>
             </connections>
@@ -240,7 +240,7 @@
                                         <constraint firstAttribute="height" constant="60" id="Ksq-fU-gdO"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="15"/>
-                                    <state key="normal" title="Scan">
+                                    <state key="normal" title="Print">
                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </state>
                                 </button>

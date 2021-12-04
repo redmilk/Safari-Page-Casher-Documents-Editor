@@ -47,12 +47,11 @@ extension PhotoalbumManagerImpl: PHPickerViewControllerDelegate {
                 group.enter()
                 item.1.loadObject(ofClass: UIImage.self) { [weak self] (image, error) in
                     if let image = image as? UIImage {
-                        print("♥️♥️♥️")
                         self?._output.send(
                             PrintableDataBox(id: item.0 ?? Date().millisecondsSince1970.description,
                                 image: image, document: nil))
-                        self?.group.leave()
                     }
+                    self?.group.leave()
                 }
             }
         }

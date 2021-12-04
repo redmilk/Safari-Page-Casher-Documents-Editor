@@ -11,12 +11,18 @@ import Combine
 protocol UserSession {
     var input: PassthroughSubject<UserSessionImpl.Action, Never> { get }
     var output: PassthroughSubject<[PrintableDataBox], Never> { get }
+    /// user session items storage
+    var sessionResult: [PrintableDataBox] { get }
 }
 
 final class UserSessionImpl: UserSession {
     enum Action {
         case addItems([PrintableDataBox])
         case deleteItem(PrintableDataBox)
+    }
+    
+    var sessionResult: [PrintableDataBox] {
+        Array(sessionData.keys).sorted { $0.id < $1.id }
     }
     
     var input = PassthroughSubject<Action, Never>()

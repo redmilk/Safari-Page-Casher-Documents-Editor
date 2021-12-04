@@ -12,14 +12,18 @@ import UIKit.UINavigationController
 import Combine
 
 protocol PrintingOptionsCoordinatorProtocol {
-   
+    func displayDefaultPrintingOptionsDialog(withPdfData data: Data)
 }
 
 final class PrintingOptionsCoordinator: CoordinatorProtocol, PrintingOptionsCoordinatorProtocol {
-    var navigationController: UINavigationController?
+    weak var navigationController: UINavigationController?
     
-    init() {
-
+    lazy var printingOptionsManager = PrintingOptionsManager(finishCallback: { [weak self] in
+        self?.end()
+    })
+    
+    init(navigationController: UINavigationController?) {
+        self.navigationController = navigationController
     }
     deinit {
         Logger.log(String(describing: self), type: .deinited)
@@ -28,10 +32,14 @@ final class PrintingOptionsCoordinator: CoordinatorProtocol, PrintingOptionsCoor
     func start() {
         let viewModel = PrintingOptionsViewModel(coordinator: self)
         let controller = PrintingOptionsViewController(viewModel: viewModel)
-
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    func displayDefaultPrintingOptionsDialog(withPdfData data: Data) {
+        printingOptionsManager.printUserSessionDataToLocalPrinter(pdfData: data, jobName: "Printing AirPrint's app current session result...")
     }
     
     func end() {
-
+        navigationController?.popToRootViewController(animated: false)
     }
 }

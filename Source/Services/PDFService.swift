@@ -9,6 +9,7 @@ import Foundation
 import PDFKit
 
 protocol PDFService {
+    func convertUserSessionDataToSinglePdfDocument(_ sessionData: [PrintableDataBox]) -> PDFDocument?
     func makeSeparatePdfDocumentFromPdf(_ pdf: PDFDocument) -> [PDFDocument]
     func makePdfFilesFromImages(_ images: [UIImage]) -> [PDFDocument]
     func mergePdfDocumentsIntoSingleFile(_ pdfFiles: [PDFDocument]) -> PDFDocument?
@@ -54,5 +55,19 @@ final class PDFServiceImpl: PDFService {
         }
         guard resultDocument.pageCount != 0 else { return nil }
         return resultDocument
+    }
+    
+    func convertUserSessionDataToSinglePdfDocument(_ sessionData: [PrintableDataBox]) -> PDFDocument? {
+        let resultSinglePdf = PDFDocument()
+        for (index, dataBox) in sessionData.enumerated() {
+            if let image = dataBox.image {
+                let pdfPage = PDFPage(image: image)
+                resultSinglePdf.insert(pdfPage!, at: index)
+            } else if let pdfPage = dataBox.document?.page(at: 0) {
+                resultSinglePdf.insert(pdfPage, at: index)
+            }
+        }
+        guard resultSinglePdf.pageCount > 0 else { return nil }
+        return resultSinglePdf
     }
 }

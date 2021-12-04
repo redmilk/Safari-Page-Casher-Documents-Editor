@@ -24,11 +24,6 @@ final class PrintingOptionsViewController: UIViewController {
     init(viewModel: PrintingOptionsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: String(describing: PrintingOptionsViewController.self), bundle: nil)
-        /**
-         CONNECT FILE'S OWNER TO SUPERVIEW IN XIB FILE
-         CONNECT FILE'S OWNER TO SUPERVIEW IN XIB FILE
-         CONNECT FILE'S OWNER TO SUPERVIEW IN XIB FILE
-         */
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -39,8 +34,9 @@ final class PrintingOptionsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         handleStates()
+        /// entry point
+        viewModel.input.send(.showDefaultPrintingDialog)
     }
 }
 

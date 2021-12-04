@@ -43,8 +43,7 @@ final class HomeCollectionManager: NSObject, InteractionFeedbackService { /// NS
     func applySnapshot(items: [PrintableDataBox]) {
         var snapshot = Snapshot()
         let section = ResultPreviewSection(items: [], title: "Main Section")
-        let item = PrintableDataBox(id: "1", image: nil, document: nil)
-        item.isAddButton = true
+        let item = PrintableDataBox(id: "1", image: nil, document: nil, isAddButton: true)
         snapshot.appendSections([section])
         snapshot.appendItems([item])
         snapshot.appendItems(items)

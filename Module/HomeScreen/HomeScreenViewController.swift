@@ -26,7 +26,7 @@ final class HomeScreenViewController: UIViewController {
     @IBOutlet private weak var plusButtonDescriptionContainer: UIStackView!
     @IBOutlet private weak var plusButton: UIButton!
     // MARK: - Common state controls
-    @IBOutlet private weak var bottomButton: UIButton!
+    @IBOutlet private weak var printButton: UIButton!
     @IBOutlet private weak var navigationBarExtenderView: UIView!
     @IBOutlet private weak var settingsButton: UIButton!
     @IBOutlet private weak var logoView: UIView!
@@ -97,29 +97,33 @@ private extension HomeScreenViewController {
                 self?.displayManager.applySnapshot(items: data)
                 self?.emptyStateContainer.isHidden = true
                 self?.collectionView.isHidden = false
+                self?.printButton.isEnabled = true
             case .empty:
                 self?.collectionView.isHidden = true
                 self?.emptyStateContainer.isHidden = false
+                self?.printButton.isEnabled = false
             }
         })
         .store(in: &bag)
     }
     
     private func configureView() {
-    
         plusButton.publisher().sink(receiveValue: { [weak self] _ in
-            guard let self = self else { return }
-            self.viewModel.input.send(.openMenu)
+            self?.viewModel.input.send(.openMenu)
+        })
+        .store(in: &bag)
+        
+        printButton.publisher().sink(receiveValue: { [weak self] _ in
+            self?.viewModel.input.send(.didTapPrint)
         })
         .store(in: &bag)
         
         displayManager.output.sink(receiveValue: { [weak self] action in
-            guard let self = self else { return }
             switch action {
             case .didPressCell(let indexPath) where indexPath.row == 0:
-                self.viewModel.input.send(.openMenu)
+                self?.viewModel.input.send(.openMenu)
             case .deleteCell(let data):
-                self.viewModel.input.send(.deleteItem(data))
+                self?.viewModel.input.send(.deleteItem(data))
             case _: break
             }
         })
@@ -133,7 +137,7 @@ private extension HomeScreenViewController {
         plusButtonDescriptionContainer.addCornerRadius(8)
         plusButtonContainer.addCornerRadius(StylingConstants.cornerRadiusDefault)
         plusButton.addCornerRadius(38)
-        bottomButton.addCornerRadius(StylingConstants.cornerRadiusDefault)
+        printButton.addCornerRadius(StylingConstants.cornerRadiusDefault)
         navigationBarExtenderView.addCornerRadius(30)
         navigationBarExtenderView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         settingsButton.addCornerRadius(20.0)

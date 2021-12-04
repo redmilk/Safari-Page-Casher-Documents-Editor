@@ -14,6 +14,7 @@ final class HomeScreenViewModel: UserSessionServiceProvidable, PdfServiceProvida
     enum Action {
         case openMenu
         case deleteItem(PrintableDataBox)
+        case didTapPrint
     }
     
     let input = PassthroughSubject<HomeScreenViewModel.Action, Never>()
@@ -44,6 +45,8 @@ private extension HomeScreenViewModel {
                 self?.coordinator.showMainMenuAndHandleActions()
             case .deleteItem(let data):
                 self?.userSession.input.send(.deleteItem(data))
+            case .didTapPrint:
+                self?.coordinator.displayPrintSettings()
             }
         })
         .store(in: &bag)
