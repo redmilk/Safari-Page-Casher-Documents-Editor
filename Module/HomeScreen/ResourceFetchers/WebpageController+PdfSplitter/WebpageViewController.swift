@@ -82,6 +82,9 @@ private extension WebpageViewController {
         func defineNextPdfPageRectWithContentSize(_ contentSize: CGSize) -> [CGRect] {
             let pageHeight = UIScreen.main.bounds.height
             let pageWidth = UIScreen.main.bounds.width
+            print("🙂")
+            print(webContentSize?.width)
+            print(pageWidth)
             let pagesCount = Int((contentSize.height / pageHeight).rounded(.up))
             var result: [CGRect] = []
             for i in 0...pagesCount {
@@ -97,7 +100,7 @@ private extension WebpageViewController {
                 switch result {
                 case .success(let data):
                     guard let pdf = PDFDocument(data: data), let self = self else { return }
-                    let dataBox = PrintableDataBox(id: Date().millisecondsSince1970.description, image: self.pdfService.makeImageFromPdfDocument(pdf, withImageSize: pdfRect.size, ofPageIndex: 0), document: pdf)
+                    let dataBox = PrintableDataBox(id: Date().millisecondsSince1970.description, image: self.pdfService.makeImageFromPDFDocument(pdf, withImageSize: pdfRect.size, ofPageIndex: 0), document: pdf)
                 completion(dataBox)
                 case .failure(let error):
                     completion(nil)

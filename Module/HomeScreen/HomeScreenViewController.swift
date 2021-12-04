@@ -120,14 +120,21 @@ private extension HomeScreenViewController {
         
         displayManager.output.sink(receiveValue: { [weak self] action in
             switch action {
-            case .didPressCell(let indexPath) where indexPath.row == 0:
-                self?.viewModel.input.send(.openMenu)
+            case .didPressCell(let cellConfig):
+                self?.resolvePressedCellActionForConfig(cellConfig)
             case .deleteCell(let data):
                 self?.viewModel.input.send(.deleteItem(data))
             case _: break
             }
         })
         .store(in: &bag)
+    }
+    
+    private func resolvePressedCellActionForConfig(_ cellConfig: ResultPreviewCollectionCell.Configuration) {
+        switch cellConfig {
+        case .add: viewModel.input.send(.openMenu)
+        case .content(let dataBox): viewModel.input.send(.openFileEditor(dataBox))
+        }
     }
     
     private func applyStyling() {

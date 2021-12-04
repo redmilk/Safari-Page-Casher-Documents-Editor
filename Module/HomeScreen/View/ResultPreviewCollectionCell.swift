@@ -9,7 +9,7 @@ import UIKit
 
 final class ResultPreviewCollectionCell: UICollectionViewCell {
 
-    enum State {
+    enum Configuration {
         case add
         case content(PrintableDataBox)
     }
@@ -20,7 +20,7 @@ final class ResultPreviewCollectionCell: UICollectionViewCell {
     @IBOutlet private weak var deleButton: UIButton!
     
     var deleteButtonDidPress: ((PrintableDataBox) -> Void)?
-    private var state: State!
+    var configuration: Configuration!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -30,8 +30,8 @@ final class ResultPreviewCollectionCell: UICollectionViewCell {
         contentView.addCornerRadius(17.0)
     }
     
-    func configure(withState state: State) {
-        self.state = state
+    func configure(withState state: Configuration) {
+        self.configuration = state
         switch state {
         case .add:
             thumbnailImageView.isHidden = true
@@ -46,7 +46,7 @@ final class ResultPreviewCollectionCell: UICollectionViewCell {
     }
 
     @IBAction private func handleDeletePressed(_ sender: UIButton) {
-        guard case .content(let data) = state else { return }
+        guard case .content(let data) = configuration else { return }
         deleteButtonDidPress?(data)
     }
 }

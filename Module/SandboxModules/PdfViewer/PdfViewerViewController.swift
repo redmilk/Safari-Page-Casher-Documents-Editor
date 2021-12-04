@@ -142,7 +142,7 @@ extension PdfViewerViewController: QLPreviewControllerDelegate {
         
         let newPage = newPdf.page(at: 0)!
         let pageSize = newPage.bounds(for: .mediaBox)
-        let image: UIImage? = pdfService.makeImageFromPdfDocument(newPdf, withImageSize: pageSize.size, ofPageIndex: 0)
+        let image: UIImage? = pdfService.makeImageFromPDFDocument(newPdf, withImageSize: pageSize.size, ofPageIndex: 0)
         let imageView = UIImageView(image: image)
         resultStackView.addArrangedSubview(imageView)
     }

@@ -9,21 +9,22 @@ import Foundation
 import PDFKit
 
 protocol PDFService {
-    func convertUserSessionDataToSinglePdfDocument(_ sessionData: [PrintableDataBox]) -> PDFDocument?
-    func makeSeparatePdfDocumentFromPdf(_ pdf: PDFDocument) -> [PDFDocument]
-    func makePdfFilesFromImages(_ images: [UIImage]) -> [PDFDocument]
-    func mergePdfDocumentsIntoSingleFile(_ pdfFiles: [PDFDocument]) -> PDFDocument?
-    func makeImageFromPdfDocument(_ pdfDocument: PDFDocument, withImageSize size: CGSize, ofPageIndex page: Int) -> UIImage?
+    func convertPrintableDataBoxesToSinglePDFDocument(_ sessionData: [PrintableDataBox]) -> PDFDocument?
+    func makeSeparatePDFDocumentsFromPDF(_ pdf: PDFDocument) -> [PDFDocument]
+    func makePDFFilesFromImages(_ images: [UIImage]) -> [PDFDocument]
+    func mergePDFDocumentsIntoSingleFile(_ pdfFiles: [PDFDocument]) -> PDFDocument?
+    func makeImageFromPDFDocument(_ pdfDocument: PDFDocument, withImageSize size: CGSize, ofPageIndex page: Int) -> UIImage?
+    func savePdfIntoTempDirectory(_ pdf: PDFDocument, filepath: URL)
 }
 
 final class PDFServiceImpl: PDFService {
     
-    func makeImageFromPdfDocument(_ pdfDocument: PDFDocument, withImageSize size: CGSize, ofPageIndex page: Int) -> UIImage? {
+    func makeImageFromPDFDocument(_ pdfDocument: PDFDocument, withImageSize size: CGSize, ofPageIndex page: Int) -> UIImage? {
         let pdfDocumentPage = pdfDocument.page(at: page)
         return pdfDocumentPage?.thumbnail(of: size, for: PDFDisplayBox.trimBox)
     }
         
-    func makePdfFilesFromImages(_ images: [UIImage]) -> [PDFDocument] {
+    func makePDFFilesFromImages(_ images: [UIImage]) -> [PDFDocument] {
         var pdfDocumentList: [PDFDocument] = []
         for (index,image) in images.enumerated() {
             let document = PDFDocument()
@@ -34,7 +35,7 @@ final class PDFServiceImpl: PDFService {
         return pdfDocumentList
     }
     
-    func makeSeparatePdfDocumentFromPdf(_ pdf: PDFDocument) -> [PDFDocument] {
+    func makeSeparatePDFDocumentsFromPDF(_ pdf: PDFDocument) -> [PDFDocument] {
         guard pdf.pageCount != 0 else { return [] }
         var pdfList: [PDFDocument] = []
         for i in 0...pdf.pageCount {
@@ -46,7 +47,7 @@ final class PDFServiceImpl: PDFService {
         return pdfList
     }
     
-    func mergePdfDocumentsIntoSingleFile(_ pdfFiles: [PDFDocument]) -> PDFDocument? {
+    func mergePDFDocumentsIntoSingleFile(_ pdfFiles: [PDFDocument]) -> PDFDocument? {
         guard !pdfFiles.isEmpty else { return nil }
         let resultDocument = PDFDocument()
         pdfFiles.forEach {
@@ -57,7 +58,7 @@ final class PDFServiceImpl: PDFService {
         return resultDocument
     }
     
-    func convertUserSessionDataToSinglePdfDocument(_ sessionData: [PrintableDataBox]) -> PDFDocument? {
+    func convertPrintableDataBoxesToSinglePDFDocument(_ sessionData: [PrintableDataBox]) -> PDFDocument? {
         let resultSinglePdf = PDFDocument()
         for (index, dataBox) in sessionData.enumerated() {
             if let image = dataBox.image {
@@ -69,5 +70,10 @@ final class PDFServiceImpl: PDFService {
         }
         guard resultSinglePdf.pageCount > 0 else { return nil }
         return resultSinglePdf
+    }
+        
+    func savePdfIntoTempDirectory(_ pdf: PDFDocument, filepath: URL) {
+        let pdfData = pdf.dataRepresentation()!
+        try? pdfData.write(to: filepath)
     }
 }

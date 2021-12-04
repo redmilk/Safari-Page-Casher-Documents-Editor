@@ -32,10 +32,10 @@ extension CloudFilesManagerImpl: UIDocumentPickerDelegate {
     
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         guard let url = urls.first, let pdf = PDFDocument(url: url) else { return }
-        let pdfPagesAsDocuments = pdfService.makeSeparatePdfDocumentFromPdf(pdf)
+        let pdfPagesAsDocuments = pdfService.makeSeparatePDFDocumentsFromPDF(pdf)
         let dataBoxList = pdfPagesAsDocuments.map {
             PrintableDataBox(id: Date().millisecondsSince1970.description,
-                             image: self.pdfService.makeImageFromPdfDocument($0, withImageSize: UIScreen.main.bounds.size, ofPageIndex: 0),
+                             image: self.pdfService.makeImageFromPDFDocument($0, withImageSize: UIScreen.main.bounds.size, ofPageIndex: 0),
                              document: $0)
         }
         _output.send(dataBoxList)

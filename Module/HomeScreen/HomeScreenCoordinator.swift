@@ -21,6 +21,7 @@ protocol HomeScreenCoordinatorProtocol {
     func showMainMenuAndHandleActions()
     func closeMenu()
     func displayPrintSettings()
+    func displayFileEditor(fileURL: URL)
 }
 
 final class HomeScreenCoordinator: CoordinatorProtocol, HomeScreenCoordinatorProtocol {
@@ -106,6 +107,11 @@ final class HomeScreenCoordinator: CoordinatorProtocol, HomeScreenCoordinatorPro
     
     func displayPrintSettings() {
         let coordinator = PrintingOptionsCoordinator(navigationController: navigationController)
+        coordinator.start()
+    }
+    
+    func displayFileEditor(fileURL: URL) {
+        let coordinator = EditScreenCoordinator(navigationController: navigationController, fileURL: fileURL)
         coordinator.start()
     }
     

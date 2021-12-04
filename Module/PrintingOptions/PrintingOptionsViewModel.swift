@@ -48,7 +48,7 @@ private extension PrintingOptionsViewModel {
     }
         
     func prepareSessionPrintingData() -> Data? {
-        guard let resultPdf = pdfService.convertUserSessionDataToSinglePdfDocument(userSession.sessionResult) else {
+        guard let resultPdf = pdfService.convertPrintableDataBoxesToSinglePDFDocument(userSession.sessionResult) else {
             return nil
         }
         return resultPdf.dataRepresentation()

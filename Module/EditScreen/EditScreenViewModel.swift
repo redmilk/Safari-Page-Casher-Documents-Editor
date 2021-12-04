@@ -12,7 +12,7 @@ import Combine
 
 final class EditScreenViewModel {
     enum Action {
-        case dummyAction
+        case displayFileEditor
     }
     
     let input = PassthroughSubject<EditScreenViewModel.Action, Never>()
@@ -38,8 +38,8 @@ private extension EditScreenViewModel {
     private func dispatchActions() {
         input.sink(receiveValue: { [weak self] action in
             switch action {
-            case .dummyAction:
-                break
+            case .displayFileEditor: break
+                //self?.coordinator.displayPDFEdit(navigation: <#UINavigationController?#>)
             }
         })
         .store(in: &bag)

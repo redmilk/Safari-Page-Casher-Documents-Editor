@@ -271,7 +271,7 @@ private extension ExampleViewController {
     }
     
     func convertImagesToPDF(_ images: [UIImage]) -> PDFDocument? {
-        pdfService.makePdfFilesFromImages(images).first
+        pdfService.makePDFFilesFromImages(images).first
     }
     
     func saveDrawing() {
@@ -301,7 +301,7 @@ private extension ExampleViewController {
 extension ExampleViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[.originalImage] as? UIImage else { return }
-        let pdf = pdfService.makePdfFilesFromImages([image])
+        let pdf = pdfService.makePDFFilesFromImages([image])
         
         dismiss(animated: true)
     }

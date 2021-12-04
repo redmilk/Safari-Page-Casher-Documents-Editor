@@ -11,6 +11,8 @@
 		79194A62275BA729003E2539 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79194A61275BA729003E2539 /* Constants.swift */; };
 		79194A67275BABE5003E2539 /* PrintingOptionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79194A66275BABE5003E2539 /* PrintingOptionsManager.swift */; };
 		79194A6A275BAE24003E2539 /* PrinterPickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79194A69275BAE24003E2539 /* PrinterPickerManager.swift */; };
+		79194A6E275BD568003E2539 /* PDFEditManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79194A6D275BD568003E2539 /* PDFEditManager.swift */; };
+		79194A74275BDA43003E2539 /* FileManager+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79194A73275BDA43003E2539 /* FileManager+Extensions.swift */; };
 		79280E44274BD57D001768A2 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79280E43274BD57D001768A2 /* UIViewController+Extensions.swift */; };
 		792D661127552DE300063F4B /* CameraScanManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792D661027552DE300063F4B /* CameraScanManager.swift */; };
 		792D66152755394000063F4B /* PhotoalbumManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792D66142755394000063F4B /* PhotoalbumManager.swift */; };
@@ -86,7 +88,6 @@
 		79E46073274D495F00FD22E1 /* PdfViewerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79E4606F274D495F00FD22E1 /* PdfViewerViewController.xib */; };
 		79F80FBC2752A93C00081C7A /* ServicesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F80FBB2752A93C00081C7A /* ServicesContainer.swift */; };
 		79F80FC22752B00000081C7A /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F80FC12752B00000081C7A /* UIImage+Extensions.swift */; };
-		79F80FC62752B36B00081C7A /* PDFDocument+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F80FC52752B36B00081C7A /* PDFDocument+Extension.swift */; };
 		79F80FCC2752E62500081C7A /* ViewHierarchyDebugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F80FCB2752E62400081C7A /* ViewHierarchyDebugger.swift */; };
 		79F913B42746501500771FFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F913B32746501500771FFE /* AppDelegate.swift */; };
 		79F913B62746501500771FFE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F913B52746501500771FFE /* SceneDelegate.swift */; };
@@ -99,6 +100,8 @@
 		79194A61275BA729003E2539 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		79194A66275BABE5003E2539 /* PrintingOptionsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintingOptionsManager.swift; sourceTree = "<group>"; };
 		79194A69275BAE24003E2539 /* PrinterPickerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrinterPickerManager.swift; sourceTree = "<group>"; };
+		79194A6D275BD568003E2539 /* PDFEditManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFEditManager.swift; sourceTree = "<group>"; };
+		79194A73275BDA43003E2539 /* FileManager+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Extensions.swift"; sourceTree = "<group>"; };
 		79280E43274BD57D001768A2 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		792D661027552DE300063F4B /* CameraScanManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraScanManager.swift; sourceTree = "<group>"; };
 		792D66142755394000063F4B /* PhotoalbumManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoalbumManager.swift; sourceTree = "<group>"; };
@@ -183,7 +186,6 @@
 		79E4606F274D495F00FD22E1 /* PdfViewerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PdfViewerViewController.xib; sourceTree = "<group>"; };
 		79F80FBB2752A93C00081C7A /* ServicesContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesContainer.swift; sourceTree = "<group>"; };
 		79F80FC12752B00000081C7A /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
-		79F80FC52752B36B00081C7A /* PDFDocument+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDFDocument+Extension.swift"; sourceTree = "<group>"; };
 		79F80FCB2752E62400081C7A /* ViewHierarchyDebugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewHierarchyDebugger.swift; sourceTree = "<group>"; };
 		79F913B02746501500771FFE /* AirPrint.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AirPrint.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		79F913B32746501500771FFE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -222,6 +224,14 @@
 			path = Entity;
 			sourceTree = "<group>";
 		};
+		79194A6C275BD518003E2539 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				79194A6D275BD568003E2539 /* PDFEditManager.swift */,
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
 		792D660D27552D1D00063F4B /* ResourceFetchers */ = {
 			isa = PBXGroup;
 			children = (
@@ -247,9 +257,9 @@
 		79408321274D488600DFCAD6 /* PdfViewer */ = {
 			isa = PBXGroup;
 			children = (
-				79E4606C274D495F00FD22E1 /* PdfViewerCoordinator.swift */,
 				79E4606D274D495F00FD22E1 /* PdfViewerViewController.swift */,
 				79E4606E274D495F00FD22E1 /* PdfViewerViewModel.swift */,
+				79E4606C274D495F00FD22E1 /* PdfViewerCoordinator.swift */,
 				79E4606F274D495F00FD22E1 /* PdfViewerViewController.xib */,
 			);
 			path = PdfViewer;
@@ -304,9 +314,9 @@
 				794F73E22746B36800B07410 /* UIView+Extensions.swift */,
 				79280E43274BD57D001768A2 /* UIViewController+Extensions.swift */,
 				79F80FC12752B00000081C7A /* UIImage+Extensions.swift */,
-				79F80FC52752B36B00081C7A /* PDFDocument+Extension.swift */,
 				7940AC852754F7890028B45F /* UIButton+Extensions.swift */,
 				79416D352759943000262593 /* Date+Extensions.swift */,
+				79194A73275BDA43003E2539 /* FileManager+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -472,8 +482,8 @@
 				79B787F22750B429009D7655 /* HomeScreenCoordinator.swift */,
 				79B787F52750B429009D7655 /* HomeScreenViewController.xib */,
 				79A725AE2750C3C700D8B330 /* View */,
-				79A725A82750BE6F00D8B330 /* Model */,
 				793ADF582754E23900F58923 /* MainMenu */,
+				79A725A82750BE6F00D8B330 /* Model */,
 				792D660D27552D1D00063F4B /* ResourceFetchers */,
 			);
 			path = HomeScreen;
@@ -482,10 +492,11 @@
 		79B787FD2750B540009D7655 /* EditScreen */ = {
 			isa = PBXGroup;
 			children = (
-				79B787FF2750B55C009D7655 /* EditScreenCoordinator.swift */,
 				79B788002750B55C009D7655 /* EditScreenViewController.swift */,
 				79B788012750B55C009D7655 /* EditScreenViewModel.swift */,
+				79B787FF2750B55C009D7655 /* EditScreenCoordinator.swift */,
 				79B788022750B55C009D7655 /* EditScreenViewController.xib */,
+				79194A6C275BD518003E2539 /* Entity */,
 			);
 			path = EditScreen;
 			sourceTree = "<group>";
@@ -663,13 +674,13 @@
 				79B576FA2754EC76006969F5 /* StylingConstants.swift in Sources */,
 				79A725B12750C41700D8B330 /* ResultPreviewCollectionCell.swift in Sources */,
 				79B787C22750B21D009D7655 /* AppSubscriptionViewController.swift in Sources */,
-				79F80FC62752B36B00081C7A /* PDFDocument+Extension.swift in Sources */,
 				794F73ED2746B36900B07410 /* Publisher+Extensions.swift in Sources */,
 				792D661127552DE300063F4B /* CameraScanManager.swift in Sources */,
 				79F80FBC2752A93C00081C7A /* ServicesContainer.swift in Sources */,
 				7983ECE22750B0D500B5C2AF /* iCarousel.m in Sources */,
 				792D661827553D6D00063F4B /* CloudFilesManager.swift in Sources */,
 				799AFB86274680EB00C37A6D /* ExampleViewModel.swift in Sources */,
+				79194A6E275BD568003E2539 /* PDFEditManager.swift in Sources */,
 				79B787CC2750B250009D7655 /* PrintingOptionsViewController.swift in Sources */,
 				79B787B62750B1E4009D7655 /* OnboardingViewController.swift in Sources */,
 				794F73E92746B36900B07410 /* UIView+Extensions.swift in Sources */,
@@ -721,6 +732,7 @@
 				79E46070274D495F00FD22E1 /* PdfViewerCoordinator.swift in Sources */,
 				79B787F82750B429009D7655 /* HomeScreenViewModel.swift in Sources */,
 				793ADF5E2754E36100F58923 /* HomeScreenMenuViewController.swift in Sources */,
+				79194A74275BDA43003E2539 /* FileManager+Extensions.swift in Sources */,
 				79F80FC22752B00000081C7A /* UIImage+Extensions.swift in Sources */,
 				79B787B52750B1E4009D7655 /* OnboardingCoordinator.swift in Sources */,
 			);

@@ -13,7 +13,7 @@ import Combine
 
 final class HomeCollectionManager: NSObject, InteractionFeedbackService { /// NSObject for collection delegate
     enum Action {
-        case didPressCell(IndexPath)
+        case didPressCell(ResultPreviewCollectionCell.Configuration)
         case deleteCell(PrintableDataBox)
     }
     
@@ -67,7 +67,7 @@ private extension HomeCollectionManager {
                 let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: String(describing: ResultPreviewCollectionCell.self),
                     for: indexPath) as? ResultPreviewCollectionCell
-                let cellState = item.isAddButton ? ResultPreviewCollectionCell.State.add : ResultPreviewCollectionCell.State.content(item)
+                let cellState = item.isAddButton ? ResultPreviewCollectionCell.Configuration.add : ResultPreviewCollectionCell.Configuration.content(item)
                 cell?.configure(withState: cellState)
                 cell?.deleteButtonDidPress = { [weak self] item in
                     self?.output.send(.deleteCell(item))
@@ -82,10 +82,11 @@ private extension HomeCollectionManager {
             /// item
             let size = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
             let item = NSCollectionLayoutItem(layoutSize: size)
-            item.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
+            item.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 0, bottom: 2, trailing: 0)
             /// group
             let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(self.collectionView.bounds.width), heightDimension: .absolute(self.collectionView.bounds.height / 3))
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 3)
+            group.interItemSpacing = .fixed(4)
             /// section
             let section = NSCollectionLayoutSection(group: group)
             section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
@@ -101,6 +102,8 @@ private extension HomeCollectionManager {
 extension HomeCollectionManager: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         generateInteractionFeedback()
-        output.send(.didPressCell(indexPath))
+        guard let cell = collectionView.cellForItem(at: indexPath) as? ResultPreviewCollectionCell,
+              let cellConfig = cell.configuration else { return }
+        output.send(.didPressCell(cellConfig))
     }
 }

@@ -10,9 +10,12 @@
 import Foundation
 import Combine
 
+import PDFKit.PDFDocument
+
 final class HomeScreenViewModel: UserSessionServiceProvidable, PdfServiceProvidable {
     enum Action {
         case openMenu
+        case openFileEditor(PrintableDataBox)
         case deleteItem(PrintableDataBox)
         case didTapPrint
     }
@@ -38,15 +41,32 @@ final class HomeScreenViewModel: UserSessionServiceProvidable, PdfServiceProvida
 
 private extension HomeScreenViewModel {
     
+    func prepareAndSaveDataBoxAsPDFDocumentIntoTempDir(_ dataBox: PrintableDataBox) -> URL? {
+        userSession.input.send(.createTempFileForEditing(withNameAndFormat: "\(dataBox.id).pdf"))
+        guard let tempfileURL = userSession.currentEditingFile?.fileURL,
+              let pdf = pdfService.convertPrintableDataBoxesToSinglePDFDocument([dataBox]) else {
+            Logger.log("Missing temp file for edit inside userSession")
+            return nil
+        }
+        pdfService.savePdfIntoTempDirectory(pdf, filepath: tempfileURL)
+        return tempfileURL
+    }
+    
     func handleActions() {
         input.sink(receiveValue: { [weak self] action in
             switch action {
             case .openMenu:
                 self?.coordinator.showMainMenuAndHandleActions()
-            case .deleteItem(let data):
-                self?.userSession.input.send(.deleteItem(data))
+            case .deleteItem(let dataBox):
+                self?.userSession.input.send(.deleteItem(dataBox))
             case .didTapPrint:
                 self?.coordinator.displayPrintSettings()
+            case .openFileEditor(let dataBox):
+                guard let fileURL = self?.prepareAndSaveDataBoxAsPDFDocumentIntoTempDir(dataBox) else { return }
+                if let pdftest = PDFDocument(url: fileURL) {
+                    print(pdftest.pageCount)
+                }
+                self?.coordinator.displayFileEditor(fileURL: fileURL)
             }
         })
         .store(in: &bag)
