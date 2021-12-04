@@ -96,12 +96,10 @@ private extension WebpageViewController {
             self.webView.createPDF(configuration: config) { [weak self] result in
                 switch result {
                 case .success(let data):
-                    print("create pdf success: \(data)")
                     guard let pdf = PDFDocument(data: data), let self = self else { return }
                     let dataBox = PrintableDataBox(id: Date().millisecondsSince1970.description, image: self.pdfService.makeImageFromPdfDocument(pdf, withImageSize: pdfRect.size, ofPageIndex: 0), document: pdf)
                 completion(dataBox)
                 case .failure(let error):
-                    print("create pdf failure: \(error)")
                     completion(nil)
                 }
                 self?.group.leave()

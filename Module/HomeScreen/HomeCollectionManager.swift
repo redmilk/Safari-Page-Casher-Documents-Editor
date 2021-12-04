@@ -48,7 +48,7 @@ final class HomeCollectionManager: NSObject, InteractionFeedbackService { /// NS
         snapshot.appendSections([section])
         snapshot.appendItems([item])
         snapshot.appendItems(items)
-        //sections.forEach { newSnapshot.appendItems($0.items, toSection: $0) }
+        Logger.log("collection items count: \(items.count - 1)")
         dataSource?.apply(snapshot, animatingDifferences: false)
     }
 }

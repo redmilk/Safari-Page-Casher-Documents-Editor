@@ -17,8 +17,9 @@ protocol PhotoalbumManager {
 final class PhotoalbumManagerImpl: NSObject, PhotoalbumManager {
     
     var output: AnyPublisher<PrintableDataBox, Never> { _output.eraseToAnyPublisher() }
-    private var picker: PHPickerViewController!
     private let _output = PassthroughSubject<PrintableDataBox, Never>()
+    private var picker: PHPickerViewController!
+    private let group = DispatchGroup()
     private var finishCallback: VoidClosure!
     
     func displayPhotoLibrary(_ parentController: UIViewController, presentationCallback: @escaping VoidClosure) {
@@ -27,7 +28,7 @@ final class PhotoalbumManagerImpl: NSObject, PhotoalbumManager {
         configuration.selectionLimit = 10
         configuration.filter = .any(of: [.livePhotos, .images])
         configuration.preferredAssetRepresentationMode = .automatic
-        let picker = PHPickerViewController(configuration: configuration)
+        picker = PHPickerViewController(configuration: configuration)
         picker.delegate = self
         picker.modalPresentationStyle = .fullScreen
         parentController.present(picker, animated: true, completion: nil)
@@ -36,16 +37,21 @@ final class PhotoalbumManagerImpl: NSObject, PhotoalbumManager {
 
 extension PhotoalbumManagerImpl: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        picker.dismiss(animated: true, completion: finishCallback)
+        group.notify(queue: DispatchQueue.main, execute: { [weak self] in
+            guard let finishCallback = self?.finishCallback else { return }
+            self?.picker.dismiss(animated: true, completion: finishCallback)
+        })
         let itemProviders = results.map { ($0.assetIdentifier, $0.itemProvider) }
         for item in itemProviders {
             if item.1.canLoadObject(ofClass: UIImage.self) {
+                group.enter()
                 item.1.loadObject(ofClass: UIImage.self) { [weak self] (image, error) in
                     if let image = image as? UIImage {
+                        print("♥️♥️♥️")
                         self?._output.send(
                             PrintableDataBox(id: item.0 ?? Date().millisecondsSince1970.description,
-                                             image: image, document: nil)
-                        )
+                                image: image, document: nil))
+                        self?.group.leave()
                     }
                 }
             }

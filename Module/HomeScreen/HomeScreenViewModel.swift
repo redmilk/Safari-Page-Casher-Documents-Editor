@@ -38,7 +38,6 @@ final class HomeScreenViewModel: UserSessionServiceProvidable, PdfServiceProvida
 private extension HomeScreenViewModel {
     
     func handleActions() {
-        /// Logger.log("handleActions")
         input.sink(receiveValue: { [weak self] action in
             switch action {
             case .openMenu:
@@ -55,21 +54,14 @@ private extension HomeScreenViewModel {
         })
         .store(in: &bag)
         
-        coordinator.cameraScanerOutput.sink(receiveValue: { [weak self] imageList in
-            let data = imageList.map {
-                PrintableDataBox(id: Date().millisecondsSince1970.description, image: $0, document: nil)
-            }
-            self?.userSession.input.send(.addItems(data))
+        coordinator.cameraScanerOutput.sink(receiveValue: { [weak self] dataBoxList in
+            self?.userSession.input.send(.addItems(dataBoxList))
         })
         .store(in: &bag)
         
-        coordinator.cloudFilesOutput.sink(receiveValue: { [weak self] pdf in
-            guard let pdfPagesAsDocuments = self?.pdfService.makeSeparatePdfDocumentFromPdf(pdf),
-                  let self = self else { return }
-            let imageThumbnails = pdfPagesAsDocuments.map { PrintableDataBox(id: Date().millisecondsSince1970.description, image: self.pdfService.makeImageFromPdfDocument($0, withImageSize: UIScreen.main.bounds.size, ofPageIndex: 0), document: $0) }
-            self.userSession.input.send(.addItems(imageThumbnails))
-            Logger.log("pdf thumbnail count: \(imageThumbnails.count.description)")
-            
+        coordinator.cloudFilesOutput.sink(receiveValue: { [weak self] dataBoxList in
+            Logger.log("pdf dataBoxList count: \(dataBoxList.count.description)")
+            self?.userSession.input.send(.addItems(dataBoxList))
         })
         .store(in: &bag)
         

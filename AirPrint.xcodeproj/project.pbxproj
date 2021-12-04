@@ -38,8 +38,6 @@
 		79763582274E88B9001D2155 /* InteractionFeedbackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79763581274E88B9001D2155 /* InteractionFeedbackService.swift */; };
 		7983ECCC275092AF00B5C2AF /* PDFService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7983ECCB275092AF00B5C2AF /* PDFService.swift */; };
 		7983ECE22750B0D500B5C2AF /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7983ECE02750B0D500B5C2AF /* iCarousel.m */; };
-		7995DFF42758F634003F8A31 /* MenuPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7995DFF32758F634003F8A31 /* MenuPopup.xib */; };
-		7995DFF72758F645003F8A31 /* MenuPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7995DFF62758F645003F8A31 /* MenuPopup.swift */; };
 		7997DE352753F82A00B33300 /* Poppins-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7997DE2F2753F82A00B33300 /* Poppins-ExtraLight.otf */; };
 		7997DE362753F82A00B33300 /* Poppins-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7997DE302753F82A00B33300 /* Poppins-Light.otf */; };
 		7997DE372753F82A00B33300 /* Poppins-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7997DE312753F82A00B33300 /* Poppins-Medium.otf */; };
@@ -134,8 +132,6 @@
 		7983ECDE2750B0D500B5C2AF /* AirPrint-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AirPrint-Bridging-Header.h"; sourceTree = "<group>"; };
 		7983ECDF2750B0D500B5C2AF /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
 		7983ECE02750B0D500B5C2AF /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
-		7995DFF32758F634003F8A31 /* MenuPopup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuPopup.xib; sourceTree = "<group>"; };
-		7995DFF62758F645003F8A31 /* MenuPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuPopup.swift; sourceTree = "<group>"; };
 		7997DE2F2753F82A00B33300 /* Poppins-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-ExtraLight.otf"; sourceTree = "<group>"; };
 		7997DE302753F82A00B33300 /* Poppins-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Light.otf"; sourceTree = "<group>"; };
 		7997DE312753F82A00B33300 /* Poppins-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Medium.otf"; sourceTree = "<group>"; };
@@ -214,10 +210,10 @@
 		792D660D27552D1D00063F4B /* ResourceFetchers */ = {
 			isa = PBXGroup;
 			children = (
+				79A2804E275B266A00DD1AB1 /* WebpageController+PdfSplitter */,
 				792D661027552DE300063F4B /* CameraScanManager.swift */,
 				792D66142755394000063F4B /* PhotoalbumManager.swift */,
 				792D661727553D6D00063F4B /* CloudFilesManager.swift */,
-				796B1AD1275A0973005864B0 /* WebpageManager.swift */,
 			);
 			path = ResourceFetchers;
 			sourceTree = "<group>";
@@ -266,8 +262,6 @@
 		79480ADA275AF10D00A5A8E1 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				79697CD2275AF1FC0056B0B0 /* WebpageViewController.swift */,
-				79697CD4275AF1FC0056B0B0 /* WebpageViewController.xib */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -350,15 +344,6 @@
 			path = CarouselView;
 			sourceTree = "<group>";
 		};
-		7995DFF22758F611003F8A31 /* Menu */ = {
-			isa = PBXGroup;
-			children = (
-				7995DFF32758F634003F8A31 /* MenuPopup.xib */,
-				7995DFF62758F645003F8A31 /* MenuPopup.swift */,
-			);
-			path = Menu;
-			sourceTree = "<group>";
-		};
 		7997DE2C2753F81C00B33300 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -379,6 +364,16 @@
 			path = poppins;
 			sourceTree = "<group>";
 		};
+		79A2804E275B266A00DD1AB1 /* WebpageController+PdfSplitter */ = {
+			isa = PBXGroup;
+			children = (
+				796B1AD1275A0973005864B0 /* WebpageManager.swift */,
+				79697CD2275AF1FC0056B0B0 /* WebpageViewController.swift */,
+				79697CD4275AF1FC0056B0B0 /* WebpageViewController.xib */,
+			);
+			path = "WebpageController+PdfSplitter";
+			sourceTree = "<group>";
+		};
 		79A725A82750BE6F00D8B330 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -390,7 +385,6 @@
 		79A725AE2750C3C700D8B330 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				7995DFF22758F611003F8A31 /* Menu */,
 				79A725AF2750C41700D8B330 /* ResultPreviewCollectionCell.swift */,
 				79A725B02750C41700D8B330 /* ResultPreviewCollectionCell.xib */,
 			);
@@ -628,7 +622,6 @@
 				7997DE372753F82A00B33300 /* Poppins-Medium.otf in Resources */,
 				79B787CE2750B250009D7655 /* PrintingOptionsViewController.xib in Resources */,
 				7997DE362753F82A00B33300 /* Poppins-Light.otf in Resources */,
-				7995DFF42758F634003F8A31 /* MenuPopup.xib in Resources */,
 				79A725B22750C41700D8B330 /* ResultPreviewCollectionCell.xib in Resources */,
 				79697CD8275AF1FC0056B0B0 /* WebpageViewController.xib in Resources */,
 				79F913C02746501900771FFE /* LaunchScreen.storyboard in Resources */,
@@ -686,7 +679,6 @@
 				79E46071274D495F00FD22E1 /* PdfViewerViewController.swift in Sources */,
 				794DDDF1274D50FF00CF8255 /* ApplicationGlobalConfig.swift in Sources */,
 				794F73EA2746B36900B07410 /* Collection+Extensions.swift in Sources */,
-				7995DFF72758F645003F8A31 /* MenuPopup.swift in Sources */,
 				7963FC4627466FAD007B8449 /* CoordinatorProtocol.swift in Sources */,
 				79B787E02750B2FD009D7655 /* SettingsViewController.swift in Sources */,
 				79189E00274672900023628A /* Logger.swift in Sources */,

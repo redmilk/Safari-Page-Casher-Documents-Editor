@@ -24,7 +24,7 @@ final class WebpageManager {
     func displayWebpage(_ parentController: UIViewController, presentationCallback: @escaping VoidClosure) {
         finishCallback = presentationCallback
         let controller = WebpageViewController(
-            initialUrlString: "https://www.google.com",
+            initialUrlString: initialUrlString,
             finishCallback: presentationCallback)
         subscription = controller.output.sink { [weak self] dataBoxList in
             self?._output.send(dataBoxList)

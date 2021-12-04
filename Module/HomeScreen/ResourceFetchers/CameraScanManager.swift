@@ -10,14 +10,14 @@ import VisionKit
 import Combine
 
 protocol CameraScanManager {
-    var output: AnyPublisher<[UIImage], Never> { get }
+    var output: AnyPublisher<[PrintableDataBox], Never> { get }
     func displayScanningController(_ parentController: UIViewController, presentationCallback: @escaping VoidClosure)
 }
 
 final class CameraScanManagerImpl: NSObject, CameraScanManager {
     
-    var output: AnyPublisher<[UIImage], Never> { _output.eraseToAnyPublisher() }
-    private let _output = PassthroughSubject<[UIImage], Never>()
+    var output: AnyPublisher<[PrintableDataBox], Never> { _output.eraseToAnyPublisher() }
+    private let _output = PassthroughSubject<[PrintableDataBox], Never>()
     private var presentationCallback: VoidClosure?
     
     func displayScanningController(_ parentController: UIViewController, presentationCallback: @escaping VoidClosure) {
@@ -39,7 +39,10 @@ extension CameraScanManagerImpl: VNDocumentCameraViewControllerDelegate {
         guard !results.isEmpty else { return
             controller.dismiss(animated: true, completion: presentationCallback)
         }
-        _output.send(results)
+        let dataBoxList = results.map {
+            PrintableDataBox(id: Date().millisecondsSince1970.description, image: $0, document: nil)
+        }
+        _output.send(dataBoxList)
         controller.dismiss(animated: true, completion: presentationCallback)
     }
     

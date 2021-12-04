@@ -41,7 +41,6 @@ final class HomeScreenMenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        handleStates()
         configureView()
         applyStyling()
     }
@@ -50,17 +49,6 @@ final class HomeScreenMenuViewController: UIViewController {
 // MARK: - Internal
 
 private extension HomeScreenMenuViewController {
-    
-    /// Handle ViewModel's states
-    func handleStates() {
-        viewModel.output.sink(receiveValue: { [weak self] state in
-            switch state {
-            case .dummyState:
-                break
-            }
-        })
-        .store(in: &bag)
-    }
     
     func configureView() {
         scanDocumentButton.publisher().sink(receiveValue: { [weak self] _ in

@@ -10,14 +10,14 @@ import PDFKit.PDFDocument
 import Combine
 
 protocol CloudFilesManager {
-    var output: AnyPublisher<PDFDocument, Never> { get }
+    var output: AnyPublisher<[PrintableDataBox], Never> { get }
     func displayDocumentsSelectionMenu(_ parentController: UIViewController, presentationCallback: @escaping VoidClosure)
 }
 
-final class CloudFilesManagerImpl: NSObject, CloudFilesManager {
-    var output: AnyPublisher<PDFDocument, Never> { _output.eraseToAnyPublisher() }
+final class CloudFilesManagerImpl: NSObject, CloudFilesManager, PdfServiceProvidable {
+    var output: AnyPublisher<[PrintableDataBox], Never> { _output.eraseToAnyPublisher() }
     private var finishCallback: VoidClosure!
-    private let _output = PassthroughSubject<PDFDocument, Never>()
+    private let _output = PassthroughSubject<[PrintableDataBox], Never>()
     
     func displayDocumentsSelectionMenu(_ parentController: UIViewController, presentationCallback: @escaping VoidClosure) {
         finishCallback = presentationCallback
@@ -32,8 +32,13 @@ extension CloudFilesManagerImpl: UIDocumentPickerDelegate {
     
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         guard let url = urls.first, let pdf = PDFDocument(url: url) else { return }
-        urls.forEach { Logger.log($0.absoluteString) }
-        _output.send(pdf)
+        let pdfPagesAsDocuments = pdfService.makeSeparatePdfDocumentFromPdf(pdf)
+        let dataBoxList = pdfPagesAsDocuments.map {
+            PrintableDataBox(id: Date().millisecondsSince1970.description,
+                             image: self.pdfService.makeImageFromPdfDocument($0, withImageSize: UIScreen.main.bounds.size, ofPageIndex: 0),
+                             document: $0)
+        }
+        _output.send(dataBoxList)
         controller.dismiss(animated: true, completion: finishCallback)
     }
     

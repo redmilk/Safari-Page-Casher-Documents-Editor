@@ -32,11 +32,11 @@ final class UserSessionImpl: UserSession {
             case .addItems(let data):
                 data.forEach { self.sessionData[$0] = $0 }
                 self.output.send(Array(self.sessionData.values).sorted { $0.id < $1.id })
-                Logger.log(self.sessionData.values.count.description)
+                //Logger.log("Count after add: " + self.sessionData.values.count.description)
             case .deleteItem(let dataElement):
                 self.sessionData[dataElement] = nil
                 self.output.send(Array(self.sessionData.values).sorted { $0.id < $1.id })
-                Logger.log(self.sessionData.values.count.description)
+                Logger.log("Count after delete: \(self.sessionData.values.count.description)")
             }
         })
         .store(in: &bag)

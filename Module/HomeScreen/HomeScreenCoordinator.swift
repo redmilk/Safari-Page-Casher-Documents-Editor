@@ -13,9 +13,9 @@ import PDFKit.PDFDocument
 import Combine
 
 protocol HomeScreenCoordinatorProtocol {
-    var cameraScanerOutput: AnyPublisher<[UIImage], Never> { get }
+    var cameraScanerOutput: AnyPublisher<[PrintableDataBox], Never> { get }
     var photoalbumOutput: AnyPublisher<PrintableDataBox, Never> { get }
-    var cloudFilesOutput: AnyPublisher<PDFDocument, Never> { get }
+    var cloudFilesOutput: AnyPublisher<[PrintableDataBox], Never> { get }
     var webpageOutput: AnyPublisher<[PrintableDataBox], Never> { get }
     
     func showMainMenuAndHandleActions()
@@ -26,13 +26,13 @@ final class HomeScreenCoordinator: CoordinatorProtocol, HomeScreenCoordinatorPro
     
     var navigationController: UINavigationController?
     
-    var cameraScanerOutput: AnyPublisher<[UIImage], Never> {
+    var cameraScanerOutput: AnyPublisher<[PrintableDataBox], Never> {
         cameraScaner.output.eraseToAnyPublisher()
     }
     var photoalbumOutput: AnyPublisher<PrintableDataBox, Never> {
         photoalbumManager.output.eraseToAnyPublisher()
     }
-    var cloudFilesOutput: AnyPublisher<PDFDocument, Never> {
+    var cloudFilesOutput: AnyPublisher<[PrintableDataBox], Never> {
         cloudFilesManager.output.eraseToAnyPublisher()
     }
     var webpageOutput: AnyPublisher<[PrintableDataBox], Never> {
