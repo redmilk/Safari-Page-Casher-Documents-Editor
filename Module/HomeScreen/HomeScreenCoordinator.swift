@@ -16,13 +16,10 @@ protocol HomeScreenCoordinatorProtocol {
     var cameraScanerOutput: AnyPublisher<[UIImage], Never> { get }
     var photoalbumOutput: AnyPublisher<PrintableDataBox, Never> { get }
     var cloudFilesOutput: AnyPublisher<PDFDocument, Never> { get }
+    var webpageOutput: AnyPublisher<[PrintableDataBox], Never> { get }
     
     func showMainMenuAndHandleActions()
-    func closeMenu(completion: @escaping VoidClosure)
-    
-    func showCameraScaner()
-    func showPhotoPicker()
-    func showCloudFilesPicker()
+    func closeMenu()
 }
 
 final class HomeScreenCoordinator: CoordinatorProtocol, HomeScreenCoordinatorProtocol {
@@ -38,11 +35,14 @@ final class HomeScreenCoordinator: CoordinatorProtocol, HomeScreenCoordinatorPro
     var cloudFilesOutput: AnyPublisher<PDFDocument, Never> {
         cloudFilesManager.output.eraseToAnyPublisher()
     }
+    var webpageOutput: AnyPublisher<[PrintableDataBox], Never> {
+        webpageManager.output.eraseToAnyPublisher()
+    }
     
     private lazy var cameraScaner: CameraScanManager = CameraScanManagerImpl()
     private lazy var photoalbumManager: PhotoalbumManager = PhotoalbumManagerImpl()
     private lazy var cloudFilesManager: CloudFilesManager = CloudFilesManagerImpl()
-    private lazy var webpageManager = WebpageManager()
+    private lazy var webpageManager = WebpageManager(initialUrlString: "www.apple.com")
     private lazy var presentationCallback: VoidClosure = { [weak self] in
         
     }
@@ -62,38 +62,38 @@ final class HomeScreenCoordinator: CoordinatorProtocol, HomeScreenCoordinatorPro
         navigationController?.pushViewController(controller, animated: true)
     }
     
-    func showCameraScaner() {
+    private func showCameraScaner() {
         cameraScaner.displayScanningController(navigationController!.topViewController!, presentationCallback: { [weak self] in
-            self?.closeMenu { }
+            self?.closeMenu()
         })
     }
     
-    func showPhotoPicker() {
+    private func showPhotoPicker() {
         photoalbumManager.displayPhotoLibrary(navigationController!.topViewController!, presentationCallback: { [weak self] in
-            self?.closeMenu { }
+            self?.closeMenu()
         })
     }
     
-    func showCloudFilesPicker() {
+    private func showCloudFilesPicker() {
         cloudFilesManager.displayDocumentsSelectionMenu(navigationController!.topViewController!, presentationCallback: { [weak self] in
-            self?.closeMenu { }
+            self?.closeMenu()
         })
     }
     
-    func showWebView() {
+    private func showWebView() {
         webpageManager.displayWebpage(navigationController!.topViewController!, presentationCallback: { [weak self] in
-            self?.closeMenu { }
+            self?.closeMenu()
         })
     }
-        
-    func showMainMenuAndHandleActions() {//afterSelectionCallback: @escaping VoidClosure) {
+    
+    func showMainMenuAndHandleActions() {
         let coordinator = HomeScreenMenuCoordinator(navigationController: navigationController)
         coordinator.start()
         childCoordinator = coordinator
         coordinator.output
             .sink(receiveValue: { [weak self] homeMenuActionSelected in
                 switch homeMenuActionSelected {
-                case .closeAction: self?.closeMenu(completion: { })
+                case .closeAction: self?.closeMenu()
                 case .printPhoto: self?.showPhotoPicker()
                 case .scanAction: self?.showCameraScaner()
                 case .printWebPage: self?.showWebView()
@@ -103,8 +103,8 @@ final class HomeScreenCoordinator: CoordinatorProtocol, HomeScreenCoordinatorPro
         .store(in: &self.bag)
     }
     
-    func closeMenu(completion: @escaping VoidClosure) {
-        childCoordinator?.end(completion: completion)
+    func closeMenu() {
+        childCoordinator?.end()
         childCoordinator = nil
     }
     

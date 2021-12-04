@@ -9,32 +9,27 @@ import Foundation
 import WebKit
 import Combine
 
-final class WebpageManager: NSObject {
-    var output: AnyPublisher<PrintableDataBox, Never> { _output.eraseToAnyPublisher() }
-    private var webView: WKWebView!
-    private let _output = PassthroughSubject<PrintableDataBox, Never>()
+final class WebpageManager {
+    var output: AnyPublisher<[PrintableDataBox], Never> { _output.eraseToAnyPublisher() }
+    
+    private let _output = PassthroughSubject<[PrintableDataBox], Never>()
+    private var subscription: AnyCancellable?
     private var finishCallback: VoidClosure!
+    private let initialUrlString: String
 
-    override init() {
-        super.init()
+    init(initialUrlString: String) {
+        self.initialUrlString = initialUrlString
     }
     
     func displayWebpage(_ parentController: UIViewController, presentationCallback: @escaping VoidClosure) {
         finishCallback = presentationCallback
-        let controller = UIViewController()
-        let webView = WKWebView()
-        controller.view.addSubview(webView)
-        webView.frame = controller.view.frame
-        webView.navigationDelegate = self
-        
-        parentController.present(controller, animated: true, completion: { [weak self] in
-            let url = URL(string: "https://www.hackingwithswift.com")!
-            webView.load(URLRequest(url: url))
-            webView.allowsBackForwardNavigationGestures = true
-        })
+        let controller = WebpageViewController(
+            initialUrlString: "https://www.google.com",
+            finishCallback: presentationCallback)
+        subscription = controller.output.sink { [weak self] dataBoxList in
+            self?._output.send(dataBoxList)
+        }
+        controller.modalPresentationStyle = .fullScreen
+        parentController.present(controller, animated: true, completion: nil)
     }
-}
-
-extension WebpageManager: WKNavigationDelegate {
-    
 }

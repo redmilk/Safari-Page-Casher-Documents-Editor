@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WebpageViewController" customModule="AirPrint" customModuleProvider="target">
+            <connections>
+                <outlet property="closeButton" destination="N8q-fp-MQf" id="Mh9-kL-rxh"/>
+                <outlet property="printButton" destination="j4J-ld-0Bo" id="pSs-6P-UyW"/>
+                <outlet property="searchBar" destination="r3B-Xx-B85" id="yTI-rF-JcP"/>
+                <outlet property="view" destination="iN0-l3-epB" id="KVM-K2-57I"/>
+                <outlet property="webView" destination="6iW-dB-S9h" id="Pky-B1-Vfj"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bU9-wi-Ubf">
+                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="z9U-9v-LB1">
+                            <rect key="frame" x="8" y="0.0" width="398" height="50"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N8q-fp-MQf">
+                                    <rect key="frame" x="0.0" y="0.0" width="39" height="50"/>
+                                    <state key="normal" title="Close"/>
+                                </button>
+                                <searchBar contentMode="redraw" placeholder="google.com" showsSearchResultsButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r3B-Xx-B85">
+                                    <rect key="frame" x="44" y="0.0" width="317" height="50"/>
+                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="webSearch" keyboardAppearance="alert" returnKeyType="go" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                                </searchBar>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j4J-ld-0Bo">
+                                    <rect key="frame" x="366" y="0.0" width="32" height="50"/>
+                                    <state key="normal" title="Print"/>
+                                </button>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="u5l-Qf-knn"/>
+                            </constraints>
+                        </stackView>
+                        <wkWebView contentMode="scaleToFill" allowsBackForwardNavigationGestures="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6iW-dB-S9h">
+                            <rect key="frame" x="0.0" y="50" width="414" height="768"/>
+                            <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <wkWebViewConfiguration key="configuration">
+                                <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                <wkPreferences key="preferences"/>
+                            </wkWebViewConfiguration>
+                        </wkWebView>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="6iW-dB-S9h" secondAttribute="trailing" id="2si-Gh-7Bb"/>
+                        <constraint firstItem="6iW-dB-S9h" firstAttribute="leading" secondItem="bU9-wi-Ubf" secondAttribute="leading" id="4uy-1l-v1e"/>
+                        <constraint firstItem="z9U-9v-LB1" firstAttribute="top" secondItem="bU9-wi-Ubf" secondAttribute="top" id="9hX-Ic-Fec"/>
+                        <constraint firstAttribute="trailing" secondItem="z9U-9v-LB1" secondAttribute="trailing" constant="8" id="COu-qf-hUZ"/>
+                        <constraint firstItem="6iW-dB-S9h" firstAttribute="top" secondItem="z9U-9v-LB1" secondAttribute="bottom" id="Fmk-9m-7uf"/>
+                        <constraint firstAttribute="bottom" secondItem="6iW-dB-S9h" secondAttribute="bottom" id="HJB-FP-ZPb"/>
+                        <constraint firstItem="z9U-9v-LB1" firstAttribute="leading" secondItem="bU9-wi-Ubf" secondAttribute="leading" constant="8" id="Rqc-vO-Byu"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="bU9-wi-Ubf" secondAttribute="bottom" id="F2n-KM-UCD"/>
+                <constraint firstItem="bU9-wi-Ubf" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="cwi-KM-q6I"/>
+                <constraint firstItem="bU9-wi-Ubf" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="fc2-uM-tWH"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="bU9-wi-Ubf" secondAttribute="trailing" id="i2Q-kG-Gxu"/>
+            </constraints>
+            <point key="canvasLocation" x="139" y="153"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

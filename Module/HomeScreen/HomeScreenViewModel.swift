@@ -10,14 +10,13 @@
 import Foundation
 import Combine
 
-final class HomeScreenViewModel: UserSessionServiceProvidable {
+final class HomeScreenViewModel: UserSessionServiceProvidable, PdfServiceProvidable {
     enum Action {
         case openMenu
         case deleteItem(PrintableDataBox)
     }
     
     let input = PassthroughSubject<HomeScreenViewModel.Action, Never>()
-
     let output = PassthroughSubject<HomeScreenViewController.State, Never>()
     
     private let coordinator: HomeScreenCoordinatorProtocol & CoordinatorProtocol
@@ -39,7 +38,7 @@ final class HomeScreenViewModel: UserSessionServiceProvidable {
 private extension HomeScreenViewModel {
     
     func handleActions() {
-        Logger.log("handleActions")
+        /// Logger.log("handleActions")
         input.sink(receiveValue: { [weak self] action in
             switch action {
             case .openMenu:
@@ -64,11 +63,20 @@ private extension HomeScreenViewModel {
         })
         .store(in: &bag)
         
-//        cloudFilesManager.output.sink(receiveValue: { [weak self] pdf in
-//            print("GOT PDF FROM CLOUS")
-//            print(pdf.pageCount.description)
-//        })
-//        .store(in: &bag)
+        coordinator.cloudFilesOutput.sink(receiveValue: { [weak self] pdf in
+            guard let pdfPagesAsDocuments = self?.pdfService.makeSeparatePdfDocumentFromPdf(pdf),
+                  let self = self else { return }
+            let imageThumbnails = pdfPagesAsDocuments.map { PrintableDataBox(id: Date().millisecondsSince1970.description, image: self.pdfService.makeImageFromPdfDocument($0, withImageSize: UIScreen.main.bounds.size, ofPageIndex: 0), document: $0) }
+            self.userSession.input.send(.addItems(imageThumbnails))
+            Logger.log("pdf thumbnail count: \(imageThumbnails.count.description)")
+            
+        })
+        .store(in: &bag)
+        
+        coordinator.webpageOutput.sink(receiveValue: { [weak self] dataBoxList in
+            self?.userSession.input.send(.addItems(dataBoxList))
+        })
+        .store(in: &bag)
         
         userSession.output.sink(receiveValue: { [weak self] data in
             if data.count == 0 {

@@ -18,12 +18,14 @@ final class CameraScanManagerImpl: NSObject, CameraScanManager {
     
     var output: AnyPublisher<[UIImage], Never> { _output.eraseToAnyPublisher() }
     private let _output = PassthroughSubject<[UIImage], Never>()
+    private var presentationCallback: VoidClosure?
     
     func displayScanningController(_ parentController: UIViewController, presentationCallback: @escaping VoidClosure) {
         let controller = VNDocumentCameraViewController()
+        self.presentationCallback = presentationCallback
         guard VNDocumentCameraViewController.isSupported else { return }
         controller.delegate = self
-        parentController.present(controller, animated: true, completion: presentationCallback)
+        parentController.present(controller, animated: true, completion: nil)
     }
 }
 
@@ -35,13 +37,13 @@ extension CameraScanManagerImpl: VNDocumentCameraViewControllerDelegate {
             results.append(image)
         }
         guard !results.isEmpty else { return
-            controller.dismiss(animated: true, completion: nil)
+            controller.dismiss(animated: true, completion: presentationCallback)
         }
         _output.send(results)
-        controller.dismiss(animated: true, completion: nil)
+        controller.dismiss(animated: true, completion: presentationCallback)
     }
     
     func documentCameraViewControllerDidCancel(_ controller: VNDocumentCameraViewController) {
-        controller.dismiss(animated: true, completion: nil)
+        controller.dismiss(animated: true, completion: presentationCallback)
     }
 }
