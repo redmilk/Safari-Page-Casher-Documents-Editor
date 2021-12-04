@@ -23,7 +23,7 @@ final class PDFServiceImpl: PDFService {
         let pdfDocumentPage = pdfDocument.page(at: page)
         return pdfDocumentPage?.thumbnail(of: size, for: PDFDisplayBox.trimBox)
     }
-        
+    
     func makePDFFilesFromImages(_ images: [UIImage]) -> [PDFDocument] {
         var pdfDocumentList: [PDFDocument] = []
         for (index,image) in images.enumerated() {
@@ -61,17 +61,17 @@ final class PDFServiceImpl: PDFService {
     func convertPrintableDataBoxesToSinglePDFDocument(_ sessionData: [PrintableDataBox]) -> PDFDocument? {
         let resultSinglePdf = PDFDocument()
         for (index, dataBox) in sessionData.enumerated() {
-            if let image = dataBox.image {
-                let pdfPage = PDFPage(image: image)
-                resultSinglePdf.insert(pdfPage!, at: index)
-            } else if let pdfPage = dataBox.document?.page(at: 0) {
+            if let pdfPage = dataBox.document?.page(at: 0) {
+                resultSinglePdf.insert(pdfPage, at: index)
+            } else if let image = dataBox.image {
+                let pdfPage = PDFPage(image: image)!
                 resultSinglePdf.insert(pdfPage, at: index)
             }
         }
         guard resultSinglePdf.pageCount > 0 else { return nil }
         return resultSinglePdf
     }
-        
+    
     func savePdfIntoTempDirectory(_ pdf: PDFDocument, filepath: URL) {
         let pdfData = pdf.dataRepresentation()!
         try? pdfData.write(to: filepath)
