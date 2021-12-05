@@ -50,6 +50,7 @@ final class HomeCollectionManager: NSObject, InteractionFeedbackService { /// NS
         Logger.log("collection items count: \(items.count - 1)")
         dataSource?.apply(snapshot, animatingDifferences: false)
     }
+    
 }
 
 // MARK: - Internal

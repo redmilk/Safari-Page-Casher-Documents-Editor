@@ -42,8 +42,8 @@ final class HomeScreenViewModel: UserSessionServiceProvidable, PdfServiceProvida
 private extension HomeScreenViewModel {
     
     func prepareAndSaveDataBoxAsPDFDocumentIntoTempDir(_ dataBox: PrintableDataBox) -> URL? {
-        userSession.input.send(.createTempFileForEditing(withNameAndFormat: "\(dataBox.id).pdf"))
-        guard let tempfileURL = userSession.currentEditingFile?.fileURL,
+        userSession.input.send(.createTempFileForEditing(withNameAndFormat: "\(dataBox.id).pdf", forDataBox: dataBox))
+        guard let tempfileURL = userSession.editingTempFile?.fileURL,
               let pdf = pdfService.convertPrintableDataBoxesToSinglePDFDocument([dataBox]) else {
             Logger.log("Missing temp file for edit inside userSession")
             return nil

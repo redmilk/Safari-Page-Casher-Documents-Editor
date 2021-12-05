@@ -12,7 +12,7 @@ import UIKit.UINavigationController
 import Combine
 
 protocol EditScreenCoordinatorProtocol {
-    func displayPDFEdit(navigation: UINavigationController?)
+
 }
 
 final class EditScreenCoordinator: NSObject, CoordinatorProtocol, EditScreenCoordinatorProtocol {
@@ -38,15 +38,11 @@ final class EditScreenCoordinator: NSObject, CoordinatorProtocol, EditScreenCoor
         let navigation = UINavigationController(rootViewController: controller)
         navigation.modalPresentationStyle = .fullScreen
         navigationController?.present(navigation, animated: false, completion: { [weak self, weak navigation] in
-            self?.displayPDFEdit(navigation: navigation)
+            self?.pdfEditManager.editFile(navigation: navigation)
             navigation?.delegate = self
         })
     }
-    
-    func displayPDFEdit(navigation: UINavigationController?) {
-        pdfEditManager.editFile(navigation: navigation)
-    }
-    
+        
     func end() {
         navigationController?.presentedViewController?.dismiss(animated: false, completion: nil)
     }

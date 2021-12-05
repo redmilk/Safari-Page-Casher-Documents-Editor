@@ -22,7 +22,7 @@ final class PDFEditManager: NSObject, PdfServiceProvidable, UserSessionServicePr
     }
     deinit {
         Logger.log(String(describing: self), type: .deinited)
-        userSession.input.send(.deleteTempFile)
+        replaceEditedFileWithUpdated(fileURL)
     }
     
     func editFile(navigation: UINavigationController?) {
@@ -31,12 +31,18 @@ final class PDFEditManager: NSObject, PdfServiceProvidable, UserSessionServicePr
         editor.delegate = self
         editor.setEditing(true, animated: true)
         editor.currentPreviewItemIndex = 0
-        //editor.modalPresentationStyle = .fullScreen
         navigation?.pushViewController(editor, animated: false)
-        navigation?.hidesBarsOnSwipe = false
-        navigation?.hidesBarsOnTap = false
-        editor.navigationController?.hidesBarsOnTap = false
-        editor.navigationController?.hidesBarsOnSwipe = false
+    }
+    
+    private func replaceEditedFileWithUpdated(_ fileURL: URL) {
+        if let editedPDF = PDFDocument(url: fileURL),
+           let oldDataBox = userSession.editingFileDataBox,
+           let updatedThumbnail = pdfService.makeImageFromPDFDocument(
+            editedPDF, withImageSize: oldDataBox.image?.size ?? UIScreen.main.bounds.size, ofPageIndex: 0) {
+            
+            let newDataBox = PrintableDataBox(id: oldDataBox.id, image: updatedThumbnail, document: editedPDF)
+            userSession.input.send(.updateEditedFilesData(newDataBox: newDataBox, oldDataBox: oldDataBox))
+        }
     }
 }
 

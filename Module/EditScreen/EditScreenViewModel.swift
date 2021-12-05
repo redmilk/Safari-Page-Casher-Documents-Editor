@@ -39,7 +39,6 @@ private extension EditScreenViewModel {
         input.sink(receiveValue: { [weak self] action in
             switch action {
             case .displayFileEditor: break
-                //self?.coordinator.displayPDFEdit(navigation: <#UINavigationController?#>)
             }
         })
         .store(in: &bag)

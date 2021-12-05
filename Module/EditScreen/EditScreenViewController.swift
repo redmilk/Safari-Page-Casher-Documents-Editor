@@ -34,7 +34,7 @@ final class EditScreenViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        handleStates()
+        ///handleStates()
     }
 }
 
