@@ -36,6 +36,7 @@ final class EditScreenCoordinator: NSObject, CoordinatorProtocol, EditScreenCoor
         let viewModel = EditScreenViewModel(coordinator: self)
         let controller = EditScreenViewController(viewModel: viewModel)
         let navigation = UINavigationController(rootViewController: controller)
+        navigation.overrideUserInterfaceStyle = .dark
         navigation.modalPresentationStyle = .fullScreen
         navigationController?.present(navigation, animated: false, completion: { [weak self, weak navigation] in
             self?.pdfEditManager.editFile(navigation: navigation)

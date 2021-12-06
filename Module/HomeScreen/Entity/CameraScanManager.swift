@@ -22,6 +22,7 @@ final class CameraScanManagerImpl: NSObject, CameraScanManager {
     
     func displayScanningController(_ parentController: UIViewController, presentationCallback: @escaping VoidClosure) {
         let controller = VNDocumentCameraViewController()
+        controller.overrideUserInterfaceStyle = .dark
         self.presentationCallback = presentationCallback
         guard VNDocumentCameraViewController.isSupported else { return }
         controller.delegate = self

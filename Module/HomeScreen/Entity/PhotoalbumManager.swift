@@ -29,6 +29,7 @@ final class PhotoalbumManagerImpl: NSObject, PhotoalbumManager {
         configuration.filter = .any(of: [.livePhotos, .images])
         configuration.preferredAssetRepresentationMode = .automatic
         picker = PHPickerViewController(configuration: configuration)
+        picker.overrideUserInterfaceStyle = .dark
         picker.delegate = self
         picker.modalPresentationStyle = .fullScreen
         parentController.present(picker, animated: true, completion: nil)

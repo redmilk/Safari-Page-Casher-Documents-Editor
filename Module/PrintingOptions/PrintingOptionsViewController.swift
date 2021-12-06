@@ -37,6 +37,7 @@ final class PrintingOptionsViewController: UIViewController {
         handleStates()
         /// entry point
         viewModel.input.send(.showDefaultPrintingDialog)
+        overrideUserInterfaceStyle = .dark
     }
 }
 

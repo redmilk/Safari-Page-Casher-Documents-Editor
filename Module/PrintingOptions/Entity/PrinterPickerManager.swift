@@ -21,7 +21,7 @@ final class PrinterPickerManager: NSObject {
     func showPrinterPicker() {
         let picker = UIPrinterPickerController()
         picker.delegate = self
-        picker.present(animated: true, completionHandler: nil)
+        picker.present(animated: false, completionHandler: nil)
     }
 }
 

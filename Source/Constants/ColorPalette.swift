@@ -8,5 +8,5 @@
 import Foundation
 
 struct ColorPalette {
-    
+    static let backgroundDark = UIColor(hex: 0x1E1D51)
 }

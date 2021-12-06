@@ -27,6 +27,7 @@ final class PDFEditManager: NSObject, PdfServiceProvidable, UserSessionServicePr
     
     func editFile(navigation: UINavigationController?) {
         editor = QLPreviewController()
+        editor.overrideUserInterfaceStyle = .dark
         editor.dataSource = self
         editor.delegate = self
         editor.setEditing(true, animated: true)

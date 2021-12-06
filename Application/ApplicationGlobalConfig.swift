@@ -13,9 +13,8 @@ struct ApplicationGlobalConfig {
         UINavigationBar.appearance().shadowImage = UIImage()
         UINavigationBar.appearance().isTranslucent = true
 
-//        UIToolbar.appearance().barTintColor = .black
-//        UITabBar.appearance().barTintColor = .black
-//        UISearchBar.appearance().barTintColor = .black
-//        UINavigationBar.appearance(whenContainedInInstancesOf: [UIDocumentBrowserViewController.self]).barTintColor = .black
+//        UIToolbar.appearance().setBackgroundImage(UIImage(), forToolbarPosition: .any, barMetrics: .default)
+//        UIToolbar.appearance().setShadowImage(UIImage(), forToolbarPosition: .any)
+//        UIToolbar.appearance().isTranslucent = true
     }
 }

@@ -22,6 +22,7 @@ final class CloudFilesManagerImpl: NSObject, CloudFilesManager, PdfServiceProvid
     func displayDocumentsSelectionMenu(_ parentController: UIViewController, presentationCallback: @escaping VoidClosure) {
         finishCallback = presentationCallback
         let importMenu = UIDocumentPickerViewController(forOpeningContentTypes: [.pdf], asCopy: true)
+        importMenu.overrideUserInterfaceStyle = .dark
         importMenu.delegate = self
         importMenu.modalPresentationStyle = .fullScreen
         parentController.present(importMenu, animated: true, completion: nil)

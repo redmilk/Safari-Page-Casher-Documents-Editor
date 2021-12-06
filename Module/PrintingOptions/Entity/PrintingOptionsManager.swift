@@ -20,17 +20,18 @@ final class PrintingOptionsManager: NSObject {
     }
     
     func printUserSessionDataToLocalPrinter(pdfData: Data, jobName: String) {
-         let printInfo = UIPrintInfo(dictionary: nil)
-         printInfo.jobName = jobName
-         printInfo.outputType = .general
-         let printController = UIPrintInteractionController.shared
-         printController.delegate = self
-         printController.printInfo = printInfo
-         printController.showsNumberOfCopies = true
-         printController.printingItem = pdfData
-         printController.showsPaperSelectionForLoadedPapers = true
-         printController.present(animated: true, completionHandler: nil)
-     }
+        let printInfo = UIPrintInfo(dictionary: nil)
+        printInfo.jobName = jobName
+        printInfo.outputType = .general
+        let printController = UIPrintInteractionController()
+        //printController.overrideUserInterfaceStyle = .dark
+        printController.delegate = self
+        printController.printInfo = printInfo
+        printController.showsNumberOfCopies = true
+        printController.printingItem = pdfData
+        printController.showsPaperSelectionForLoadedPapers = true
+        printController.present(animated: false, completionHandler: nil)
+    }
 }
 
 extension PrintingOptionsManager: UIPrintInteractionControllerDelegate {

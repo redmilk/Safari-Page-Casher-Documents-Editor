@@ -16,29 +16,38 @@ final class HomeScreenViewController: UIViewController {
         case empty
     }
     
-    // MARK: - Filled state controls
+    @IBOutlet private weak var mainContainer: UIView!
+    /// Filled state controls
     @IBOutlet private weak var collectionView: UICollectionView!
-    // MARK: - Empty state controls
+    @IBOutlet private weak var layoutChangeButton: UIButton!
+    @IBOutlet private weak var plusButtonSmall: UIButton!
+    @IBOutlet private weak var deleteButton: UIButton!
+    
+    /// Empty state controls
     @IBOutlet private weak var emptyStateContainer: UIView!
-    @IBOutlet private weak var giftPanelContainer: UIView!
-    @IBOutlet private weak var giftPanelOpenButton: UIButton!
-    @IBOutlet private weak var plusButtonContainer: UIView!
     @IBOutlet private weak var plusButtonDescriptionContainer: UIStackView!
     @IBOutlet private weak var plusButton: UIButton!
-    // MARK: - Common state controls
+    /// Common state controls
     @IBOutlet private weak var printButton: UIButton!
     @IBOutlet private weak var navigationBarExtenderView: UIView!
     @IBOutlet private weak var settingsButton: UIButton!
     @IBOutlet private weak var logoView: UIView!
+    @IBOutlet private weak var bottomBarContainer: UIView!
     
     private lazy var dashedLineLayer: CAShapeLayer = {
+        let bounds = emptyStateContainer.bounds
+        let gradient = CAGradientLayer()
+        gradient.frame = bounds
+        gradient.type = .conic
+        gradient.colors = [UIColor(hex: 0x04EEF2).cgColor, UIColor(hex: 0x049FFC).cgColor, UIColor(hex: 0x9848FF).cgColor, UIColor(hex: 0x04EEF2).cgColor]
         let layer = CAShapeLayer()
-        let bounds = CGRect(x: 1, y: 1, width: plusButtonContainer.frame.width - 2, height: plusButtonContainer.frame.height - 2)
         layer.path = UIBezierPath(roundedRect: bounds, byRoundingCorners: .allCorners, cornerRadii: CGSize(width: StylingConstants.cornerRadiusDefault, height: StylingConstants.cornerRadiusDefault)).cgPath
         layer.strokeColor = UIColor.black.cgColor
         layer.fillColor = nil
-        layer.lineDashPattern = [8, 6]
-        plusButtonContainer.layer.addSublayer(layer)
+        layer.lineWidth = 5
+        layer.lineDashPattern = [4, 7]
+        gradient.mask = layer
+        emptyStateContainer.layer.addSublayer(gradient)
         return layer
     }()
     
@@ -46,14 +55,14 @@ final class HomeScreenViewController: UIViewController {
         let animation = CABasicAnimation(keyPath: "lineDashPhase")
         animation.fromValue = 0
         animation.toValue = dashedLineLayer.lineDashPattern?.reduce(0) { $0 - $1.intValue } ?? 0
-        animation.duration = 2
+        animation.duration = 1
         animation.repeatCount = .infinity
         animation.isRemovedOnCompletion = false
         return animation
     }()
     
     private lazy var displayManager = HomeCollectionManager(collectionView: collectionView)
-    
+    private var isGridLayout: Bool = true
     private let viewModel: HomeScreenViewModel
     private var bag = Set<AnyCancellable>()
     
@@ -70,18 +79,22 @@ final class HomeScreenViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         handleStates()
         configureView()
         applyStyling()
         displayManager.configure()
         viewModel.configureViewModel()
+    
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        dashedLineLayer.add(dashedLineAnimation, forKey: "line")
+        dashedLineLayer.add(dashedLineAnimation, forKey: "dashed-line")
     }
 }
 
@@ -95,20 +108,17 @@ private extension HomeScreenViewController {
             switch state {
             case .newCollectionData(let data):
                 self?.displayManager.applySnapshot(items: data)
-                self?.emptyStateContainer.isHidden = true
-                self?.collectionView.isHidden = false
-                self?.printButton.isEnabled = true
+                self?.changeState(hasItems: true)
             case .empty:
-                self?.collectionView.isHidden = true
-                self?.emptyStateContainer.isHidden = false
-                self?.printButton.isEnabled = false
+                self?.changeState(hasItems: false)
             }
         })
         .store(in: &bag)
     }
     
     private func configureView() {
-        plusButton.publisher().sink(receiveValue: { [weak self] _ in
+        Publishers.Merge(plusButton.publisher(), plusButtonSmall.publisher())
+            .sink(receiveValue: { [weak self] _ in
             self?.viewModel.input.send(.openMenu)
         })
         .store(in: &bag)
@@ -118,36 +128,47 @@ private extension HomeScreenViewController {
         })
         .store(in: &bag)
         
+        layoutChangeButton.publisher().sink(receiveValue: { [weak self] _ in
+            guard let self = self else { return }
+            self.isGridLayout.toggle()
+            self.isGridLayout ? self.displayManager.layoutCollectionAsGrid() : self.displayManager.layoutCollectionAsFullSizePages()
+            let buttonImage = UIImage(named: self.isGridLayout ? "button-layout-grid" : "button-layout-pages")!
+            self.layoutChangeButton.setBackgroundImage(buttonImage, for: .normal)
+            self.collectionView.reloadData()
+        })
+        .store(in: &bag)
+                
         displayManager.output.sink(receiveValue: { [weak self] action in
             switch action {
-            case .didPressCell(let cellConfig):
-                self?.resolvePressedCellActionForConfig(cellConfig)
+            case .didPressCell(let dataBox):
+                self?.viewModel.input.send(.openFileEditor(dataBox))
             case .deleteCell(let data):
                 self?.viewModel.input.send(.deleteItem(data))
             case _: break
             }
         })
         .store(in: &bag)
+        changeState(hasItems: false)
     }
     
-    private func resolvePressedCellActionForConfig(_ cellConfig: ResultPreviewCollectionCell.Configuration) {
-        switch cellConfig {
-        case .add: viewModel.input.send(.openMenu)
-        case .content(let dataBox): viewModel.input.send(.openFileEditor(dataBox))
-        }
+    private func changeState(hasItems: Bool) {
+        plusButtonSmall.isHidden = !hasItems
+        deleteButton.isHidden = !hasItems
+        layoutChangeButton.isHidden = !hasItems
+        plusButtonSmall.isHidden = !hasItems
+        collectionView.isHidden = !hasItems
+        emptyStateContainer.isHidden = hasItems
+        printButton.isEnabled = hasItems
+        bottomBarContainer.backgroundColor = hasItems ? UIColor(hex: 0x1E1D51) : .clear
+        ///hasItems ? dashedLineLayer.removeAllAnimations() : dashedLineLayer.add(dashedLineAnimation, forKey: "dashed-line")
     }
     
     private func applyStyling() {
-        collectionView.addCornerRadius(StylingConstants.cornerRadiusDefault)
-        giftPanelContainer.addCornerRadius(StylingConstants.cornerRadiusDefault)
-        giftPanelOpenButton.addCornerRadius(14)
         plusButtonDescriptionContainer.addCornerRadius(8)
-        plusButtonContainer.addCornerRadius(StylingConstants.cornerRadiusDefault)
-        plusButton.addCornerRadius(38)
+        emptyStateContainer.addCornerRadius(StylingConstants.cornerRadiusDefault)
         printButton.addCornerRadius(StylingConstants.cornerRadiusDefault)
         navigationBarExtenderView.addCornerRadius(30)
         navigationBarExtenderView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
-        settingsButton.addCornerRadius(20.0)
-        logoView.addCornerRadius(25)
+        bottomBarContainer.addCornerRadius(30)
     }
 }

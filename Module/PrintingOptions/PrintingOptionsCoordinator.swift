@@ -32,7 +32,7 @@ final class PrintingOptionsCoordinator: CoordinatorProtocol, PrintingOptionsCoor
     func start() {
         let viewModel = PrintingOptionsViewModel(coordinator: self)
         let controller = PrintingOptionsViewController(viewModel: viewModel)
-        navigationController?.pushViewController(controller, animated: true)
+        navigationController?.pushViewController(controller, animated: false)
     }
     
     func displayDefaultPrintingOptionsDialog(withPdfData data: Data) {

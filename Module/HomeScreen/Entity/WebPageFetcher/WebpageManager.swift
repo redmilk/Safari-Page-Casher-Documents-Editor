@@ -26,6 +26,7 @@ final class WebpageManager {
         let controller = WebpageViewController(
             initialUrlString: initialUrlString,
             finishCallback: presentationCallback)
+        controller.overrideUserInterfaceStyle = .dark
         subscription = controller.output.sink { [weak self] dataBoxList in
             self?._output.send(dataBoxList)
         }
