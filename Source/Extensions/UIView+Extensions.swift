@@ -7,7 +7,7 @@
 
 import UIKit.UIView
 
-protocol XibDesignable: class { }
+protocol XibDesignable: AnyObject { }
 extension XibDesignable where Self: UIView {
     static func instantiateFromXib() -> Self {
         let dynamicMetatype = Self.self

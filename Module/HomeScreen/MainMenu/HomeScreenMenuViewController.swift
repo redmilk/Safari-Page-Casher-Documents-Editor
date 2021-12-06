@@ -74,6 +74,8 @@ private extension HomeScreenMenuViewController {
     }
     
     func applyStyling() {
+        buttonsContainerView.addCornerRadius(StylingConstants.cornerRadiusDefault)
+        buttonsContainerView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         scanDocumentButton.addCornerRadius(StylingConstants.cornerRadiusDefault)
         scanDocumentButton.addBorder(1.0, .black)
         printDocumentButton.addCornerRadius(StylingConstants.cornerRadiusDefault)
