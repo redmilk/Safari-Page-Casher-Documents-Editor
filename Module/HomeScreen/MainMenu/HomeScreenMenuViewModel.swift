@@ -16,7 +16,7 @@ final class HomeScreenMenuViewModel {
         case printPhoto
         case printDocument
         case printWebPage
-        
+        case printFromClipboard
         case closeAction
     }
     

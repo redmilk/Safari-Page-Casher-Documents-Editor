@@ -17,6 +17,7 @@
                 <outlet property="buttonsContainerView" destination="N0z-el-oHM" id="C8X-wd-NF1"/>
                 <outlet property="cancelButton" destination="mKP-1H-lbP" id="A17-Nd-Bv6"/>
                 <outlet property="printDocumentButton" destination="MgE-Zl-44o" id="GaS-6N-jTq"/>
+                <outlet property="printFromClipboard" destination="6rt-fY-WT6" id="6Or-vG-cRJ"/>
                 <outlet property="printPhotoButton" destination="EEb-Pc-fgQ" id="TCQ-Ku-xlw"/>
                 <outlet property="printWebPage" destination="DFi-f8-sYa" id="Xdr-Uu-bk9"/>
                 <outlet property="scanDocumentButton" destination="PS8-al-TF7" id="OUV-hT-uHj"/>
@@ -29,10 +30,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N0z-el-oHM">
-                    <rect key="frame" x="0.0" y="446" width="414" height="450"/>
+                    <rect key="frame" x="0.0" y="362" width="414" height="534"/>
                     <subviews>
                         <stackView verifyAmbiguity="ignoreSizes" opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="n2Z-pN-kUV">
-                            <rect key="frame" x="39.5" y="25" width="335" height="400"/>
+                            <rect key="frame" x="39.5" y="25" width="335" height="484"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PS8-al-TF7">
                                     <rect key="frame" x="0.0" y="0.0" width="335" height="64"/>
@@ -78,8 +79,18 @@
                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </state>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mKP-1H-lbP">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6rt-fY-WT6">
                                     <rect key="frame" x="0.0" y="336" width="335" height="64"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="15"/>
+                                    <inset key="titleEdgeInsets" minX="100" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="imageEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <state key="normal" backgroundImage="button-menu-document">
+                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </state>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mKP-1H-lbP">
+                                    <rect key="frame" x="0.0" y="420" width="335" height="64"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="15"/>
                                     <state key="normal" backgroundImage="button-menu-cancel">
@@ -87,16 +98,6 @@
                                     </state>
                                 </button>
                             </subviews>
-                            <constraints>
-                                <constraint firstItem="DFi-f8-sYa" firstAttribute="height" secondItem="mKP-1H-lbP" secondAttribute="height" id="3zi-ue-Z6n"/>
-                                <constraint firstItem="MgE-Zl-44o" firstAttribute="height" secondItem="DFi-f8-sYa" secondAttribute="height" id="Aub-YV-odg"/>
-                                <constraint firstItem="PS8-al-TF7" firstAttribute="height" secondItem="EEb-Pc-fgQ" secondAttribute="height" id="IDv-TV-K49"/>
-                                <constraint firstItem="MgE-Zl-44o" firstAttribute="width" secondItem="DFi-f8-sYa" secondAttribute="width" id="Qz4-oS-xF9"/>
-                                <constraint firstItem="EEb-Pc-fgQ" firstAttribute="width" secondItem="MgE-Zl-44o" secondAttribute="width" id="VkV-ql-dez"/>
-                                <constraint firstItem="DFi-f8-sYa" firstAttribute="width" secondItem="mKP-1H-lbP" secondAttribute="width" id="adL-Tc-Bnk"/>
-                                <constraint firstItem="EEb-Pc-fgQ" firstAttribute="height" secondItem="MgE-Zl-44o" secondAttribute="height" id="eke-5v-KCz"/>
-                                <constraint firstItem="PS8-al-TF7" firstAttribute="width" secondItem="EEb-Pc-fgQ" secondAttribute="width" id="ngX-iO-Ccc"/>
-                            </constraints>
                         </stackView>
                     </subviews>
                     <color key="backgroundColor" red="0.1565033793" green="0.16101536150000001" blue="0.36866086720000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>

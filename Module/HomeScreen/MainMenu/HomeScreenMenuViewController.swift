@@ -23,6 +23,7 @@ final class HomeScreenMenuViewController: UIViewController {
     @IBOutlet weak var printPhotoButton: UIButton!
     @IBOutlet weak var printDocumentButton: UIButton!
     @IBOutlet weak var printWebPage: UIButton!
+    @IBOutlet weak var printFromClipboard: UIButton!
     
     private let viewModel: HomeScreenMenuViewModel
     private var bag = Set<AnyCancellable>()
@@ -69,6 +70,10 @@ private extension HomeScreenMenuViewController {
         .store(in: &bag)
         printWebPage.publisher().sink(receiveValue: { [weak self] _ in
             self?.viewModel.input.send(.printWebPage)
+        })
+        .store(in: &bag)
+        printFromClipboard.publisher().sink(receiveValue: { [weak self] _ in
+            self?.viewModel.input.send(.printFromClipboard)
         })
         .store(in: &bag)
     }

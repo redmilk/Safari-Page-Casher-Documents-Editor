@@ -30,7 +30,7 @@ final class HomeScreenViewModel: UserSessionServiceProvidable, PdfServiceProvida
     var deletePendingItems: [PrintableDataBox] = []
     
     private var isViewInSelectionMode: Bool = false
-    private let coordinator: HomeScreenCoordinatorProtocol & CoordinatorProtocol
+    private var coordinator: HomeScreenCoordinatorProtocol & CoordinatorProtocol
     private var bag = Set<AnyCancellable>()
 
     init(coordinator: HomeScreenCoordinatorProtocol & CoordinatorProtocol) {
@@ -41,6 +41,9 @@ final class HomeScreenViewModel: UserSessionServiceProvidable, PdfServiceProvida
     }
     func configureViewModel() {
         handleActions()
+        coordinator.copyFromClipboardCallback = { [weak self] in
+            self?.handleCopyFromClipboard()
+        }
     }
 }
 
@@ -75,6 +78,18 @@ private extension HomeScreenViewModel {
             pdfService.savePdfIntoTempDirectory(pdf, filepath: tempfileURL)
             return tempfileURL
         }
+    }
+    
+    func handleCopyFromClipboard() {
+        guard UIPasteboard.general.hasStrings,
+              let content = UIPasteboard.general.string,
+              let pdf = pdfService.createPDFWithText(content) else { return }
+        Logger.log(content)
+        let dataBox = PrintableDataBox(
+            id: Date().millisecondsSince1970.description,
+            image: self.pdfService.makeImageFromPDFDocument(pdf, withImageSize: UIScreen.main.bounds.size, ofPageIndex: 0),
+            document: pdf)
+        userSession.input.send(.addItems([dataBox]))
     }
     
     func handleActions() {

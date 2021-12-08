@@ -17,6 +17,7 @@ protocol HomeScreenCoordinatorProtocol {
     var photoalbumOutput: AnyPublisher<PrintableDataBox, Never> { get }
     var cloudFilesOutput: AnyPublisher<[PrintableDataBox], Never> { get }
     var webpageOutput: AnyPublisher<[PrintableDataBox], Never> { get }
+    var copyFromClipboardCallback: VoidClosure! { get set }
     
     func showMainMenuAndHandleActions()
     func closeMenu()
@@ -40,14 +41,13 @@ final class HomeScreenCoordinator: CoordinatorProtocol, HomeScreenCoordinatorPro
     var webpageOutput: AnyPublisher<[PrintableDataBox], Never> {
         webpageManager.output.eraseToAnyPublisher()
     }
+    var copyFromClipboardCallback: VoidClosure!
     
     private lazy var cameraScaner: CameraScanManager = CameraScanManagerImpl()
     private lazy var photoalbumManager: PhotoalbumManager = PhotoalbumManagerImpl()
     private lazy var cloudFilesManager: CloudFilesManager = CloudFilesManagerImpl()
     private lazy var webpageManager = WebpageManager(initialUrlString: "www.apple.com")
-    private lazy var presentationCallback: VoidClosure = { [weak self] in
-        
-    }
+    private lazy var presentationCallback: VoidClosure = { [weak self] in }
     private var childCoordinator: HomeScreenMenuCoordinatorProtocol?
     private var bag = Set<AnyCancellable>()
     
@@ -100,6 +100,8 @@ final class HomeScreenCoordinator: CoordinatorProtocol, HomeScreenCoordinatorPro
                 case .scanAction: self?.showCameraScaner()
                 case .printWebPage: self?.showWebView()
                 case .printDocument: self?.showCloudFilesPicker()
+                case .printFromClipboard:
+                    self?.copyFromClipboardCallback()
                 }
             })
         .store(in: &self.bag)

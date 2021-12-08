@@ -15,6 +15,7 @@ protocol PDFService {
     func mergePDFDocumentsIntoSingleFile(_ pdfFiles: [PDFDocument]) -> PDFDocument?
     func makeImageFromPDFDocument(_ pdfDocument: PDFDocument, withImageSize size: CGSize, ofPageIndex page: Int) -> UIImage?
     func savePdfIntoTempDirectory(_ pdf: PDFDocument, filepath: URL)
+    func createPDFWithText(_ text: String) -> PDFDocument?
 }
 
 final class PDFServiceImpl: PDFService {
@@ -75,5 +76,33 @@ final class PDFServiceImpl: PDFService {
     func savePdfIntoTempDirectory(_ pdf: PDFDocument, filepath: URL) {
         let pdfData = pdf.dataRepresentation()!
         try? pdfData.write(to: filepath)
+    }
+    
+    func createPDFWithText(_ text: String) -> PDFDocument? {
+        func addBodyText(pageRect: CGRect, textTop: CGFloat, text: String) {
+            let textFont = UIFont.systemFont(ofSize: 12.0, weight: .regular)
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.alignment = .natural
+            paragraphStyle.lineBreakMode = .byWordWrapping
+            let textAttributes = [
+                NSAttributedString.Key.paragraphStyle: paragraphStyle,
+                NSAttributedString.Key.font: textFont
+            ]
+            let attributedText = NSAttributedString(string: text, attributes: textAttributes)
+            let textRect = CGRect(x: 10, y: textTop, width: pageRect.width - 20,
+                                  height: pageRect.height - textTop - pageRect.height / 5.0)
+            attributedText.draw(in: textRect)
+        }
+        
+        let format = UIGraphicsPDFRendererFormat()
+        let pageWidth = 8.5 * 72.0
+        let pageHeight = 11 * 72.0
+        let pageRect = CGRect(x: 0, y: 0, width: pageWidth, height: pageHeight)
+        let renderer = UIGraphicsPDFRenderer(bounds: pageRect, format: format)
+        let data = renderer.pdfData { (context) in
+            context.beginPage()
+            addBodyText(pageRect: pageRect, textTop: 18.0, text: text)
+        }
+        return PDFDocument(data: data)
     }
 }
