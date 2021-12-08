@@ -14,22 +14,19 @@ import PDFKit.PDFDocument
 
 final class HomeScreenViewModel: UserSessionServiceProvidable, PdfServiceProvidable {
     enum Action {
+        case didPressCell(dataBox: PrintableDataBox)
         case openMenu
-        case didPressCellWithData(PrintableDataBox)
-        case deleteItems([PrintableDataBox])
-        case enterSelectionMode
+        case deleteSelectedItem
+        case deleteAll
+        case itemsDeleteConfirmed
+        case itemsDeleteRejected
         case exitSelectionMode
-        case selectItem(PrintableDataBox)
         case didTapPrint
-        case reloadCollection
     }
     
     let input = PassthroughSubject<HomeScreenViewModel.Action, Never>()
     let output = PassthroughSubject<HomeScreenViewController.State, Never>()
-    
-    var deletePendingItems: [PrintableDataBox] = []
-    
-    private var isViewInSelectionMode: Bool = false
+
     private var coordinator: HomeScreenCoordinatorProtocol & CoordinatorProtocol
     private var bag = Set<AnyCancellable>()
 
@@ -51,14 +48,7 @@ final class HomeScreenViewModel: UserSessionServiceProvidable, PdfServiceProvida
 
 private extension HomeScreenViewModel {
    
-    func resolveCellTapAction(_ dataBox: PrintableDataBox) {
-        if isViewInSelectionMode {
-            deletePendingItems.append(dataBox)
-            output.send(.selectionMode)
-            userSession.input.send(.selectItemsToDelete([dataBox]))
-        } else {
-            openFileEditorWithData(dataBox)
-        }
+    func resolveCellTapAction(dataBox: PrintableDataBox) {
     }
     
     func openFileEditorWithData(_ dataBox: PrintableDataBox) {
@@ -97,23 +87,21 @@ private extension HomeScreenViewModel {
             switch action {
             case .openMenu:
                 self?.coordinator.showMainMenuAndHandleActions()
-            case .deleteItems(let dataBox):
-                self?.userSession.input.send(.deleteItems(dataBox))
-            case .didPressCellWithData(let dataBox):
-                self?.resolveCellTapAction(dataBox)
-            case .selectItem(let dataBox):
-                self?.userSession.input.send(.selectItemsToDelete([dataBox]))
-            case .enterSelectionMode:
-                self?.isViewInSelectionMode.toggle()
-                guard let self = self else { return }
-                self.output.send(self.isViewInSelectionMode ? .selectionMode : .exitSelectionMode)
+            case .deleteAll:
+                self?.userSession.input.send(.deleteAll)
+            case .itemsDeleteConfirmed:
+                self?.userSession.input.send(.deleteSelected)
+            case .itemsDeleteRejected:
+                self?.userSession.input.send(.cancelSelection)
+            case .didPressCell(let dataBox):
+                self?.openFileEditorWithData(dataBox)
             case .exitSelectionMode:
-                self?.isViewInSelectionMode = false
-                self?.output.send(.exitSelectionMode)
-            case .reloadCollection:
-                self?.userSession.input.send(.populateWithCurrentSessionData)
+                self?.userSession.input.send(.cancelSelection)
             case .didTapPrint:
                 self?.coordinator.displayPrintSettings()
+            case .deleteSelectedItem:
+                break
+                
             }
         })
         .store(in: &bag)
@@ -140,11 +128,15 @@ private extension HomeScreenViewModel {
         })
         .store(in: &bag)
         
-        userSession.output.sink(receiveValue: { [weak self] data in
-            if data.count == 0 {
+        userSession.output.sink(receiveValue: { [weak self] response in
+            switch response {
+            case .empty:
                 self?.output.send(.empty)
-            } else {
-                self?.output.send(.newCollectionData(data))
+            case .allCurrentData(let allData): self?.output.send(.allCurrentData(allData))
+            case .addedItems(let addNewItems): self?.output.send(.addedItems(addNewItems))
+            case .deletedItems(let deletedItems):
+                self?.output.send(.deletedItems(deletedItems))
+            case .selectedItems(let selectedItems): self?.output.send(.selectedItems(selectedItems))
             }
         })
         .store(in: &bag)

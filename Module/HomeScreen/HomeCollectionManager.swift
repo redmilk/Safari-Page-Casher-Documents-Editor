@@ -13,33 +13,49 @@ import Combine
 
 final class HomeCollectionManager: NSObject, InteractionFeedbackService { /// NSObject for collection delegate
     enum Action {
-        case didPressCell(PrintableDataBox)
-        case deleteCell(PrintableDataBox)
+        case configure
+        case replaceAllWithItems([PrintableDataBox])
+        case incrementItems([PrintableDataBox])
+        case removeItems([PrintableDataBox])
+        case updateItems([PrintableDataBox])
+        case toggleLayout
+        case toggleSelectionMode
+        //case
+    }
+    
+    enum Response {
+        case didPressCell(dataBox: PrintableDataBox)
+        case layoutMode(isGrid: Bool)
+        case selectionMode(isOn: Bool)
     }
     
     typealias DataSource = UICollectionViewDiffableDataSource<ResultPreviewSection, PrintableDataBox>
     typealias Snapshot = NSDiffableDataSourceSnapshot<ResultPreviewSection, PrintableDataBox>
     
-    let output = PassthroughSubject<HomeCollectionManager.Action, Never>()
+    let input = PassthroughSubject<Action, Never>()
+    let output = PassthroughSubject<Response, Never>()
     
     // TODO: - refactor to avoid storing these state fields
-    var isGridLayout: Bool = true
-    var isInSelectionMode: Bool = false
+    private var isGridLayout: Bool = true
+    private var isInSelectionMode: Bool = false
     var currentCenterCellInPagingLayout: PrintableDataBox?
-    var selectionList: [PrintableDataBox] = []
     
     private unowned let collectionView: UICollectionView
+    private let section = ResultPreviewSection(items: [], title: "Main Section")
     private var dataSource: DataSource!
     private var timerCancellable: AnyCancellable?
+    private var bag = Set<AnyCancellable>()
 
     init(collectionView: UICollectionView) {
         self.collectionView = collectionView
+        super.init()
+        handleInput()
     }
     deinit {
         Logger.log(String(describing: self), type: .deinited)
     }
     
-    func configure() {
+    private func configure() {
         collectionView.delegate = self
         collectionView.register(cellClassName: ResultPreviewCollectionCell.self)
         collectionView.showsVerticalScrollIndicator = false
@@ -47,28 +63,75 @@ final class HomeCollectionManager: NSObject, InteractionFeedbackService { /// NS
         layoutCollectionAsGrid()
         startPostingCenterCell()
     }
+    
+    private func handleInput() {
+        input.sink(receiveValue: { [weak self] action in
+            switch action {
+            case .configure:
+                self?.configure()
+            case .replaceAllWithItems(let items):
+                self?.replaceAllItemsWithItems(items)
+            case .incrementItems(let itemsToIncrement):
+                self?.incrementItems(itemsToIncrement)
+            case .removeItems(let items):
+                self?.removeItems(items)
+            case .updateItems(let items):
+                self?.reloadItems(items)
+            case .toggleLayout:
+                guard let self = self else { return }
+                self.isGridLayout.toggle()
+                self.isGridLayout ? self.layoutCollectionAsGrid() : self.layoutCollectionAsFullSizePages()
+                self.collectionView.reloadData()
+                self.output.send(.layoutMode(isGrid: self.isGridLayout))
+            case .toggleSelectionMode:
+                guard let self = self else { return }
+                self.isInSelectionMode.toggle()
+                if !self.isGridLayout { self.input.send(.toggleLayout) }
+                self.collectionView.reloadData()
+                self.output.send(.selectionMode(isOn: self.isInSelectionMode))
+            }
+        })
+        .store(in: &bag)
+    }
 
-    func applySnapshot(items: [PrintableDataBox]) {
+    private func replaceAllItemsWithItems(_ items: [PrintableDataBox]) {
         var snapshot = Snapshot()
-        let section = ResultPreviewSection(items: [], title: "Main Section")
         snapshot.appendSections([section])
         snapshot.appendItems(items)
         Logger.log("collection items count: \(items.count)")
         dataSource?.apply(snapshot, animatingDifferences: false)
     }
     
-    func removeItems(_ items: [PrintableDataBox]) {
+    private func incrementItems(_ items: [PrintableDataBox]) {
+        var snapshot = Snapshot()
+        snapshot.appendSections([section])
+        snapshot.appendItems(items)
+        Logger.log("collection items count: \(items.count)")
+        dataSource?.apply(snapshot, animatingDifferences: false)
+//        var currentSnapshot = dataSource.snapshot()
+//        currentSnapshot.appendItems(items, toSection: section)
+//        dataSource?.apply(currentSnapshot, animatingDifferences: true)
+    }
+    
+    private func removeItems(_ items: [PrintableDataBox]) {
         var currentSnapshot = dataSource.snapshot()
         currentSnapshot.deleteItems(items)
         dataSource?.apply(currentSnapshot, animatingDifferences: true)
     }
     
-    func reloadSection() {
+    private func reloadSection() {
         let currentSnapshot = dataSource.snapshot()
+        
+        dataSource?.apply(currentSnapshot, animatingDifferences: false)
+    }
+    
+    private func reloadItems(_ items: [PrintableDataBox]) {
+        var currentSnapshot = dataSource.snapshot()
+        currentSnapshot.reloadItems(items)
         dataSource?.apply(currentSnapshot, animatingDifferences: true)
     }
     
-    func layoutCollectionAsGrid() {
+    private func layoutCollectionAsGrid() {
         let layout = UICollectionViewCompositionalLayout(sectionProvider: { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
             /// item
             let size = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
@@ -90,7 +153,7 @@ final class HomeCollectionManager: NSObject, InteractionFeedbackService { /// NS
         collectionView.collectionViewLayout = layout
     }
     
-    func layoutCollectionAsFullSizePages() {
+    private func layoutCollectionAsFullSizePages() {
         let layout = UICollectionViewCompositionalLayout(sectionProvider: { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
             /// item
             let size = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
@@ -163,6 +226,11 @@ extension HomeCollectionManager: UICollectionViewDelegate {
         generateInteractionFeedback()
         guard let cell = collectionView.cellForItem(at: indexPath) as? ResultPreviewCollectionCell,
               let dataBox = cell.dataBox else { return }
-        output.send(.didPressCell(dataBox))
+        if isInSelectionMode {
+            cell.selectionCheckmark.isSelected.toggle()
+            dataBox.isSelected.toggle()
+        } else {
+            output.send(.didPressCell(dataBox: dataBox))
+        }
     }
 }

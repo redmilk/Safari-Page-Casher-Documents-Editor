@@ -11,8 +11,12 @@ import UIKit
 import Combine
 
 final class HomeScreenViewController: UIViewController {
-    enum State {        
-        case newCollectionData([PrintableDataBox])
+    enum State {
+        case allCurrentData([PrintableDataBox])
+        case addedItems([PrintableDataBox])
+        case deletedItems([PrintableDataBox])
+        case selectedItems([PrintableDataBox])
+        
         case selectionMode
         case exitSelectionMode
         case empty
@@ -94,7 +98,7 @@ final class HomeScreenViewController: UIViewController {
         handleStates()
         configureView()
         applyStyling()
-        collectionManager.configure()
+        collectionManager.input.send(.configure)
         viewModel.configureViewModel()
     
         navigationController?.setNavigationBarHidden(true, animated: false)
@@ -118,15 +122,26 @@ private extension HomeScreenViewController {
     func handleStates() {
         viewModel.output.sink(receiveValue: { [weak self] state in
             switch state {
-            case .newCollectionData(let data):
-                self?.collectionManager.applySnapshot(items: data)
+            case .allCurrentData(let allData):
+                self?.collectionManager.input.send(.replaceAllWithItems(allData))
                 self?.changeViewStateBasedOnItemsCount(hasItems: true)
+            case .addedItems(let addNewItems):
+                self?.collectionManager.input.send(.incrementItems(addNewItems))
+                self?.changeViewStateBasedOnItemsCount(hasItems: true)
+            case .deletedItems(let deletedItems):
+                self?.collectionManager.input.send(.removeItems(deletedItems))
+            case .selectedItems(let selectedItems):
+                self?.selectionModeInfoLabel.text = "Items selected: \(selectedItems.count)"
+                self?.collectionManager.input.send(.updateItems(selectedItems))
             case .empty:
                 self?.changeViewStateBasedOnItemsCount(hasItems: false)
+                self?.deleteButton.isHidden = true
             case .selectionMode:
-                self?.changeViewStateBasedOnSelectionMode(isInSelectionMode: true)
+                self?.collectionManager.input.send(.toggleSelectionMode)
+                //self?.changeViewStateBasedOnSelectionMode(isInSelectionMode: true)
             case .exitSelectionMode:
-                self?.changeViewStateBasedOnSelectionMode(isInSelectionMode: false)
+                self?.collectionManager.input.send(.toggleSelectionMode)
+                //self?.changeViewStateBasedOnSelectionMode(isInSelectionMode: false)
             }
         })
         .store(in: &bag)
@@ -144,10 +159,21 @@ private extension HomeScreenViewController {
         })
         .store(in: &bag)
         
+        deleteSelectedButton.publisher().sink(receiveValue: { [weak self] _ in
+            self?.setHiddenClarifyDeleteDialog(false)
+        })
+        .store(in: &bag)
+        
         deleteButton.publisher().sink(receiveValue: { [weak self] _ in
             guard let dataBox = self?.collectionManager.currentCenterCellInPagingLayout else { return }
-            self?.viewModel.deletePendingItems.removeAll()
-            self?.viewModel.deletePendingItems.append(dataBox)
+            dataBox.isSelected = true
+            self?.viewModel.input.send(.deleteSelectedItem)
+            self?.setHiddenClarifyDeleteDialog(false)
+        })
+        .store(in: &bag)
+        
+        deleteAllButton.publisher().sink(receiveValue: { [weak self] _ in
+            self?.viewModel.input.send(.deleteAll)
             self?.setHiddenClarifyDeleteDialog(false)
         })
         .store(in: &bag)
@@ -155,25 +181,25 @@ private extension HomeScreenViewController {
         dialogDeleteButton.publisher().sink(receiveValue: { [weak self] _ in
             guard let self = self else { return }
             self.setHiddenClarifyDeleteDialog(true)
-            self.confirmedToDeleteItems(self.viewModel.deletePendingItems)
+            self.viewModel.input.send(.itemsDeleteConfirmed)
+            self.changeViewStateBasedOnSelectionMode(isInSelectionMode: false)
         })
         .store(in: &bag)
         
         dialogCancelButton.publisher().sink(receiveValue: { [weak self] _ in
             self?.setHiddenClarifyDeleteDialog(true)
-            self?.viewModel.deletePendingItems.removeAll()
+            self?.viewModel.input.send(.itemsDeleteRejected)
+            self?.changeViewStateBasedOnSelectionMode(isInSelectionMode: false)
         })
         .store(in: &bag)
         
         layoutChangeButton.publisher().sink(receiveValue: { [weak self] _ in
-            self?.toggleLayoutButton()
+            self?.collectionManager.input.send(.toggleLayout)
         })
         .store(in: &bag)
         
         checkmarkButton.publisher().sink(receiveValue: { [weak self] _ in
-            guard let self = self else { return }
-            self.collectionManager.isGridLayout ?
-            self.viewModel.input.send(.enterSelectionMode) : self.toggleLayoutButton()
+            self?.collectionManager.input.send(.toggleSelectionMode)
         })
         .store(in: &bag)
         
@@ -185,10 +211,13 @@ private extension HomeScreenViewController {
         collectionManager.output.sink(receiveValue: { [weak self] action in
             switch action {
             case .didPressCell(let dataBox):
-                self?.viewModel.input.send(.didPressCellWithData(dataBox))
-            case .deleteCell(let dataBox):
-                self?.viewModel.input.send(.deleteItems([dataBox]))
-            case _: break
+                self?.viewModel.input.send(.didPressCell(dataBox: dataBox))
+            case .layoutMode(let isGrid):
+                guard let self = self else { return }
+                self.deleteButton.isHidden = isGrid
+                self.layoutChangeButton.isSelected = isGrid
+            case .selectionMode(let isOn):
+                self?.changeViewStateBasedOnSelectionMode(isInSelectionMode: isOn)
             }
         })
         .store(in: &bag)
@@ -196,11 +225,8 @@ private extension HomeScreenViewController {
         changeViewStateBasedOnItemsCount(hasItems: false)
         setHiddenClarifyDeleteDialog(true)
         changeViewStateBasedOnSelectionMode(isInSelectionMode: false)
-    }
-    
-    private func confirmedToDeleteItems(_ items: [PrintableDataBox]) {
-        collectionManager.removeItems(items)
-        viewModel.input.send(.deleteItems(items))
+        deleteButton.isHidden = true
+        layoutChangeButton.isSelected = true
     }
     
     private func changeViewStateBasedOnItemsCount(hasItems: Bool) {
@@ -210,7 +236,6 @@ private extension HomeScreenViewController {
         collectionView.isHidden = !hasItems
         emptyStateContainer.isHidden = hasItems
         printButton.isEnabled = hasItems
-        deleteButton.isHidden = collectionManager.isGridLayout
         ///hasItems ? dashedLineLayer.removeAllAnimations() : dashedLineLayer.add(dashedLineAnimation, forKey: "dashed-line")
     }
     
@@ -219,19 +244,7 @@ private extension HomeScreenViewController {
         plusButtonSmall.isHidden = isInSelectionMode
         printButton.isHidden = isInSelectionMode
         checkmarkButton.isHidden = isInSelectionMode
-        collectionManager.isInSelectionMode = isInSelectionMode
-        //collectionManager.reloadSection()
-        deleteButtonsContainer.isHidden = !isInSelectionMode
         selectionModeTopContainer.isHidden = !isInSelectionMode
-    }
-    
-    private func toggleLayoutButton() {
-        collectionManager.isGridLayout.toggle()
-        Logger.log("isGridLayout: \(collectionManager.isGridLayout)")
-        collectionManager.isGridLayout ? collectionManager.layoutCollectionAsGrid() : collectionManager.layoutCollectionAsFullSizePages()
-        layoutChangeButton.isSelected = collectionManager.isGridLayout
-        viewModel.input.send(.reloadCollection)
-        collectionManager.reloadSection()
     }
 
     private func setHiddenClarifyDeleteDialog(_ isHidden: Bool) {

@@ -93,6 +93,7 @@ final class HomeScreenCoordinator: CoordinatorProtocol, HomeScreenCoordinatorPro
         coordinator.start()
         childCoordinator = coordinator
         coordinator.output
+            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] homeMenuActionSelected in
                 switch homeMenuActionSelected {
                 case .closeAction: self?.closeMenu()
