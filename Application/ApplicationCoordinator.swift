@@ -26,8 +26,7 @@ final class ApplicationCoordinator: CoordinatorProtocol {
     func end() { }
         
     private func showAppTutorial() {
-        let coordinator = ExampleCoordinator(window: window)
-        coordinator.start()
+
     }
     
     private func showContent() {

@@ -22,8 +22,15 @@ final class HomeCollectionManager: NSObject, InteractionFeedbackService { /// NS
     
     let output = PassthroughSubject<HomeCollectionManager.Action, Never>()
     
+    // TODO: - refactor to avoid storing these state fields
+    var isGridLayout: Bool = true
+    var isInSelectionMode: Bool = false
+    var currentCenterCellInPagingLayout: PrintableDataBox?
+    var selectionList: [PrintableDataBox] = []
+    
     private unowned let collectionView: UICollectionView
     private var dataSource: DataSource!
+    private var timerCancellable: AnyCancellable?
 
     init(collectionView: UICollectionView) {
         self.collectionView = collectionView
@@ -38,6 +45,7 @@ final class HomeCollectionManager: NSObject, InteractionFeedbackService { /// NS
         collectionView.showsVerticalScrollIndicator = false
         dataSource = buildDataSource()
         layoutCollectionAsGrid()
+        startPostingCenterCell()
     }
 
     func applySnapshot(items: [PrintableDataBox]) {
@@ -47,6 +55,17 @@ final class HomeCollectionManager: NSObject, InteractionFeedbackService { /// NS
         snapshot.appendItems(items)
         Logger.log("collection items count: \(items.count)")
         dataSource?.apply(snapshot, animatingDifferences: false)
+    }
+    
+    func removeItems(_ items: [PrintableDataBox]) {
+        var currentSnapshot = dataSource.snapshot()
+        currentSnapshot.deleteItems(items)
+        dataSource?.apply(currentSnapshot, animatingDifferences: true)
+    }
+    
+    func reloadSection() {
+        let currentSnapshot = dataSource.snapshot()
+        dataSource?.apply(currentSnapshot, animatingDifferences: true)
     }
     
     func layoutCollectionAsGrid() {
@@ -84,9 +103,35 @@ final class HomeCollectionManager: NSObject, InteractionFeedbackService { /// NS
             let section = NSCollectionLayoutSection(group: group)
             section.interGroupSpacing = 20
             section.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 0, bottom: 20, trailing: 0)
+            section.orthogonalScrollingBehavior = .groupPaging
             return section
         })
+        let config = UICollectionViewCompositionalLayoutConfiguration()
+        config.scrollDirection = .horizontal
+        layout.configuration = config
         collectionView.collectionViewLayout = layout
+    }
+    
+    private func startPostingCenterCell() {
+        timerCancellable?.cancel()
+        timerCancellable = Timer.publish(every: 0.5, on: .main, in: .common)
+            .autoconnect()
+            .compactMap { [weak self] _ in self?.getCenterScreenCollectionItem() }
+            .removeDuplicates()
+            .sink(receiveValue: { [weak self] dataBox in
+                print(dataBox.id)
+                self?.currentCenterCellInPagingLayout = dataBox
+            })
+    }
+    
+    private func getCenterScreenCollectionItem() -> PrintableDataBox? {
+        let centerPoint = CGPoint(x: collectionView.bounds.midX, y: collectionView.bounds.midY)
+        guard !isGridLayout,
+              collectionView.numberOfItems(inSection: 0) > 0,
+              let indexPath = collectionView.indexPathForItem(at: centerPoint),
+              let cell = collectionView.cellForItem(at: indexPath) as? ResultPreviewCollectionCell,
+              let dataBox = cell.dataBox else { return nil }
+        return dataBox
     }
 }
 
@@ -105,12 +150,8 @@ private extension HomeCollectionManager {
                 let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: String(describing: ResultPreviewCollectionCell.self),
                     for: indexPath) as? ResultPreviewCollectionCell
-                cell?.configure(withDataBox: dataBox)
+                cell?.configure(withDataBox: dataBox, isInSelectionMode: self.isInSelectionMode)
                 cell?.dropShadow(color: ColorPalette.backgroundDark, opacity: 1.0, offSet: CGSize(width: -2, height: 2), radius: 5, scale: true)
-
-                cell?.deleteButtonDidPress = { [weak self] item in
-                    self?.output.send(.deleteCell(item))
-                }
                 return cell
             })
         return dataSource

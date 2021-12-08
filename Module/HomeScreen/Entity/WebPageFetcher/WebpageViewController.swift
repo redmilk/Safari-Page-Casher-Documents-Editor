@@ -59,13 +59,13 @@ private extension WebpageViewController {
         webView.uiDelegate = self
         searchBar.delegate = self
         searchBar.autocapitalizationType = .none
-        webView.load(URLRequest(url: URL(string: "https://google.com")!))
+        webView.load(URLRequest(url: URL(string: "https://apple.com/iphone")!))
         
         closeButton.publisher().sink(receiveValue: { [weak self] _ in
             self?.dismiss(animated: true, completion: self?.finishCallback)
         })
         .store(in: &bag)
-        printButton.publisher().sink(receiveValue: { [weak self] _ in
+        printButton.publisher().receive(on: DispatchQueue.main).sink(receiveValue: { [weak self] _ in
             guard let self = self else { return }
             self.makePdfWithWebPageContent()
             self.group.notify(queue: DispatchQueue.main, execute: {
@@ -82,9 +82,6 @@ private extension WebpageViewController {
         func defineNextPdfPageRectWithContentSize(_ contentSize: CGSize) -> [CGRect] {
             let pageHeight = UIScreen.main.bounds.height
             let pageWidth = UIScreen.main.bounds.width
-            print("🙂")
-            print(webContentSize?.width)
-            print(pageWidth)
             let pagesCount = Int((contentSize.height / pageHeight).rounded(.up))
             var result: [CGRect] = []
             for i in 0...pagesCount {
@@ -103,6 +100,7 @@ private extension WebpageViewController {
                     let dataBox = PrintableDataBox(id: Date().millisecondsSince1970.description, image: self.pdfService.makeImageFromPDFDocument(pdf, withImageSize: pdfRect.size, ofPageIndex: 0), document: pdf)
                 completion(dataBox)
                 case .failure(let error):
+                    Logger.logError(error, descriptions: (error as NSError).localizedDescription)
                     completion(nil)
                 }
                 self?.group.leave()
@@ -130,6 +128,10 @@ extension WebpageViewController: WKNavigationDelegate, WKUIDelegate, UISearchBar
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if let currentNavigationUrl = navigationAction.request.url?.absoluteString,
+           !currentNavigationUrl.contains("blank") {
+            searchBar.text = currentNavigationUrl
+        }
         decisionHandler(.allow)
     }
     

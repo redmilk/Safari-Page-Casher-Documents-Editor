@@ -10,6 +10,7 @@ import PDFKit.PDFDocument
 
 final class PrintableDataBox: Hashable, Equatable {
     
+    var isSelected: Bool = false
     let id: String
     
     /// scan or photoalbum item

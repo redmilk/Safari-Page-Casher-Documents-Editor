@@ -22,17 +22,15 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Wp8-cn-QwH">
                                 <rect key="frame" x="0.0" y="0.0" width="287" height="416"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bux-kE-qrh">
-                                <rect key="frame" x="255" y="2" width="30" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bux-kE-qrh" userLabel="selection">
+                                <rect key="frame" x="261" y="2" width="24" height="24"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="ruj-XC-Ani"/>
+                                    <constraint firstAttribute="height" constant="24" id="ruj-XC-Ani"/>
                                     <constraint firstAttribute="width" secondItem="Bux-kE-qrh" secondAttribute="height" multiplier="1:1" id="zFQ-12-Drc"/>
                                 </constraints>
-                                <state key="normal" title=" " backgroundImage="button-results-delete"/>
-                                <connections>
-                                    <action selector="handleDeletePressed:" destination="gTV-IL-0wX" eventType="touchUpInside" id="Qz9-Im-cDc"/>
-                                </connections>
+                                <state key="normal" title=" " backgroundImage="delete-selection-mode-unselected"/>
+                                <state key="selected" backgroundImage="delete-selection-mode-selected"/>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -57,13 +55,14 @@
             <size key="customSize" width="287" height="416"/>
             <connections>
                 <outlet property="containerView" destination="dcb-kN-OuT" id="ANo-I4-ax6"/>
-                <outlet property="deleButton" destination="Bux-kE-qrh" id="Otu-Po-A1w"/>
+                <outlet property="selectionCheckmark" destination="Bux-kE-qrh" id="Otu-Po-A1w"/>
                 <outlet property="thumbnailImageView" destination="Wp8-cn-QwH" id="nm9-MR-sWO"/>
             </connections>
             <point key="canvasLocation" x="396.37681159420293" y="21.428571428571427"/>
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="button-results-delete" width="32" height="32"/>
+        <image name="delete-selection-mode-selected" width="24" height="24"/>
+        <image name="delete-selection-mode-unselected" width="24" height="24"/>
     </resources>
 </document>
