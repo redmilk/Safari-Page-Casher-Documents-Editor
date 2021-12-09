@@ -34,6 +34,8 @@ final class HomeScreenViewController: UIViewController {
     @IBOutlet private weak var emptyStateContainer: UIView!
     @IBOutlet private weak var plusButtonDescriptionContainer: UIStackView!
     @IBOutlet private weak var plusButton: UIButton!
+    @IBOutlet private weak var giftContentView: UIView!
+    
     /// Common state controls
     @IBOutlet private weak var printButton: UIButton!
     @IBOutlet private weak var navigationBarExtenderView: UIView!
@@ -139,10 +141,8 @@ private extension HomeScreenViewController {
                 self?.deleteButton.isHidden = true
             case .selectionMode:
                 self?.collectionManager.input.send(.toggleSelectionMode)
-                //self?.changeViewStateBasedOnSelectionMode(isInSelectionMode: true)
             case .exitSelectionMode:
                 self?.collectionManager.input.send(.toggleSelectionMode)
-                //self?.changeViewStateBasedOnSelectionMode(isInSelectionMode: false)
             case .selectionCount(let selectionCount):
                 self?.selectionModeInfoLabel.text = "Selected items: \(selectionCount)"
             }
@@ -274,5 +274,6 @@ private extension HomeScreenViewController {
         dialogButtonsContainer.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         deleteButtonsContainer.addCornerRadius(30)
         deleteButtonsContainer.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        giftContentView.addCornerRadius(28)
     }
 }
