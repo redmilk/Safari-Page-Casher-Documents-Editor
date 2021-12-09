@@ -21,6 +21,7 @@ final class HomeScreenViewModel: UserSessionServiceProvidable, PdfServiceProvida
         case itemsDeleteConfirmed
         case itemsDeleteRejected
         case exitSelectionMode
+        case getSelectionCount
         case didTapPrint
     }
     
@@ -101,7 +102,8 @@ private extension HomeScreenViewModel {
                 self?.coordinator.displayPrintSettings()
             case .deleteSelectedItem:
                 break
-                
+            case .getSelectionCount:
+                self?.userSession.input.send(.getSelectionCount)
             }
         })
         .store(in: &bag)
@@ -137,6 +139,8 @@ private extension HomeScreenViewModel {
             case .deletedItems(let deletedItems):
                 self?.output.send(.deletedItems(deletedItems))
             case .selectedItems(let selectedItems): self?.output.send(.selectedItems(selectedItems))
+            case .selectionCount(let selectionCount):
+                self?.output.send(.selectionCount(selectionCount))
             }
         })
         .store(in: &bag)

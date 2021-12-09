@@ -26,6 +26,7 @@ final class UserSessionImpl: UserSession {
         case deleteAll
         case deleteSelected
         case cancelSelection
+        case getSelectionCount
         case populateWithCurrentSessionData
         case createTempFileForEditing(withNameAndFormat: String, forDataBox: PrintableDataBox)
         case updateEditedFilesData(newDataBox: PrintableDataBox, oldDataBox: PrintableDataBox)
@@ -36,6 +37,7 @@ final class UserSessionImpl: UserSession {
         case deletedItems([PrintableDataBox])
         case selectedItems([PrintableDataBox])
         case allCurrentData([PrintableDataBox])
+        case selectionCount(Int)
         case empty
     }
     
@@ -78,6 +80,8 @@ final class UserSessionImpl: UserSession {
                 self.output.send(.allCurrentData(Array(self.sessionData.keys).sorted { $0.id < $1.id }))
             case .cancelSelection:
                 self.sessionData.keys.forEach { $0.isSelected = false }
+            case .getSelectionCount:
+                self.output.send(.selectionCount(self.getSelectedCount()))
             case .deleteSelected:
                 let deleted = self.sessionData.keys.compactMap ({ dataBox -> PrintableDataBox? in
                     if dataBox.isSelected {
@@ -90,6 +94,10 @@ final class UserSessionImpl: UserSession {
             }
         })
         .store(in: &bag)
+    }
+    
+    private func getSelectedCount() -> Int {
+        sessionData.keys.filter { $0.isSelected }.count
     }
         
     // MARK: - Update file after edit flow

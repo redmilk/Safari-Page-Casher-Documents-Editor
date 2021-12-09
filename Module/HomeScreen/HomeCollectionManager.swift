@@ -20,13 +20,14 @@ final class HomeCollectionManager: NSObject, InteractionFeedbackService { /// NS
         case updateItems([PrintableDataBox])
         case toggleLayout
         case toggleSelectionMode
-        //case
+        case disableSelectionMode
     }
     
     enum Response {
         case didPressCell(dataBox: PrintableDataBox)
         case layoutMode(isGrid: Bool)
         case selectionMode(isOn: Bool)
+        case didSelectCheckmark
     }
     
     typealias DataSource = UICollectionViewDiffableDataSource<ResultPreviewSection, PrintableDataBox>
@@ -66,29 +67,33 @@ final class HomeCollectionManager: NSObject, InteractionFeedbackService { /// NS
     
     private func handleInput() {
         input.sink(receiveValue: { [weak self] action in
+            guard let self = self else { return }
             switch action {
             case .configure:
-                self?.configure()
+                self.configure()
             case .replaceAllWithItems(let items):
-                self?.replaceAllItemsWithItems(items)
+                self.replaceAllItemsWithItems(items)
             case .incrementItems(let itemsToIncrement):
-                self?.incrementItems(itemsToIncrement)
+                self.incrementItems(itemsToIncrement)
             case .removeItems(let items):
-                self?.removeItems(items)
+                self.removeItems(items)
             case .updateItems(let items):
-                self?.reloadItems(items)
+                self.reloadItems(items)
             case .toggleLayout:
-                guard let self = self else { return }
                 self.isGridLayout.toggle()
                 self.isGridLayout ? self.layoutCollectionAsGrid() : self.layoutCollectionAsFullSizePages()
                 self.collectionView.reloadData()
                 self.output.send(.layoutMode(isGrid: self.isGridLayout))
             case .toggleSelectionMode:
-                guard let self = self else { return }
                 self.isInSelectionMode.toggle()
                 if !self.isGridLayout { self.input.send(.toggleLayout) }
                 self.collectionView.reloadData()
                 self.output.send(.selectionMode(isOn: self.isInSelectionMode))
+            case .disableSelectionMode:
+                self.isInSelectionMode = false
+                //if !self.isGridLayout { self.input.send(.toggleLayout) }
+                self.collectionView.reloadData()
+                //self.output.send(.selectionMode(isOn: self.isInSelectionMode))
             }
         })
         .store(in: &bag)
@@ -229,6 +234,7 @@ extension HomeCollectionManager: UICollectionViewDelegate {
         if isInSelectionMode {
             cell.selectionCheckmark.isSelected.toggle()
             dataBox.isSelected.toggle()
+            output.send(.didSelectCheckmark)
         } else {
             output.send(.didPressCell(dataBox: dataBox))
         }
