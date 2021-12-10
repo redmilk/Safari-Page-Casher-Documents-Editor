@@ -59,7 +59,6 @@ final class OnboardingViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //addBluredCircle()
 
         primaryImageView.image = UIImage(named: model.mainImageName)!
         pagingImageView.image = UIImage(named: model.paginImageName)!
@@ -77,13 +76,7 @@ final class OnboardingViewController: UIViewController {
                 guard let self = self else { return }
                 if self.model.isLastOnboardingPage {
                     self.dimmedView.isHidden = false
-                    let emitter = ParticleEmitterView()
-                    emitter.translatesAutoresizingMaskIntoConstraints = false
-                    self.dimmedView.addSubview(emitter)
-                    emitter.widthAnchor.constraint(equalTo: self.dimmedView.widthAnchor).isActive = true
-                    emitter.heightAnchor.constraint(equalTo: self.dimmedView.heightAnchor).isActive = true
-                    emitter.centerYAnchor.constraint(equalTo: self.dimmedView.centerYAnchor).isActive = true
-                    emitter.centerXAnchor.constraint(equalTo: self.dimmedView.centerXAnchor).isActive = true
+                    self.setupParticles()
                     self.subscriptionFlowContainerOne.isHidden = false
                 } else {
                     self.model.continueButtonAction()
@@ -102,7 +95,7 @@ final class OnboardingViewController: UIViewController {
             self?.secondPlanButton.isSelected.toggle()
         })
         .store(in: &bag)
-        
+
         secondPlanButton.publisher().sink(receiveValue: { [weak self] _ in
             self?.secondPlanButton.isSelected.toggle()
             self?.firstPlanButton.isSelected.toggle()
@@ -126,5 +119,33 @@ final class OnboardingViewController: UIViewController {
         subscriptionFlowContainerOne.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         subscriptionFlowContainerTwo.addCornerRadius(30.0)
         subscriptionFlowContainerTwo.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        subscriptionFlowContainerOne.dropShadow(color: .black, opacity: 0.4, offSet: .zero, radius: 30, scale: true)
+        subscriptionFlowContainerTwo.dropShadow(color: .black, opacity: 0.4, offSet: .zero, radius: 30, scale: true)
+    }
+    
+    private func setupParticles() {
+        let emitterForStepOne = ParticleEmitterView()
+        let emitterForStepTwo = ParticleEmitterView()
+        emitterForStepOne.isUserInteractionEnabled = false
+        emitterForStepTwo.isUserInteractionEnabled = false
+        emitterForStepOne.translatesAutoresizingMaskIntoConstraints = false
+        emitterForStepTwo.translatesAutoresizingMaskIntoConstraints = false
+
+        subscriptionFlowContainerOne.addSubview(emitterForStepOne)
+        emitterForStepOne.widthAnchor.constraint(equalTo: subscriptionFlowContainerOne.widthAnchor).isActive = true
+        emitterForStepOne.heightAnchor.constraint(equalTo: subscriptionFlowContainerOne.heightAnchor).isActive = true
+        emitterForStepOne.centerYAnchor.constraint(equalTo: subscriptionFlowContainerOne.centerYAnchor).isActive = true
+        emitterForStepOne.centerXAnchor.constraint(equalTo: subscriptionFlowContainerOne.centerXAnchor).isActive = true
+        subscriptionFlowContainerOne.bringSubviewToFront(subscriptionFlowOneContinue)
+        
+
+        subscriptionFlowContainerTwo.addSubview(emitterForStepTwo)
+        emitterForStepTwo.widthAnchor.constraint(equalTo: subscriptionFlowContainerTwo.widthAnchor).isActive = true
+        emitterForStepTwo.heightAnchor.constraint(equalTo: subscriptionFlowContainerTwo.heightAnchor).isActive = true
+        emitterForStepTwo.centerYAnchor.constraint(equalTo: subscriptionFlowContainerTwo.centerYAnchor).isActive = true
+        emitterForStepTwo.centerXAnchor.constraint(equalTo: subscriptionFlowContainerTwo.centerXAnchor).isActive = true
+        subscriptionFlowContainerTwo.bringSubviewToFront(subscriptionFlowTwoContinue)
+        
+        //subscriptionFlowContainerOne.bringSubviewToFront(emitterForStepTwo)
     }
 }

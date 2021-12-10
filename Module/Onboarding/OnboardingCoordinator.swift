@@ -63,12 +63,12 @@ final class OnboardingCoordinator: CoordinatorProtocol {
     
     private func showPage2() {
         let controller = OnboardingViewController(model: onboardingData[1])
-        navigationController?.pushViewController(controller, animated: true)
+        navigationController?.pushViewController(controller, animated: false)
     }
     
     private func showPage3() {
         let controller = OnboardingViewController(model: onboardingData[2])
-        navigationController?.pushViewController(controller, animated: true)
+        navigationController?.pushViewController(controller, animated: false)
     }
     
     private func showSubscriptionPage() {

@@ -90,5 +90,6 @@ private extension HomeScreenMenuViewController {
         cancelButton.addCornerRadius(StylingConstants.cornerRadiusDefault)
         printWebPage.addCornerRadius(StylingConstants.cornerRadiusDefault)
         printWebPage.addBorder(1.0, .black)
+        buttonsContainerView.dropShadow(color: .black, opacity: 0.6, offSet: .zero, radius: 30, scale: true)
     }
 }

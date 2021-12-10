@@ -67,8 +67,7 @@ final class UserSessionImpl: UserSession {
                 data.forEach { self.sessionData[$0] = $0 }
                 self.output.send(.addedItems(Array(self.sessionData.keys).sorted { $0.id < $1.id }))
             case .deleteAll:
-                self.sessionData.removeAll()
-                self.output.send(.empty)
+                self.sessionData.keys.forEach { $0.isSelected = true }
             case .createTempFileForEditing(let filename, let dataBox):
                 self.createTemporaryFile(withNameAndFormat: filename)
                 self._editingFileDataBox = dataBox

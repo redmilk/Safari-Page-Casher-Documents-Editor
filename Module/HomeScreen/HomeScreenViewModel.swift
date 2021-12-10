@@ -20,7 +20,6 @@ final class HomeScreenViewModel: UserSessionServiceProvidable, PdfServiceProvida
         case deleteAll
         case itemsDeleteConfirmed
         case itemsDeleteRejected
-        case exitSelectionMode
         case getSelectionCount
         case didTapPrint
     }
@@ -96,8 +95,6 @@ private extension HomeScreenViewModel {
                 self?.userSession.input.send(.cancelSelection)
             case .didPressCell(let dataBox):
                 self?.openFileEditorWithData(dataBox)
-            case .exitSelectionMode:
-                self?.userSession.input.send(.cancelSelection)
             case .didTapPrint:
                 self?.coordinator.displayPrintSettings()
             case .deleteSelectedItem:

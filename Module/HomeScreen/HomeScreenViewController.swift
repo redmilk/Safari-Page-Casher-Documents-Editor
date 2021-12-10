@@ -23,7 +23,15 @@ final class HomeScreenViewController: UIViewController {
         case empty
     }
     
+    /// Gift menu
     @IBOutlet private weak var mainContainer: UIView!
+    @IBOutlet private weak var subscriptionContainer: UIView!
+    @IBOutlet private weak var subscriptionMenuContainer: UIView!
+    @IBOutlet private weak var subscriptionContinueButton: UIButton!
+    @IBOutlet private weak var subscriptionMenuOpenButton: UIButton!
+    @IBOutlet private weak var subscriptionDiscountLabel: UILabel!
+    @IBOutlet private weak var subscriptionCloseButton: UIButton!
+    
     /// Filled state controls
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var layoutChangeButton: UIButton!
@@ -191,7 +199,6 @@ private extension HomeScreenViewController {
         
         dialogCancelButton.publisher().sink(receiveValue: { [weak self] _ in
             self?.setHiddenClarifyDeleteDialog(true)
-            self?.viewModel.input.send(.exitSelectionMode)
             self?.viewModel.input.send(.itemsDeleteRejected)
             self?.changeViewStateBasedOnSelectionMode(isInSelectionMode: false)
         })
@@ -199,6 +206,26 @@ private extension HomeScreenViewController {
         
         layoutChangeButton.publisher().sink(receiveValue: { [weak self] _ in
             self?.collectionManager.input.send(.toggleLayout)
+        })
+        .store(in: &bag)
+        
+        subscriptionMenuOpenButton.publisher().sink(receiveValue: { [weak self] _ in           self?.subscriptionContainer.isHidden.toggle()
+            self?.addParticles()
+        })
+        .store(in: &bag)
+        
+        subscriptionContinueButton.publisher().sink(receiveValue: { [weak self] _ in
+            /// proceed subscription
+            self?.subscriptionContainer.isHidden.toggle()
+            self?.subscriptionContainer.viewWithTag(1)!.removeFromSuperview()
+        })
+        .store(in: &bag)
+        
+        subscriptionCloseButton.publisher()
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] _ in
+            self?.subscriptionContainer.isHidden.toggle()
+            self?.subscriptionContainer.viewWithTag(1)!.removeFromSuperview()
         })
         .store(in: &bag)
         
@@ -210,7 +237,6 @@ private extension HomeScreenViewController {
         closeSelectionModeButton.publisher().sink(receiveValue: { [weak self] _ in
             self?.setHiddenClarifyDeleteDialog(true)
             self?.collectionManager.input.send(.toggleSelectionMode)
-            self?.viewModel.input.send(.exitSelectionMode)
             self?.viewModel.input.send(.itemsDeleteRejected)
             self?.changeViewStateBasedOnSelectionMode(isInSelectionMode: false)
         })
@@ -238,6 +264,13 @@ private extension HomeScreenViewController {
         changeViewStateBasedOnSelectionMode(isInSelectionMode: false)
         deleteButton.isHidden = true
         layoutChangeButton.isSelected = true
+        subscriptionContainer.isHidden.toggle()
+    }
+    
+    private func makeStrikeThroughText(_ text: String) -> NSMutableAttributedString {
+        let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: text)
+            attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSRange(location: 0, length: attributeString.length))
+        return attributeString
     }
     
     private func changeViewStateBasedOnItemsCount(hasItems: Bool) {
@@ -247,6 +280,7 @@ private extension HomeScreenViewController {
         collectionView.isHidden = !hasItems
         emptyStateContainer.isHidden = hasItems
         printButton.isEnabled = hasItems
+        giftContentView.isHidden = hasItems
         ///hasItems ? dashedLineLayer.removeAllAnimations() : dashedLineLayer.add(dashedLineAnimation, forKey: "dashed-line")
     }
     
@@ -275,5 +309,24 @@ private extension HomeScreenViewController {
         deleteButtonsContainer.addCornerRadius(30)
         deleteButtonsContainer.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         giftContentView.addCornerRadius(28)
+        subscriptionMenuContainer.addCornerRadius(30)
+        subscriptionMenuContainer.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        subscriptionDiscountLabel.attributedText = makeStrikeThroughText("89.99")
+        subscriptionMenuContainer.dropShadow(color: .black, opacity: 0.6, offSet: .zero, radius: 30, scale: true)
+        dialogButtonsContainer.dropShadow(color: .black, opacity: 0.6, offSet: .zero, radius: 30, scale: true)
+    }
+    
+    private func addParticles() {
+        let emitter = ParticleEmitterView()
+        emitter.tag = 1
+        emitter.alpha = 0.6
+        emitter.isUserInteractionEnabled = false
+        emitter.translatesAutoresizingMaskIntoConstraints = false
+        subscriptionContainer.addSubview(emitter)
+        emitter.topAnchor.constraint(equalTo: subscriptionMenuContainer.topAnchor).isActive = true
+        emitter.bottomAnchor.constraint(equalTo: subscriptionMenuContainer.bottomAnchor).isActive = true
+        emitter.leadingAnchor.constraint(equalTo: subscriptionMenuContainer.leadingAnchor).isActive = true
+        emitter.trailingAnchor.constraint(equalTo: subscriptionMenuContainer.trailingAnchor).isActive = true
+        subscriptionMenuContainer.bringSubviewToFront(subscriptionContinueButton)
     }
 }
