@@ -41,7 +41,7 @@ final class OnboardingCoordinator: CoordinatorProtocol {
             mainTextLine2: "photos from the phone.",
             isLastOnboardingPage: true,
             continueButtonAction: { [weak self] in
-                self?.showSubscriptionPage()
+                Onboarding.shared?.onboardingFinishAction()
             }, closeButtonAction: nil)
     ]
     

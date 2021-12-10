@@ -209,10 +209,10 @@ private extension HomeScreenViewController {
         })
         .store(in: &bag)
         
-        subscriptionMenuOpenButton.publisher().sink(receiveValue: { [weak self] _ in           self?.subscriptionContainer.isHidden.toggle()
-            self?.addParticles()
-        })
-        .store(in: &bag)
+//        subscriptionMenuOpenButton.publisher().sink(receiveValue: { [weak self] _ in           self?.subscriptionContainer.isHidden.toggle()
+//            self?.addParticles()
+//        })
+//        .store(in: &bag)
         
         subscriptionContinueButton.publisher().sink(receiveValue: { [weak self] _ in
             /// proceed subscription
@@ -322,7 +322,7 @@ private extension HomeScreenViewController {
         emitter.alpha = 0.6
         emitter.isUserInteractionEnabled = false
         emitter.translatesAutoresizingMaskIntoConstraints = false
-        subscriptionContainer.addSubview(emitter)
+        subscriptionContainer.insertSubview(emitter, at: 0)
         emitter.topAnchor.constraint(equalTo: subscriptionMenuContainer.topAnchor).isActive = true
         emitter.bottomAnchor.constraint(equalTo: subscriptionMenuContainer.bottomAnchor).isActive = true
         emitter.leadingAnchor.constraint(equalTo: subscriptionMenuContainer.leadingAnchor).isActive = true

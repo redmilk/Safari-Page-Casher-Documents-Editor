@@ -74,12 +74,14 @@ final class OnboardingViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
                 guard let self = self else { return }
+                self.model.continueButtonAction()
+                return
                 if self.model.isLastOnboardingPage {
                     self.dimmedView.isHidden = false
                     self.setupParticles()
                     self.subscriptionFlowContainerOne.isHidden = false
                 } else {
-                    self.model.continueButtonAction()
+                    //self.model.continueButtonAction()
                 }
             })
             .store(in: &bag)
@@ -136,15 +138,11 @@ final class OnboardingViewController: UIViewController {
         emitterForStepOne.heightAnchor.constraint(equalTo: subscriptionFlowContainerOne.heightAnchor).isActive = true
         emitterForStepOne.centerYAnchor.constraint(equalTo: subscriptionFlowContainerOne.centerYAnchor).isActive = true
         emitterForStepOne.centerXAnchor.constraint(equalTo: subscriptionFlowContainerOne.centerXAnchor).isActive = true
-        //subscriptionFlowContainerOne.bringSubviewToFront(subscriptionFlowOneContinue)
 
         subscriptionFlowContainerTwo.insertSubview(emitterForStepTwo, at: 0)
         emitterForStepTwo.widthAnchor.constraint(equalTo: subscriptionFlowContainerTwo.widthAnchor).isActive = true
         emitterForStepTwo.heightAnchor.constraint(equalTo: subscriptionFlowContainerTwo.heightAnchor).isActive = true
         emitterForStepTwo.centerYAnchor.constraint(equalTo: subscriptionFlowContainerTwo.centerYAnchor).isActive = true
         emitterForStepTwo.centerXAnchor.constraint(equalTo: subscriptionFlowContainerTwo.centerXAnchor).isActive = true
-        //subscriptionFlowContainerTwo.bringSubviewToFront(subscriptionFlowTwoContinue)
-        
-        //subscriptionFlowContainerOne.bringSubviewToFront(emitterForStepTwo)
     }
 }
