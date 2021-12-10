@@ -261,13 +261,6 @@
 			path = Scans;
 			sourceTree = "<group>";
 		};
-		79480ADA275AF10D00A5A8E1 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Controllers;
-			sourceTree = "<group>";
-		};
 		794F73DB2746B1F500B07410 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -551,7 +544,6 @@
 			children = (
 				79A598092762FDA800EB580A /* View */,
 				79DCEF9B275B9266007BC160 /* Model */,
-				79480ADA275AF10D00A5A8E1 /* Controllers */,
 				79B576FC2754EC7D006969F5 /* Constants */,
 				7983ECDD2750B06400B5C2AF /* CarouselView */,
 				794F73F52746CEA000B07410 /* ModuleTemplates */,
