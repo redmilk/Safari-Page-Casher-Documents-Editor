@@ -42,11 +42,11 @@ final class HomeScreenMenuCoordinator: CoordinatorProtocol, HomeScreenMenuCoordi
         let viewModel = HomeScreenMenuViewModel(coordinator: self)
         let controller = HomeScreenMenuViewController(viewModel: viewModel)
         controller.isModalInPresentation = true
-        navigationController?.topViewController?.present(controller, animated: true, completion: nil)
+        navigationController?.topViewController?.present(controller, animated: false, completion: nil)
     }
     
     func endWithSelectedAction(_ action: HomeScreenMenuViewModel.Action) {
-        navigationController?.topViewController?.dismiss(animated: true, completion: { [weak self] in
+        navigationController?.topViewController?.dismiss(animated: false, completion: { [weak self] in
             self?.output.send(action)
         })
     }

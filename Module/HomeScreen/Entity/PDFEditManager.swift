@@ -22,7 +22,6 @@ final class PDFEditManager: NSObject, PdfServiceProvidable, UserSessionServicePr
     }
     deinit {
         Logger.log(String(describing: self), type: .deinited)
-        replaceEditedFileWithUpdated(fileURL)
     }
     
     func editFile(navigation: UINavigationController?) {
@@ -30,9 +29,10 @@ final class PDFEditManager: NSObject, PdfServiceProvidable, UserSessionServicePr
         editor.overrideUserInterfaceStyle = .dark
         editor.dataSource = self
         editor.delegate = self
-        editor.setEditing(true, animated: true)
+        editor.setEditing(true, animated: false)
         editor.currentPreviewItemIndex = 0
-        navigation?.pushViewController(editor, animated: false)
+        navigation?.setNavigationBarHidden(true, animated: false)
+        navigation?.present(editor, animated: false, completion: nil)
     }
     
     private func replaceEditedFileWithUpdated(_ fileURL: URL) {
@@ -40,7 +40,6 @@ final class PDFEditManager: NSObject, PdfServiceProvidable, UserSessionServicePr
            let oldDataBox = userSession.editingFileDataBox,
            let updatedThumbnail = pdfService.makeImageFromPDFDocument(
             editedPDF, withImageSize: oldDataBox.image?.size ?? UIScreen.main.bounds.size, ofPageIndex: 0) {
-            
             let newDataBox = PrintableDataBox(id: oldDataBox.id, image: updatedThumbnail, document: editedPDF)
             userSession.input.send(.updateEditedFilesData(newDataBox: newDataBox, oldDataBox: oldDataBox))
         }
@@ -52,7 +51,6 @@ extension PDFEditManager: QLPreviewControllerDataSource {
     func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
         return 1
     }
-    
     func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem {
         return fileURL as QLPreviewItem
     }
@@ -63,15 +61,10 @@ extension PDFEditManager: QLPreviewControllerDelegate {
     func previewController(_ controller: QLPreviewController, editingModeFor previewItem: QLPreviewItem) -> QLPreviewItemEditingMode {
         return .updateContents
     }
-    
     func previewController(_ controller: QLPreviewController, didUpdateContentsOf previewItem: QLPreviewItem) {
 
     }
-
-    func previewController(_ controller: QLPreviewController, didSaveEditedCopyOf previewItem: QLPreviewItem, at modifiedContentsURL: URL) {
-
-    }
-    func previewControllerDidDismiss(_ controller: QLPreviewController) {
-        controller.navigationController?.popViewController(animated: false)
+    func previewControllerWillDismiss(_ controller: QLPreviewController) {
+        replaceEditedFileWithUpdated(fileURL)
     }
 }

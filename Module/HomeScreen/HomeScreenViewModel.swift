@@ -48,9 +48,6 @@ final class HomeScreenViewModel: UserSessionServiceProvidable, PdfServiceProvida
 
 private extension HomeScreenViewModel {
    
-    func resolveCellTapAction(dataBox: PrintableDataBox) {
-    }
-    
     func openFileEditorWithData(_ dataBox: PrintableDataBox) {
         guard let fileURL = prepareAndSaveDataBoxAsPDFDocumentIntoTempDir(dataBox) else { return }
         if let pdftest = PDFDocument(url: fileURL) {

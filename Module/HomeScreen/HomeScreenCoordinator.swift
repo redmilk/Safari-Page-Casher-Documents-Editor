@@ -47,6 +47,8 @@ final class HomeScreenCoordinator: CoordinatorProtocol, HomeScreenCoordinatorPro
     private lazy var photoalbumManager: PhotoalbumManager = PhotoalbumManagerImpl()
     private lazy var cloudFilesManager: CloudFilesManager = CloudFilesManagerImpl()
     private lazy var webpageManager = WebpageManager(initialUrlString: "www.apple.com")
+    private var pdfEditManager: PDFEditManager!
+    
     private lazy var presentationCallback: VoidClosure = { [weak self] in }
     private var childCoordinator: HomeScreenMenuCoordinatorProtocol?
     private var bag = Set<AnyCancellable>()
@@ -114,16 +116,14 @@ final class HomeScreenCoordinator: CoordinatorProtocol, HomeScreenCoordinatorPro
     }
     
     func displayFileEditor(fileURL: URL) {
-        let coordinator = EditScreenCoordinator(navigationController: navigationController, fileURL: fileURL)
-        coordinator.start()
+        pdfEditManager = PDFEditManager(fileURL: fileURL, finishCallback: {
+            
+        })
+        pdfEditManager.editFile(navigation: navigationController)
     }
     
     func closeMenu() {
         childCoordinator?.end()
         childCoordinator = nil
-    }
-    
-    func end() {
-        
     }
 }
