@@ -51,7 +51,7 @@ final class BlurredShadowView2: UIView {
     private func setup() {
         layer.shadowColor = UIColor(red: 0.106, green: 0.671, blue: 1, alpha: 0.26).cgColor
         layer.shadowOffset = CGSize(width: 0, height: 0)
-        layer.shadowOpacity = 0.7
+        layer.shadowOpacity = 0.9
         layer.shadowRadius = 50
         layer.masksToBounds = false
         layer.shadowPath = UIBezierPath(rect: bounds).cgPath

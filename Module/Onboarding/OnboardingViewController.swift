@@ -77,6 +77,13 @@ final class OnboardingViewController: UIViewController {
                 guard let self = self else { return }
                 if self.model.isLastOnboardingPage {
                     self.dimmedView.isHidden = false
+                    let emitter = ParticleEmitterView()
+                    emitter.translatesAutoresizingMaskIntoConstraints = false
+                    self.dimmedView.addSubview(emitter)
+                    emitter.widthAnchor.constraint(equalTo: self.dimmedView.widthAnchor).isActive = true
+                    emitter.heightAnchor.constraint(equalTo: self.dimmedView.heightAnchor).isActive = true
+                    emitter.centerYAnchor.constraint(equalTo: self.dimmedView.centerYAnchor).isActive = true
+                    emitter.centerXAnchor.constraint(equalTo: self.dimmedView.centerXAnchor).isActive = true
                     self.subscriptionFlowContainerOne.isHidden = false
                 } else {
                     self.model.continueButtonAction()

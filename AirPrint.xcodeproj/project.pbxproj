@@ -79,6 +79,7 @@
 		79B788042750B55C009D7655 /* EditScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B788002750B55C009D7655 /* EditScreenViewController.swift */; };
 		79B788052750B55C009D7655 /* EditScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B788012750B55C009D7655 /* EditScreenViewModel.swift */; };
 		79B788062750B55C009D7655 /* EditScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79B788022750B55C009D7655 /* EditScreenViewController.xib */; };
+		79BBD8AB276319660087B1E0 /* ParticleEmitterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BBD8AA276319660087B1E0 /* ParticleEmitterView.swift */; };
 		79F23A6E2760A9710004475D /* PDFComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F23A6D2760A9710004475D /* PDFComposer.swift */; };
 		79F80FBC2752A93C00081C7A /* ServicesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F80FBB2752A93C00081C7A /* ServicesContainer.swift */; };
 		79F80FC22752B00000081C7A /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F80FC12752B00000081C7A /* UIImage+Extensions.swift */; };
@@ -176,6 +177,7 @@
 		79B788002750B55C009D7655 /* EditScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditScreenViewController.swift; sourceTree = "<group>"; };
 		79B788012750B55C009D7655 /* EditScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditScreenViewModel.swift; sourceTree = "<group>"; };
 		79B788022750B55C009D7655 /* EditScreenViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditScreenViewController.xib; sourceTree = "<group>"; };
+		79BBD8AA276319660087B1E0 /* ParticleEmitterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticleEmitterView.swift; sourceTree = "<group>"; };
 		79E4606C274D495F00FD22E1 /* PdfViewerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PdfViewerCoordinator.swift; sourceTree = "<group>"; };
 		79E4606D274D495F00FD22E1 /* PdfViewerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PdfViewerViewController.swift; sourceTree = "<group>"; };
 		79E4606E274D495F00FD22E1 /* PdfViewerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PdfViewerViewModel.swift; sourceTree = "<group>"; };
@@ -395,6 +397,7 @@
 			isa = PBXGroup;
 			children = (
 				79A5980A2762FDD400EB580A /* BlurredShadowView.swift */,
+				79BBD8AA276319660087B1E0 /* ParticleEmitterView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -717,6 +720,7 @@
 				794F73E02746B31D00B07410 /* MarketBoardDisplayManager.swift in Sources */,
 				794F73EC2746B36900B07410 /* UICollectionView+Extensions.swift in Sources */,
 				79B788052750B55C009D7655 /* EditScreenViewModel.swift in Sources */,
+				79BBD8AB276319660087B1E0 /* ParticleEmitterView.swift in Sources */,
 				79F913B62746501500771FFE /* SceneDelegate.swift in Sources */,
 				7963FC4227466F6F007B8449 /* ApplicationCoordinator.swift in Sources */,
 				799DA16A2762CFE2003EA17F /* Onboarding.swift in Sources */,

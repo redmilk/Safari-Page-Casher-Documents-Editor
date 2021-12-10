@@ -144,7 +144,7 @@
                             <state key="normal" backgroundImage="button-close-small"/>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.41203055110002429" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.80414039730408027" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="jEf-CW-4lt" firstAttribute="top" secondItem="rEn-B3-bDH" secondAttribute="top" constant="70" id="JAE-K7-NK6"/>
                         <constraint firstAttribute="trailing" secondItem="jEf-CW-4lt" secondAttribute="trailing" constant="20" id="Kks-2R-3lY"/>
