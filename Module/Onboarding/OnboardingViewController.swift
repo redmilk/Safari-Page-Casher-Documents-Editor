@@ -56,10 +56,11 @@ final class OnboardingViewController: UIViewController {
     deinit {
         Logger.log(String(describing: self), type: .deinited)
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        //addBluredCircle()
+
         primaryImageView.image = UIImage(named: model.mainImageName)!
         pagingImageView.image = UIImage(named: model.paginImageName)!
         primaryLabel.text = model.mainTextLine1
