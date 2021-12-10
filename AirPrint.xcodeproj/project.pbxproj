@@ -48,6 +48,7 @@
 		7997DE372753F82A00B33300 /* Poppins-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7997DE312753F82A00B33300 /* Poppins-Medium.otf */; };
 		7997DE382753F82A00B33300 /* Poppins-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7997DE322753F82A00B33300 /* Poppins-SemiBold.otf */; };
 		7997DE392753F82A00B33300 /* Poppins-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7997DE332753F82A00B33300 /* Poppins-Regular.otf */; };
+		799DA16A2762CFE2003EA17F /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799DA1692762CFE2003EA17F /* Onboarding.swift */; };
 		79A725A62750BE3B00D8B330 /* HomeCollectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A725A52750BE3B00D8B330 /* HomeCollectionManager.swift */; };
 		79A725AA2750BEA200D8B330 /* ResultPreviewSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A725A92750BEA200D8B330 /* ResultPreviewSection.swift */; };
 		79A725B12750C41700D8B330 /* ResultPreviewCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A725AF2750C41700D8B330 /* ResultPreviewCollectionCell.swift */; };
@@ -56,7 +57,6 @@
 		79B576FA2754EC76006969F5 /* StylingConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B576F92754EC76006969F5 /* StylingConstants.swift */; };
 		79B787B52750B1E4009D7655 /* OnboardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B787B12750B1E4009D7655 /* OnboardingCoordinator.swift */; };
 		79B787B62750B1E4009D7655 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B787B22750B1E4009D7655 /* OnboardingViewController.swift */; };
-		79B787B72750B1E4009D7655 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B787B32750B1E4009D7655 /* OnboardingViewModel.swift */; };
 		79B787B82750B1E4009D7655 /* OnboardingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79B787B42750B1E4009D7655 /* OnboardingViewController.xib */; };
 		79B787C12750B21D009D7655 /* AppSubscriptionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B787BD2750B21D009D7655 /* AppSubscriptionCoordinator.swift */; };
 		79B787C22750B21D009D7655 /* AppSubscriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B787BE2750B21D009D7655 /* AppSubscriptionViewController.swift */; };
@@ -144,6 +144,7 @@
 		799AFB81274680EB00C37A6D /* ExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleViewController.swift; sourceTree = "<group>"; };
 		799AFB82274680EB00C37A6D /* ExampleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleViewModel.swift; sourceTree = "<group>"; };
 		799AFB83274680EB00C37A6D /* ExampleViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExampleViewController.xib; sourceTree = "<group>"; };
+		799DA1692762CFE2003EA17F /* Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
 		79A725A52750BE3B00D8B330 /* HomeCollectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionManager.swift; sourceTree = "<group>"; };
 		79A725A92750BEA200D8B330 /* ResultPreviewSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultPreviewSection.swift; sourceTree = "<group>"; };
 		79A725AF2750C41700D8B330 /* ResultPreviewCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultPreviewCollectionCell.swift; sourceTree = "<group>"; };
@@ -152,7 +153,6 @@
 		79B576F92754EC76006969F5 /* StylingConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StylingConstants.swift; sourceTree = "<group>"; };
 		79B787B12750B1E4009D7655 /* OnboardingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCoordinator.swift; sourceTree = "<group>"; };
 		79B787B22750B1E4009D7655 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
-		79B787B32750B1E4009D7655 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
 		79B787B42750B1E4009D7655 /* OnboardingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingViewController.xib; sourceTree = "<group>"; };
 		79B787BD2750B21D009D7655 /* AppSubscriptionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSubscriptionCoordinator.swift; sourceTree = "<group>"; };
 		79B787BE2750B21D009D7655 /* AppSubscriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSubscriptionViewController.swift; sourceTree = "<group>"; };
@@ -286,6 +286,7 @@
 				793ADF542754DFAE00F58923 /* UserSession.swift */,
 				7983ECCB275092AF00B5C2AF /* PDFService.swift */,
 				79763581274E88B9001D2155 /* InteractionFeedbackService.swift */,
+				799DA1692762CFE2003EA17F /* Onboarding.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -419,9 +420,8 @@
 		79B787BA2750B1ED009D7655 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
-				79B787B12750B1E4009D7655 /* OnboardingCoordinator.swift */,
 				79B787B22750B1E4009D7655 /* OnboardingViewController.swift */,
-				79B787B32750B1E4009D7655 /* OnboardingViewModel.swift */,
+				79B787B12750B1E4009D7655 /* OnboardingCoordinator.swift */,
 				79B787B42750B1E4009D7655 /* OnboardingViewController.xib */,
 			);
 			path = Onboarding;
@@ -707,11 +707,11 @@
 				79B788052750B55C009D7655 /* EditScreenViewModel.swift in Sources */,
 				79F913B62746501500771FFE /* SceneDelegate.swift in Sources */,
 				7963FC4227466F6F007B8449 /* ApplicationCoordinator.swift in Sources */,
+				799DA16A2762CFE2003EA17F /* Onboarding.swift in Sources */,
 				79B787CB2750B250009D7655 /* PrintingOptionsCoordinator.swift in Sources */,
 				79480AD7275AE5A100A5A8E1 /* WebpageManager.swift in Sources */,
 				79763582274E88B9001D2155 /* InteractionFeedbackService.swift in Sources */,
 				793ADF552754DFAE00F58923 /* UserSession.swift in Sources */,
-				79B787B72750B1E4009D7655 /* OnboardingViewModel.swift in Sources */,
 				794F73EF2746B36900B07410 /* UIControl+Extensions.swift in Sources */,
 				793ADF5D2754E36100F58923 /* HomeScreenMenuCoordinator.swift in Sources */,
 				79A725A62750BE3B00D8B330 /* HomeCollectionManager.swift in Sources */,
