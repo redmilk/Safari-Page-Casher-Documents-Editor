@@ -136,15 +136,11 @@ final class OnboardingViewController: UIViewController {
         emitterForStepOne.heightAnchor.constraint(equalTo: subscriptionFlowContainerOne.heightAnchor).isActive = true
         emitterForStepOne.centerYAnchor.constraint(equalTo: subscriptionFlowContainerOne.centerYAnchor).isActive = true
         emitterForStepOne.centerXAnchor.constraint(equalTo: subscriptionFlowContainerOne.centerXAnchor).isActive = true
-        //subscriptionFlowContainerOne.bringSubviewToFront(subscriptionFlowOneContinue)
 
         subscriptionFlowContainerTwo.insertSubview(emitterForStepTwo, at: 0)
         emitterForStepTwo.widthAnchor.constraint(equalTo: subscriptionFlowContainerTwo.widthAnchor).isActive = true
         emitterForStepTwo.heightAnchor.constraint(equalTo: subscriptionFlowContainerTwo.heightAnchor).isActive = true
         emitterForStepTwo.centerYAnchor.constraint(equalTo: subscriptionFlowContainerTwo.centerYAnchor).isActive = true
         emitterForStepTwo.centerXAnchor.constraint(equalTo: subscriptionFlowContainerTwo.centerXAnchor).isActive = true
-        //subscriptionFlowContainerTwo.bringSubviewToFront(subscriptionFlowTwoContinue)
-        
-        //subscriptionFlowContainerOne.bringSubviewToFront(emitterForStepTwo)
     }
 }

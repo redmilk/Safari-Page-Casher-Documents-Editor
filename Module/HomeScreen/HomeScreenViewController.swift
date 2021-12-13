@@ -111,8 +111,6 @@ final class HomeScreenViewController: UIViewController {
         applyStyling()
         collectionManager.input.send(.configure)
         viewModel.configureViewModel()
-    
-        navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -122,6 +120,16 @@ final class HomeScreenViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         dashedLineLayer.add(dashedLineAnimation, forKey: "dashed-line")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 }
 
@@ -167,6 +175,11 @@ private extension HomeScreenViewController {
         
         printButton.publisher().sink(receiveValue: { [weak self] _ in
             self?.viewModel.input.send(.didTapPrint)
+        })
+        .store(in: &bag)
+        
+        settingsButton.publisher().print("SETTINGS").sink(receiveValue: { [weak self] _ in
+            self?.viewModel.input.send(.didTapSettings)
         })
         .store(in: &bag)
         
@@ -322,11 +335,10 @@ private extension HomeScreenViewController {
         emitter.alpha = 0.6
         emitter.isUserInteractionEnabled = false
         emitter.translatesAutoresizingMaskIntoConstraints = false
-        subscriptionContainer.addSubview(emitter)
+        subscriptionMenuContainer.insertSubview(emitter, at: 0)
         emitter.topAnchor.constraint(equalTo: subscriptionMenuContainer.topAnchor).isActive = true
         emitter.bottomAnchor.constraint(equalTo: subscriptionMenuContainer.bottomAnchor).isActive = true
         emitter.leadingAnchor.constraint(equalTo: subscriptionMenuContainer.leadingAnchor).isActive = true
         emitter.trailingAnchor.constraint(equalTo: subscriptionMenuContainer.trailingAnchor).isActive = true
-        subscriptionMenuContainer.bringSubviewToFront(subscriptionContinueButton)
     }
 }

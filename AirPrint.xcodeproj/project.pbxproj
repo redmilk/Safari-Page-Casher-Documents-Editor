@@ -13,6 +13,10 @@
 		79194A6A275BAE24003E2539 /* PrinterPickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79194A69275BAE24003E2539 /* PrinterPickerManager.swift */; };
 		79194A6E275BD568003E2539 /* PDFEditManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79194A6D275BD568003E2539 /* PDFEditManager.swift */; };
 		79194A74275BDA43003E2539 /* FileManager+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79194A73275BDA43003E2539 /* FileManager+Extensions.swift */; };
+		791CC43F276441B200813FAC /* ManageSubscriptionsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791CC43B276441B200813FAC /* ManageSubscriptionsCoordinator.swift */; };
+		791CC440276441B200813FAC /* ManageSubscriptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791CC43C276441B200813FAC /* ManageSubscriptionsViewController.swift */; };
+		791CC441276441B200813FAC /* ManageSubscriptionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791CC43D276441B200813FAC /* ManageSubscriptionsViewModel.swift */; };
+		791CC442276441B200813FAC /* ManageSubscriptionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 791CC43E276441B200813FAC /* ManageSubscriptionsViewController.xib */; };
 		79280E44274BD57D001768A2 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79280E43274BD57D001768A2 /* UIViewController+Extensions.swift */; };
 		792D661127552DE300063F4B /* CameraScanManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792D661027552DE300063F4B /* CameraScanManager.swift */; };
 		792D66152755394000063F4B /* PhotoalbumManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792D66142755394000063F4B /* PhotoalbumManager.swift */; };
@@ -93,6 +97,10 @@
 		79194A69275BAE24003E2539 /* PrinterPickerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrinterPickerManager.swift; sourceTree = "<group>"; };
 		79194A6D275BD568003E2539 /* PDFEditManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFEditManager.swift; sourceTree = "<group>"; };
 		79194A73275BDA43003E2539 /* FileManager+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Extensions.swift"; sourceTree = "<group>"; };
+		791CC43B276441B200813FAC /* ManageSubscriptionsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageSubscriptionsCoordinator.swift; sourceTree = "<group>"; };
+		791CC43C276441B200813FAC /* ManageSubscriptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageSubscriptionsViewController.swift; sourceTree = "<group>"; };
+		791CC43D276441B200813FAC /* ManageSubscriptionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageSubscriptionsViewModel.swift; sourceTree = "<group>"; };
+		791CC43E276441B200813FAC /* ManageSubscriptionsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ManageSubscriptionsViewController.xib; sourceTree = "<group>"; };
 		79280E43274BD57D001768A2 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		792D661027552DE300063F4B /* CameraScanManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraScanManager.swift; sourceTree = "<group>"; };
 		792D66142755394000063F4B /* PhotoalbumManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoalbumManager.swift; sourceTree = "<group>"; };
@@ -213,6 +221,17 @@
 				79194A69275BAE24003E2539 /* PrinterPickerManager.swift */,
 			);
 			path = Entity;
+			sourceTree = "<group>";
+		};
+		791CC43A276440C200813FAC /* ManageSubscriptions */ = {
+			isa = PBXGroup;
+			children = (
+				791CC43C276441B200813FAC /* ManageSubscriptionsViewController.swift */,
+				791CC43D276441B200813FAC /* ManageSubscriptionsViewModel.swift */,
+				791CC43B276441B200813FAC /* ManageSubscriptionsCoordinator.swift */,
+				791CC43E276441B200813FAC /* ManageSubscriptionsViewController.xib */,
+			);
+			path = ManageSubscriptions;
 			sourceTree = "<group>";
 		};
 		792D660D27552D1D00063F4B /* Entity */ = {
@@ -444,10 +463,11 @@
 		79B787DA2750B2EA009D7655 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				79B787DB2750B2FD009D7655 /* SettingsCoordinator.swift */,
 				79B787DC2750B2FD009D7655 /* SettingsViewController.swift */,
 				79B787DD2750B2FD009D7655 /* SettingsViewModel.swift */,
+				79B787DB2750B2FD009D7655 /* SettingsCoordinator.swift */,
 				79B787DE2750B2FD009D7655 /* SettingsViewController.xib */,
+				791CC43A276440C200813FAC /* ManageSubscriptions */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -620,6 +640,7 @@
 				79A725B22750C41700D8B330 /* ResultPreviewCollectionCell.xib in Resources */,
 				79697CD8275AF1FC0056B0B0 /* WebpageViewController.xib in Resources */,
 				79F913C02746501900771FFE /* LaunchScreen.storyboard in Resources */,
+				791CC442276441B200813FAC /* ManageSubscriptionsViewController.xib in Resources */,
 				79B787C42750B21D009D7655 /* AppSubscriptionViewController.xib in Resources */,
 				7997DE392753F82A00B33300 /* Poppins-Regular.otf in Resources */,
 				79F913BD2746501900771FFE /* Assets.xcassets in Resources */,
@@ -641,6 +662,7 @@
 			files = (
 				7940AC862754F7890028B45F /* UIButton+Extensions.swift in Sources */,
 				794F73EB2746B36900B07410 /* UIBarButtonItem+Extensions.swift in Sources */,
+				791CC440276441B200813FAC /* ManageSubscriptionsViewController.swift in Sources */,
 				79F913B42746501500771FFE /* AppDelegate.swift in Sources */,
 				79A5980B2762FDD400EB580A /* BlurredShadowView.swift in Sources */,
 				79B576FA2754EC76006969F5 /* StylingConstants.swift in Sources */,
@@ -676,6 +698,7 @@
 				794F73EE2746B36900B07410 /* KeyedDecodingContainer+Extensions.swift in Sources */,
 				792D66152755394000063F4B /* PhotoalbumManager.swift in Sources */,
 				79B787F62750B429009D7655 /* HomeScreenCoordinator.swift in Sources */,
+				791CC43F276441B200813FAC /* ManageSubscriptionsCoordinator.swift in Sources */,
 				79416D362759943000262593 /* Date+Extensions.swift in Sources */,
 				793ADF5F2754E36100F58923 /* HomeScreenMenuViewModel.swift in Sources */,
 				794F73E02746B31D00B07410 /* MarketBoardDisplayManager.swift in Sources */,
@@ -699,6 +722,7 @@
 				793ADF5E2754E36100F58923 /* HomeScreenMenuViewController.swift in Sources */,
 				79194A74275BDA43003E2539 /* FileManager+Extensions.swift in Sources */,
 				79F80FC22752B00000081C7A /* UIImage+Extensions.swift in Sources */,
+				791CC441276441B200813FAC /* ManageSubscriptionsViewModel.swift in Sources */,
 				795A1CB8275D12650097FA6E /* UIColor+Extensions.swift in Sources */,
 				79B787B52750B1E4009D7655 /* OnboardingCoordinator.swift in Sources */,
 			);
