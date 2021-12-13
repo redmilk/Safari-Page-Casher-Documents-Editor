@@ -32,7 +32,7 @@ final class SettingsCoordinator: CoordinatorProtocol, SettingsCoordinatorProtoco
         navigationController?.pushViewController(controller, animated: true)
     }
     
-    func showManageSubscriptions() {
+    func showManageSubscriptions() { 
 //        let coordinator = ManageSubscriptionsCoordinator(navigationController: navigationController)
 //        coordinator.start()
     }
