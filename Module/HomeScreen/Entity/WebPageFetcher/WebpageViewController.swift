@@ -59,7 +59,7 @@ private extension WebpageViewController {
         webView.uiDelegate = self
         searchBar.delegate = self
         searchBar.autocapitalizationType = .none
-        webView.load(URLRequest(url: URL(string: "https://apple.com/iphone")!))
+        webView.load(URLRequest(url: URL(string: "https://google.com")!))
         
         closeButton.publisher().sink(receiveValue: { [weak self] _ in
             self?.dismiss(animated: true, completion: self?.finishCallback)
@@ -130,7 +130,7 @@ extension WebpageViewController: WKNavigationDelegate, WKUIDelegate, UISearchBar
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         if let currentNavigationUrl = navigationAction.request.url?.absoluteString,
            !currentNavigationUrl.contains("blank") {
-            searchBar.text = currentNavigationUrl
+            searchBar.text = currentNavigationUrl.replacingOccurrences(of: "https://", with: "")
         }
         decisionHandler(.allow)
     }
@@ -155,7 +155,7 @@ extension WebpageViewController: WKNavigationDelegate, WKUIDelegate, UISearchBar
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        //Logger.log("webView.scrollView.contentSize: \(webView.scrollView.contentSize)")
+        Logger.log("webView.scrollView.contentSize: \(webView.scrollView.contentSize)")
         webContentSize = webView.scrollView.contentSize
     }
 }

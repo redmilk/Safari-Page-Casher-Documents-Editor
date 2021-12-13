@@ -82,8 +82,7 @@ final class HomeCollectionManager: NSObject, InteractionFeedbackService { /// NS
             case .toggleLayout:
                 self.isGridLayout.toggle()
                 self.isGridLayout ? self.layoutCollectionAsGrid() : self.layoutCollectionAsFullSizePages()
-                //self.collectionView.reloadData()
-                self.collectionView.collectionViewLayout.invalidateLayout()
+                self.collectionView.reloadData()
                 self.output.send(.layoutMode(isGrid: self.isGridLayout))
             case .toggleSelectionMode:
                 self.isInSelectionMode.toggle()
