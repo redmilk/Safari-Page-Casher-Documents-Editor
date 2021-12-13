@@ -33,7 +33,7 @@ final class BlurredShadowView1: UIView {
         UIView.animate(withDuration: 5.0, delay: 0, options: [.autoreverse, .repeat, .curveEaseInOut], animations: {
             self.transform = CGAffineTransform(scaleX: 2.0, y: 2.0)
         }, completion: { _ in
-            UIView.animate(withDuration: 5.0, delay: 0, options: [.curveEaseInOut], animations: {
+            UIView.animate(withDuration: 5.0, delay: 0, options: [.autoreverse, .repeat, .curveEaseInOut], animations: {
                 self.center.x -= 1000
                 self.transform = CGAffineTransform(scaleX: 1.6, y: 1.6)
             })
@@ -63,7 +63,7 @@ final class BlurredShadowView2: UIView {
         layer.rasterizationScale = 1
         backgroundColor = UIColor.clear
         
-        UIView.animate(withDuration: 6.0, delay: 0.0, options: [.repeat, .curveEaseInOut], animations: {
+        UIView.animate(withDuration: 6.0, delay: 0.0, options: [.autoreverse, .repeat, .curveEaseInOut], animations: {
             self.transform = CGAffineTransform(scaleX: 2.6, y: 1.6)
             self.center = CGPoint(x: UIScreen.main.bounds.minX - 300, y: UIScreen.main.bounds.height + 600)
             self.alpha = 0.2

@@ -22,6 +22,7 @@ final class HomeScreenViewModel: UserSessionServiceProvidable, PdfServiceProvida
         case itemsDeleteRejected
         case getSelectionCount
         case didTapPrint
+        case didTapSettings
     }
     
     let input = PassthroughSubject<HomeScreenViewModel.Action, Never>()
@@ -84,6 +85,8 @@ private extension HomeScreenViewModel {
             switch action {
             case .openMenu:
                 self?.coordinator.showMainMenuAndHandleActions()
+            case .didTapSettings:
+                self?.coordinator.displaySettings()
             case .deleteAll:
                 self?.userSession.input.send(.deleteAll)
             case .itemsDeleteConfirmed:

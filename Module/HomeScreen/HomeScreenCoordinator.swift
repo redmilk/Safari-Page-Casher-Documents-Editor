@@ -20,6 +20,7 @@ protocol HomeScreenCoordinatorProtocol {
     var copyFromClipboardCallback: VoidClosure! { get set }
     
     func showMainMenuAndHandleActions()
+    func displaySettings()
     func closeMenu()
     func displayPrintSettings()
     func displayFileEditor(fileURL: URL)
@@ -66,30 +67,6 @@ final class HomeScreenCoordinator: CoordinatorProtocol, HomeScreenCoordinatorPro
         navigationController?.pushViewController(controller, animated: true)
     }
     
-    private func showCameraScaner() {
-        cameraScaner.displayScanningController(navigationController!.topViewController!, presentationCallback: { [weak self] in
-            self?.closeMenu()
-        })
-    }
-    
-    private func showPhotoPicker() {
-        photoalbumManager.displayPhotoLibrary(navigationController!.topViewController!, presentationCallback: { [weak self] in
-            self?.closeMenu()
-        })
-    }
-    
-    private func showCloudFilesPicker() {
-        cloudFilesManager.displayDocumentsSelectionMenu(navigationController!.topViewController!, presentationCallback: { [weak self] in
-            self?.closeMenu()
-        })
-    }
-    
-    private func showWebView() {
-        webpageManager.displayWebpage(navigationController!.topViewController!, presentationCallback: { [weak self] in
-            self?.closeMenu()
-        })
-    }
-    
     func showMainMenuAndHandleActions() {
         let coordinator = HomeScreenMenuCoordinator(navigationController: navigationController)
         coordinator.start()
@@ -110,6 +87,11 @@ final class HomeScreenCoordinator: CoordinatorProtocol, HomeScreenCoordinatorPro
         .store(in: &self.bag)
     }
     
+    func displaySettings() {
+        let coordinator = SettingsCoordinator(navigationController: navigationController)
+        coordinator.start()
+    }
+    
     func displayPrintSettings() {
         let coordinator = PrintingOptionsCoordinator(navigationController: navigationController)
         coordinator.start()
@@ -125,5 +107,31 @@ final class HomeScreenCoordinator: CoordinatorProtocol, HomeScreenCoordinatorPro
     func closeMenu() {
         childCoordinator?.end()
         childCoordinator = nil
+    }
+}
+
+private extension HomeScreenCoordinator {
+    func showCameraScaner() {
+        cameraScaner.displayScanningController(navigationController!.topViewController!, presentationCallback: { [weak self] in
+            self?.closeMenu()
+        })
+    }
+    
+    func showPhotoPicker() {
+        photoalbumManager.displayPhotoLibrary(navigationController!.topViewController!, presentationCallback: { [weak self] in
+            self?.closeMenu()
+        })
+    }
+    
+    func showCloudFilesPicker() {
+        cloudFilesManager.displayDocumentsSelectionMenu(navigationController!.topViewController!, presentationCallback: { [weak self] in
+            self?.closeMenu()
+        })
+    }
+    
+    func showWebView() {
+        webpageManager.displayWebpage(navigationController!.topViewController!, presentationCallback: { [weak self] in
+            self?.closeMenu()
+        })
     }
 }

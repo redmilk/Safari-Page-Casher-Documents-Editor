@@ -12,7 +12,11 @@ import Combine
 
 final class SettingsViewModel {
     enum Action {
-        case dummyAction
+        case manageSubscriptions
+        case contactUs
+        case privacyPolicy
+        case termsOfUse
+        case share
     }
     
     let input = PassthroughSubject<SettingsViewModel.Action, Never>()
@@ -38,8 +42,12 @@ private extension SettingsViewModel {
     private func dispatchActions() {
         input.sink(receiveValue: { [weak self] action in
             switch action {
-            case .dummyAction:
-                break
+            case .manageSubscriptions:
+                self?.coordinator.showManageSubscriptions()
+            case .contactUs: break
+            case .privacyPolicy: break
+            case .termsOfUse: break
+            case .share: break
             }
         })
         .store(in: &bag)

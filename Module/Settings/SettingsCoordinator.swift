@@ -12,14 +12,14 @@ import UIKit.UINavigationController
 import Combine
 
 protocol SettingsCoordinatorProtocol {
-   
+    func showManageSubscriptions()
 }
 
 final class SettingsCoordinator: CoordinatorProtocol, SettingsCoordinatorProtocol {
     var navigationController: UINavigationController?
     
-    init() {
-
+    init(navigationController: UINavigationController?) {
+        self.navigationController = navigationController
     }
     deinit {
         Logger.log(String(describing: self), type: .deinited)
@@ -28,7 +28,13 @@ final class SettingsCoordinator: CoordinatorProtocol, SettingsCoordinatorProtoco
     func start() {
         let viewModel = SettingsViewModel(coordinator: self)
         let controller = SettingsViewController(viewModel: viewModel)
-
+        navigationController?.navigationItem.titleView?.tintColor = .white
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    func showManageSubscriptions() {
+        let coordinator = ManageSubscriptionsCoordinator(navigationController: navigationController)
+        coordinator.start()
     }
     
     func end() {

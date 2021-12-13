@@ -41,7 +41,7 @@ final class HomeScreenMenuCoordinator: CoordinatorProtocol, HomeScreenMenuCoordi
     func start() {
         let viewModel = HomeScreenMenuViewModel(coordinator: self)
         let controller = HomeScreenMenuViewController(viewModel: viewModel)
-        controller.isModalInPresentation = true
+        controller.modalPresentationStyle = .custom
         navigationController?.topViewController?.present(controller, animated: false, completion: nil)
     }
     
