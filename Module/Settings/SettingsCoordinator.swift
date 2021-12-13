@@ -33,8 +33,8 @@ final class SettingsCoordinator: CoordinatorProtocol, SettingsCoordinatorProtoco
     }
     
     func showManageSubscriptions() {
-        let coordinator = ManageSubscriptionsCoordinator(navigationController: navigationController)
-        coordinator.start()
+//        let coordinator = ManageSubscriptionsCoordinator(navigationController: navigationController)
+//        coordinator.start()
     }
     
     func end() {
