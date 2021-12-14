@@ -31,7 +31,6 @@ final class HomeScreenViewController: UIViewController {
     @IBOutlet private weak var subscriptionMenuOpenButton: UIButton!
     @IBOutlet private weak var subscriptionDiscountLabel: UILabel!
     @IBOutlet private weak var subscriptionCloseButton: UIButton!
-    
     /// Filled state controls
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var layoutChangeButton: UIButton!
@@ -43,7 +42,6 @@ final class HomeScreenViewController: UIViewController {
     @IBOutlet private weak var plusButtonDescriptionContainer: UIStackView!
     @IBOutlet private weak var plusButton: UIButton!
     @IBOutlet private weak var giftContentView: UIView!
-    
     /// Common state controls
     @IBOutlet private weak var printButton: UIButton!
     @IBOutlet private weak var navigationBarExtenderView: UIView!
@@ -119,7 +117,7 @@ final class HomeScreenViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        dashedLineLayer.add(dashedLineAnimation, forKey: "dashed-line")
+        dashedLineLayer.add(dashedLineAnimation, forKey: "dashed-line")        
     }
     
     override func viewWillAppear(_ animated: Bool) {
