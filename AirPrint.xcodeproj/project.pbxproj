@@ -146,10 +146,6 @@
 		7997DE312753F82A00B33300 /* Poppins-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Medium.otf"; sourceTree = "<group>"; };
 		7997DE322753F82A00B33300 /* Poppins-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-SemiBold.otf"; sourceTree = "<group>"; };
 		7997DE332753F82A00B33300 /* Poppins-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Regular.otf"; sourceTree = "<group>"; };
-		799AFB80274680EB00C37A6D /* ExampleCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleCoordinator.swift; sourceTree = "<group>"; };
-		799AFB81274680EB00C37A6D /* ExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleViewController.swift; sourceTree = "<group>"; };
-		799AFB82274680EB00C37A6D /* ExampleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleViewModel.swift; sourceTree = "<group>"; };
-		799AFB83274680EB00C37A6D /* ExampleViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExampleViewController.xib; sourceTree = "<group>"; };
 		799DA1692762CFE2003EA17F /* Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
 		79A5980A2762FDD400EB580A /* BlurredShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurredShadowView.swift; sourceTree = "<group>"; };
 		79A725A52750BE3B00D8B330 /* HomeCollectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionManager.swift; sourceTree = "<group>"; };
@@ -178,10 +174,6 @@
 		79B787F42750B429009D7655 /* HomeScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenViewModel.swift; sourceTree = "<group>"; };
 		79B787F52750B429009D7655 /* HomeScreenViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeScreenViewController.xib; sourceTree = "<group>"; };
 		79BBD8AA276319660087B1E0 /* ParticleEmitterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticleEmitterView.swift; sourceTree = "<group>"; };
-		79E4606C274D495F00FD22E1 /* PdfViewerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PdfViewerCoordinator.swift; sourceTree = "<group>"; };
-		79E4606D274D495F00FD22E1 /* PdfViewerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PdfViewerViewController.swift; sourceTree = "<group>"; };
-		79E4606E274D495F00FD22E1 /* PdfViewerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PdfViewerViewModel.swift; sourceTree = "<group>"; };
-		79E4606F274D495F00FD22E1 /* PdfViewerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PdfViewerViewController.xib; sourceTree = "<group>"; };
 		79F23A6D2760A9710004475D /* PDFComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFComposer.swift; sourceTree = "<group>"; };
 		79F80FBB2752A93C00081C7A /* ServicesContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesContainer.swift; sourceTree = "<group>"; };
 		79F80FC12752B00000081C7A /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
@@ -256,28 +248,6 @@
 				793ADF5C2754E36100F58923 /* HomeScreenMenuViewController.xib */,
 			);
 			path = MainMenu;
-			sourceTree = "<group>";
-		};
-		79408321274D488600DFCAD6 /* PdfViewer */ = {
-			isa = PBXGroup;
-			children = (
-				79E4606D274D495F00FD22E1 /* PdfViewerViewController.swift */,
-				79E4606E274D495F00FD22E1 /* PdfViewerViewModel.swift */,
-				79E4606C274D495F00FD22E1 /* PdfViewerCoordinator.swift */,
-				79E4606F274D495F00FD22E1 /* PdfViewerViewController.xib */,
-			);
-			path = PdfViewer;
-			sourceTree = "<group>";
-		};
-		79408322274D48C100DFCAD6 /* Scans */ = {
-			isa = PBXGroup;
-			children = (
-				799AFB80274680EB00C37A6D /* ExampleCoordinator.swift */,
-				799AFB81274680EB00C37A6D /* ExampleViewController.swift */,
-				799AFB82274680EB00C37A6D /* ExampleViewModel.swift */,
-				799AFB83274680EB00C37A6D /* ExampleViewController.xib */,
-			);
-			path = Scans;
 			sourceTree = "<group>";
 		};
 		794F73DB2746B1F500B07410 /* Services */ = {
@@ -472,15 +442,6 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
-		79B787EF2750B378009D7655 /* SandboxModules */ = {
-			isa = PBXGroup;
-			children = (
-				79408321274D488600DFCAD6 /* PdfViewer */,
-				79408322274D48C100DFCAD6 /* Scans */,
-			);
-			path = SandboxModules;
-			sourceTree = "<group>";
-		};
 		79B787F12750B402009D7655 /* HomeScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -532,7 +493,6 @@
 				79B787F12750B402009D7655 /* HomeScreen */,
 				79B787C62750B223009D7655 /* PrintingOptions */,
 				79B787DA2750B2EA009D7655 /* Settings */,
-				79B787EF2750B378009D7655 /* SandboxModules */,
 			);
 			path = Module;
 			sourceTree = "<group>";
