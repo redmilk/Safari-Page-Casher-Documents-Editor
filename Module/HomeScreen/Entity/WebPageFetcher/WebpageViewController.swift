@@ -125,13 +125,22 @@ extension WebpageViewController: WKNavigationDelegate, WKUIDelegate, UISearchBar
         let req = URLRequest(url: url)
         self.webView.load(req)
     }
+   
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        let req = URLRequest(url: URL(string: "https://google.com")!)
+        webView.load(req)
+        searchBar.text = nil
+        return Logger.logError(error)
+    }
     
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction,
-                 decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        if let currentNavigationUrl = navigationAction.request.url?.absoluteString,
-           !currentNavigationUrl.contains("blank") {
-            searchBar.text = currentNavigationUrl.replacingOccurrences(of: "https://", with: "")
+    func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse,
+                 decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
+        guard let response = navigationResponse.response as? HTTPURLResponse else {
+            let req = URLRequest(url: URL(string: "https://google.com")!)
+            webView.load(req)
+            return decisionHandler(.allow)
         }
+        Logger.log(response.statusCode.description)
         decisionHandler(.allow)
     }
     
