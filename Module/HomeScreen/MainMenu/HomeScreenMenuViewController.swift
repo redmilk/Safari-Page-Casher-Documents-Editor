@@ -58,7 +58,9 @@ final class HomeScreenMenuViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        firstBlurredShadowView.animationDuration = 20
+        firstBlurredShadowView.animationDuration = 2000
+        secondBlurredShadowView.animationDuration = 2000
+        secondBlurredShadowView.setup()
         firstBlurredShadowView.setup()
     }
 }
