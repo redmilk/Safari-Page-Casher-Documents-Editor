@@ -9,11 +9,11 @@
 
 import UIKit
 import Combine
-
+import MessageUI
 
 // MARK: - SettingsViewController
 
-final class SettingsViewController: UIViewController {
+final class SettingsViewController: UIViewController, MFMailComposeViewControllerDelegate {
     enum State {
         case dummyState
     }
@@ -43,6 +43,11 @@ final class SettingsViewController: UIViewController {
         configureView()
         handleStates()
     }
+    
+    func mailComposeController(_ controller: MFMailComposeViewController,
+                               didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true)
+    }
 }
 
 // MARK: - Internal
@@ -57,24 +62,105 @@ private extension SettingsViewController {
         navigationBarExtender.addCornerRadius(30)
         navigationBarExtender.dropShadow(color: .black, opacity: 0.6, offSet: .zero, radius: 30, scale: true)
         
-        manageSubscriptionsButton.publisher().sink(receiveValue: { [weak self] _ in
-            self?.viewModel.input.send(.manageSubscriptions)
-        })
-        .store(in: &bag)
-        contactUsButton.publisher().sink(receiveValue: { [weak self] _ in
-            self?.viewModel.input.send(.manageSubscriptions)
-        })
-        .store(in: &bag)
+        manageSubscriptionsButton.publisher()
+            .sink(receiveValue: { [weak self] _ in
+                self?.viewModel.input.send(.manageSubscriptions)
+            })
+            .store(in: &bag)
+        
+        contactUsButton.publisher()
+            .sink(receiveValue: { [weak self] _ in
+                self?.sendEmail()
+            })
+            .store(in: &bag)
+        
+        shareButton.publisher()
+            .sink(receiveValue: { [weak self] _ in
+                self?.share()
+            })
+            .store(in: &bag)
+        
+        privacyPolicyButton.publisher()
+            .sink(receiveValue: { [weak self] _ in
+                self?.viewModel.input.send(.privacyPolicy)
+            })
+            .store(in: &bag)
+        
+        termsOfUseButton.publisher()
+            .sink(receiveValue: { [weak self] _ in
+                self?.viewModel.input.send(.termsOfUse)
+            })
+            .store(in: &bag)
     }
     
     /// Handle ViewModel's states
     func handleStates() {
-        viewModel.output.sink(receiveValue: { [weak self] state in
-            switch state {
-            case .dummyState:
-                break
-            }
-        })
-        .store(in: &bag)
+        viewModel.output
+            .sink(receiveValue: { [weak self] state in
+                switch state {
+                case .dummyState:
+                    break
+                }
+            })
+            .store(in: &bag)
+    }
+    
+    func share() {
+        UIGraphicsBeginImageContext(view.frame.size)
+        view.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        let textToShare = "Check out AirPrinter app"
+        
+        if let myWebsite = URL(string: "http://itunes.apple.com/app/idXXXXXXXXX") {
+            let objectsToShare = [textToShare, myWebsite, image ?? UIImage(named: "icon-logo")!] as [Any]
+            let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+            /// Excluded Activities
+            activityVC.excludedActivityTypes = [UIActivity.ActivityType.airDrop, UIActivity.ActivityType.addToReadingList]
+            
+            //activityVC.popoverPresentationController?.sourceView = sender
+            self.present(activityVC, animated: true, completion: nil)
+        }
+    }
+    
+    func sendEmail() {
+        let recipientEmail = "test@gmail.com"
+        let subject = "Multi client email support"
+        let body = "This code supports sending email via multiple different email apps on iOS! :)"
+        
+        if MFMailComposeViewController.canSendMail() {
+            let mail = MFMailComposeViewController()
+            mail.mailComposeDelegate = self
+            mail.setToRecipients([recipientEmail])
+            mail.setSubject(subject)
+            mail.setMessageBody(body, isHTML: false)
+            present(mail, animated: true)
+        } else if let emailUrl = createEmailUrl(to: recipientEmail, subject: subject, body: body) {
+            UIApplication.shared.open(emailUrl)
+        }
+    }
+    
+    func createEmailUrl(to: String, subject: String, body: String) -> URL? {
+        let subjectEncoded = subject.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+        let bodyEncoded = body.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+        
+        let gmailUrl = URL(string: "googlegmail://co?to=\(to)&subject=\(subjectEncoded)&body=\(bodyEncoded)")
+        let outlookUrl = URL(string: "ms-outlook://compose?to=\(to)&subject=\(subjectEncoded)")
+        let yahooMail = URL(string: "ymail://mail/compose?to=\(to)&subject=\(subjectEncoded)&body=\(bodyEncoded)")
+        let sparkUrl = URL(string: "readdle-spark://compose?recipient=\(to)&subject=\(subjectEncoded)&body=\(bodyEncoded)")
+        let defaultUrl = URL(string: "mailto:\(to)?subject=\(subjectEncoded)&body=\(bodyEncoded)")
+        
+        if let gmailUrl = gmailUrl, UIApplication.shared.canOpenURL(gmailUrl) {
+            return gmailUrl
+        } else if let outlookUrl = outlookUrl, UIApplication.shared.canOpenURL(outlookUrl) {
+            return outlookUrl
+        } else if let yahooMail = yahooMail, UIApplication.shared.canOpenURL(yahooMail) {
+            return yahooMail
+        } else if let sparkUrl = sparkUrl, UIApplication.shared.canOpenURL(sparkUrl) {
+            return sparkUrl
+        } else {
+            return defaultUrl
+        }
     }
 }

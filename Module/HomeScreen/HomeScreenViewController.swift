@@ -220,10 +220,12 @@ private extension HomeScreenViewController {
         })
         .store(in: &bag)
         
-//        subscriptionMenuOpenButton.publisher().sink(receiveValue: { [weak self] _ in           self?.subscriptionContainer.isHidden.toggle()
-//            self?.addParticles()
-//        })
-//        .store(in: &bag)
+        subscriptionMenuOpenButton.publisher()
+            .sink(receiveValue: { [weak self] _ in           
+                self?.subscriptionContainer.isHidden.toggle()
+                self?.addParticles()
+            })
+            .store(in: &bag)
         
         subscriptionContinueButton.publisher().sink(receiveValue: { [weak self] _ in
             /// proceed subscription

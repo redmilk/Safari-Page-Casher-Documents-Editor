@@ -13,6 +13,7 @@ import Combine
 
 protocol SettingsCoordinatorProtocol {
     func showManageSubscriptions()
+    func showMiscSettingsModules(isPrivacyPolicy: Bool)
 }
 
 final class SettingsCoordinator: CoordinatorProtocol, SettingsCoordinatorProtocol {
@@ -34,6 +35,11 @@ final class SettingsCoordinator: CoordinatorProtocol, SettingsCoordinatorProtoco
     
     func showManageSubscriptions() {  
         let coordinator = ManageSubscriptionsCoordinator(navigationController: navigationController)
+        coordinator.start()
+    }
+    
+    func showMiscSettingsModules(isPrivacyPolicy: Bool) {
+        let coordinator = MiscSettingsModulesCoordinator(navigationController: navigationController, isPrivacyPolicy: isPrivacyPolicy)
         coordinator.start()
     }
     

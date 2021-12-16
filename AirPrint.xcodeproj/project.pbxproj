@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7911B024276B0FEC0058CD26 /* MiscSettingsModulesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7911B020276B0FEC0058CD26 /* MiscSettingsModulesCoordinator.swift */; };
+		7911B025276B0FEC0058CD26 /* MiscSettingsModulesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7911B021276B0FEC0058CD26 /* MiscSettingsModulesViewController.swift */; };
+		7911B026276B0FEC0058CD26 /* MiscSettingsModulesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7911B022276B0FEC0058CD26 /* MiscSettingsModulesViewModel.swift */; };
+		7911B027276B0FEC0058CD26 /* MiscSettingsModulesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7911B023276B0FEC0058CD26 /* MiscSettingsModulesViewController.xib */; };
 		79189E00274672900023628A /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79189DFF274672900023628A /* Logger.swift */; };
 		79194A62275BA729003E2539 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79194A61275BA729003E2539 /* Constants.swift */; };
 		79194A67275BABE5003E2539 /* PrintingOptionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79194A66275BABE5003E2539 /* PrintingOptionsManager.swift */; };
@@ -92,6 +96,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7911B020276B0FEC0058CD26 /* MiscSettingsModulesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiscSettingsModulesCoordinator.swift; sourceTree = "<group>"; };
+		7911B021276B0FEC0058CD26 /* MiscSettingsModulesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiscSettingsModulesViewController.swift; sourceTree = "<group>"; };
+		7911B022276B0FEC0058CD26 /* MiscSettingsModulesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiscSettingsModulesViewModel.swift; sourceTree = "<group>"; };
+		7911B023276B0FEC0058CD26 /* MiscSettingsModulesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MiscSettingsModulesViewController.xib; sourceTree = "<group>"; };
 		79189DFF274672900023628A /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		79194A61275BA729003E2539 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		79194A66275BABE5003E2539 /* PrintingOptionsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintingOptionsManager.swift; sourceTree = "<group>"; };
@@ -199,6 +207,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7911B01F276B0F8E0058CD26 /* MiscSettingsModules */ = {
+			isa = PBXGroup;
+			children = (
+				7911B020276B0FEC0058CD26 /* MiscSettingsModulesCoordinator.swift */,
+				7911B021276B0FEC0058CD26 /* MiscSettingsModulesViewController.swift */,
+				7911B022276B0FEC0058CD26 /* MiscSettingsModulesViewModel.swift */,
+				7911B023276B0FEC0058CD26 /* MiscSettingsModulesViewController.xib */,
+			);
+			path = MiscSettingsModules;
+			sourceTree = "<group>";
+		};
 		79189DFE274672420023628A /* Debug */ = {
 			isa = PBXGroup;
 			children = (
@@ -444,6 +463,7 @@
 		79B787DA2750B2EA009D7655 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				7911B01F276B0F8E0058CD26 /* MiscSettingsModules */,
 				79B787DC2750B2FD009D7655 /* SettingsViewController.swift */,
 				79B787DD2750B2FD009D7655 /* SettingsViewModel.swift */,
 				79B787DB2750B2FD009D7655 /* SettingsCoordinator.swift */,
@@ -619,6 +639,7 @@
 				79B787F92750B429009D7655 /* HomeScreenViewController.xib in Resources */,
 				7997DE352753F82A00B33300 /* Poppins-ExtraLight.otf in Resources */,
 				79B787B82750B1E4009D7655 /* OnboardingViewController.xib in Resources */,
+				7911B027276B0FEC0058CD26 /* MiscSettingsModulesViewController.xib in Resources */,
 				79B787E22750B2FD009D7655 /* SettingsViewController.xib in Resources */,
 				7997DE382753F82A00B33300 /* Poppins-SemiBold.otf in Resources */,
 			);
@@ -671,18 +692,21 @@
 				792D66152755394000063F4B /* PhotoalbumManager.swift in Sources */,
 				79B787F62750B429009D7655 /* HomeScreenCoordinator.swift in Sources */,
 				791CC43F276441B200813FAC /* ManageSubscriptionsCoordinator.swift in Sources */,
+				7911B024276B0FEC0058CD26 /* MiscSettingsModulesCoordinator.swift in Sources */,
 				79416D362759943000262593 /* Date+Extensions.swift in Sources */,
 				793ADF5F2754E36100F58923 /* HomeScreenMenuViewModel.swift in Sources */,
 				794F73E02746B31D00B07410 /* MarketBoardDisplayManager.swift in Sources */,
 				794F73EC2746B36900B07410 /* UICollectionView+Extensions.swift in Sources */,
 				79BBD8AB276319660087B1E0 /* ParticleEmitterView.swift in Sources */,
 				79F913B62746501500771FFE /* SceneDelegate.swift in Sources */,
+				7911B025276B0FEC0058CD26 /* MiscSettingsModulesViewController.swift in Sources */,
 				7963FC4227466F6F007B8449 /* ApplicationCoordinator.swift in Sources */,
 				799DA16A2762CFE2003EA17F /* Onboarding.swift in Sources */,
 				79B787CB2750B250009D7655 /* PrintingOptionsCoordinator.swift in Sources */,
 				79480AD7275AE5A100A5A8E1 /* WebpageManager.swift in Sources */,
 				79763582274E88B9001D2155 /* InteractionFeedbackService.swift in Sources */,
 				793ADF552754DFAE00F58923 /* UserSession.swift in Sources */,
+				7911B026276B0FEC0058CD26 /* MiscSettingsModulesViewModel.swift in Sources */,
 				794F73EF2746B36900B07410 /* UIControl+Extensions.swift in Sources */,
 				793ADF5D2754E36100F58923 /* HomeScreenMenuCoordinator.swift in Sources */,
 				79A725A62750BE3B00D8B330 /* HomeCollectionManager.swift in Sources */,

@@ -44,10 +44,11 @@ private extension SettingsViewModel {
             switch action {
             case .manageSubscriptions:
                 self?.coordinator.showManageSubscriptions()
-            case .contactUs: break
-            case .privacyPolicy: break
-            case .termsOfUse: break
-            case .share: break
+            case .privacyPolicy:
+                self?.coordinator.showMiscSettingsModules(isPrivacyPolicy: true)
+            case .termsOfUse:
+                self?.coordinator.showMiscSettingsModules(isPrivacyPolicy: false)
+            case _: break
             }
         })
         .store(in: &bag)
