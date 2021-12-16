@@ -131,7 +131,7 @@ private extension HomeScreenMenuViewController {
         subscriptionButtonsContainer.addCornerRadius(30.0)
         subscriptionButtonsContainer.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
 
-        subscriptionButtonsContainer.dropShadow(color: .white, opacity: 0.2, offSet: .zero, radius: 30, scale: true)
+        subscriptionButtonsContainer.dropShadow(color: .black, opacity: 0.6, offSet: .zero, radius: 30, scale: true)
         let emitterForStepOne = ParticleEmitterView()
         emitterForStepOne.isUserInteractionEnabled = false
         emitterForStepOne.translatesAutoresizingMaskIntoConstraints = false
