@@ -14,94 +14,6 @@ import QuickLook
 
 // MARK: - SettingsViewController
 
-extension MustachifyActivity: QLPreviewControllerDataSource {
-    override var activityViewController: UIViewController? {
-        guard let image = self.mustachioedImage else {
-            return nil
-        }
-
-        let viewController = QLPreviewController()
-        viewController.dataSource = self
-        return viewController
-    }
-
-    // MARK: QLPreviewControllerDataSource
-
-    func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
-        return self.mustachioedImage != nil ? 1 : 0
-    }
-
-    func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem {
-        return self.mustachioedImage! as! QLPreviewItem
-    }
-}
-
-extension UIActivity.ActivityType {
-    static let mustachify =
-        UIActivity.ActivityType("com.airprint")
-}
-
-class MustachifyActivity: UIActivity {
-    override class var activityCategory: UIActivity.Category {
-        return .action
-    }
-
-    override var activityType: UIActivity.ActivityType? {
-        return .mustachify
-    }
-
-    override var activityTitle: String? {
-        return NSLocalizedString("Mustachify", comment: "activity title")
-    }
-
-    override var activityImage: UIImage? {
-        return UIImage(named: "icon-logo-big")
-    }
-
-    override func canPerform(withActivityItems activityItems: [Any]) -> Bool {
-        for case is UIImage in activityItems {
-            return true
-        }
-
-        return false
-    }
-    
-    var sourceImageData: Data?
-
-    override func prepare(withActivityItems activityItems: [Any]) {
-        for case let image as UIImage in activityItems {
-            self.sourceImageData = image.pngData()
-            return
-        }
-    }
-    
-    var mustachioedImage: UIImage?
-
-    override func perform() {
-        let url = URL(string: "https://google.com/")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"//"POST"
-        request.httpBody = self.sourceImageData
-
-        URLSession.shared.dataTask(with: request) { (data, _, error) in
-            guard error == nil else {
-                self.activityDidFinish(false)
-                return
-            }
-
-            if let data = data,
-                let image = UIImage(data: data)
-            {
-                self.mustachioedImage = image
-                self.activityDidFinish(true)
-            } else {
-                self.activityDidFinish(false)
-            }
-        }
-    }
-    
-}
-
 final class SettingsViewController: UIViewController, MFMailComposeViewControllerDelegate {
     enum State {
         case dummyState
@@ -137,25 +49,6 @@ final class SettingsViewController: UIViewController, MFMailComposeViewControlle
                                didFinishWith result: MFMailComposeResult, error: Error?) {
         controller.dismiss(animated: true)
     }
-    
-    @IBAction func shareDidPress(_ sender: UIButton) {
-        UIGraphicsBeginImageContext(view.frame.size)
-        view.layer.render(in: UIGraphicsGetCurrentContext()!)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        let textToShare = "Check out AirPrinter app"
-        
-        if let myWebsite = URL(string: "https://apps.apple.com/us/app/clawee/id1315539131") {
-            let objectsToShare = [textToShare, myWebsite, image ?? UIImage(named: "icon-logo")!] as [Any]
-            let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: [MustachifyActivity()])
-            /// Excluded Activities
-            activityVC.excludedActivityTypes = [UIActivity.ActivityType.airDrop, UIActivity.ActivityType.addToReadingList]
-            
-            activityVC.popoverPresentationController?.sourceView = sender
-            self.present(activityVC, animated: true, completion: nil)
-        }
-    }
 }
 
 // MARK: - Internal
@@ -182,11 +75,11 @@ private extension SettingsViewController {
             })
             .store(in: &bag)
         
-//        shareButton.publisher()
-//            .sink(receiveValue: { [weak self] _ in
-//                self?.share()
-//            })
-//            .store(in: &bag)
+        shareButton.publisher()
+            .sink(receiveValue: { [weak self] _ in
+                self?.share()
+            })
+            .store(in: &bag)
         
         privacyPolicyButton.publisher()
             .sink(receiveValue: { [weak self] _ in
@@ -214,7 +107,22 @@ private extension SettingsViewController {
     }
     
     func share() {
+        UIGraphicsBeginImageContext(view.frame.size)
+        view.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
         
+        let textToShare = "Check out AirPrinter app"
+        
+        if let myWebsite = URL(string: "https://apps.apple.com/us/app/clawee/id1315539131") {
+            let objectsToShare = [textToShare, myWebsite, image ?? UIImage(named: "icon-logo")!] as [Any]
+            let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+            /// Excluded Activities
+            activityVC.excludedActivityTypes = [UIActivity.ActivityType.airDrop, UIActivity.ActivityType.addToReadingList]
+            
+            //activityVC.popoverPresentationController?.sourceView = sender
+            self.present(activityVC, animated: true, completion: nil)
+        }
     }
     
     func sendEmail() {

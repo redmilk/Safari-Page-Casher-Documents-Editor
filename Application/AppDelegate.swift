@@ -17,5 +17,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+    
+    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
+        
+    }
+    
 }
 
