@@ -4,6 +4,10 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIconName</key>
@@ -78,8 +82,8 @@
 		<dict>
 			<key>CFBundleTypeName</key>
 			<string>All Files</string>
-            <key>CFBundleTypeIconFile</key>
-            <string>app.icns</string>
+			<key>CFBundleTypeIconFile</key>
+			<string>app.icns</string>
 			<key>LSHandlerRank</key>
 			<string>Alternate</string>
 			<key>CFBundleTypeRole</key>
