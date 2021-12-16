@@ -71,18 +71,38 @@ private extension ManageSubscriptionsViewController {
         navigationBarExtender.addCornerRadius(30)
         //navigationBarExtender.dropShadow(color: .black, opacity: 0.6, offSet: .zero, radius: 30, scale: true)
         weekPlanButton.isSelected.toggle()
+        monthlyPlanButton.addCornerRadius(14)
+        monthlyPlanButton.addBorder(1, UIColor(hex: 0x4E50BD33).withAlphaComponent(0.2))
+        yearPlanButton.addCornerRadius(14)
+        yearPlanButton.addBorder(1, UIColor(hex: 0x4E50BD33).withAlphaComponent(0.2))
+        weekPlanButton.addCornerRadius(14)
+        weekPlanButton.backgroundColor = UIColor(hex: 0x1E1D51)
         
         weekPlanButton.publisher().receive(on: DispatchQueue.main).sink(receiveValue: { [weak self] button in
             self?.weekPlanButton.isSelected = true
+            self?.weekPlanButton.backgroundColor = UIColor(hex: 0x1E1D51)
             self?.monthlyPlanButton.isSelected = false
             self?.yearPlanButton.isSelected = false
+            self?.monthlyPlanButton.addCornerRadius(14)
+            self?.monthlyPlanButton.addBorder(1, UIColor(hex: 0x4E50BD33).withAlphaComponent(0.2))
+            self?.yearPlanButton.addCornerRadius(14)
+            self?.yearPlanButton.addBorder(1, UIColor(hex: 0x4E50BD33).withAlphaComponent(0.2))
+            self?.monthlyPlanButton.backgroundColor = UIColor(hex: 0x282961)
+            self?.yearPlanButton.backgroundColor = UIColor(hex: 0x282961)
         })
         .store(in: &bag)
         
         monthlyPlanButton.publisher().receive(on: DispatchQueue.main).sink(receiveValue: { [weak self] button in
             self?.weekPlanButton.isSelected = false
             self?.monthlyPlanButton.isSelected = true
+            self?.monthlyPlanButton.backgroundColor = UIColor(hex: 0x1E1D51)
             self?.yearPlanButton.isSelected = false
+            self?.weekPlanButton.addCornerRadius(14)
+            self?.weekPlanButton.addBorder(1, UIColor(hex: 0x4E50BD33).withAlphaComponent(0.2))
+            self?.yearPlanButton.addCornerRadius(14)
+            self?.yearPlanButton.addBorder(1, UIColor(hex: 0x4E50BD33).withAlphaComponent(0.2))
+            self?.weekPlanButton.backgroundColor = UIColor(hex: 0x282961)
+            self?.yearPlanButton.backgroundColor = UIColor(hex: 0x282961)
         })
         .store(in: &bag)
         
@@ -90,6 +110,13 @@ private extension ManageSubscriptionsViewController {
             self?.weekPlanButton.isSelected = false
             self?.monthlyPlanButton.isSelected = false
             self?.yearPlanButton.isSelected = true
+            self?.yearPlanButton.backgroundColor = UIColor(hex: 0x1E1D51)
+            self?.weekPlanButton.addCornerRadius(14)
+            self?.weekPlanButton.addBorder(1, UIColor(hex: 0x4E50BD33).withAlphaComponent(0.2))
+            self?.monthlyPlanButton.addCornerRadius(14)
+            self?.monthlyPlanButton.addBorder(1, UIColor(hex: 0x4E50BD33).withAlphaComponent(0.2))
+            self?.weekPlanButton.backgroundColor = UIColor(hex: 0x282961)
+            self?.monthlyPlanButton.backgroundColor = UIColor(hex: 0x282961)
         })
         .store(in: &bag)
     }

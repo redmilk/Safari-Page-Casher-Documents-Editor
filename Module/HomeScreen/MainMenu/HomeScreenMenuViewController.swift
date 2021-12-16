@@ -14,7 +14,7 @@ import Combine
 
 final class HomeScreenMenuViewController: UIViewController {
     enum State {
-        case dummyState
+        case showSubscriptionPopup(withContent: (UIImage, UIImage, String, String))
     }
     @IBOutlet weak var buttonsContainerView: UIView!
     @IBOutlet weak var cancelButton: UIButton!
@@ -24,6 +24,16 @@ final class HomeScreenMenuViewController: UIViewController {
     @IBOutlet weak var printDocumentButton: UIButton!
     @IBOutlet weak var printWebPage: UIButton!
     @IBOutlet weak var printFromClipboard: UIButton!
+    
+    @IBOutlet weak var subscriptionPopup: UIView!
+    @IBOutlet weak var subscriptionButtonsContainer: UIView!
+    @IBOutlet weak var subscriptionPopupImageView: UIImageView!
+    @IBOutlet weak var subscriptionCloseButton: UIButton!
+    @IBOutlet weak var subscriptionTitleFirstLine: UILabel!
+    @IBOutlet weak var subscriptionTitleSecondLine: UILabel!
+    @IBOutlet weak var subscriptionContinueButton: UIButton!
+    @IBOutlet weak var secondBlurredShadowView: BlurredShadowView2!
+    @IBOutlet weak var firstBlurredShadowView: BlurredShadowView1!
     
     private let viewModel: HomeScreenMenuViewModel
     private var bag = Set<AnyCancellable>()
@@ -45,6 +55,12 @@ final class HomeScreenMenuViewController: UIViewController {
         configureView()
         applyStyling()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        firstBlurredShadowView.animationDuration = 20
+        firstBlurredShadowView.setup()
+    }
 }
 
 // MARK: - Internal
@@ -52,6 +68,19 @@ final class HomeScreenMenuViewController: UIViewController {
 private extension HomeScreenMenuViewController {
     
     func configureView() {
+        viewModel.output
+            .sink(receiveValue: { [weak self] state in
+                switch state {
+                case .showSubscriptionPopup(let content):
+                    self?.subscriptionPopupImageView.image = content.0
+                    self?.subscriptionContinueButton.setBackgroundImage(content.1, for: .normal)
+                    self?.subscriptionTitleFirstLine.text = content.2
+                    self?.subscriptionTitleSecondLine.text = content.3
+                    self?.subscriptionPopup.isHidden = false
+                }
+            })
+            .store(in: &bag)
+        
         scanDocumentButton.publisher().sink(receiveValue: { [weak self] _ in
             self?.viewModel.input.send(.scanAction)
         })
@@ -76,6 +105,12 @@ private extension HomeScreenMenuViewController {
             self?.viewModel.input.send(.printFromClipboard)
         })
         .store(in: &bag)
+        
+        subscriptionCloseButton.publisher().sink(receiveValue: { [weak self] _ in
+            self?.subscriptionPopup.isHidden = true
+            self?.viewModel.input.send(.closeAction)
+        })
+        .store(in: &bag)
     }
     
     func applyStyling() {
@@ -91,5 +126,18 @@ private extension HomeScreenMenuViewController {
         printWebPage.addCornerRadius(StylingConstants.cornerRadiusDefault)
         printWebPage.addBorder(1.0, .black)
         buttonsContainerView.dropShadow(color: .black, opacity: 0.6, offSet: .zero, radius: 30, scale: true)
+        subscriptionButtonsContainer.addCornerRadius(30.0)
+        subscriptionButtonsContainer.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+
+        subscriptionButtonsContainer.dropShadow(color: .white, opacity: 0.2, offSet: .zero, radius: 30, scale: true)
+        let emitterForStepOne = ParticleEmitterView()
+        emitterForStepOne.isUserInteractionEnabled = false
+        emitterForStepOne.translatesAutoresizingMaskIntoConstraints = false
+
+        subscriptionPopup.insertSubview(emitterForStepOne, at: 0)
+        emitterForStepOne.widthAnchor.constraint(equalTo: subscriptionPopup.widthAnchor).isActive = true
+        emitterForStepOne.heightAnchor.constraint(equalTo: subscriptionPopup.heightAnchor).isActive = true
+        emitterForStepOne.centerYAnchor.constraint(equalTo: subscriptionPopup.centerYAnchor).isActive = true
+        emitterForStepOne.centerXAnchor.constraint(equalTo: subscriptionPopup.centerXAnchor).isActive = true
     }
 }

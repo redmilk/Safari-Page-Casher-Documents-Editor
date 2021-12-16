@@ -19,7 +19,11 @@ final class BlurredShadowView1: UIView {
         setup()
     }
     
-    private func setup() {
+    var animationDuration: CFTimeInterval = 6
+    var isAnimated: Bool = true
+    
+    func setup() {
+        self.layer.removeAllAnimations()
         layer.shadowColor = UIColor(red: 0.106, green: 0.671, blue: 1, alpha: 0.26).cgColor
         layer.shadowOffset = CGSize(width: 0, height: 0)
         layer.shadowOpacity = 1
@@ -30,7 +34,9 @@ final class BlurredShadowView1: UIView {
         layer.rasterizationScale = 1
         backgroundColor = UIColor.clear
         
-        UIView.animate(withDuration: 5.0, delay: 0, options: [.autoreverse, .repeat, .curveEaseInOut], animations: {
+        guard isAnimated else { return }
+
+        UIView.animate(withDuration: animationDuration, delay: 0, options: [.autoreverse, .repeat, .curveEaseInOut], animations: {
             self.transform = CGAffineTransform(scaleX: 2.0, y: 2.0)
         }, completion: { _ in
             UIView.animate(withDuration: 5.0, delay: 0, options: [.autoreverse, .repeat, .curveEaseInOut], animations: {
@@ -52,7 +58,11 @@ final class BlurredShadowView2: UIView {
         setup()
     }
     
-    private func setup() {
+    var animationDuration: CFTimeInterval = 6
+    var isAnimated: Bool = true
+    
+    func setup() {
+        self.layer.removeAllAnimations()
         layer.shadowColor = UIColor(red: 0.106, green: 0.671, blue: 1, alpha: 0.26).cgColor
         layer.shadowOffset = CGSize(width: 0, height: 0)
         layer.shadowOpacity = 0.9
@@ -63,7 +73,8 @@ final class BlurredShadowView2: UIView {
         layer.rasterizationScale = 1
         backgroundColor = UIColor.clear
         
-        UIView.animate(withDuration: 6.0, delay: 0.0, options: [.autoreverse, .repeat, .curveEaseInOut], animations: {
+        guard isAnimated else { return }
+        UIView.animate(withDuration: animationDuration, delay: 0.0, options: [.autoreverse, .repeat, .curveEaseInOut], animations: {
             self.transform = CGAffineTransform(scaleX: 2.6, y: 1.6)
             self.center = CGPoint(x: UIScreen.main.bounds.minX - 300, y: UIScreen.main.bounds.height + 600)
             self.alpha = 0.2
