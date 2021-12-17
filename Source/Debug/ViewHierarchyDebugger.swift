@@ -11,7 +11,7 @@ enum ViewHierarchyDebugger {
     
     // TODO: - Implement for whole chain
     static func paintEverythingWithinResponderChain(_ responder: UIResponder?) {
-        guard let responder = responder else { return }
+        guard let _ = responder else { return }
     }
     
     static func paintEverythingWithinViewController(_ vc: UIViewController?) {

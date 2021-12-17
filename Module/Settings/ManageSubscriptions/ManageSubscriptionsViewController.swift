@@ -54,7 +54,7 @@ private extension ManageSubscriptionsViewController {
     
     /// Handle ViewModel's states
     func handleStates() {
-        viewModel.output.sink(receiveValue: { [weak self] state in
+        viewModel.output.sink(receiveValue: { state in
             switch state {
             case .dummyState:
                 break

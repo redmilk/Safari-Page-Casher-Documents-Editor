@@ -15,7 +15,7 @@ final class WebpageManager {
     private let _output = PassthroughSubject<[PrintableDataBox], Never>()
     private var subscription: AnyCancellable?
     private var finishCallback: VoidClosure!
-    private let initialUrlString: String
+    var initialUrlString: String
 
     init(initialUrlString: String) {
         self.initialUrlString = initialUrlString

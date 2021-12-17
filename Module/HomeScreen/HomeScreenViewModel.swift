@@ -12,12 +12,16 @@ import Combine
 
 import PDFKit.PDFDocument
 
-final class HomeScreenViewModel: UserSessionServiceProvidable, PdfServiceProvidable {
+final class HomeScreenViewModel: UserSessionServiceProvidable,
+                                 PdfServiceProvidable,
+                                 SharedActivityResultsProvidable {
     enum Action {
         case didPressCell(dataBox: PrintableDataBox)
         case openMenu
         case deleteSelectedItem
         case deleteAll
+        case viewDidAppear
+        case viewDisapear
         case itemsDeleteConfirmed
         case itemsDeleteRejected
         case getSelectionCount
@@ -30,7 +34,8 @@ final class HomeScreenViewModel: UserSessionServiceProvidable, PdfServiceProvida
 
     private var coordinator: HomeScreenCoordinatorProtocol & CoordinatorProtocol
     private var bag = Set<AnyCancellable>()
-
+    private var trackingEnterForeground: AnyCancellable?
+    
     init(coordinator: HomeScreenCoordinatorProtocol & CoordinatorProtocol) {
         self.coordinator = coordinator
     }
@@ -80,6 +85,15 @@ private extension HomeScreenViewModel {
         userSession.input.send(.addItems([dataBox]))
     }
     
+    
+    func searchForSharedItems() {
+        let itemsCount = sharedResults.searchSharedItems()
+        Logger.log("Shared items count: " + itemsCount.description)
+        if let url = sharedResults.searchSharedURL() {
+            coordinator.showWebView(initialURL: url)
+        }
+    }
+    
     func handleActions() {
         input.sink(receiveValue: { [weak self] action in
             switch action {
@@ -89,6 +103,11 @@ private extension HomeScreenViewModel {
                 self?.coordinator.displaySettings()
             case .deleteAll:
                 self?.userSession.input.send(.deleteAll)
+            case .viewDidAppear:
+                self?.searchForSharedItems()
+                self?.trackEnterForeground()
+            case .viewDisapear:
+                self?.trackingEnterForeground?.cancel()
             case .itemsDeleteConfirmed:
                 self?.userSession.input.send(.deleteSelected)
             case .itemsDeleteRejected:
@@ -141,5 +160,16 @@ private extension HomeScreenViewModel {
             }
         })
         .store(in: &bag)
+        
+        
+    }
+    
+    func trackEnterForeground() {
+        trackingEnterForeground?.cancel()
+        trackingEnterForeground = NotificationCenter.default
+            .publisher(for: UIApplication.willEnterForegroundNotification)
+            .sink() { [weak self] _ in
+                self?.searchForSharedItems()
+            }
     }
 }

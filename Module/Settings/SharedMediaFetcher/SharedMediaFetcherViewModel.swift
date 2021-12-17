@@ -1,27 +1,27 @@
 //
 //  
-//  AppSubscriptionViewModel.swift
+//  SharedMediaFetcherViewModel.swift
 //  AirPrint
 //
-//  Created by Danyl Timofeyev on 26.11.2021.
+//  Created by Danyl Timofeyev on 17.12.2021.
 //
 //
 
 import Foundation
 import Combine
 
-final class AppSubscriptionViewModel {
+final class SharedMediaFetcherViewModel {
     enum Action {
         case dummyAction
     }
     
-    let input = PassthroughSubject<AppSubscriptionViewModel.Action, Never>()
-    let output = PassthroughSubject<AppSubscriptionViewController.State, Never>()
+    let input = PassthroughSubject<SharedMediaFetcherViewModel.Action, Never>()
+    let output = PassthroughSubject<SharedMediaFetcherViewController.State, Never>()
     
-    private let coordinator: AppSubscriptionCoordinatorProtocol & CoordinatorProtocol
+    private let coordinator: SharedMediaFetcherCoordinatorProtocol & CoordinatorProtocol
     private var bag = Set<AnyCancellable>()
 
-    init(coordinator: AppSubscriptionCoordinatorProtocol & CoordinatorProtocol) {
+    init(coordinator: SharedMediaFetcherCoordinatorProtocol & CoordinatorProtocol) {
         self.coordinator = coordinator
         dispatchActions()
     }
@@ -32,11 +32,11 @@ final class AppSubscriptionViewModel {
 
 // MARK: - Internal
 
-private extension AppSubscriptionViewModel {
+private extension SharedMediaFetcherViewModel {
     
     /// Handle ViewController's actions
     private func dispatchActions() {
-        input.sink(receiveValue: { [weak self] action in
+        input.sink(receiveValue: { action in
             switch action {
             case .dummyAction:
                 break

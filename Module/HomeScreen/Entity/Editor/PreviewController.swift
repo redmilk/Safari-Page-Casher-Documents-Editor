@@ -50,7 +50,6 @@ class PreviewController: QLPreviewController, PdfServiceProvidable, UserSessionS
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        //(children[0] as? UINavigationController)?.setToolbarHidden(true, animated: false)
         (children[0] as? UINavigationController)?.toolbar.removeFromSuperview()
     }
     

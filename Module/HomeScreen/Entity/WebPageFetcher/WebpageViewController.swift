@@ -59,7 +59,7 @@ private extension WebpageViewController {
         webView.uiDelegate = self
         searchBar.delegate = self
         searchBar.autocapitalizationType = .none
-        webView.load(URLRequest(url: URL(string: "https://google.com")!))
+        webView.load(URLRequest(url: URL(string: initialUrlString)!))
         
         closeButton.publisher().sink(receiveValue: { [weak self] _ in
             self?.dismiss(animated: true, completion: self?.finishCallback)

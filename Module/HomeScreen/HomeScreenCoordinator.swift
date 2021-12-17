@@ -19,6 +19,7 @@ protocol HomeScreenCoordinatorProtocol {
     var webpageOutput: AnyPublisher<[PrintableDataBox], Never> { get }
     var copyFromClipboardCallback: VoidClosure! { get set }
     
+    func showWebView(initialURL: URL?)
     func showMainMenuAndHandleActions()
     func displaySettings()
     func closeMenu()
@@ -47,7 +48,7 @@ final class HomeScreenCoordinator: CoordinatorProtocol, HomeScreenCoordinatorPro
     private lazy var cameraScaner: CameraScanManager = CameraScanManagerImpl()
     private lazy var photoalbumManager: PhotoalbumManager = PhotoalbumManagerImpl()
     private lazy var cloudFilesManager: CloudFilesManager = CloudFilesManagerImpl()
-    private lazy var webpageManager = WebpageManager(initialUrlString: "www.apple.com")
+    private lazy var webpageManager = WebpageManager(initialUrlString: "www.google.com")
     private var pdfEditManager: PDFEditManager!
     
     private lazy var presentationCallback: VoidClosure = { [weak self] in }
@@ -78,7 +79,7 @@ final class HomeScreenCoordinator: CoordinatorProtocol, HomeScreenCoordinatorPro
                 case .closeAction: self?.closeMenu()
                 case .printPhoto: self?.showPhotoPicker()
                 case .scanAction: self?.showCameraScaner()
-                case .printWebPage: self?.showWebView()
+                case .printWebPage: self?.showWebView(initialURL: nil)
                 case .printDocument: self?.showCloudFilesPicker()
                 case .printFromClipboard:
                     self?.copyFromClipboardCallback()
@@ -86,7 +87,7 @@ final class HomeScreenCoordinator: CoordinatorProtocol, HomeScreenCoordinatorPro
             })
         .store(in: &self.bag)
     }
-    
+        
     func displaySettings() {
         let coordinator = SettingsCoordinator(navigationController: navigationController)
         coordinator.start()
@@ -102,6 +103,16 @@ final class HomeScreenCoordinator: CoordinatorProtocol, HomeScreenCoordinatorPro
             
         })
         pdfEditManager.editFile(navigation: navigationController)
+    }
+    
+    
+    func showWebView(initialURL: URL? = nil) {
+        if let sharedURL = initialURL {
+            webpageManager.initialUrlString = sharedURL.absoluteString
+        }
+        webpageManager.displayWebpage(navigationController!.topViewController!, presentationCallback: { [weak self] in
+            self?.closeMenu()
+        })
     }
     
     func closeMenu() {
@@ -125,12 +136,6 @@ private extension HomeScreenCoordinator {
     
     func showCloudFilesPicker() {
         cloudFilesManager.displayDocumentsSelectionMenu(navigationController!.topViewController!, presentationCallback: { [weak self] in
-            self?.closeMenu()
-        })
-    }
-    
-    func showWebView() {
-        webpageManager.displayWebpage(navigationController!.topViewController!, presentationCallback: { [weak self] in
             self?.closeMenu()
         })
     }

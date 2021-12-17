@@ -36,7 +36,7 @@ private extension ManageSubscriptionsViewModel {
     
     /// Handle ViewController's actions
     private func dispatchActions() {
-        input.sink(receiveValue: { [weak self] action in
+        input.sink(receiveValue: { action in
             switch action {
             case .dummyAction:
                 break

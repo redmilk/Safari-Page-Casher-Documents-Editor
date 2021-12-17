@@ -97,7 +97,7 @@ private extension SettingsViewController {
     /// Handle ViewModel's states
     func handleStates() {
         viewModel.output
-            .sink(receiveValue: { [weak self] state in
+            .sink(receiveValue: { state in
                 switch state {
                 case .dummyState:
                     break

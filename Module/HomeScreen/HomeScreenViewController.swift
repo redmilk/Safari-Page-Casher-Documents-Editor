@@ -23,6 +23,7 @@ final class HomeScreenViewController: UIViewController {
         case empty
     }
     
+    @IBOutlet weak var centerImageView: UIImageView!
     /// Gift menu
     @IBOutlet private weak var mainContainer: UIView!
     @IBOutlet private weak var subscriptionContainer: UIView!
@@ -117,17 +118,19 @@ final class HomeScreenViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        dashedLineLayer.add(dashedLineAnimation, forKey: "dashed-line")        
+        dashedLineLayer.add(dashedLineAnimation, forKey: "dashed-line")
+        viewModel.input.send(.viewDidAppear)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
+        viewModel.input.send(.viewDisapear)
     }
 }
 
@@ -161,43 +164,43 @@ private extension HomeScreenViewController {
                 self?.selectionModeInfoLabel.text = "Selected items: \(selectionCount)"
             }
         })
-        .store(in: &bag)
+            .store(in: &bag)
     }
     
     func configureView() {
         Publishers.Merge(plusButton.publisher(), plusButtonSmall.publisher())
             .sink(receiveValue: { [weak self] _ in
-            self?.viewModel.input.send(.openMenu)
-        })
-        .store(in: &bag)
+                self?.viewModel.input.send(.openMenu)
+            })
+            .store(in: &bag)
         
         printButton.publisher().sink(receiveValue: { [weak self] _ in
             self?.viewModel.input.send(.didTapPrint)
         })
-        .store(in: &bag)
+            .store(in: &bag)
         
         settingsButton.publisher().print("SETTINGS").sink(receiveValue: { [weak self] _ in
             self?.viewModel.input.send(.didTapSettings)
         })
-        .store(in: &bag)
+            .store(in: &bag)
         
         deleteSelectedButton.publisher().sink(receiveValue: { [weak self] _ in
             self?.setHiddenClarifyDeleteDialog(false)
         })
-        .store(in: &bag)
+            .store(in: &bag)
         
         deleteButton.publisher().sink(receiveValue: { [weak self] _ in
             guard let dataBox = self?.collectionManager.currentCenterCellInPagingLayout else { return }
             dataBox.isSelected = true
             self?.setHiddenClarifyDeleteDialog(false)
         })
-        .store(in: &bag)
+            .store(in: &bag)
         
         deleteAllButton.publisher().sink(receiveValue: { [weak self] _ in
             self?.viewModel.input.send(.deleteAll)
             self?.setHiddenClarifyDeleteDialog(false)
         })
-        .store(in: &bag)
+            .store(in: &bag)
         
         dialogDeleteButton.publisher().sink(receiveValue: { [weak self] _ in
             guard let self = self else { return }
@@ -206,22 +209,22 @@ private extension HomeScreenViewController {
             self.changeViewStateBasedOnSelectionMode(isInSelectionMode: false)
             self.collectionManager.input.send(.disableSelectionMode)
         })
-        .store(in: &bag)
+            .store(in: &bag)
         
         dialogCancelButton.publisher().sink(receiveValue: { [weak self] _ in
             self?.setHiddenClarifyDeleteDialog(true)
             self?.viewModel.input.send(.itemsDeleteRejected)
             self?.changeViewStateBasedOnSelectionMode(isInSelectionMode: false)
         })
-        .store(in: &bag)
+            .store(in: &bag)
         
         layoutChangeButton.publisher().sink(receiveValue: { [weak self] _ in
             self?.collectionManager.input.send(.toggleLayout)
         })
-        .store(in: &bag)
+            .store(in: &bag)
         
         subscriptionMenuOpenButton.publisher()
-            .sink(receiveValue: { [weak self] _ in           
+            .sink(receiveValue: { [weak self] _ in
                 self?.subscriptionContainer.isHidden.toggle()
                 self?.addParticles()
             })
@@ -232,20 +235,20 @@ private extension HomeScreenViewController {
             self?.subscriptionContainer.isHidden.toggle()
             self?.subscriptionContainer.viewWithTag(1)!.removeFromSuperview()
         })
-        .store(in: &bag)
+            .store(in: &bag)
         
         subscriptionCloseButton.publisher()
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
-            self?.subscriptionContainer.isHidden.toggle()
-            self?.subscriptionContainer.viewWithTag(1)!.removeFromSuperview()
-        })
-        .store(in: &bag)
+                self?.subscriptionContainer.isHidden.toggle()
+                self?.subscriptionContainer.viewWithTag(1)!.removeFromSuperview()
+            })
+            .store(in: &bag)
         
         checkmarkButton.publisher().sink(receiveValue: { [weak self] _ in
             self?.collectionManager.input.send(.toggleSelectionMode)
         })
-        .store(in: &bag)
+            .store(in: &bag)
         
         closeSelectionModeButton.publisher().sink(receiveValue: { [weak self] _ in
             self?.setHiddenClarifyDeleteDialog(true)
@@ -253,8 +256,8 @@ private extension HomeScreenViewController {
             self?.viewModel.input.send(.itemsDeleteRejected)
             self?.changeViewStateBasedOnSelectionMode(isInSelectionMode: false)
         })
-        .store(in: &bag)
-                
+            .store(in: &bag)
+        
         collectionManager.output.sink(receiveValue: { [weak self] action in
             switch action {
             case .didPressCell(let dataBox):
@@ -270,7 +273,7 @@ private extension HomeScreenViewController {
                 self?.viewModel.input.send(.getSelectionCount)
             }
         })
-        .store(in: &bag)
+            .store(in: &bag)
         
         changeViewStateBasedOnItemsCount(hasItems: false)
         setHiddenClarifyDeleteDialog(true)
@@ -282,7 +285,7 @@ private extension HomeScreenViewController {
     
     private func makeStrikeThroughText(_ text: String) -> NSMutableAttributedString {
         let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: text)
-            attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSRange(location: 0, length: attributeString.length))
+        attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSRange(location: 0, length: attributeString.length))
         return attributeString
     }
     
@@ -304,7 +307,7 @@ private extension HomeScreenViewController {
         checkmarkButton.isHidden = isInSelectionMode
         selectionModeTopContainer.isHidden = !isInSelectionMode
     }
-
+    
     private func setHiddenClarifyDeleteDialog(_ isHidden: Bool) {
         dialogContainer.isHidden = isHidden
     }
@@ -342,3 +345,4 @@ private extension HomeScreenViewController {
         emitter.trailingAnchor.constraint(equalTo: subscriptionMenuContainer.trailingAnchor).isActive = true
     }
 }
+

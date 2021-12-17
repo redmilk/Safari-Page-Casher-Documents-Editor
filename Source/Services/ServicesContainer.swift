@@ -12,9 +12,16 @@ fileprivate let services = ServicesContainer()
 final class ServicesContainer {
     lazy var pdfService: PDFService = PDFServiceImpl()
     lazy var userSession: UserSession = UserSessionImpl()
+    lazy var sharedResults: SharedActivityResults = SharedActivityResults()
 }
 
 // MARK: - add specific service dependency to object
+
+/// Shared Activity Results
+protocol SharedActivityResultsProvidable { }
+extension SharedActivityResultsProvidable {
+    var sharedResults: SharedActivityResults { services.sharedResults }
+}
 
 /// PDF Service
 protocol PdfServiceProvidable { }

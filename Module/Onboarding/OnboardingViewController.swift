@@ -75,13 +75,12 @@ final class OnboardingViewController: UIViewController {
             .sink(receiveValue: { [weak self] _ in
                 guard let self = self else { return }
                 self.model.continueButtonAction()
-                return
                 if self.model.isLastOnboardingPage {
                     self.dimmedView.isHidden = false
                     self.setupParticles()
                     self.subscriptionFlowContainerOne.isHidden = false
                 } else {
-                    //self.model.continueButtonAction()
+                    self.model.continueButtonAction()
                 }
             })
             .store(in: &bag)

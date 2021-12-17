@@ -25,6 +25,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeScreenViewController" customModule="AirPrint" customModuleProvider="target">
             <connections>
                 <outlet property="bottomBarContainer" destination="f8f-lO-4zj" id="lbW-w0-MJK"/>
+                <outlet property="centerImageView" destination="nh4-LX-aGx" id="eta-l8-Rna"/>
                 <outlet property="checkmarkButton" destination="hoU-mT-VJx" id="hoa-uN-O7B"/>
                 <outlet property="closeSelectionModeButton" destination="n7T-eX-CwZ" id="GsJ-jE-ut6"/>
                 <outlet property="collectionView" destination="zTA-bp-dXM" id="XbD-Qb-W32"/>
