@@ -857,7 +857,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 476NTDT6B9;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -872,7 +872,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.kefirtest3.airprinter.share;
+				PRODUCT_BUNDLE_IDENTIFIER = surf.devip.print.airprinter.share;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -887,7 +887,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 476NTDT6B9;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -902,7 +902,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.kefirtest3.airprinter.share;
+				PRODUCT_BUNDLE_IDENTIFIER = surf.devip.print.airprinter.share;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1036,7 +1036,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = AirPrint.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = 476NTDT6B9;
 				INFOPLIST_FILE = "$(SRCROOT)/Application/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
@@ -1045,7 +1045,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.kefirtest3;
+				PRODUCT_BUNDLE_IDENTIFIER = surf.devip.print;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/CarouselView/AirPrint-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1063,7 +1063,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = AirPrint.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = 476NTDT6B9;
 				INFOPLIST_FILE = "$(SRCROOT)/Application/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
@@ -1072,7 +1072,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.kefirtest3;
+				PRODUCT_BUNDLE_IDENTIFIER = surf.devip.print;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/CarouselView/AirPrint-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
