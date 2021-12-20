@@ -112,12 +112,60 @@ final class HomeScreenViewController: UIViewController, PurchesServiceProvidable
         viewModel.configureViewModel()
         
         purchases.isActiveSubscription
-            .sink(receiveValue: { isActive in
+            .sink(receiveValue: { [weak self] isActive in
                 if let isActive = isActive {
                     print("hasActive subscr")
-                    
+                    if isActive {
+                        //self?.purchase(.weekly)
+
+                        self?.restorePurchases()
+                    } else {
+                        self?.purchase(.annual)
+                    }
                 } else {
                     print("isActive == nil")
+                }
+            })
+            .store(in: &bag)
+    }
+    
+    private func purchase(_ plan: Purchase) {
+        purchases
+            .buy(model: plan)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .failure(let purchaseError):
+                    print(purchaseError.localizedDescription)
+                case _: break
+                }
+            }, receiveValue: { isSucceed in
+                if isSucceed {
+                    print("purchase: successfully purchased")
+                    
+                } else {
+                    print("purchase: something went wrong")
+                    
+                }
+            })
+            .store(in: &bag)
+    }
+    
+    private func restorePurchases() {
+        
+        purchases
+            .restorePurchases()
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .failure(let purchaseError):
+                    print(purchaseError.localizedDescription)
+                case _: break
+                }
+            }, receiveValue: { isSucceed in
+                if isSucceed {
+                    print("restorePurchases: purchases successfully restored")
+                    
+                } else {
+                    print("restore purchases: something went wrong")
                     
                 }
             })
