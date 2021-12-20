@@ -9,6 +9,8 @@ import UIKit
 import Social
 import MobileCoreServices
 
+let kGroupPathIdentifier = "group.surf.devip.print.path_of_media"
+
 final class ShareViewController: SLComposeServiceViewController {
 
     override func isContentValid() -> Bool { true }
@@ -26,7 +28,7 @@ final class ShareViewController: SLComposeServiceViewController {
                                 guard let dataURL = data as? NSURL,
                                 let mediaData = NSData(contentsOf: dataURL as URL),
                                 let sharedPath = FileManager.default.containerURL(
-                                forSecurityApplicationGroupIdentifier: "group.airprint_path_of_media") else { return }
+                                forSecurityApplicationGroupIdentifier: kGroupPathIdentifier) else { return }
                                 var url: URL?
                                 switch contentType {
                                 case kUTTypeImage:
@@ -38,13 +40,13 @@ final class ShareViewController: SLComposeServiceViewController {
                                     break
                                 case kUTTypeURL:
                                     if !self.pdfProcessing {
-                                        UserDefaults(suiteName: "group.airprint_path_of_media")?.set(data as? URL, forKey: "shared-url")
+                                        UserDefaults(suiteName: kGroupPathIdentifier)?.set(data as? URL, forKey: "shared-url")
                                     } else {
                                         self.pdfProcessing = false
                                     }
                                     return
                                 case kUTTypeText:
-                                    UserDefaults(suiteName: "group.airprint_path_of_media")?.set(data as? String, forKey: "shared-text")
+                                    UserDefaults(suiteName: kGroupPathIdentifier)?.set(data as? String, forKey: "shared-text")
                                     return
                                 case _:
                                     break

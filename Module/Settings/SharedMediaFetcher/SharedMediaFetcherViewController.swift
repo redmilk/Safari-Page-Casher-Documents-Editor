@@ -43,7 +43,7 @@ final class SharedMediaFetcherViewController: UIViewController {
     }
     
     func loadAndDisplayMedia(image: Bool, video: Bool) {
-        var defFilePath = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.airprint_path_of_media")
+        var defFilePath = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: kGroupPathIdentifier)
         
         if image {
             defFilePath?.appendPathComponent("myNewMedia")

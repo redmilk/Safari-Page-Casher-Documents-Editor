@@ -12,7 +12,7 @@ fileprivate let kSharedText = "shared-text"
 fileprivate let kSharedURL = "shared-url"
 fileprivate let kSharedPDF = "shared-pdf.pdf"
 fileprivate let kSharedImage = "shared-image"
-fileprivate let kGroupPathIdentifier = "group.airprint_path_of_media"
+let kGroupPathIdentifier = "group.surf.devip.print.path_of_media"
 
 final class SharedActivityResults: PdfServiceProvidable, UserSessionServiceProvidable {
     
