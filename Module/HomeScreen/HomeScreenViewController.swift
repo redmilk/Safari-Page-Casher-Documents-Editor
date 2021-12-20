@@ -10,7 +10,7 @@
 import UIKit
 import Combine
 
-final class HomeScreenViewController: UIViewController {
+final class HomeScreenViewController: UIViewController, PurchesServiceProvidable {
     enum State {
         case allCurrentData([PrintableDataBox])
         case addedItems([PrintableDataBox])
@@ -110,6 +110,18 @@ final class HomeScreenViewController: UIViewController {
         applyStyling()
         collectionManager.input.send(.configure)
         viewModel.configureViewModel()
+        
+        purchases.isActiveSubscription
+            .sink(receiveValue: { isActive in
+                if let isActive = isActive {
+                    print("hasActive subscr")
+                    
+                } else {
+                    print("isActive == nil")
+                    
+                }
+            })
+            .store(in: &bag)
     }
     
     override var prefersStatusBarHidden: Bool {

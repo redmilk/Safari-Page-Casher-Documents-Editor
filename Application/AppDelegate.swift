@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ApphudSDK
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -14,15 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         ApplicationGlobalConfig().configure()
         
+        Apphud.start(apiKey: "app_EaKCtoJCJkjJV73Dc7XA2L2ikP7KST")
+        
         return true
-    }
-    
-    func applicationWillResignActive(_ application: UIApplication) {
-        
-    }
-    
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        
     }
 }
 

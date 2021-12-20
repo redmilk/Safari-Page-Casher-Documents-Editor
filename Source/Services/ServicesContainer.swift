@@ -13,9 +13,16 @@ final class ServicesContainer {
     lazy var pdfService: PDFService = PDFServiceImpl()
     lazy var userSession: UserSession = UserSessionImpl()
     lazy var sharedResults: SharedActivityResults = SharedActivityResults()
+    lazy var purchases: PurchesService = PurchesService()
 }
 
 // MARK: - add specific service dependency to object
+
+/// Purchase Service
+protocol PurchesServiceProvidable { }
+extension PurchesServiceProvidable {
+    var purchases: PurchesService { services.purchases }
+}
 
 /// Shared Activity Results
 protocol SharedActivityResultsProvidable { }

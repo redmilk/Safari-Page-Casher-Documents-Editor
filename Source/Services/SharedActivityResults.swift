@@ -55,6 +55,7 @@ final class SharedActivityResults: PdfServiceProvidable, UserSessionServiceProvi
     }
     
     private func checkSharedDocument() -> [PrintableDataBox]? {
+        return nil
         var fullPath = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: kGroupPathIdentifier)
         fullPath!.appendPathComponent(kSharedPDF)
         guard let pdf = PDFDocument(url: fullPath!) else { return nil }
