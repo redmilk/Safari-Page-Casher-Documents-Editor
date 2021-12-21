@@ -10,7 +10,7 @@
 import UIKit
 import Combine
 
-final class HomeScreenViewController: UIViewController, PurchesServiceProvidable {
+final class HomeScreenViewController: UIViewController {
     enum State {
         case allCurrentData([PrintableDataBox])
         case addedItems([PrintableDataBox])
@@ -21,6 +21,7 @@ final class HomeScreenViewController: UIViewController, PurchesServiceProvidable
         case selectionMode
         case exitSelectionMode
         case empty
+        case timerTick(timerText: String)
     }
     
     @IBOutlet weak var centerImageView: UIImageView!
@@ -32,6 +33,9 @@ final class HomeScreenViewController: UIViewController, PurchesServiceProvidable
     @IBOutlet private weak var subscriptionMenuOpenButton: UIButton!
     @IBOutlet private weak var subscriptionDiscountLabel: UILabel!
     @IBOutlet private weak var subscriptionCloseButton: UIButton!
+    @IBOutlet private weak var giftContainerHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var giftTimerContainer: UIView!
+    @IBOutlet private weak var giftTimerLabel: UILabel!
     /// Filled state controls
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var layoutChangeButton: UIButton!
@@ -110,66 +114,6 @@ final class HomeScreenViewController: UIViewController, PurchesServiceProvidable
         applyStyling()
         collectionManager.input.send(.configure)
         viewModel.configureViewModel()
-        
-        purchases.isActiveSubscription
-            .sink(receiveValue: { [weak self] isActive in
-                if let isActive = isActive {
-                    print("hasActive subscr")
-                    if isActive {
-                        //self?.purchase(.weekly)
-
-                        self?.restorePurchases()
-                    } else {
-                        self?.purchase(.annual)
-                    }
-                } else {
-                    print("isActive == nil")
-                }
-            })
-            .store(in: &bag)
-    }
-    
-    private func purchase(_ plan: Purchase) {
-        purchases
-            .buy(model: plan)
-            .sink(receiveCompletion: { completion in
-                switch completion {
-                case .failure(let purchaseError):
-                    print(purchaseError.localizedDescription)
-                case _: break
-                }
-            }, receiveValue: { isSucceed in
-                if isSucceed {
-                    print("purchase: successfully purchased")
-                    
-                } else {
-                    print("purchase: something went wrong")
-                    
-                }
-            })
-            .store(in: &bag)
-    }
-    
-    private func restorePurchases() {
-        
-        purchases
-            .restorePurchases()
-            .sink(receiveCompletion: { completion in
-                switch completion {
-                case .failure(let purchaseError):
-                    print(purchaseError.localizedDescription)
-                case _: break
-                }
-            }, receiveValue: { isSucceed in
-                if isSucceed {
-                    print("restorePurchases: purchases successfully restored")
-                    
-                } else {
-                    print("restore purchases: something went wrong")
-                    
-                }
-            })
-            .store(in: &bag)
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -222,45 +166,40 @@ private extension HomeScreenViewController {
                 self?.collectionManager.input.send(.toggleSelectionMode)
             case .selectionCount(let selectionCount):
                 self?.selectionModeInfoLabel.text = "Selected items: \(selectionCount)"
+            case .timerTick(let timerText):
+                self?.giftTimerLabel.text = timerText
             }
-        })
-            .store(in: &bag)
+        }).store(in: &bag)
     }
     
     func configureView() {
         Publishers.Merge(plusButton.publisher(), plusButtonSmall.publisher())
             .sink(receiveValue: { [weak self] _ in
                 self?.viewModel.input.send(.openMenu)
-            })
-            .store(in: &bag)
+            }).store(in: &bag)
         
         printButton.publisher().sink(receiveValue: { [weak self] _ in
             self?.viewModel.input.send(.didTapPrint)
-        })
-            .store(in: &bag)
+        }).store(in: &bag)
         
         settingsButton.publisher().print("SETTINGS").sink(receiveValue: { [weak self] _ in
             self?.viewModel.input.send(.didTapSettings)
-        })
-            .store(in: &bag)
+        }).store(in: &bag)
         
         deleteSelectedButton.publisher().sink(receiveValue: { [weak self] _ in
             self?.setHiddenClarifyDeleteDialog(false)
-        })
-            .store(in: &bag)
+        }).store(in: &bag)
         
         deleteButton.publisher().sink(receiveValue: { [weak self] _ in
             guard let dataBox = self?.collectionManager.currentCenterCellInPagingLayout else { return }
             dataBox.isSelected = true
             self?.setHiddenClarifyDeleteDialog(false)
-        })
-            .store(in: &bag)
+        }).store(in: &bag)
         
         deleteAllButton.publisher().sink(receiveValue: { [weak self] _ in
             self?.viewModel.input.send(.deleteAll)
             self?.setHiddenClarifyDeleteDialog(false)
-        })
-            .store(in: &bag)
+        }).store(in: &bag)
         
         dialogDeleteButton.publisher().sink(receiveValue: { [weak self] _ in
             guard let self = self else { return }
@@ -268,55 +207,47 @@ private extension HomeScreenViewController {
             self.viewModel.input.send(.itemsDeleteConfirmed)
             self.changeViewStateBasedOnSelectionMode(isInSelectionMode: false)
             self.collectionManager.input.send(.disableSelectionMode)
-        })
-            .store(in: &bag)
+        }).store(in: &bag)
         
         dialogCancelButton.publisher().sink(receiveValue: { [weak self] _ in
             self?.setHiddenClarifyDeleteDialog(true)
             self?.viewModel.input.send(.itemsDeleteRejected)
             self?.changeViewStateBasedOnSelectionMode(isInSelectionMode: false)
-        })
-            .store(in: &bag)
+        }).store(in: &bag)
         
         layoutChangeButton.publisher().sink(receiveValue: { [weak self] _ in
             self?.collectionManager.input.send(.toggleLayout)
-        })
-            .store(in: &bag)
+        }).store(in: &bag)
         
         subscriptionMenuOpenButton.publisher()
             .sink(receiveValue: { [weak self] _ in
                 self?.subscriptionContainer.isHidden.toggle()
                 self?.addParticles()
-            })
-            .store(in: &bag)
+            }).store(in: &bag)
         
         subscriptionContinueButton.publisher().sink(receiveValue: { [weak self] _ in
             /// proceed subscription
             self?.subscriptionContainer.isHidden.toggle()
             self?.subscriptionContainer.viewWithTag(1)!.removeFromSuperview()
-        })
-            .store(in: &bag)
+        }).store(in: &bag)
         
         subscriptionCloseButton.publisher()
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
                 self?.subscriptionContainer.isHidden.toggle()
                 self?.subscriptionContainer.viewWithTag(1)!.removeFromSuperview()
-            })
-            .store(in: &bag)
+            }).store(in: &bag)
         
         checkmarkButton.publisher().sink(receiveValue: { [weak self] _ in
             self?.collectionManager.input.send(.toggleSelectionMode)
-        })
-            .store(in: &bag)
+        }).store(in: &bag)
         
         closeSelectionModeButton.publisher().sink(receiveValue: { [weak self] _ in
             self?.setHiddenClarifyDeleteDialog(true)
             self?.collectionManager.input.send(.toggleSelectionMode)
             self?.viewModel.input.send(.itemsDeleteRejected)
             self?.changeViewStateBasedOnSelectionMode(isInSelectionMode: false)
-        })
-            .store(in: &bag)
+        }).store(in: &bag)
         
         collectionManager.output.sink(receiveValue: { [weak self] action in
             switch action {
@@ -332,8 +263,7 @@ private extension HomeScreenViewController {
             case .didSelectCheckmark:
                 self?.viewModel.input.send(.getSelectionCount)
             }
-        })
-            .store(in: &bag)
+        }).store(in: &bag)
         
         changeViewStateBasedOnItemsCount(hasItems: false)
         setHiddenClarifyDeleteDialog(true)
@@ -390,6 +320,7 @@ private extension HomeScreenViewController {
         subscriptionDiscountLabel.attributedText = makeStrikeThroughText("89.99")
         subscriptionMenuContainer.dropShadow(color: .black, opacity: 0.6, offSet: .zero, radius: 30, scale: true)
         dialogButtonsContainer.dropShadow(color: .black, opacity: 0.6, offSet: .zero, radius: 30, scale: true)
+        giftTimerContainer.addGradientBorder(to: giftTimerContainer, radius: 16, width: 2, colors: [UIColor(hex: 0x04FFF0), UIColor(hex: 0x0487FF), UIColor(hex: 0x9948FF)])
     }
     
     private func addParticles() {

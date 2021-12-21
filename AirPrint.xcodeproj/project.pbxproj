@@ -92,6 +92,8 @@
 		79B787F92750B429009D7655 /* HomeScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79B787F52750B429009D7655 /* HomeScreenViewController.xib */; };
 		79BBD8AB276319660087B1E0 /* ParticleEmitterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BBD8AA276319660087B1E0 /* ParticleEmitterView.swift */; };
 		79C362B0276CAB58001B1745 /* SharedActivityResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C362AF276CAB57001B1745 /* SharedActivityResults.swift */; };
+		79D102A227717C9A00F3C4D5 /* SubscriptionPlanPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79D102A127717C9A00F3C4D5 /* SubscriptionPlanPopup.xib */; };
+		79D102A527717CC500F3C4D5 /* SubscriptionPlanPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D102A427717CC500F3C4D5 /* SubscriptionPlanPopup.swift */; };
 		79F23A6E2760A9710004475D /* PDFComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F23A6D2760A9710004475D /* PDFComposer.swift */; };
 		79F80FBC2752A93C00081C7A /* ServicesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F80FBB2752A93C00081C7A /* ServicesContainer.swift */; };
 		79F80FC22752B00000081C7A /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F80FC12752B00000081C7A /* UIImage+Extensions.swift */; };
@@ -224,6 +226,8 @@
 		79B787F52750B429009D7655 /* HomeScreenViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeScreenViewController.xib; sourceTree = "<group>"; };
 		79BBD8AA276319660087B1E0 /* ParticleEmitterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticleEmitterView.swift; sourceTree = "<group>"; };
 		79C362AF276CAB57001B1745 /* SharedActivityResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedActivityResults.swift; sourceTree = "<group>"; };
+		79D102A127717C9A00F3C4D5 /* SubscriptionPlanPopup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubscriptionPlanPopup.xib; sourceTree = "<group>"; };
+		79D102A427717CC500F3C4D5 /* SubscriptionPlanPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPlanPopup.swift; sourceTree = "<group>"; };
 		79F23A6D2760A9710004475D /* PDFComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFComposer.swift; sourceTree = "<group>"; };
 		79F80FBB2752A93C00081C7A /* ServicesContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesContainer.swift; sourceTree = "<group>"; };
 		79F80FC12752B00000081C7A /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
@@ -476,6 +480,7 @@
 			children = (
 				79A5980A2762FDD400EB580A /* BlurredShadowView.swift */,
 				79BBD8AA276319660087B1E0 /* ParticleEmitterView.swift */,
+				79D102A327717CA000F3C4D5 /* SubscriptionPlanPopup */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -558,6 +563,15 @@
 				792D660D27552D1D00063F4B /* Entity */,
 			);
 			path = HomeScreen;
+			sourceTree = "<group>";
+		};
+		79D102A327717CA000F3C4D5 /* SubscriptionPlanPopup */ = {
+			isa = PBXGroup;
+			children = (
+				79D102A127717C9A00F3C4D5 /* SubscriptionPlanPopup.xib */,
+				79D102A427717CC500F3C4D5 /* SubscriptionPlanPopup.swift */,
+			);
+			path = SubscriptionPlanPopup;
 			sourceTree = "<group>";
 		};
 		79DCEF9B275B9266007BC160 /* Model */ = {
@@ -741,6 +755,7 @@
 				79A725B22750C41700D8B330 /* ResultPreviewCollectionCell.xib in Resources */,
 				79697CD8275AF1FC0056B0B0 /* WebpageViewController.xib in Resources */,
 				79F913C02746501900771FFE /* LaunchScreen.storyboard in Resources */,
+				79D102A227717C9A00F3C4D5 /* SubscriptionPlanPopup.xib in Resources */,
 				791CC442276441B200813FAC /* ManageSubscriptionsViewController.xib in Resources */,
 				794B5721276C4791001A7FE6 /* SharedMediaFetcherViewController.xib in Resources */,
 				7997DE392753F82A00B33300 /* Poppins-Regular.otf in Resources */,
@@ -817,6 +832,7 @@
 				793ADF5F2754E36100F58923 /* HomeScreenMenuViewModel.swift in Sources */,
 				794F73E02746B31D00B07410 /* MarketBoardDisplayManager.swift in Sources */,
 				794F73EC2746B36900B07410 /* UICollectionView+Extensions.swift in Sources */,
+				79D102A527717CC500F3C4D5 /* SubscriptionPlanPopup.swift in Sources */,
 				79BBD8AB276319660087B1E0 /* ParticleEmitterView.swift in Sources */,
 				79F913B62746501500771FFE /* SceneDelegate.swift in Sources */,
 				7911B025276B0FEC0058CD26 /* MiscSettingsModulesViewController.swift in Sources */,

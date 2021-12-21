@@ -14,7 +14,8 @@ import PDFKit.PDFDocument
 
 final class HomeScreenViewModel: UserSessionServiceProvidable,
                                  PdfServiceProvidable,
-                                 SharedActivityResultsProvidable {
+                                 SharedActivityResultsProvidable,
+                                 PurchesServiceProvidable {
     enum Action {
         case didPressCell(dataBox: PrintableDataBox)
         case openMenu
@@ -148,20 +149,23 @@ private extension HomeScreenViewModel {
         
         userSession.output.sink(receiveValue: { [weak self] response in
             switch response {
-            case .empty:
-                self?.output.send(.empty)
+            case .empty: self?.output.send(.empty)
             case .allCurrentData(let allData): self?.output.send(.allCurrentData(allData))
             case .addedItems(let addNewItems): self?.output.send(.addedItems(addNewItems))
-            case .deletedItems(let deletedItems):
-                self?.output.send(.deletedItems(deletedItems))
+            case .deletedItems(let deletedItems): self?.output.send(.deletedItems(deletedItems))
             case .selectedItems(let selectedItems): self?.output.send(.selectedItems(selectedItems))
-            case .selectionCount(let selectionCount):
-                self?.output.send(.selectionCount(selectionCount))
+            case .selectionCount(let selectionCount): self?.output.send(.selectionCount(selectionCount))
             }
         })
         .store(in: &bag)
         
-        
+        purchases.startTimerForGiftOffer()
+        purchases.output.sink(receiveValue: { [weak self] response in
+            switch response {
+            case .timerTick(let timerTickText):
+                self?.output.send(.timerTick(timerText: timerTickText))
+            }
+        }).store(in: &bag)
     }
     
     func trackEnterForeground() {
@@ -172,4 +176,45 @@ private extension HomeScreenViewModel {
                 self?.searchForSharedItems()
             }
     }
+    
+    // MARK: - Purchase
+    
+    private func checkActiveSubscriptions() {
+        purchases.isActiveSubscription
+            .sink(receiveValue: { [weak self] isActive in
+                if let isActive = isActive {
+                    print("hasActive subscr")
+                    if isActive {
+                        //self?.purchase(.weekly)
+                    } else {
+                        self?.purchase(.annual)
+                    }
+                } else {
+                    print("isActive == nil")
+                }
+            })
+            .store(in: &bag)
+    }
+    
+    private func purchase(_ plan: Purchase) {
+        purchases
+            .buy(model: plan)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .failure(let purchaseError):
+                    print(purchaseError.localizedDescription)
+                case _: break
+                }
+            }, receiveValue: { isSucceed in
+                if isSucceed {
+                    print("purchase: successfully purchased")
+                    
+                } else {
+                    print("purchase: something went wrong")
+                    
+                }
+            })
+            .store(in: &bag)
+    }
+    
 }

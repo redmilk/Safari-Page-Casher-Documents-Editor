@@ -21,6 +21,18 @@ extension XibDesignable where Self: UIView {
 }
 extension UIView: XibDesignable { }
 
+// MARK: - Constraints
+extension UIView {
+    func constraintToSides(inside superView: UIView) {
+        translatesAutoresizingMaskIntoConstraints = false
+        leadingAnchor.constraint(equalTo: superView.leadingAnchor).isActive = true
+        trailingAnchor.constraint(equalTo: superView.trailingAnchor).isActive = true
+        topAnchor.constraint(equalTo: superView.topAnchor).isActive = true
+        bottomAnchor.constraint(equalTo: superView.bottomAnchor).isActive = true
+    }
+}
+
+// MARK: - Styling
 extension UIView {
     func addCornerRadius(_ radius: CGFloat) {
         self.clipsToBounds = true
@@ -38,6 +50,18 @@ extension UIView {
         }, completion: { _ in
             completion?()
         })
+    }
+    func addGradientBorder(to view: UIView, radius: CGFloat, width: CGFloat, colors: [UIColor]) {
+        let gradient = CAGradientLayer()
+        gradient.frame = CGRect(origin: CGPoint.zero, size: view.frame.size)
+        gradient.colors = colors.map { $0.cgColor }
+        let shape = CAShapeLayer()
+        shape.lineWidth = width
+        shape.path = UIBezierPath(roundedRect: view.bounds, cornerRadius: radius).cgPath
+        shape.strokeColor = UIColor.black.cgColor
+        shape.fillColor = UIColor.clear.cgColor
+        gradient.mask = shape
+        view.layer.addSublayer(gradient)
     }
     func dropShadow(scale: Bool = true) {
         layer.masksToBounds = false

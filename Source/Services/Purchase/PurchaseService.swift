@@ -9,21 +9,41 @@ import ApphudSDK
 import StoreKit
 import Combine
 
+// if has subscr - non gift
+// if was subscr,
+
+//    Недельная подписка имеет предложение для новых пользователей - 3 дня бесплатно (встроенно)
+//    Также у недельной подписки есть промо оффер appid.weekly.offer - 2.99 за первую неделю
+//    При запуске чекается если у юзера не было подписки то ему предлагается недельная подписка с триалом на 3 дня
+//    Если юзер уже использовал триал то ему выдается промооффер appid.weekly.offer
+//    Если юзер использовал и то и то то ему выдается просто недельная подписка
+//    При выводе годовой подписки рядом всегда пишем зачеркную цену х2 типа подарок
+//    1) если юзер не подписался а закрыл окно то висит плашка хау ту триал воркс где предлагается промо предложение на 3 дня appid.weekly
+//    2) если юзер использовал промо и отписался то ему предлагается appid.weekly.offer с 2.99 за первую неделю
+//    3) если юзер не проходит под правила выше то выходит плашка с гифтом где внутри предлагает подписаться на год
+
+
 enum PurchaseError: Error {
     case error(String)
 }
 
-class PurchesService {
+final class PurchesService {
+    enum Response {
+        case timerTick(String)
+    }
+    
+    let output = PassthroughSubject<Response, Never>()
     var isActiveSubscription = CurrentValueSubject<Bool?, Never>(nil)
     let products = CurrentValueSubject<[ApphudProduct], Never>([])
+    private var bag = Set<AnyCancellable>()
+    private var giftOfferTimerCancellable: AnyCancellable?
+    private var giftOfferTimerEnds: Date?
         
     init() {
-        Apphud.paywallsDidLoadCallback {[unowned self] (paywalls) in
-            // retrieve current paywall with identifier
+        Apphud.paywallsDidLoadCallback { [unowned self] (paywalls) in
             let paywall = paywalls
             print("paywall:=\(paywall)")
-            // retrieve the products [ApphudProduct] from current paywall
-            let products = paywall.map({$0.products}).flatMap({$0})
+            let products = paywall.map({ $0.products }).flatMap({ $0 })
             products.forEach { product in
                 print("productid:=\(product.productId)")
             }
@@ -34,11 +54,36 @@ class PurchesService {
         }
     }
     
+    func startTimerForGiftOffer() {
+        giftOfferTimerEnds = Date().addingTimeInterval(10 * 60)
+        giftOfferTimerCancellable?.cancel()
+        giftOfferTimerCancellable = Timer.publish(every: 1, on: .main, in: .default)
+            .autoconnect()
+            .sink(receiveValue: { [weak self] date in
+                guard let self = self, let endDate = self.giftOfferTimerEnds else { return }
+                let distanceTimeInterval: Int = Int(date.distance(to: endDate).rounded(.up))
+                let min = Int(distanceTimeInterval / 60)
+                let sec = distanceTimeInterval % 60
+                if min <= 0 && sec <= 0 {
+                    self.startTimerForGiftOffer()
+                }
+                self.output.send(.timerTick("\(min) min \(sec) sec"))
+            })
+    }
+    
+    func checkSubscriptionsState() {
+        let isUserAlreadyHadSubscription = false
+        let isTrialHasBeenUsed = false
+        let isTrialAndWeekWithTrialWasUsed = false
+        let isTrialWasUsedAndHeCanceledSubscription = false
+        let isSpecialGiftShouldBeShown = !isTrialHasBeenUsed && !isTrialAndWeekWithTrialWasUsed && !isTrialWasUsedAndHeCanceledSubscription
+    }
+    
     func refreshPurchase() {
         var isActive = false
         let activeSubscription = Apphud.subscriptions()?.first(where: { $0.isActive() })
         if activeSubscription?.status == .trial && activeSubscription?.canceledAt != nil {
-            isActive =  false
+            isActive = false
         } else {
             isActive = Apphud.hasActiveSubscription()
             print("hasActiveSubscription:=\(isActive)")
@@ -49,11 +94,13 @@ class PurchesService {
     }
     
     func getPurchase(model: Purchase) -> ApphudProduct? {
-        return products.value.filter({$0.productId == model.productId}).last
+        return products.value.filter({ $0.productId == model.productId }).last
     }
     
-    func isActiv(model: Purchase) -> Bool {
-        guard let purchase = Apphud.subscriptions()?.filter({$0.productId == model.productId}).first(where: {$0.isActive()}) else {return false}
+    func checkIfPurchaseIsActive(_ purchase: Purchase) -> Bool {
+        guard let purchase = Apphud.subscriptions()?
+                .filter({ $0.productId == purchase.productId })
+                .first(where: { $0.isActive() }) else { return false }
         print("purchase:=\(purchase)")
         return true
     }
@@ -64,7 +111,6 @@ class PurchesService {
                 guard let product = self.getPurchase(model: model) else {
                     return promise(.failure(PurchaseError.error("Couldn't load this product")))
                 }
-                
                 let callback: ((ApphudPurchaseResult) -> Void) = { result in
                     if let subscription = result.subscription, subscription.isActive() {
                         promise(.success(true))
@@ -108,19 +154,11 @@ class PurchesService {
        .eraseToAnyPublisher()
     }
     
-    //    Недельная подписка имеет предложение для новых пользователей - 3 дня бесплатно (встроенно)
-    //    Также у недельной подписки есть промо оффер appid.weekly.offer - 2.99 за первую неделю
-    //    При запуске чекается если у юзера не было подписки то ему предлагается недельная подписка с триалом на 3 дня
-    //    Если юзер уже использовал триал то ему выдается промооффер appid.weekly.offer
-    //    Если юзер использовал и то и то то ему выдается просто недельная подписка
-    //    При выводе годовой подписки рядом всегда пишем зачеркную цену х2 типа подарок
-    //    1) если юзер не подписался а закрыл окно то висит плашка хау ту триал воркс где предлагается промо предложение на 3 дня appid.weekly
-    //    2) если юзер использовал промо и отписался то ему предлагается appid.weekly.offer с 2.99 за первую неделю
-    //    3) если юзер не проходит под правила выше то выходит плашка с гифтом где внутри предлагает подписаться на год
-//    func avaliablePurchases() {
-//        let subscriptions = Apphud.subscriptions()
-//    }
-    
+    // MARK: - Promo
+    func isAvaliablePromo() -> Bool {
+        guard let subscriptions = Apphud.subscriptions() else { return true }
+        return subscriptions.filter({$0.status == .promo}).isEmpty
+    }
     func promoPurchase() -> Purchase {
         if !hadPurchase() {
             return .weekly
@@ -138,20 +176,11 @@ class PurchesService {
     }
     
     func listOfPurchase() -> [Purchase] {
-        if !hadPurchase() {
-            return [.monthly, .annual]
-        } else {
-            return [.monthly, .annual]
-        }
+        return [.monthly, .annual]
     }
     
     func fullListOfPurchase() -> [Purchase] {
-            return [.weekly, .monthly, .annual]
-    }
-
-    func isAvaliablePromo() -> Bool {
-        guard let subscriptions = Apphud.subscriptions() else { return true }
-        return subscriptions.filter({$0.status == .promo}).isEmpty
+        return [.weekly, .monthly, .annual]
     }
     
     func hadPurchase() -> Bool {
