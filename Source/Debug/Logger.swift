@@ -18,6 +18,8 @@ enum LoggerTypes: Int {
     case token
     case subscriptionFinished
     case deinited
+    case purchase
+    case error
 }
 
 final class Logger {
@@ -37,7 +39,7 @@ final class Logger {
                     line: Int = #line,
                     function: String = #function
     ) {
-        Swift.print(" - LOGGER \(time) ❌ ❌ ❌ ERROR \nFunction: \((function as NSString).lastPathComponent), File: \((path as NSString).lastPathComponent), Line: \((line.description as NSString).lastPathComponent)")
+        Swift.print(" - LOGGER \(time) ❌❌❌ ERROR \nFunction: \((function as NSString).lastPathComponent), File: \((path as NSString).lastPathComponent), Line: \((line.description as NSString).lastPathComponent)")
 
         if let e = error {
             debugPrint(e)
@@ -121,6 +123,10 @@ final class Logger {
             print(str:" - LOGGER \(time) 🗑 Finished " + string)
         case .deinited:
             print(str:" - LOGGER \(time) 🚯 Deinit " + string)
+        case .purchase:
+            print(str:" - LOGGER \(time) 🌈 Purchases " + string)
+        case .error:
+            print(str:" - LOGGER \(time) ⛔️ Error " + string)
         }
     }
     

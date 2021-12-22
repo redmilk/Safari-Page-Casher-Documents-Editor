@@ -17,7 +17,7 @@ class ParticleEmitterView: UIView {
     
     func makeEmmiterCell(color: UIColor, velocity: CGFloat, scale: CGFloat) -> CAEmitterCell {
         let cell = CAEmitterCell()
-        cell.birthRate = 5
+        cell.birthRate = 6
         cell.lifetime = 30.0
         cell.lifetimeRange = 0
         cell.velocity = velocity
@@ -25,7 +25,7 @@ class ParticleEmitterView: UIView {
         cell.emissionLongitude = .pi
         cell.emissionRange = .pi / 8
         cell.scale = 0.02
-        //cell.scaleRange = scale / 3
+        cell.scaleRange = 0.02 / 2
         cell.contents = particleImage.cgImage
         return cell
     }

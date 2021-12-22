@@ -61,6 +61,7 @@ struct ControlPublisher<T: UIControl>: Publisher {
         @objc private func doAction(_ sender: UIControl) {
             guard let sender = self.sender else { return }
             _ = downstream?.receive(sender)
+            sender.generateInteractionFeedback()
         }
         
         private func finish() {
@@ -70,3 +71,4 @@ struct ControlPublisher<T: UIControl>: Publisher {
         }
     }
 }
+

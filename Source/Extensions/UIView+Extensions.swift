@@ -6,6 +6,7 @@
 //
 
 import UIKit.UIView
+import QuartzCore
 
 protocol XibDesignable: AnyObject { }
 extension XibDesignable where Self: UIView {
@@ -33,7 +34,7 @@ extension UIView {
 }
 
 // MARK: - Styling
-extension UIView {
+extension UIView: InteractionFeedbackService {
     func addCornerRadius(_ radius: CGFloat) {
         self.clipsToBounds = true
         self.layer.cornerRadius = radius
@@ -80,9 +81,72 @@ extension UIView {
         layer.shadowOpacity = opacity
         layer.shadowOffset = offSet
         layer.shadowRadius = radius
-        
         layer.shadowPath = UIBezierPath(rect: self.bounds).cgPath
         layer.shouldRasterize = true
         layer.rasterizationScale = scale ? UIScreen.main.scale : 1
     }
+    
+    // MARK: - Animations
+    func animateShake() {
+        let animation = CAKeyframeAnimation(keyPath: "transform.translation.x")
+        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
+        animation.duration = 0.6
+        animation.values = [-20.0, 20.0, -20.0, 20.0, -10.0, 10.0, -5.0, 5.0, 0.0 ]
+        animation.beginTime = CACurrentMediaTime() + 5
+        layer.add(animation, forKey: "shake")
+    }
+    func animateBounceAndShadow() {
+        Timer.scheduledTimer(withTimeInterval: 3, repeats: true) { [weak self] _ in
+            self?.transform = CGAffineTransform.init(scaleX: 0.9, y: 0.9)
+            UIView.animate(withDuration: 1.5, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 15, options: [.curveEaseInOut, .allowUserInteraction], animations: {
+                self?.transform = .identity
+            }, completion: nil)
+            self?.generateInteractionFeedback()
+            let animation = CABasicAnimation(keyPath: "shadowOpacity")
+            animation.fromValue = 1.0
+            animation.toValue = 0.0
+            animation.duration = 0.3
+            self?.layer.add(animation, forKey: animation.keyPath)
+        }
+    }
+    func animateFadeIn(_ duration: TimeInterval, delay: TimeInterval = 0, finalAlpha: CGFloat = 1.0) {
+        self.alpha = 0
+        UIView.animate(withDuration: duration, delay: delay, options: [.allowUserInteraction]) {
+            self.alpha = finalAlpha
+        }
+    }
 }
+
+class ShimmerView: UIView {
+    func startShimmering() {
+        let light = UIColor.white.cgColor
+        let alpha = UIColor.white.withAlphaComponent(0.0).cgColor
+
+        let gradient = CAGradientLayer()
+        gradient.colors = [alpha, light, alpha]
+        gradient.frame = CGRect(x: -self.bounds.size.width, y: 0, width: 3 * self.bounds.size.width, height: self.bounds.size.height)
+        gradient.startPoint = CGPoint(x: 1.0, y: 0.525)
+        gradient.endPoint = CGPoint(x: 0.0, y: 0.5)
+        gradient.locations = [0.1, 0.5, 0.9]
+        self.layer.mask = gradient
+
+        let shimmer = CABasicAnimation(keyPath: "locations")
+        shimmer.fromValue = [0.0, 0.1, 0.2]
+        shimmer.toValue = [0.8, 0.9, 1.0]
+        shimmer.duration = 1.5
+        shimmer.fillMode = .forwards
+        shimmer.isRemovedOnCompletion = false
+
+        let group = CAAnimationGroup()
+        group.animations = [shimmer]
+        group.duration = 2
+        group.repeatCount = HUGE
+        gradient.add(group, forKey: "shimmer")
+    }
+}
+
+//let view = ShimmerView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+//PlaygroundPage.current.liveView = view
+//
+//view.backgroundColor = .blue
+//view.startShimmering()

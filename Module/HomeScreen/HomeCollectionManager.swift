@@ -228,7 +228,6 @@ private extension HomeCollectionManager {
 
 extension HomeCollectionManager: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        generateInteractionFeedback()
         guard let cell = collectionView.cellForItem(at: indexPath) as? ResultPreviewCollectionCell,
               let dataBox = cell.dataBox else { return }
         if isInSelectionMode {

@@ -16,15 +16,15 @@ protocol SubscriptionPresentable where Self: UIViewController & PurchesServicePr
 
 extension SubscriptionPresentable {
     func presentSubscriptionDialog() {
-        purchases.isActiveSubscription.sink(receiveValue: { isActive in
-            guard let hasActiveSubscriptions = isActive else {
-                return Logger.log("Something went wrong, check internet connection")
-            }
-            let hasCanceledSubscription = false /// get from apphud
-            if !hasActiveSubscriptions && !hasCanceledSubscription {
-                
-            }
-        }).store(in: &bag)
+//        purchases.isUserHasActiveSubscriptionSubject.sink(receiveValue: { isActive in
+//            guard let hasActiveSubscriptions = isActive else {
+//                return Logger.log("Something went wrong, check internet connection")
+//            }
+//            let hasCanceledSubscription = false /// get from apphud
+//            if !hasActiveSubscriptions && !hasCanceledSubscription {
+//                
+//            }
+//        }).store(in: &bag)
     }
     
     private func displaySubscriptionPlanSelection() {
@@ -42,12 +42,7 @@ extension SubscriptionPresentable {
                             Logger.logError(error)
                         }
                         subscriptionPopup.isHidden = true
-                    }, receiveValue: { isSuccess in
-                        if isSuccess {
-                            Logger.log("Successfully purchased", type: .token)
-                        } else {
-                            Logger.log("Something went wrong", type: .token)
-                        }
+                    }, receiveValue: {
                         subscriptionPopup.isHidden = true
                     }).store(in: &self.bag)
             case .onClose:

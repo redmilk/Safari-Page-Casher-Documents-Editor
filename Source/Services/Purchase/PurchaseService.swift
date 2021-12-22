@@ -9,51 +9,143 @@ import ApphudSDK
 import StoreKit
 import Combine
 
-// if has subscr - non gift
-// if was subscr,
-
-//    Недельная подписка имеет предложение для новых пользователей - 3 дня бесплатно (встроенно)
-//    Также у недельной подписки есть промо оффер appid.weekly.offer - 2.99 за первую неделю
-//    При запуске чекается если у юзера не было подписки то ему предлагается недельная подписка с триалом на 3 дня
-//    Если юзер уже использовал триал то ему выдается промооффер appid.weekly.offer
-//    Если юзер использовал и то и то то ему выдается просто недельная подписка
-//    При выводе годовой подписки рядом всегда пишем зачеркную цену х2 типа подарок
-//    1) если юзер не подписался а закрыл окно то висит плашка хау ту триал воркс где предлагается промо предложение на 3 дня appid.weekly
-//    2) если юзер использовал промо и отписался то ему предлагается appid.weekly.offer с 2.99 за первую неделю
-//    3) если юзер не проходит под правила выше то выходит плашка с гифтом где внутри предлагает подписаться на год
-
+///                     if let purchase = purchaseResultModel.nonRenewingPurchase, purchase.isActive()
+///                     what if purchase was refunded
 
 enum PurchaseError: Error {
     case error(String)
 }
 
+extension SKProduct {
+    var localizedPrice: String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.locale = priceLocale
+        return formatter.string(from: price)!
+    }
+}
+
 final class PurchesService {
     enum Response {
         case timerTick(String)
+        case hasActiveSubscriptions(Bool)
     }
     
     let output = PassthroughSubject<Response, Never>()
-    var isActiveSubscription = CurrentValueSubject<Bool?, Never>(nil)
-    let products = CurrentValueSubject<[ApphudProduct], Never>([])
-    private var bag = Set<AnyCancellable>()
+    /// determine if user has active subscriptions and which was not canceled during trial period
+    var isUserHasActiveSubscription: Bool!
+    /// check if user had any subscription
+    var isUserEverHadSubscriptions: Bool { !(Apphud.subscriptions()?.isEmpty ?? true) }
+    /// weekly discaunt prices case: no active subs && no previus subs
+    var isWeeklyPlanWithDiscaunt: Bool { !isUserHasActiveSubscription && !isUserEverHadSubscriptions }
+    /// gift section should be visible: no active subs
+    var isGiftPopupShouldBeVisibleForUser: Bool { !isUserHasActiveSubscription }
+    
+    /// configured in-app purchases data
+    let appPurchasesInfoList = CurrentValueSubject<[ApphudProduct], Never>([])
+
     private var giftOfferTimerCancellable: AnyCancellable?
     private var giftOfferTimerEnds: Date?
+    private var bag = Set<AnyCancellable>()
         
     init() {
-        Apphud.paywallsDidLoadCallback { [unowned self] (paywalls) in
+        /// callback when all apphud necessary data is loaded
+        Apphud.paywallsDidLoadCallback { [weak self] (paywalls) in
             let paywall = paywalls
-            print("paywall:=\(paywall)")
-            let products = paywall.map({ $0.products }).flatMap({ $0 })
-            products.forEach { product in
-                print("productid:=\(product.productId)")
-            }
-            print("products:=\(products)")
-            print("")
-            self.products.send(products)
-            refreshPurchase()
+            let appPurchasesInfoList = paywall.map({ $0.products }).flatMap({ $0 })
+            Logger.log("\(appPurchasesInfoList)", type: .purchase)
+            self?.appPurchasesInfoList.send(appPurchasesInfoList)
+            self?.refreshUserPurchasesStatus()
         }
     }
     
+    /// get specific in-app purchase info
+    func getCurrentPurchase(model: Purchase) -> ApphudProduct? {
+        appPurchasesInfoList.value.filter({ $0.productId == model.productId }).last
+    }
+    
+    func getPriceForPurchase(model: Purchase) -> String? {
+        appPurchasesInfoList.value.filter({ $0.productId == model.productId })
+            .last?.skProduct?.localizedPrice
+    }
+    
+    /// check if user's specific purchase is still active
+    func checkIfPurchaseIsActive(_ purchase: Purchase) -> Bool {
+        Apphud.subscriptions()?
+            .filter({ $0.productId == purchase.productId })
+            .first(where: { $0.isActive() }) != nil
+    }
+    
+    /// determine if user has active subscriptions and which was not canceled during trial period
+    func refreshUserPurchasesStatus() {
+        /// if subscription was cancelled on trial period
+        if let activeSubscription = Apphud.subscriptions()?.first(where: { $0.isActive() }),
+           activeSubscription.status == .trial && activeSubscription.canceledAt != nil {
+            isUserHasActiveSubscription = false
+        } else {
+            isUserHasActiveSubscription = Apphud.hasActiveSubscription()
+        }
+        output.send(.hasActiveSubscriptions(isUserEverHadSubscriptions))
+        Logger.log("Does user have active and not canceled subscriptions: \(isUserHasActiveSubscription.description.uppercased())", type: .purchase)
+    }
+    
+    /// make purchase
+    func buy(model: Purchase) -> AnyPublisher<(), PurchaseError> {
+       return Deferred {
+            Future<(), PurchaseError> { [weak self] promise in
+                /// attempt to get all data about this purchase
+                guard let product = self?.getCurrentPurchase(model: model) else {
+                    return promise(.failure(PurchaseError.error("Couldn't load this product")))
+                }
+                let callback: ((ApphudPurchaseResult) -> Void) = { purchaseResultModel in
+                    /// got error during buy subscription process
+                    if let error = purchaseResultModel.error,
+                       let purchaseError = self?.handlePurchasesError(error) {
+                        return promise(.failure(purchaseError))
+                        /// attempt to fetch subscription model from purchaseResult and check it isActive state
+                    } else if let subscription = purchaseResultModel.subscription, subscription.isActive() {
+                        promise(.success(()))
+                        self?.refreshUserPurchasesStatus()
+                    /// attempt to fetch nonRenewingPurchase model from purchaseResult and check it isActive state
+                    } else if let purchase = purchaseResultModel.nonRenewingPurchase, purchase.isActive() {
+                        promise(.success(()))
+                        self?.refreshUserPurchasesStatus()
+                    }
+                }
+                Apphud.purchase(product, callback: callback)
+            }
+       }
+       .eraseToAnyPublisher()
+    }
+        
+    /// restore previous purchase which did expire
+    /// refresh available in-app purchases for app and user's subscriptions status
+    func restoreLastExpiredPurchase() -> AnyPublisher<Bool, PurchaseError> {
+        /// refresh available in-app purchases for app
+        return Deferred {
+            Future<Bool, PurchaseError> { promise in
+                Apphud.restorePurchases { [weak self] subscriptions, purchases, error in
+                    guard error == nil else {
+                        guard let self = self else { return }
+                        let purchaseError = self.handlePurchasesError(error!)
+                        Logger.logError(purchaseError)
+                        return promise(.failure(purchaseError))
+                    }
+                    /// if we have active subscription plans configured
+                    if let subscriptions = subscriptions, !subscriptions.filter({ $0.isActive() }).isEmpty {
+                        /// determine if user has active subscriptions and which was not canceled during trial period
+                        self?.refreshUserPurchasesStatus()
+                        promise(.success(true))
+                    } else {
+                        promise(.success(false))
+                    }
+                }
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    /// timer for gift offer
     func startTimerForGiftOffer() {
         giftOfferTimerEnds = Date().addingTimeInterval(10 * 60)
         giftOfferTimerCancellable?.cancel()
@@ -71,151 +163,42 @@ final class PurchesService {
             })
     }
     
-    func checkSubscriptionsState() {
-        let isUserAlreadyHadSubscription = false
-        let isTrialHasBeenUsed = false
-        let isTrialAndWeekWithTrialWasUsed = false
-        let isTrialWasUsedAndHeCanceledSubscription = false
-        let isSpecialGiftShouldBeShown = !isTrialHasBeenUsed && !isTrialAndWeekWithTrialWasUsed && !isTrialWasUsedAndHeCanceledSubscription
-    }
-    
-    func refreshPurchase() {
-        var isActive = false
-        let activeSubscription = Apphud.subscriptions()?.first(where: { $0.isActive() })
-        if activeSubscription?.status == .trial && activeSubscription?.canceledAt != nil {
-            isActive = false
-        } else {
-            isActive = Apphud.hasActiveSubscription()
-            print("hasActiveSubscription:=\(isActive)")
+    /// purchases error handling
+    private func handlePurchasesError(_ error: Error) -> PurchaseError {
+        guard let error = error as? SKError else {
+            return PurchaseError.error("Error code: \((error as NSError).code). Message: \((error as NSError).localizedDescription)")
         }
-        guard isActive != isActiveSubscription.value else { return }
-        print("isActive:=\(isActive)")
-        isActiveSubscription.send(isActive)
-    }
-    
-    func getPurchase(model: Purchase) -> ApphudProduct? {
-        return products.value.filter({ $0.productId == model.productId }).last
-    }
-    
-    func checkIfPurchaseIsActive(_ purchase: Purchase) -> Bool {
-        guard let purchase = Apphud.subscriptions()?
-                .filter({ $0.productId == purchase.productId })
-                .first(where: { $0.isActive() }) else { return false }
-        print("purchase:=\(purchase)")
-        return true
-    }
-    
-    func buy(model: Purchase) -> AnyPublisher<Bool, PurchaseError> {
-       return Deferred {
-            Future<Bool, PurchaseError> { [unowned self] promise in
-                guard let product = self.getPurchase(model: model) else {
-                    return promise(.failure(PurchaseError.error("Couldn't load this product")))
-                }
-                let callback: ((ApphudPurchaseResult) -> Void) = { result in
-                    if let subscription = result.subscription, subscription.isActive() {
-                        promise(.success(true))
-                        self.refreshPurchase()
-                    } else if let purchase = result.nonRenewingPurchase, purchase.isActive() {
-                        promise(.success(true))
-                        self.refreshPurchase()
-                    } else if let error = result.error as? SKError {
-                        switch error.code {
-                        case .unknown:
-                            promise(.success(false))
-                        case .clientInvalid:
-                            promise(.success(false))
-                        case .paymentCancelled:
-                            promise(.success(false))
-                        case .paymentInvalid:
-                            promise(.success(false))
-                        case .paymentNotAllowed:
-                            promise(.failure(PurchaseError.error("Purchase is not allowed on your device")))
-                        case .storeProductNotAvailable:
-                            promise(.success(false))
-                        case .cloudServicePermissionDenied:
-                            promise(.failure(PurchaseError.error("Access denied, try another account \(error)")))
-                        case .cloudServiceNetworkConnectionFailed:
-                            promise(.failure(PurchaseError.error("Could not connect to network")))
-                        default:
-                            break
-                        }
-                    } else if let error = result.error {
-                        promise(.failure(PurchaseError.error(error.localizedDescription)))
-                    }
-                }
-                
-                if let promo = model.promoId, let productStoreKit = product.skProduct {
-                    Apphud.purchasePromo(productStoreKit, discountID: promo, callback)
-                } else {
-                    Apphud.purchase(product, callback: callback)
-                }
-            }
-       }
-       .eraseToAnyPublisher()
-    }
-    
-    // MARK: - Promo
-    func isAvaliablePromo() -> Bool {
-        guard let subscriptions = Apphud.subscriptions() else { return true }
-        return subscriptions.filter({$0.status == .promo}).isEmpty
-    }
-    func promoPurchase() -> Purchase {
-        if !hadPurchase() {
-            return .weekly
-        } else {
-            return .annual
+        switch error.code {
+        case .clientInvalid:
+            return PurchaseError.error("Indicating that the client is not allowed to perform the attempted purchase action")
+        case .paymentCancelled:
+            return PurchaseError.error("Payment request was canceled by user")
+        case .paymentInvalid:
+            return PurchaseError.error("One of the payment parameters wasn’t recognized by the App Store")
+        case .storeProductNotAvailable:
+            return PurchaseError.error("Requested product is not available in the store")
+        case .paymentNotAllowed:
+            return PurchaseError.error("The user is not allowed to authorize payments")
+        case .cloudServicePermissionDenied:
+            return PurchaseError.error("The user has not allowed access to Cloud service information")
+        case .cloudServiceNetworkConnectionFailed:
+            return PurchaseError.error("Could not connect to network")
+        case .unknown:
+            return PurchaseError.error("Unknown error during purchase")
+        case _: return PurchaseError.error("Unhandled error. Something went wrong during purchase")
         }
-    }
-    
-    func singlePurchase() -> Purchase {
-        if !hadPurchase() {
-            return .weekly
-        } else {
-            return .weeklyTrial
-        }
-    }
-    
-    func listOfPurchase() -> [Purchase] {
-        return [.monthly, .annual]
-    }
-    
-    func fullListOfPurchase() -> [Purchase] {
-        return [.weekly, .monthly, .annual]
-    }
-    
-    func hadPurchase() -> Bool {
-        return !(Apphud.subscriptions()?.isEmpty ?? true)
-    }
-    
-    func restorePurchases() -> AnyPublisher<Bool, PurchaseError> {
-        return Deferred {
-            Future<Bool, PurchaseError> { promise in
-                Apphud.restorePurchases{[unowned self] subscription, purchases, error in
-                    if let subscription = subscription, !subscription.filter({$0.isActive()}).isEmpty {
-                        self.refreshPurchase()
-                        promise(.success(false))
-                    } else if error != nil {
-                        promise(.failure(PurchaseError.error(error?.localizedDescription ?? "Error purchase")))
-                    } else {
-                        promise(.failure(PurchaseError.error(error?.localizedDescription ?? "Nothing to restore")))
-                    }
-                }
-            }
-        }
-        .eraseToAnyPublisher()
     }
 }
 
-//protocol PurchesServicable {
-//    var products: BehaviorRelay<[ApphudProduct]> {get}
-//    var isActiveSubscription: BehaviorRelay<Bool?> {get}
-//    func getPurchase(model: Purchase) -> ApphudProduct?
-//    func buy(model: Purchase) -> Observable<Bool>
-//    func isActiv(model: Purchase) -> Bool
-//    func restorePurchases() -> Observable<Bool>
-//    func promoPurchase() -> Purchase
-//    func singlePurchase() -> Purchase
-//    func listOfPurchase() -> [Purchase]
-//    func hadPurchase() -> Bool
-//    func fullListOfPurchase() -> [Purchase]
-//}
+
+// if has subscr - non gift
+
+//    Недельная подписка имеет предложение для новых пользователей - 3 дня бесплатно (встроенно)
+//    Также у недельной подписки есть промо оффер appid.weekly.offer - 2.99 за первую неделю
+//    При запуске чекается если у юзера не было подписки то ему предлагается недельная подписка с триалом на 3 дня
+//    Если юзер уже использовал триал то ему выдается промооффер appid.weekly.offer
+//    Если юзер использовал и то и то то ему выдается просто недельная подписка
+//    При выводе годовой подписки рядом всегда пишем зачеркную цену х2 типа подарок
+//    1) если юзер не подписался а закрыл окно то висит плашка хау ту триал воркс где предлагается промо предложение на 3 дня appid.weekly
+//    2) если юзер использовал промо и отписался то ему предлагается appid.weekly.offer с 2.99 за первую неделю
+//    3) если юзер не проходит под правила выше то выходит плашка с гифтом где внутри предлагает подписаться на год

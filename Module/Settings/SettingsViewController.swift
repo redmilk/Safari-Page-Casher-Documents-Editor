@@ -14,7 +14,7 @@ import QuickLook
 
 // MARK: - SettingsViewController
 
-final class SettingsViewController: UIViewController, MFMailComposeViewControllerDelegate {
+final class SettingsViewController: UIViewController, MFMailComposeViewControllerDelegate, UIGestureRecognizerDelegate {
     enum State {
         case dummyState
     }
@@ -53,9 +53,32 @@ final class SettingsViewController: UIViewController, MFMailComposeViewControlle
 
 // MARK: - Internal
 
+class CustomNavigation: UINavigationController, InteractionFeedbackService {
+    override func popViewController(animated: Bool) -> UIViewController? {
+        generateInteractionFeedback()
+        return self.popViewController(animated: animated)
+    }
+}
+
 private extension SettingsViewController {
     
     func configureView() {
+        
+        let backButton = UIBarButtonItem(image: UIImage(named: "settings-navigation-back")!,
+                                      style: .plain,
+                                      target: navigationController,
+                                      action: #selector(UINavigationController.popViewController(animated:)))
+        navigationItem.leftBarButtonItem = backButton
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+        
+//        let leftItem = UIBarButtonItem(image: UIImage(named: "settings-navigation-back")!, style: .done, target: self, action: nil)
+//        leftItem.publisher().sink(receiveValue: { [weak self] item in
+//            item.generateInteractionFeedback()
+//            self?.navigationController?.popViewController(animated: true)
+//        }).store(in: &bag)
+        //navigationController?.navigationBar.backItem =
+       // navigationController?.navigationItem.backBarButtonItem = leftItem
+        
         let textAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationController?.navigationBar.titleTextAttributes = textAttributes
         navigationController?.navigationBar.tintColor = .white
@@ -66,32 +89,27 @@ private extension SettingsViewController {
         manageSubscriptionsButton.publisher()
             .sink(receiveValue: { [weak self] _ in
                 self?.viewModel.input.send(.manageSubscriptions)
-            })
-            .store(in: &bag)
+            }).store(in: &bag)
         
         contactUsButton.publisher()
             .sink(receiveValue: { [weak self] _ in
                 self?.sendEmail()
-            })
-            .store(in: &bag)
+            }).store(in: &bag)
         
         shareButton.publisher()
             .sink(receiveValue: { [weak self] _ in
                 self?.share()
-            })
-            .store(in: &bag)
+            }).store(in: &bag)
         
         privacyPolicyButton.publisher()
             .sink(receiveValue: { [weak self] _ in
                 self?.viewModel.input.send(.privacyPolicy)
-            })
-            .store(in: &bag)
+            }).store(in: &bag)
         
         termsOfUseButton.publisher()
             .sink(receiveValue: { [weak self] _ in
                 self?.viewModel.input.send(.termsOfUse)
-            })
-            .store(in: &bag)
+            }).store(in: &bag)
     }
     
     /// Handle ViewModel's states

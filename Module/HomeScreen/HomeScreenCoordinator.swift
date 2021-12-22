@@ -81,8 +81,8 @@ final class HomeScreenCoordinator: CoordinatorProtocol, HomeScreenCoordinatorPro
                 case .scanAction: self?.showCameraScaner()
                 case .printWebPage: self?.showWebView(initialURL: nil)
                 case .printDocument: self?.showCloudFilesPicker()
-                case .printFromClipboard:
-                    self?.copyFromClipboardCallback()
+                case .printFromClipboard: self?.copyFromClipboardCallback()
+                case _: break
                 }
             })
         .store(in: &self.bag)

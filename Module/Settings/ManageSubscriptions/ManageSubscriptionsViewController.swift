@@ -13,9 +13,10 @@ import Combine
 
 // MARK: - ManageSubscriptionsViewController
 
-final class ManageSubscriptionsViewController: UIViewController {
+final class ManageSubscriptionsViewController: UIViewController, ActivityIndicatorPresentable {
     enum State {
-        case dummyState
+        case currentSubscriptionPlan(Purchase)
+        case loadingState(Bool)
     }
     
     @IBOutlet weak var navigationBarExtender: UIView!
@@ -46,6 +47,10 @@ final class ManageSubscriptionsViewController: UIViewController {
         configureView()
         handleStates()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.input.send(.checkCurrentSubscriptionPlan)
+    }
 }
 
 // MARK: - Internal
@@ -54,10 +59,16 @@ private extension ManageSubscriptionsViewController {
     
     /// Handle ViewModel's states
     func handleStates() {
-        viewModel.output.sink(receiveValue: { state in
+        viewModel.output.sink(receiveValue: { [weak self] state in
             switch state {
-            case .dummyState:
-                break
+            case .loadingState(let isHidden):
+                isHidden ? self?.startActivityAnimation() : self?.stopActivityAnimation()
+            case .currentSubscriptionPlan(let purchase):
+                switch purchase {
+                case .weekly: self?.toggleWeeklyPlan()
+                case .monthly: self?.toggleMonthlyPlan()
+                case .annual: self?.toggleYearlyPlan()
+                }
             }
         })
         .store(in: &bag)
@@ -70,54 +81,71 @@ private extension ManageSubscriptionsViewController {
         title = "Manage Subscriptions"
         navigationBarExtender.addCornerRadius(30)
         //navigationBarExtender.dropShadow(color: .black, opacity: 0.6, offSet: .zero, radius: 30, scale: true)
-        weekPlanButton.isSelected.toggle()
+        //weekPlanButton.isSelected.toggle()
         monthlyPlanButton.addCornerRadius(14)
         monthlyPlanButton.addBorder(1, UIColor(hex: 0x4E50BD33).withAlphaComponent(0.2))
         yearPlanButton.addCornerRadius(14)
         yearPlanButton.addBorder(1, UIColor(hex: 0x4E50BD33).withAlphaComponent(0.2))
         weekPlanButton.addCornerRadius(14)
+        weekPlanButton.addBorder(1, UIColor(hex: 0x4E50BD33).withAlphaComponent(0.2))
+        
+        weekPlanButton.publisher().receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] button in
+                self?.viewModel.input.send(.subscription(.weekly))
+        }).store(in: &bag)
+        monthlyPlanButton.publisher().receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] button in
+                self?.viewModel.input.send(.subscription(.monthly))
+        }).store(in: &bag)
+        yearPlanButton.publisher().receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] button in
+                self?.viewModel.input.send(.subscription(.annual))
+        }).store(in: &bag)
+    }
+    
+    private func toggleWeeklyPlan() {
+        weekPlanButton.isSelected = true
+        weekPlanButton.isUserInteractionEnabled = false
+        monthlyPlanButton.isUserInteractionEnabled = true
+        yearPlanButton.isUserInteractionEnabled = true
         weekPlanButton.backgroundColor = UIColor(hex: 0x1E1D51)
-        
-        weekPlanButton.publisher().receive(on: DispatchQueue.main).sink(receiveValue: { [weak self] button in
-            self?.weekPlanButton.isSelected = true
-            self?.weekPlanButton.backgroundColor = UIColor(hex: 0x1E1D51)
-            self?.monthlyPlanButton.isSelected = false
-            self?.yearPlanButton.isSelected = false
-            self?.monthlyPlanButton.addCornerRadius(14)
-            self?.monthlyPlanButton.addBorder(1, UIColor(hex: 0x4E50BD33).withAlphaComponent(0.2))
-            self?.yearPlanButton.addCornerRadius(14)
-            self?.yearPlanButton.addBorder(1, UIColor(hex: 0x4E50BD33).withAlphaComponent(0.2))
-            self?.monthlyPlanButton.backgroundColor = UIColor(hex: 0x282961)
-            self?.yearPlanButton.backgroundColor = UIColor(hex: 0x282961)
-        })
-        .store(in: &bag)
-        
-        monthlyPlanButton.publisher().receive(on: DispatchQueue.main).sink(receiveValue: { [weak self] button in
-            self?.weekPlanButton.isSelected = false
-            self?.monthlyPlanButton.isSelected = true
-            self?.monthlyPlanButton.backgroundColor = UIColor(hex: 0x1E1D51)
-            self?.yearPlanButton.isSelected = false
-            self?.weekPlanButton.addCornerRadius(14)
-            self?.weekPlanButton.addBorder(1, UIColor(hex: 0x4E50BD33).withAlphaComponent(0.2))
-            self?.yearPlanButton.addCornerRadius(14)
-            self?.yearPlanButton.addBorder(1, UIColor(hex: 0x4E50BD33).withAlphaComponent(0.2))
-            self?.weekPlanButton.backgroundColor = UIColor(hex: 0x282961)
-            self?.yearPlanButton.backgroundColor = UIColor(hex: 0x282961)
-        })
-        .store(in: &bag)
-        
-        yearPlanButton.publisher().receive(on: DispatchQueue.main).sink(receiveValue: { [weak self] button in
-            self?.weekPlanButton.isSelected = false
-            self?.monthlyPlanButton.isSelected = false
-            self?.yearPlanButton.isSelected = true
-            self?.yearPlanButton.backgroundColor = UIColor(hex: 0x1E1D51)
-            self?.weekPlanButton.addCornerRadius(14)
-            self?.weekPlanButton.addBorder(1, UIColor(hex: 0x4E50BD33).withAlphaComponent(0.2))
-            self?.monthlyPlanButton.addCornerRadius(14)
-            self?.monthlyPlanButton.addBorder(1, UIColor(hex: 0x4E50BD33).withAlphaComponent(0.2))
-            self?.weekPlanButton.backgroundColor = UIColor(hex: 0x282961)
-            self?.monthlyPlanButton.backgroundColor = UIColor(hex: 0x282961)
-        })
-        .store(in: &bag)
+        monthlyPlanButton.isSelected = false
+        yearPlanButton.isSelected = false
+        monthlyPlanButton.addCornerRadius(14)
+        monthlyPlanButton.addBorder(1, UIColor(hex: 0x4E50BD33).withAlphaComponent(0.2))
+        yearPlanButton.addCornerRadius(14)
+        yearPlanButton.addBorder(1, UIColor(hex: 0x4E50BD33).withAlphaComponent(0.2))
+        monthlyPlanButton.backgroundColor = UIColor(hex: 0x282961)
+        yearPlanButton.backgroundColor = UIColor(hex: 0x282961)
+    }
+    private func toggleMonthlyPlan() {
+        weekPlanButton.isSelected = false
+        monthlyPlanButton.isSelected = true
+        monthlyPlanButton.isUserInteractionEnabled = false
+        weekPlanButton.isUserInteractionEnabled = true
+        yearPlanButton.isUserInteractionEnabled = true
+        monthlyPlanButton.backgroundColor = UIColor(hex: 0x1E1D51)
+        yearPlanButton.isSelected = false
+        weekPlanButton.addCornerRadius(14)
+        weekPlanButton.addBorder(1, UIColor(hex: 0x4E50BD33).withAlphaComponent(0.2))
+        yearPlanButton.addCornerRadius(14)
+        yearPlanButton.addBorder(1, UIColor(hex: 0x4E50BD33).withAlphaComponent(0.2))
+        weekPlanButton.backgroundColor = UIColor(hex: 0x282961)
+        yearPlanButton.backgroundColor = UIColor(hex: 0x282961)
+    }
+    private func toggleYearlyPlan() {
+        weekPlanButton.isSelected = false
+        monthlyPlanButton.isSelected = false
+        yearPlanButton.isSelected = true
+        yearPlanButton.isUserInteractionEnabled = false
+        weekPlanButton.isUserInteractionEnabled = true
+        monthlyPlanButton.isUserInteractionEnabled = true
+        yearPlanButton.backgroundColor = UIColor(hex: 0x1E1D51)
+        weekPlanButton.addCornerRadius(14)
+        weekPlanButton.addBorder(1, UIColor(hex: 0x4E50BD33).withAlphaComponent(0.2))
+        monthlyPlanButton.addCornerRadius(14)
+        monthlyPlanButton.addBorder(1, UIColor(hex: 0x4E50BD33).withAlphaComponent(0.2))
+        weekPlanButton.backgroundColor = UIColor(hex: 0x282961)
+        monthlyPlanButton.backgroundColor = UIColor(hex: 0x282961)
     }
 }

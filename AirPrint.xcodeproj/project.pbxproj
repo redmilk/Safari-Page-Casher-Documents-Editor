@@ -92,6 +92,7 @@
 		79B787F92750B429009D7655 /* HomeScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79B787F52750B429009D7655 /* HomeScreenViewController.xib */; };
 		79BBD8AB276319660087B1E0 /* ParticleEmitterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BBD8AA276319660087B1E0 /* ParticleEmitterView.swift */; };
 		79C362B0276CAB58001B1745 /* SharedActivityResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C362AF276CAB57001B1745 /* SharedActivityResults.swift */; };
+		79C7B2DF2772186A0058C759 /* CirclesActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C7B2DE2772186A0058C759 /* CirclesActivityIndicator.swift */; };
 		79D102A227717C9A00F3C4D5 /* SubscriptionPlanPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79D102A127717C9A00F3C4D5 /* SubscriptionPlanPopup.xib */; };
 		79D102A527717CC500F3C4D5 /* SubscriptionPlanPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D102A427717CC500F3C4D5 /* SubscriptionPlanPopup.swift */; };
 		79F23A6E2760A9710004475D /* PDFComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F23A6D2760A9710004475D /* PDFComposer.swift */; };
@@ -226,6 +227,7 @@
 		79B787F52750B429009D7655 /* HomeScreenViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeScreenViewController.xib; sourceTree = "<group>"; };
 		79BBD8AA276319660087B1E0 /* ParticleEmitterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticleEmitterView.swift; sourceTree = "<group>"; };
 		79C362AF276CAB57001B1745 /* SharedActivityResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedActivityResults.swift; sourceTree = "<group>"; };
+		79C7B2DE2772186A0058C759 /* CirclesActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CirclesActivityIndicator.swift; sourceTree = "<group>"; };
 		79D102A127717C9A00F3C4D5 /* SubscriptionPlanPopup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubscriptionPlanPopup.xib; sourceTree = "<group>"; };
 		79D102A427717CC500F3C4D5 /* SubscriptionPlanPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPlanPopup.swift; sourceTree = "<group>"; };
 		79F23A6D2760A9710004475D /* PDFComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFComposer.swift; sourceTree = "<group>"; };
@@ -481,6 +483,7 @@
 				79A5980A2762FDD400EB580A /* BlurredShadowView.swift */,
 				79BBD8AA276319660087B1E0 /* ParticleEmitterView.swift */,
 				79D102A327717CA000F3C4D5 /* SubscriptionPlanPopup */,
+				79C7B2DE2772186A0058C759 /* CirclesActivityIndicator.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -824,6 +827,7 @@
 				79189E00274672900023628A /* Logger.swift in Sources */,
 				794F73EE2746B36900B07410 /* KeyedDecodingContainer+Extensions.swift in Sources */,
 				7953DE292768B3A00003DF71 /* PreviewController.swift in Sources */,
+				79C7B2DF2772186A0058C759 /* CirclesActivityIndicator.swift in Sources */,
 				792D66152755394000063F4B /* PhotoalbumManager.swift in Sources */,
 				79B787F62750B429009D7655 /* HomeScreenCoordinator.swift in Sources */,
 				791CC43F276441B200813FAC /* ManageSubscriptionsCoordinator.swift in Sources */,

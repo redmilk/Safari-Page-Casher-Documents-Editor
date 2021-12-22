@@ -28,6 +28,8 @@ final class HomeScreenViewModel: UserSessionServiceProvidable,
         case getSelectionCount
         case didTapPrint
         case didTapSettings
+        case purchaseYearly
+        case restoreSubscription
     }
     
     let input = PassthroughSubject<HomeScreenViewModel.Action, Never>()
@@ -107,6 +109,7 @@ private extension HomeScreenViewModel {
             case .viewDidAppear:
                 self?.searchForSharedItems()
                 self?.trackEnterForeground()
+                self?.output.send(.giftContainer(isHidden: self?.purchases.isUserHasActiveSubscription ?? false))
             case .viewDisapear:
                 self?.trackingEnterForeground?.cancel()
             case .itemsDeleteConfirmed:
@@ -121,31 +124,30 @@ private extension HomeScreenViewModel {
                 break
             case .getSelectionCount:
                 self?.userSession.input.send(.getSelectionCount)
+            case .purchaseYearly:
+                self?.purchaseSubscriptionPlan()
+            case .restoreSubscription:
+                self?.restoreLastSubscription()
             }
-        })
-        .store(in: &bag)
+        }).store(in: &bag)
         
         coordinator.photoalbumOutput.receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] dataBox in
             self?.userSession.input.send(.addItems([dataBox]))
-        })
-        .store(in: &bag)
+        }).store(in: &bag)
         
         coordinator.cameraScanerOutput.sink(receiveValue: { [weak self] dataBoxList in
             self?.userSession.input.send(.addItems(dataBoxList))
-        })
-        .store(in: &bag)
+        }).store(in: &bag)
         
         coordinator.cloudFilesOutput.sink(receiveValue: { [weak self] dataBoxList in
             Logger.log("pdf dataBoxList count: \(dataBoxList.count.description)")
             self?.userSession.input.send(.addItems(dataBoxList))
-        })
-        .store(in: &bag)
+        }).store(in: &bag)
         
         coordinator.webpageOutput.sink(receiveValue: { [weak self] dataBoxList in
             self?.userSession.input.send(.addItems(dataBoxList))
-        })
-        .store(in: &bag)
+        }).store(in: &bag)
         
         userSession.output.sink(receiveValue: { [weak self] response in
             switch response {
@@ -156,14 +158,15 @@ private extension HomeScreenViewModel {
             case .selectedItems(let selectedItems): self?.output.send(.selectedItems(selectedItems))
             case .selectionCount(let selectionCount): self?.output.send(.selectionCount(selectionCount))
             }
-        })
-        .store(in: &bag)
+        }).store(in: &bag)
         
         purchases.startTimerForGiftOffer()
         purchases.output.sink(receiveValue: { [weak self] response in
             switch response {
             case .timerTick(let timerTickText):
                 self?.output.send(.timerTick(timerText: timerTickText))
+            case .hasActiveSubscriptions(let hasActiveSubscriptions):
+                self?.output.send(.giftContainer(isHidden: hasActiveSubscriptions))
             }
         }).store(in: &bag)
     }
@@ -177,44 +180,35 @@ private extension HomeScreenViewModel {
             }
     }
     
-    // MARK: - Purchase
-    
-    private func checkActiveSubscriptions() {
-        purchases.isActiveSubscription
-            .sink(receiveValue: { [weak self] isActive in
-                if let isActive = isActive {
-                    print("hasActive subscr")
-                    if isActive {
-                        //self?.purchase(.weekly)
-                    } else {
-                        self?.purchase(.annual)
-                    }
-                } else {
-                    print("isActive == nil")
-                }
-            })
-            .store(in: &bag)
+    private func purchaseSubscriptionPlan() {
+        let purchase = Purchase.annual
+        output.send(.loadingState(true))
+        purchases.buy(model: purchase).sink(receiveCompletion: { [weak self] completion in
+            self?.output.send(.loadingState(false))
+            switch completion {
+            case .failure(let purchaseError):
+                Logger.log(purchaseError.localizedDescription, type: .purchase)
+                Logger.logError(purchaseError)
+            case _: break
+            }
+        }, receiveValue: { [weak self] in
+            Logger.log("Successfully purchased annual subscription", type: .purchase)
+        }).store(in: &bag)
     }
     
-    private func purchase(_ plan: Purchase) {
-        purchases
-            .buy(model: plan)
-            .sink(receiveCompletion: { completion in
-                switch completion {
-                case .failure(let purchaseError):
-                    print(purchaseError.localizedDescription)
-                case _: break
-                }
-            }, receiveValue: { isSucceed in
-                if isSucceed {
-                    print("purchase: successfully purchased")
-                    
-                } else {
-                    print("purchase: something went wrong")
-                    
-                }
-            })
-            .store(in: &bag)
+    private func restoreLastSubscription() {
+        output.send(.loadingState(true))
+        purchases.restoreLastExpiredPurchase().sink(receiveCompletion: { [weak self] completion in
+            self?.output.send(.loadingState(false))
+            switch completion {
+            case .failure(let error):
+                Logger.log(error.localizedDescription, type: .error)
+                Logger.logError(error)
+            case _: break
+            }
+        }, receiveValue: { [weak self] isSuccess in
+            isSuccess ? Logger.log("Subscription was renewed successfully", type: .purchase) :
+            Logger.log("Restore subscription failed", type: .purchase)
+        }).store(in: &bag)
     }
-    
 }

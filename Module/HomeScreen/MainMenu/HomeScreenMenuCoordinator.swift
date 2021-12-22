@@ -19,17 +19,6 @@ protocol HomeScreenMenuCoordinatorProtocol {
 final class HomeScreenMenuCoordinator: CoordinatorProtocol, HomeScreenMenuCoordinatorProtocol {
     weak var navigationController: UINavigationController?
     var output = PassthroughSubject<HomeScreenMenuViewModel.Action, Never>()
-
-    private lazy var dimmView: UIView = {
-        let size = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height + 200)
-        let rect = CGRect(origin: .zero, size: size)
-        let view = UIView(frame: rect)
-        view.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.7516258912)
-        navigationController?.view.addSubview(view)
-        navigationController?.view.bringSubviewToFront(view)
-        view.alpha = 0
-        return view
-    }()
     
     init(navigationController: UINavigationController?) {
         self.navigationController = navigationController

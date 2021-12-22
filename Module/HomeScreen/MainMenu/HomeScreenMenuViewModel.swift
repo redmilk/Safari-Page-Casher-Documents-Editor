@@ -11,7 +11,7 @@ import Foundation
 import Combine
 import UIKit
 
-final class HomeScreenMenuViewModel {
+final class HomeScreenMenuViewModel: PurchesServiceProvidable {
     enum Action {
         case scanAction
         case printPhoto
@@ -19,6 +19,8 @@ final class HomeScreenMenuViewModel {
         case printWebPage
         case printFromClipboard
         case closeAction
+        case subscriptionBuy
+        case restoreSubscription
     }
     
     let input = PassthroughSubject<HomeScreenMenuViewModel.Action, Never>()
@@ -26,9 +28,6 @@ final class HomeScreenMenuViewModel {
     
     private let coordinator: HomeScreenMenuCoordinatorProtocol & CoordinatorProtocol
     private var bag = Set<AnyCancellable>()
-    private var isAlreadySubscribed: Bool {
-        return false
-    }
     
     private let subscriptionPopupContent = [
         (UIImage(named: "menu-subscription-photos")!,
@@ -58,7 +57,7 @@ final class HomeScreenMenuViewModel {
     
     private func handleActions() {
         input.sink(receiveValue: { [weak self] action in
-            guard let hasSubscription = self?.isAlreadySubscribed, hasSubscription else {
+            guard let hasSubscription = self?.purchases.isUserHasActiveSubscription, hasSubscription else {
                 var content: (UIImage, UIImage, String, String)?
                 switch action {
                 case .printDocument: content = self?.subscriptionPopupContent[1]
@@ -66,7 +65,10 @@ final class HomeScreenMenuViewModel {
                 case .printPhoto: content = self?.subscriptionPopupContent[0]
                 case .printWebPage: content = self?.subscriptionPopupContent[2]
                 case .closeAction, .scanAction: self?.coordinator.endWithSelectedAction(action)
-                case _: return
+                case .subscriptionBuy: self?.purchaseSubscriptionPlan()
+                case .restoreSubscription:
+                    self?.restoreLastSubscription()
+                case _: break
                 }
                 if let content = content {
                     self?.output.send(.showSubscriptionPopup(withContent: content))
@@ -76,5 +78,38 @@ final class HomeScreenMenuViewModel {
             self?.coordinator.endWithSelectedAction(action)
         })
         .store(in: &bag)
+    }
+    
+    private func purchaseSubscriptionPlan() {
+        let purchase = Purchase.weekly
+        output.send(.loadingState(true))
+        purchases.buy(model: purchase).sink(receiveCompletion: { [weak self] completion in
+            self?.output.send(.loadingState(false))
+            switch completion {
+            case .failure(let purchaseError):
+                Logger.log(purchaseError.localizedDescription, type: .purchase)
+                Logger.logError(purchaseError)
+            case _: break
+            }
+        }, receiveValue: { [weak self] in
+            self?.output.send(.hideSubscriptionPopup)
+        }).store(in: &bag)
+    }
+    
+    private func restoreLastSubscription() {
+        output.send(.loadingState(true))
+        purchases.restoreLastExpiredPurchase().sink(receiveCompletion: { [weak self] completion in
+            self?.output.send(.loadingState(false))
+            switch completion {
+            case .failure(let error):
+                Logger.log(error.localizedDescription, type: .error)
+                Logger.logError(error)
+            case _: break
+            }
+        }, receiveValue: { [weak self] isSuccess in
+            isSuccess ? Logger.log("Subscription was renewed successfully", type: .purchase) :
+            Logger.log("Restore subscription failed", type: .purchase)
+            self?.output.send(.hideSubscriptionPopup)
+        }).store(in: &bag)
     }
 }

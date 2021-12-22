@@ -10,16 +10,17 @@
 import UIKit
 import Combine
 
-final class HomeScreenViewController: UIViewController {
+final class HomeScreenViewController: UIViewController, ActivityIndicatorPresentable {
     enum State {
         case allCurrentData([PrintableDataBox])
         case addedItems([PrintableDataBox])
         case deletedItems([PrintableDataBox])
         case selectedItems([PrintableDataBox])
-        
+        case giftContainer(isHidden: Bool)
         case selectionCount(Int)
         case selectionMode
         case exitSelectionMode
+        case loadingState(Bool)
         case empty
         case timerTick(timerText: String)
     }
@@ -34,8 +35,14 @@ final class HomeScreenViewController: UIViewController {
     @IBOutlet private weak var subscriptionDiscountLabel: UILabel!
     @IBOutlet private weak var subscriptionCloseButton: UIButton!
     @IBOutlet private weak var giftContainerHeightConstraint: NSLayoutConstraint!
+    
+    @IBOutlet private weak var giftContainerTopSpacing: NSLayoutConstraint!
     @IBOutlet private weak var giftTimerContainer: UIView!
     @IBOutlet private weak var giftTimerLabel: UILabel!
+    @IBOutlet private weak var restorePurchaseButton: UIButton!
+    @IBOutlet private weak var purchaseTermsButton: UIButton!
+    @IBOutlet private weak var privacyButton: UIButton!
+    
     /// Filled state controls
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var layoutChangeButton: UIButton!
@@ -65,37 +72,12 @@ final class HomeScreenViewController: UIViewController {
     @IBOutlet private weak var dialogDeleteButton: UIButton!
     @IBOutlet private weak var dialogCancelButton: UIButton!
     
-    private lazy var dashedLineLayer: CAShapeLayer = {
-        let bounds = emptyStateContainer.bounds
-        let gradient = CAGradientLayer()
-        gradient.frame = bounds
-        gradient.type = .conic
-        gradient.colors = [UIColor(hex: 0x04EEF2).cgColor, UIColor(hex: 0x049FFC).cgColor, UIColor(hex: 0x9848FF).cgColor, UIColor(hex: 0x04EEF2).cgColor]
-        let layer = CAShapeLayer()
-        layer.path = UIBezierPath(roundedRect: bounds, byRoundingCorners: .allCorners, cornerRadii: CGSize(width: StylingConstants.cornerRadiusDefault, height: StylingConstants.cornerRadiusDefault)).cgPath
-        layer.strokeColor = UIColor.black.cgColor
-        layer.fillColor = nil
-        layer.lineWidth = 5
-        layer.lineDashPattern = [4, 7]
-        gradient.mask = layer
-        emptyStateContainer.layer.addSublayer(gradient)
-        return layer
-    }()
-    
-    private lazy var dashedLineAnimation: CABasicAnimation = {
-        let animation = CABasicAnimation(keyPath: "lineDashPhase")
-        animation.fromValue = 0
-        animation.toValue = dashedLineLayer.lineDashPattern?.reduce(0) { $0 - $1.intValue } ?? 0
-        animation.duration = 1
-        animation.repeatCount = .infinity
-        animation.isRemovedOnCompletion = false
-        return animation
-    }()
-    
     private lazy var collectionManager = HomeCollectionManager(collectionView: collectionView)
     private let viewModel: HomeScreenViewModel
     private var bag = Set<AnyCancellable>()
-    
+    private var dashedLineLayer: CAShapeLayer?
+    var gradient: CAGradientLayer?
+
     init(viewModel: HomeScreenViewModel) {
         self.viewModel = viewModel
         super.init(nibName: String(describing: HomeScreenViewController.self), bundle: nil)
@@ -110,27 +92,24 @@ final class HomeScreenViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         handleStates()
-        configureView()
         applyStyling()
         collectionManager.input.send(.configure)
         viewModel.configureViewModel()
+        configureView()
     }
     
     override var prefersStatusBarHidden: Bool {
         return true
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        dashedLineLayer.add(dashedLineAnimation, forKey: "dashed-line")
-        viewModel.input.send(.viewDidAppear)
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
-    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        viewModel.input.send(.viewDidAppear)
+        addDashedLineAnimation()
+    }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
@@ -168,6 +147,10 @@ private extension HomeScreenViewController {
                 self?.selectionModeInfoLabel.text = "Selected items: \(selectionCount)"
             case .timerTick(let timerText):
                 self?.giftTimerLabel.text = timerText
+            case .loadingState(let isLoading):
+                isLoading ? self?.startActivityAnimation() : self?.stopActivityAnimation()
+            case .giftContainer(let isHidden):
+                self?.updateGiftContainer(isHidden)
             }
         }).store(in: &bag)
     }
@@ -221,14 +204,19 @@ private extension HomeScreenViewController {
         
         subscriptionMenuOpenButton.publisher()
             .sink(receiveValue: { [weak self] _ in
+                self?.subscriptionCloseButton.animateFadeIn(2, delay: 5, finalAlpha: 0.6)
                 self?.subscriptionContainer.isHidden.toggle()
                 self?.addParticles()
             }).store(in: &bag)
         
         subscriptionContinueButton.publisher().sink(receiveValue: { [weak self] _ in
-            /// proceed subscription
+            self?.viewModel.input.send(.purchaseYearly)
             self?.subscriptionContainer.isHidden.toggle()
             self?.subscriptionContainer.viewWithTag(1)!.removeFromSuperview()
+        }).store(in: &bag)
+        
+        restorePurchaseButton.publisher().sink(receiveValue: { [weak self] _ in
+            self?.viewModel.input.send(.restoreSubscription)
         }).store(in: &bag)
         
         subscriptionCloseButton.publisher()
@@ -287,7 +275,6 @@ private extension HomeScreenViewController {
         emptyStateContainer.isHidden = hasItems
         printButton.isEnabled = hasItems
         giftContentView.isHidden = hasItems
-        ///hasItems ? dashedLineLayer.removeAllAnimations() : dashedLineLayer.add(dashedLineAnimation, forKey: "dashed-line")
     }
     
     private func changeViewStateBasedOnSelectionMode(isInSelectionMode: Bool) {
@@ -300,6 +287,15 @@ private extension HomeScreenViewController {
     
     private func setHiddenClarifyDeleteDialog(_ isHidden: Bool) {
         dialogContainer.isHidden = isHidden
+    }
+    
+    private func updateGiftContainer(_ isHidden: Bool) {
+        giftContainerHeightConstraint.constant = isHidden ? 0 : 56
+        giftContainerTopSpacing.constant = isHidden ? 0 : 15
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.2, options: [.curveEaseIn], animations: { [weak self] in
+            self?.mainContainer.layoutIfNeeded()
+        }, completion: nil)
+        addDashedLineAnimation()
     }
     
     private func applyStyling() {
@@ -318,7 +314,7 @@ private extension HomeScreenViewController {
         subscriptionMenuContainer.addCornerRadius(30)
         subscriptionMenuContainer.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         subscriptionDiscountLabel.attributedText = makeStrikeThroughText("89.99")
-        subscriptionMenuContainer.dropShadow(color: .black, opacity: 0.6, offSet: .zero, radius: 30, scale: true)
+        subscriptionMenuContainer.dropShadow(color: .black, opacity: 0.8, offSet: .zero, radius: 30, scale: true)
         dialogButtonsContainer.dropShadow(color: .black, opacity: 0.6, offSet: .zero, radius: 30, scale: true)
         giftTimerContainer.addGradientBorder(to: giftTimerContainer, radius: 16, width: 2, colors: [UIColor(hex: 0x04FFF0), UIColor(hex: 0x0487FF), UIColor(hex: 0x9948FF)])
     }
@@ -329,11 +325,44 @@ private extension HomeScreenViewController {
         emitter.alpha = 0.6
         emitter.isUserInteractionEnabled = false
         emitter.translatesAutoresizingMaskIntoConstraints = false
-        subscriptionMenuContainer.insertSubview(emitter, at: 0)
-        emitter.topAnchor.constraint(equalTo: subscriptionMenuContainer.topAnchor).isActive = true
-        emitter.bottomAnchor.constraint(equalTo: subscriptionMenuContainer.bottomAnchor).isActive = true
-        emitter.leadingAnchor.constraint(equalTo: subscriptionMenuContainer.leadingAnchor).isActive = true
-        emitter.trailingAnchor.constraint(equalTo: subscriptionMenuContainer.trailingAnchor).isActive = true
+        subscriptionContainer.insertSubview(emitter, at: 0)
+        emitter.topAnchor.constraint(equalTo: subscriptionContainer.topAnchor).isActive = true
+        emitter.heightAnchor.constraint(equalToConstant: subscriptionContainer.bounds.height - subscriptionMenuContainer.bounds.height).isActive = true
+        emitter.leadingAnchor.constraint(equalTo: subscriptionContainer.leadingAnchor).isActive = true
+        emitter.trailingAnchor.constraint(equalTo: subscriptionContainer.trailingAnchor).isActive = true
+    }
+    
+    private func addDashedLineAnimation() {
+        self.dashedLineLayer?.removeFromSuperlayer()
+        self.gradient?.removeFromSuperlayer()
+        self.gradient = CAGradientLayer()
+        let dashedLineLayer: CAShapeLayer = {
+            let bounds = emptyStateContainer.bounds
+            gradient?.frame = bounds
+            gradient?.type = .conic
+            gradient?.colors = [UIColor(hex: 0x04EEF2).cgColor, UIColor(hex: 0x049FFC).cgColor, UIColor(hex: 0x9848FF).cgColor, UIColor(hex: 0x04EEF2).cgColor]
+            let layer = CAShapeLayer()
+            layer.path = UIBezierPath(roundedRect: bounds, byRoundingCorners: .allCorners, cornerRadii: CGSize(width: StylingConstants.cornerRadiusDefault, height: StylingConstants.cornerRadiusDefault)).cgPath
+            layer.strokeColor = UIColor.black.cgColor
+            layer.fillColor = nil
+            layer.lineWidth = 5
+            layer.lineDashPattern = [4, 7]
+            gradient?.mask = layer
+            emptyStateContainer.layer.addSublayer(gradient!)
+            return layer
+        }()
+        self.dashedLineLayer = dashedLineLayer
+        
+        let dashedLineAnimation: CABasicAnimation = {
+            let animation = CABasicAnimation(keyPath: "lineDashPhase")
+            animation.fromValue = 0
+            animation.toValue = dashedLineLayer.lineDashPattern?.reduce(0) { $0 - $1.intValue } ?? 0
+            animation.duration = 1
+            animation.repeatCount = .infinity
+            animation.isRemovedOnCompletion = false
+            return animation
+        }()
+        dashedLineLayer.add(dashedLineAnimation, forKey: "dashed-line")
     }
 }
 
