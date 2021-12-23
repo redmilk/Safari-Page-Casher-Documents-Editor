@@ -19,12 +19,12 @@ final class HomeScreenMenuViewController: UIViewController, ActivityIndicatorPre
         case loadingState(_ isLoading: Bool)
     }
     @IBOutlet weak var buttonsContainerView: UIView!
-    @IBOutlet weak var cancelButton: UIButton!
-    @IBOutlet weak var scanDocumentButton: UIButton!
-    @IBOutlet weak var printPhotoButton: UIButton!
-    @IBOutlet weak var printDocumentButton: UIButton!
-    @IBOutlet weak var printWebPage: UIButton!
-    @IBOutlet weak var printFromClipboard: UIButton!
+    @IBOutlet weak var cancelButton: TapAnimatedButton!
+    @IBOutlet weak var scanDocumentButton: TapAnimatedButton!
+    @IBOutlet weak var printPhotoButton: TapAnimatedButton!
+    @IBOutlet weak var printDocumentButton: TapAnimatedButton!
+    @IBOutlet weak var printWebPage: TapAnimatedButton!
+    @IBOutlet weak var printFromClipboard: TapAnimatedButton!
     @IBOutlet weak var subscriptionPriceLabel: UILabel!
     @IBOutlet weak var subscriptionPopup: UIView!
     @IBOutlet weak var subscriptionButtonsContainer: UIView!
@@ -39,7 +39,8 @@ final class HomeScreenMenuViewController: UIViewController, ActivityIndicatorPre
     
     private let viewModel: HomeScreenMenuViewModel
     private var bag = Set<AnyCancellable>()
-    
+    private var purchaseConntinueAnimationsCancelable: AnyCancellable?
+
     init(viewModel: HomeScreenMenuViewModel) {
         self.viewModel = viewModel
         super.init(nibName: String(describing: HomeScreenMenuViewController.self), bundle: nil)
@@ -54,9 +55,18 @@ final class HomeScreenMenuViewController: UIViewController, ActivityIndicatorPre
         super.viewDidLoad()
         configureView()
         applyStyling()
+        buttonsContainerView.isHidden = true
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        let runLoopMode = CFRunLoopMode.commonModes.rawValue
+        CFRunLoopPerformBlock(CFRunLoopGetMain(), runLoopMode) {
+            UIView.transition(with: self.view, duration: 0.5, options: .transitionFlipFromTop, animations: {
+                self.buttonsContainerView.isHidden = false
+            })
+        }
+        CFRunLoopWakeUp(CFRunLoopGetMain())
     }
     override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         firstBlurredShadowView.animationDuration = 2000
         secondBlurredShadowView.animationDuration = 2000
         secondBlurredShadowView.setup()
@@ -69,24 +79,17 @@ final class HomeScreenMenuViewController: UIViewController, ActivityIndicatorPre
 private extension HomeScreenMenuViewController {
     func configureView() {
         subscriptionPriceLabel.text = viewModel.purchases.getPriceForPurchase(model: .weekly)
+        
         viewModel.output.sink(receiveValue: { [weak self] state in
             switch state {
             case .showSubscriptionPopup(let content):
-                self?.subscriptionPopupImageView.image = content.0
-                self?.subscriptionContinueButton.setBackgroundImage(content.1, for: .normal)
-                self?.subscriptionTitleFirstLine.text = content.2
-                self?.subscriptionTitleSecondLine.text = content.3
-                self?.subscriptionPopup.isHidden = false
-                self?.subscriptionContinueButton.dropShadow(color: .white, opacity: 0.0, offSet: CGSize(width: 0, height: 0), radius: 20, scale: true)
-                self?.subscriptionContinueButton.animateBounceAndShadow()
-                self?.subscriptionCloseButton.animateFadeIn(2, delay: 4, finalAlpha: 0.6)
+                self?.showSubscriptionsPopup(with: content)
             case .loadingState(let isLoading):
                 isLoading ?
                 self?.startActivityAnimation() :
                 self?.stopActivityAnimation()
             case .hideSubscriptionPopup:
-                self?.subscriptionPopup.isHidden = true
-                self?.subscriptionContinueButton.layer.removeAllAnimations()
+                self?.closeSubscriptionsPopup()
             }
         }).store(in: &bag)
         scanDocumentButton.publisher().sink(receiveValue: { [weak self] _ in
@@ -99,7 +102,12 @@ private extension HomeScreenMenuViewController {
             self?.viewModel.input.send(.printDocument)
         }).store(in: &bag)
         cancelButton.publisher().sink(receiveValue: { [weak self] _ in
-            self?.viewModel.input.send(.closeAction)
+            guard let self = self else { return }
+            UIView.transition(with: self.view, duration: 0.5, options: .transitionFlipFromBottom, animations: {
+                self.buttonsContainerView.isHidden = true
+            }, completion: { _ in
+                self.viewModel.input.send(.closeAction)
+            })
         }).store(in: &bag)
         printWebPage.publisher().sink(receiveValue: { [weak self] _ in
             self?.viewModel.input.send(.printWebPage)
@@ -108,8 +116,7 @@ private extension HomeScreenMenuViewController {
             self?.viewModel.input.send(.printFromClipboard)
         }).store(in: &bag)
         subscriptionCloseButton.publisher().sink(receiveValue: { [weak self] _ in
-            self?.subscriptionPopup.isHidden = true
-            self?.viewModel.input.send(.closeAction)
+            self?.closeSubscriptionsPopup()
         }).store(in: &bag)
         subscriptionContinueButton.publisher().sink(receiveValue: { [weak self] _ in
             self?.viewModel.input.send(.subscriptionBuy)
@@ -117,6 +124,32 @@ private extension HomeScreenMenuViewController {
         restoreSubscriptionButton.publisher().sink(receiveValue: { [weak self] _ in
             self?.viewModel.input.send(.restoreSubscription)
         }).store(in: &bag)
+    }
+    
+    func showSubscriptionsPopup(with content: (UIImage, UIImage, String, String)) {
+        buttonsContainerView.isHidden = true
+        subscriptionPopupImageView.image = content.0
+        subscriptionContinueButton.setBackgroundImage(content.1, for: .normal)
+        subscriptionTitleFirstLine.text = content.2
+        subscriptionTitleSecondLine.text = content.3
+        subscriptionContinueButton.dropShadow(color: .white, opacity: 0.0, offSet: CGSize(width: 0, height: 0), radius: 15, scale: true)
+        purchaseConntinueAnimationsCancelable = subscriptionContinueButton.animateBounceAndShadow()
+        subscriptionCloseButton.animateFadeIn(1, delay: 4, finalAlpha: 0.6)
+        
+        UIView.transition(with: self.view, duration: 0.7, options: .transitionCurlDown, animations: { [weak self] in
+            self?.subscriptionPopup.isHidden = false
+        })
+    }
+    
+    func closeSubscriptionsPopup() {
+        subscriptionPopup.isHidden = true
+        purchaseConntinueAnimationsCancelable?.cancel()
+        subscriptionContinueButton.layer.removeAllAnimations()
+        UIView.transition(with: self.view, duration: 0.7, options: .transitionCurlUp, animations: { [weak self] in
+            self?.subscriptionPopup.isHidden = true
+        }, completion: { [weak self] _ in
+            self?.viewModel.input.send(.closeAction)
+        })
     }
     
     func applyStyling() {

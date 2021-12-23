@@ -7,8 +7,10 @@
 
 import UIKit.UIView
 import QuartzCore
+import Combine
 
 protocol XibDesignable: AnyObject { }
+extension UIView: XibDesignable { }
 extension XibDesignable where Self: UIView {
     static func instantiateFromXib() -> Self {
         let dynamicMetatype = Self.self
@@ -20,7 +22,32 @@ extension XibDesignable where Self: UIView {
         return view
     }
 }
-extension UIView: XibDesignable { }
+
+// MARK: - Init from Nib
+extension UIView {
+    func loadViewFromNib(nibName: String) -> UIView {
+        if nibExists(name: nibName) {
+            return getNibForClass(named: nibName)
+        } else if let superClass = superclass.self {
+            let parentName = String(describing: superClass)
+            if nibExists(name: parentName) {
+                return getNibForClass(named: parentName)
+            }
+        }
+        fatalError("\"\(nibName).xib\" does not exist")
+    }
+    
+    func nibExists(name: String) -> Bool {
+        !(Bundle.main.path(forResource: name, ofType: "nib") == nil)
+    }
+    
+    func getNibForClass(named nibName: String) -> UIView {
+        let bundle = Bundle(for: Self.self)
+        let nib = UINib(nibName: nibName, bundle: bundle)
+        let view = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
+        return view
+    }
+}
 
 // MARK: - Constraints
 extension UIView {
@@ -30,6 +57,17 @@ extension UIView {
         trailingAnchor.constraint(equalTo: superView.trailingAnchor).isActive = true
         topAnchor.constraint(equalTo: superView.topAnchor).isActive = true
         bottomAnchor.constraint(equalTo: superView.bottomAnchor).isActive = true
+    }
+    
+    func addAndFill(_ subview: UIView) {
+        subview.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(subview)
+        self.addConstraints([
+            NSLayoutConstraint(item: subview, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: subview, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: subview, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: subview, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1, constant: 0)
+        ])
     }
 }
 
@@ -70,12 +108,12 @@ extension UIView: InteractionFeedbackService {
         layer.shadowOpacity = 0.5
         layer.shadowOffset = CGSize(width: -1, height: 1)
         layer.shadowRadius = 1
-        
         layer.shadowPath = UIBezierPath(rect: bounds).cgPath
         layer.shouldRasterize = true
         layer.rasterizationScale = scale ? UIScreen.main.scale : 1
     }
-    func dropShadow(color: UIColor, opacity: Float = 0.5, offSet: CGSize, radius: CGFloat = 1, scale: Bool = true) {
+    func dropShadow(color: UIColor, opacity: Float = 0.5,
+                    offSet: CGSize, radius: CGFloat = 1, scale: Bool = true) {
         layer.masksToBounds = false
         layer.shadowColor = color.cgColor
         layer.shadowOpacity = opacity
@@ -95,19 +133,33 @@ extension UIView: InteractionFeedbackService {
         animation.beginTime = CACurrentMediaTime() + 5
         layer.add(animation, forKey: "shake")
     }
-    func animateBounceAndShadow() {
-        Timer.scheduledTimer(withTimeInterval: 3, repeats: true) { [weak self] _ in
-            self?.transform = CGAffineTransform.init(scaleX: 0.9, y: 0.9)
-            UIView.animate(withDuration: 1.5, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 15, options: [.curveEaseInOut, .allowUserInteraction], animations: {
-                self?.transform = .identity
-            }, completion: nil)
-            self?.generateInteractionFeedback()
-            let animation = CABasicAnimation(keyPath: "shadowOpacity")
-            animation.fromValue = 1.0
-            animation.toValue = 0.0
-            animation.duration = 0.3
-            self?.layer.add(animation, forKey: animation.keyPath)
-        }
+    func animateBounceAndShadow() -> AnyCancellable? {
+        var cancelable: AnyCancellable?
+        cancelable = Timer.publish(every: 3, tolerance: .none, on: RunLoop.main, in: .common, options: nil)
+            .autoconnect()
+            .eraseToAnyPublisher()
+            .sink(receiveValue: { [weak self] _ in
+                self?.transform = CGAffineTransform.init(scaleX: 0.9, y: 0.9)
+                UIView.animate(withDuration: 1.5, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 15, options: [.curveEaseInOut, .allowUserInteraction], animations: {
+                    self?.transform = .identity
+                }, completion: nil)
+                self?.generateInteractionFeedback()
+                let animation = CABasicAnimation(keyPath: "shadowOpacity")
+                animation.fromValue = 1.0
+                animation.toValue = 0.0
+                animation.duration = 0.3
+                self?.layer.add(animation, forKey: animation.keyPath)
+            })
+        return cancelable
+    }
+    func animateShadowGlow() {
+        let animation = CABasicAnimation(keyPath: "shadowRadius")
+        animation.fromValue = 0.0
+        animation.toValue = 30.0
+        animation.duration = 0.5
+        animation.autoreverses = true
+        animation.repeatCount = .infinity
+        self.layer.add(animation, forKey: animation.keyPath)
     }
     func animateFadeIn(_ duration: TimeInterval, delay: TimeInterval = 0, finalAlpha: CGFloat = 1.0) {
         self.alpha = 0

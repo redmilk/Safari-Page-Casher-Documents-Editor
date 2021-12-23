@@ -13,7 +13,7 @@ import Combine
 
 // MARK: - ManageSubscriptionsViewController
 
-final class ManageSubscriptionsViewController: UIViewController, ActivityIndicatorPresentable {
+final class ManageSubscriptionsViewController: UIViewController, ActivityIndicatorPresentable, UIGestureRecognizerDelegate {
     enum State {
         case currentSubscriptionPlan(Purchase)
         case loadingState(Bool)
@@ -75,6 +75,17 @@ private extension ManageSubscriptionsViewController {
     }
     
     func configureView() {
+        let backButton = UIBarButtonItem(
+            image: UIImage(named: "settings-navigation-back")!,
+            style: .plain,
+            target: navigationController,
+            action: nil)
+        backButton.publisher().sink(receiveValue: { [weak self] _ in
+            self?.navigationController?.popViewController(animated: true)
+        }).store(in: &bag)
+        navigationItem.leftBarButtonItem = backButton
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+        
         let textAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationController?.navigationBar.titleTextAttributes = textAttributes
         navigationController?.navigationBar.tintColor = .white

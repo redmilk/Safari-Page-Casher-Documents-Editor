@@ -14,7 +14,7 @@ import WebKit
 
 // MARK: - MiscSettingsModulesViewController
 
-final class MiscSettingsModulesViewController: UIViewController {
+final class MiscSettingsModulesViewController: UIViewController, UIGestureRecognizerDelegate {
     enum State {
         case configure(isPrivacyPolicy: Bool)
     }
@@ -70,6 +70,17 @@ private extension MiscSettingsModulesViewController {
     }
     
     func configureView() {
+        let backButton = UIBarButtonItem(
+            image: UIImage(named: "settings-navigation-back")!,
+            style: .plain,
+            target: navigationController,
+            action: nil)
+        backButton.publisher().sink(receiveValue: { [weak self] _ in
+            self?.navigationController?.popViewController(animated: true)
+        }).store(in: &bag)
+        navigationItem.leftBarButtonItem = backButton
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+        
         let textAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationController?.navigationBar.titleTextAttributes = textAttributes
         navigationController?.navigationBar.tintColor = .white

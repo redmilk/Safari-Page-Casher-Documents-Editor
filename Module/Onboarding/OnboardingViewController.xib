@@ -58,7 +58,7 @@
                                 <constraint firstAttribute="width" constant="215" id="x9o-uT-yZ8"/>
                             </constraints>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1al-Op-cFy" customClass="BlurredShadowView2" customModule="AirPrint" customModuleProvider="target">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1al-Op-cFy" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="897" width="215" height="215"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
@@ -96,7 +96,7 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bLG-UY-Yur">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bLG-UY-Yur" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
                             <rect key="frame" x="20" y="700.66666666666663" width="335" height="60"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="335" id="5Jy-m5-3Zv"/>
@@ -134,7 +134,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rEn-B3-bDH" userLabel="DimmView">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jEf-CW-4lt" userLabel="Close">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jEf-CW-4lt" userLabel="Close" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
                             <rect key="frame" x="320" y="40" width="35" height="35"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="jEf-CW-4lt" secondAttribute="height" multiplier="1:1" id="OVP-9U-tEy"/>
@@ -188,7 +188,7 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QX9-jb-pnZ">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QX9-jb-pnZ" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
                             <rect key="frame" x="20" y="181" width="335" height="60"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="335" id="JsO-pY-DG8"/>
@@ -225,7 +225,7 @@
                         <stackView opaque="NO" contentMode="scaleToFill" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="e3H-Ud-8b9">
                             <rect key="frame" x="84" y="301" width="207" height="29"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZmC-pI-o6v">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZmC-pI-o6v" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="38" height="29"/>
                                     <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="12"/>
                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -233,7 +233,7 @@
                                         <color key="titleColor" red="0.33623573179999999" green="0.67496186489999999" blue="0.94124519819999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     </state>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t4T-6z-f4y">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t4T-6z-f4y" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
                                     <rect key="frame" x="78" y="0.0" width="44" height="29"/>
                                     <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="12"/>
                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -241,7 +241,7 @@
                                         <color key="titleColor" red="0.33623573179999999" green="0.67496186489999999" blue="0.94124519819999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     </state>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1DZ-cL-FFg">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1DZ-cL-FFg" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
                                     <rect key="frame" x="162" y="0.0" width="45" height="29"/>
                                     <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="12"/>
                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -280,7 +280,7 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4fl-SC-e0C" userLabel="Close">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4fl-SC-e0C" userLabel="Close" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
                             <rect key="frame" x="320" y="59.333333333333343" width="35" height="35"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="35" id="EDw-mI-sL6"/>
@@ -367,7 +367,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3TG-B9-fSm" userLabel="PlanSelectionMenuContainer">
                             <rect key="frame" x="0.0" y="406.66666666666674" width="375" height="405.33333333333326"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="clJ-dT-Bbf" userLabel="FirstButton">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="clJ-dT-Bbf" userLabel="FirstButton" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
                                     <rect key="frame" x="21.333333333333343" y="20" width="332.33333333333326" height="72"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="72" id="x2O-W0-sAd"/>
@@ -427,7 +427,7 @@
                                         <constraint firstItem="CI3-Fa-y0U" firstAttribute="leading" secondItem="KPq-aZ-bta" secondAttribute="leading" constant="48" id="xwO-gU-rAh"/>
                                     </constraints>
                                 </view>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZSQ-2v-glz" userLabel="SecondButton">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZSQ-2v-glz" userLabel="SecondButton" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
                                     <rect key="frame" x="21.333333333333343" y="121.99999999999994" width="332.33333333333326" height="72"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="72" id="j6z-pM-FFb"/>
@@ -496,7 +496,7 @@
                                         <constraint firstItem="24M-xr-oHY" firstAttribute="centerY" secondItem="BdR-Zh-Bsd" secondAttribute="centerY" id="tVA-wV-46O"/>
                                     </constraints>
                                 </view>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4zd-Dm-qft" userLabel="Continue">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4zd-Dm-qft" userLabel="Continue" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
                                     <rect key="frame" x="12.666666666666657" y="213.99999999999994" width="350" height="60"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="350" id="KDJ-Wg-1oR"/>
@@ -533,7 +533,7 @@
                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="qvF-OJ-uiT">
                                     <rect key="frame" x="84" y="343.99999999999994" width="207" height="29"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tbI-iQ-i2C">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tbI-iQ-i2C" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="38" height="29"/>
                                             <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="12"/>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -541,7 +541,7 @@
                                                 <color key="titleColor" red="0.33623573179999999" green="0.67496186489999999" blue="0.94124519819999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             </state>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UTJ-dG-zTu">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UTJ-dG-zTu" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
                                             <rect key="frame" x="78" y="0.0" width="44" height="29"/>
                                             <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="12"/>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -549,7 +549,7 @@
                                                 <color key="titleColor" red="0.33623573179999999" green="0.67496186489999999" blue="0.94124519819999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             </state>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x0G-tp-yTy">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x0G-tp-yTy" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
                                             <rect key="frame" x="162" y="0.0" width="45" height="29"/>
                                             <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="12"/>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>

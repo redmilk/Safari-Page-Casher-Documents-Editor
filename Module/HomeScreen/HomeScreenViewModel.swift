@@ -109,7 +109,8 @@ private extension HomeScreenViewModel {
             case .viewDidAppear:
                 self?.searchForSharedItems()
                 self?.trackEnterForeground()
-                self?.output.send(.giftContainer(isHidden: self?.purchases.isUserHasActiveSubscription ?? false))
+                guard let isUserHasActiveSubscriptions = self?.purchases.isUserHasActiveSubscription else { return}
+                self?.output.send(.giftContainer(isHidden: isUserHasActiveSubscriptions))
             case .viewDisapear:
                 self?.trackingEnterForeground?.cancel()
             case .itemsDeleteConfirmed:

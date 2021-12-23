@@ -30,53 +30,53 @@ final class HomeScreenViewController: UIViewController, ActivityIndicatorPresent
     @IBOutlet private weak var mainContainer: UIView!
     @IBOutlet private weak var subscriptionContainer: UIView!
     @IBOutlet private weak var subscriptionMenuContainer: UIView!
-    @IBOutlet private weak var subscriptionContinueButton: UIButton!
-    @IBOutlet private weak var subscriptionMenuOpenButton: UIButton!
+    @IBOutlet private weak var subscriptionContinueButton: TapAnimatedButton!
+    @IBOutlet private weak var subscriptionMenuOpenButton: TapAnimatedButton!
     @IBOutlet private weak var subscriptionDiscountLabel: UILabel!
-    @IBOutlet private weak var subscriptionCloseButton: UIButton!
+    @IBOutlet private weak var subscriptionCloseButton: TapAnimatedButton!
     @IBOutlet private weak var giftContainerHeightConstraint: NSLayoutConstraint!
-    
     @IBOutlet private weak var giftContainerTopSpacing: NSLayoutConstraint!
     @IBOutlet private weak var giftTimerContainer: UIView!
     @IBOutlet private weak var giftTimerLabel: UILabel!
-    @IBOutlet private weak var restorePurchaseButton: UIButton!
-    @IBOutlet private weak var purchaseTermsButton: UIButton!
-    @IBOutlet private weak var privacyButton: UIButton!
-    
+    @IBOutlet private weak var restorePurchaseButton: TapAnimatedButton!
+    @IBOutlet private weak var purchaseTermsButton: TapAnimatedButton!
+    @IBOutlet private weak var privacyButton: TapAnimatedButton!
     /// Filled state controls
     @IBOutlet private weak var collectionView: UICollectionView!
-    @IBOutlet private weak var layoutChangeButton: UIButton!
-    @IBOutlet private weak var plusButtonSmall: UIButton!
-    @IBOutlet private weak var checkmarkButton: UIButton!
-    @IBOutlet private weak var deleteButton: UIButton!
+    @IBOutlet private weak var layoutChangeButton: TapAnimatedButton!
+    @IBOutlet private weak var plusButtonSmall: TapAnimatedButton!
+    @IBOutlet private weak var checkmarkButton: TapAnimatedButton!
+    @IBOutlet private weak var deleteButton: TapAnimatedButton!
     /// Empty state controls
     @IBOutlet private weak var emptyStateContainer: UIView!
     @IBOutlet private weak var plusButtonDescriptionContainer: UIStackView!
-    @IBOutlet private weak var plusButton: UIButton!
+    @IBOutlet private weak var plusButton: TapAnimatedButton!
     @IBOutlet private weak var giftContentView: UIView!
     /// Common state controls
-    @IBOutlet private weak var printButton: UIButton!
+    @IBOutlet private weak var printButton: TapAnimatedButton!
     @IBOutlet private weak var navigationBarExtenderView: UIView!
-    @IBOutlet private weak var settingsButton: UIButton!
+    @IBOutlet private weak var settingsButton: TapAnimatedButton!
     @IBOutlet private weak var bottomBarContainer: UIView!
     /// Selection mode
     @IBOutlet private weak var deleteButtonsContainer: UIView!
-    @IBOutlet private weak var deleteAllButton: UIButton!
-    @IBOutlet private weak var deleteSelectedButton: UIButton!
-    @IBOutlet private weak var closeSelectionModeButton: UIButton!
+    @IBOutlet private weak var deleteAllButton: TapAnimatedButton!
+    @IBOutlet private weak var deleteSelectedButton: TapAnimatedButton!
+    @IBOutlet private weak var closeSelectionModeButton: TapAnimatedButton!
     @IBOutlet private weak var selectionModeInfoLabel: UILabel!
     @IBOutlet private weak var selectionModeTopContainer: UIView!
     /// Action clarify dialog
     @IBOutlet private weak var dialogContainer: UIView!
     @IBOutlet private weak var dialogButtonsContainer: UIView!
-    @IBOutlet private weak var dialogDeleteButton: UIButton!
-    @IBOutlet private weak var dialogCancelButton: UIButton!
+    @IBOutlet private weak var dialogDeleteButton: TapAnimatedButton!
+    @IBOutlet private weak var dialogCancelButton: TapAnimatedButton!
     
     private lazy var collectionManager = HomeCollectionManager(collectionView: collectionView)
     private let viewModel: HomeScreenViewModel
     private var bag = Set<AnyCancellable>()
+    private var purchaseConntinueAnimationsCancelable: AnyCancellable?
+    
     private var dashedLineLayer: CAShapeLayer?
-    var gradient: CAGradientLayer?
+    private var gradient: CAGradientLayer?
 
     init(viewModel: HomeScreenViewModel) {
         self.viewModel = viewModel
@@ -150,7 +150,7 @@ private extension HomeScreenViewController {
             case .loadingState(let isLoading):
                 isLoading ? self?.startActivityAnimation() : self?.stopActivityAnimation()
             case .giftContainer(let isHidden):
-                self?.updateGiftContainer(isHidden)
+                self?.updateGiftContainer(isHidden: isHidden)
             }
         }).store(in: &bag)
     }
@@ -204,14 +204,23 @@ private extension HomeScreenViewController {
         
         subscriptionMenuOpenButton.publisher()
             .sink(receiveValue: { [weak self] _ in
-                self?.subscriptionCloseButton.animateFadeIn(2, delay: 5, finalAlpha: 0.6)
-                self?.subscriptionContainer.isHidden.toggle()
-                self?.addParticles()
+                guard let self = self else { return }
+                UIView.transition(with: self.view, duration: 0.7, options: .transitionCurlDown, animations: {
+                    self.subscriptionContainer.isHidden = false
+                })
+                self.subscriptionContinueButton.dropShadow(color: .white, opacity: 0.0, offSet: CGSize(width: 0, height: 0), radius: 15, scale: true)
+                self.purchaseConntinueAnimationsCancelable = self.subscriptionContinueButton.animateBounceAndShadow()
+                self.subscriptionCloseButton.animateFadeIn(1, delay: 4, finalAlpha: 0.6)
+                self.addParticles()
             }).store(in: &bag)
         
         subscriptionContinueButton.publisher().sink(receiveValue: { [weak self] _ in
+            guard let mainView = self?.view else { return }
             self?.viewModel.input.send(.purchaseYearly)
-            self?.subscriptionContainer.isHidden.toggle()
+            UIView.transition(with: mainView, duration: 0.7, options: .transitionCurlUp, animations: {
+                self?.subscriptionContainer.isHidden = true
+            })
+            self?.subscriptionContainer.layer.removeAllAnimations()
             self?.subscriptionContainer.viewWithTag(1)!.removeFromSuperview()
         }).store(in: &bag)
         
@@ -220,10 +229,14 @@ private extension HomeScreenViewController {
         }).store(in: &bag)
         
         subscriptionCloseButton.publisher()
-            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
-                self?.subscriptionContainer.isHidden.toggle()
-                self?.subscriptionContainer.viewWithTag(1)!.removeFromSuperview()
+                guard let self = self else { return }
+                UIView.transition(with: self.view, duration: 0.7, options: .transitionCurlUp, animations: {
+                    self.subscriptionContainer.isHidden = true
+                })
+                self.subscriptionContinueButton.layer.removeAllAnimations()
+                self.subscriptionContainer.viewWithTag(1)!.removeFromSuperview()
+                self.purchaseConntinueAnimationsCancelable?.cancel()
             }).store(in: &bag)
         
         checkmarkButton.publisher().sink(receiveValue: { [weak self] _ in
@@ -252,7 +265,6 @@ private extension HomeScreenViewController {
                 self?.viewModel.input.send(.getSelectionCount)
             }
         }).store(in: &bag)
-        
         changeViewStateBasedOnItemsCount(hasItems: false)
         setHiddenClarifyDeleteDialog(true)
         changeViewStateBasedOnSelectionMode(isInSelectionMode: false)
@@ -268,11 +280,13 @@ private extension HomeScreenViewController {
     }
     
     private func changeViewStateBasedOnItemsCount(hasItems: Bool) {
+        UIView.transition(with: self.mainContainer, duration: 0.5, options: hasItems ? .transitionFlipFromTop : .transitionFlipFromBottom, animations: {
+            self.emptyStateContainer.isHidden = hasItems
+            self.collectionView.isHidden = !hasItems
+        })
         plusButtonSmall.isEnabled = hasItems
         checkmarkButton.isEnabled = hasItems
         layoutChangeButton.isHidden = !hasItems
-        collectionView.isHidden = !hasItems
-        emptyStateContainer.isHidden = hasItems
         printButton.isEnabled = hasItems
         giftContentView.isHidden = hasItems
     }
@@ -289,7 +303,7 @@ private extension HomeScreenViewController {
         dialogContainer.isHidden = isHidden
     }
     
-    private func updateGiftContainer(_ isHidden: Bool) {
+    private func updateGiftContainer(isHidden: Bool) {
         giftContainerHeightConstraint.constant = isHidden ? 0 : 56
         giftContainerTopSpacing.constant = isHidden ? 0 : 15
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.2, options: [.curveEaseIn], animations: { [weak self] in

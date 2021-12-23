@@ -53,31 +53,19 @@ final class SettingsViewController: UIViewController, MFMailComposeViewControlle
 
 // MARK: - Internal
 
-class CustomNavigation: UINavigationController, InteractionFeedbackService {
-    override func popViewController(animated: Bool) -> UIViewController? {
-        generateInteractionFeedback()
-        return self.popViewController(animated: animated)
-    }
-}
-
 private extension SettingsViewController {
     
     func configureView() {
-        
-        let backButton = UIBarButtonItem(image: UIImage(named: "settings-navigation-back")!,
-                                      style: .plain,
-                                      target: navigationController,
-                                      action: #selector(UINavigationController.popViewController(animated:)))
+        let backButton = UIBarButtonItem(
+            image: UIImage(named: "settings-navigation-back")!,
+            style: .plain,
+            target: navigationController,
+            action: nil)
+        backButton.publisher().sink(receiveValue: { [weak self] _ in
+            self?.navigationController?.popViewController(animated: true)
+        }).store(in: &bag)
         navigationItem.leftBarButtonItem = backButton
         navigationController?.interactivePopGestureRecognizer?.delegate = self
-        
-//        let leftItem = UIBarButtonItem(image: UIImage(named: "settings-navigation-back")!, style: .done, target: self, action: nil)
-//        leftItem.publisher().sink(receiveValue: { [weak self] item in
-//            item.generateInteractionFeedback()
-//            self?.navigationController?.popViewController(animated: true)
-//        }).store(in: &bag)
-        //navigationController?.navigationBar.backItem =
-       // navigationController?.navigationItem.backBarButtonItem = leftItem
         
         let textAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationController?.navigationBar.titleTextAttributes = textAttributes
