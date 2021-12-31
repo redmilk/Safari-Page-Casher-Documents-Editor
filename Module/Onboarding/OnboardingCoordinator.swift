@@ -73,8 +73,5 @@ final class OnboardingCoordinator: CoordinatorProtocol {
     
     private func showSubscriptionPage() {
         Onboarding.shared?.onboardingFinishAction()
-//
-//        window.rootViewController = navigationController
-//        window.makeKeyAndVisible()
     }
 }

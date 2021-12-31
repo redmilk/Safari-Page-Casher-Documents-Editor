@@ -10,19 +10,29 @@
 import UIKit
 import Combine
 
-final class HomeScreenViewController: UIViewController, ActivityIndicatorPresentable {
+fileprivate let multiSubscriptionPopupViewTag: Int = 123
+
+final class HomeScreenViewController: UIViewController,
+                                      ActivityIndicatorPresentable,
+                                      AlertPresentable,
+                                      SubscriptionsMultiPopupProvidable {
+    
     enum State {
         case allCurrentData([PrintableDataBox])
         case addedItems([PrintableDataBox])
         case deletedItems([PrintableDataBox])
         case selectedItems([PrintableDataBox])
-        case giftContainer(isHidden: Bool)
+        case subscriptionStatus(hasActiveSubscriptions: Bool, shouldDisplayMultiSubscrPopup: Bool)
         case selectionCount(Int)
         case selectionMode
         case exitSelectionMode
         case loadingState(Bool)
         case empty
         case timerTick(timerText: String)
+        case displayAlert(text: String, title: String?, action: VoidClosure?, buttonTitle: String?)
+        case displayHowTrialWorks
+        case collapseAllSubscriptionPopupsWhichArePresented
+        case gotUpdatedPricesForGift(yearly: String, yearlyStrike: NSAttributedString)
     }
     
     @IBOutlet weak var centerImageView: UIImageView!
@@ -39,8 +49,7 @@ final class HomeScreenViewController: UIViewController, ActivityIndicatorPresent
     @IBOutlet private weak var giftTimerContainer: UIView!
     @IBOutlet private weak var giftTimerLabel: UILabel!
     @IBOutlet private weak var restorePurchaseButton: TapAnimatedButton!
-    @IBOutlet private weak var purchaseTermsButton: TapAnimatedButton!
-    @IBOutlet private weak var privacyButton: TapAnimatedButton!
+    @IBOutlet private weak var giftYearlyPriceLabel: UILabel!
     /// Filled state controls
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var layoutChangeButton: TapAnimatedButton!
@@ -69,6 +78,9 @@ final class HomeScreenViewController: UIViewController, ActivityIndicatorPresent
     @IBOutlet private weak var dialogButtonsContainer: UIView!
     @IBOutlet private weak var dialogDeleteButton: TapAnimatedButton!
     @IBOutlet private weak var dialogCancelButton: TapAnimatedButton!
+
+    @IBOutlet weak var howTrialWorksButton: TapAnimatedButton!
+    @IBOutlet weak var otherPlansButton: TapAnimatedButton!
     
     private lazy var collectionManager = HomeCollectionManager(collectionView: collectionView)
     private let viewModel: HomeScreenViewModel
@@ -77,6 +89,8 @@ final class HomeScreenViewController: UIViewController, ActivityIndicatorPresent
     
     private var dashedLineLayer: CAShapeLayer?
     private var gradient: CAGradientLayer?
+    private var hasItems: Bool = false
+    private var selectionCount: Int = 0
 
     init(viewModel: HomeScreenViewModel) {
         self.viewModel = viewModel
@@ -144,13 +158,31 @@ private extension HomeScreenViewController {
             case .exitSelectionMode:
                 self?.collectionManager.input.send(.toggleSelectionMode)
             case .selectionCount(let selectionCount):
+                self?.selectionCount = selectionCount
+                self?.deleteSelectedButton.isEnabled = selectionCount > 0
                 self?.selectionModeInfoLabel.text = "Selected items: \(selectionCount)"
             case .timerTick(let timerText):
                 self?.giftTimerLabel.text = timerText
             case .loadingState(let isLoading):
                 isLoading ? self?.startActivityAnimation() : self?.stopActivityAnimation()
-            case .giftContainer(let isHidden):
-                self?.updateGiftContainer(isHidden: isHidden)
+            case .subscriptionStatus(let hasActiveSubscriptions, let shouldDisplayMultiSubscrPopup):
+                guard let self = self else { return }
+                self.updateGiftContainer(isHidden: hasActiveSubscriptions)
+                if shouldDisplayMultiSubscrPopup {
+                    self.displayMultisubscriptionsPopup(inContainer: self.view, optionToShowFirst: .weekly)
+                    PurchesService.shouldDisplaySubscriptionsForCurrentUser = false
+                }
+            case .displayAlert(let text, let title, let action, let buttonTitle):
+                guard let parentViewForAlert = self?.view else { return }
+                self?.displayAlert(fromParentView: parentViewForAlert, with: text, title: title, action: action, buttonTitle: buttonTitle)
+            case .gotUpdatedPricesForGift(let yearly, let yearlyStrike):
+                self?.giftYearlyPriceLabel.text = yearly
+                self?.subscriptionDiscountLabel.attributedText = yearlyStrike
+            case .displayHowTrialWorks:
+                break
+            case .collapseAllSubscriptionPopupsWhichArePresented:
+                self?.removeMultisubscriptionsPopupIfDisplayed()
+                self?.collapseGiftSubscriptionPopup()
             }
         }).store(in: &bag)
     }
@@ -193,9 +225,10 @@ private extension HomeScreenViewController {
         }).store(in: &bag)
         
         dialogCancelButton.publisher().sink(receiveValue: { [weak self] _ in
-            self?.setHiddenClarifyDeleteDialog(true)
             self?.viewModel.input.send(.itemsDeleteRejected)
             self?.changeViewStateBasedOnSelectionMode(isInSelectionMode: false)
+            guard let self = self, self.selectionCount == 0 else { return }
+            self.setHiddenClarifyDeleteDialog(true)
         }).store(in: &bag)
         
         layoutChangeButton.publisher().sink(receiveValue: { [weak self] _ in
@@ -205,7 +238,7 @@ private extension HomeScreenViewController {
         subscriptionMenuOpenButton.publisher()
             .sink(receiveValue: { [weak self] _ in
                 guard let self = self else { return }
-                UIView.transition(with: self.view, duration: 0.7, options: .transitionCurlDown, animations: {
+                UIView.transition(with: self.view, duration: 0.5, options: .transitionCrossDissolve, animations: {
                     self.subscriptionContainer.isHidden = false
                 })
                 self.subscriptionContinueButton.dropShadow(color: .white, opacity: 0.0, offSet: CGSize(width: 0, height: 0), radius: 15, scale: true)
@@ -215,34 +248,32 @@ private extension HomeScreenViewController {
             }).store(in: &bag)
         
         subscriptionContinueButton.publisher().sink(receiveValue: { [weak self] _ in
-            guard let mainView = self?.view else { return }
-            self?.viewModel.input.send(.purchaseYearly)
-            UIView.transition(with: mainView, duration: 0.7, options: .transitionCurlUp, animations: {
-                self?.subscriptionContainer.isHidden = true
-            })
-            self?.subscriptionContainer.layer.removeAllAnimations()
-            self?.subscriptionContainer.viewWithTag(1)!.removeFromSuperview()
+            self?.viewModel.input.send(.purchase(.annual))
         }).store(in: &bag)
-        
         restorePurchaseButton.publisher().sink(receiveValue: { [weak self] _ in
             self?.viewModel.input.send(.restoreSubscription)
         }).store(in: &bag)
-        
+        otherPlansButton.publisher().sink(receiveValue: { [weak self] _ in
+            guard let self = self else { return }
+            self.displayMultisubscriptionsPopup(inContainer: self.subscriptionContainer, optionToShowFirst: .weekly)
+        }).store(in: &bag)
+        howTrialWorksButton.publisher().sink(receiveValue: { [weak self] _ in
+            guard let self = self else { return }
+            self.displayMultisubscriptionsPopup(inContainer: self.subscriptionContainer, optionToShowFirst: .howItWorks)
+        }).store(in: &bag)
         subscriptionCloseButton.publisher()
             .sink(receiveValue: { [weak self] _ in
                 guard let self = self else { return }
-                UIView.transition(with: self.view, duration: 0.7, options: .transitionCurlUp, animations: {
+                UIView.transition(with: self.view, duration: 0.5, options: .transitionCrossDissolve, animations: {
                     self.subscriptionContainer.isHidden = true
                 })
                 self.subscriptionContinueButton.layer.removeAllAnimations()
                 self.subscriptionContainer.viewWithTag(1)!.removeFromSuperview()
                 self.purchaseConntinueAnimationsCancelable?.cancel()
             }).store(in: &bag)
-        
         checkmarkButton.publisher().sink(receiveValue: { [weak self] _ in
             self?.collectionManager.input.send(.toggleSelectionMode)
         }).store(in: &bag)
-        
         closeSelectionModeButton.publisher().sink(receiveValue: { [weak self] _ in
             self?.setHiddenClarifyDeleteDialog(true)
             self?.collectionManager.input.send(.toggleSelectionMode)
@@ -250,7 +281,7 @@ private extension HomeScreenViewController {
             self?.changeViewStateBasedOnSelectionMode(isInSelectionMode: false)
         }).store(in: &bag)
         
-        collectionManager.output.sink(receiveValue: { [weak self] action in
+        collectionManager.output.sink(receiveValue: { [weak self] action in 
             switch action {
             case .didPressCell(let dataBox):
                 self?.viewModel.input.send(.getSelectionCount)
@@ -265,30 +296,74 @@ private extension HomeScreenViewController {
                 self?.viewModel.input.send(.getSelectionCount)
             }
         }).store(in: &bag)
-        changeViewStateBasedOnItemsCount(hasItems: false)
+        
+        showEmptyState()
         setHiddenClarifyDeleteDialog(true)
         changeViewStateBasedOnSelectionMode(isInSelectionMode: false)
         deleteButton.isHidden = true
         layoutChangeButton.isSelected = true
         subscriptionContainer.isHidden.toggle()
+        deleteSelectedButton.isEnabled = false
     }
     
-    private func makeStrikeThroughText(_ text: String) -> NSMutableAttributedString {
-        let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: text)
-        attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSRange(location: 0, length: attributeString.length))
-        return attributeString
+    private func removeMultisubscriptionsPopupIfDisplayed() {
+        subscriptionContainer.subviews.forEach {
+            if $0.tag == multiSubscriptionPopupViewTag {
+                $0.removeFromSuperview()
+                return
+            }
+        }
+    }
+    
+    /// universal subscription popup
+    private func displayMultisubscriptionsPopup(
+        inContainer container: UIView,
+        optionToShowFirst: SubscriptionPlanPopup.State
+    ) {
+        let (publisher, popUp) = displayMultiSubscriptions(optionToShowFirst, fromParentView: container)
+        popUp.tag = 123
+        publisher.sink(receiveValue: { [weak self] response in
+            switch response {
+            case .restoreSubscription:
+                self?.viewModel.input.send(.restoreSubscription)
+            case .onPurchase(let isSecondOptionSelected):
+                self?.viewModel.input.send(.purchase(isSecondOptionSelected ? .annual : .monthly))
+            case .onWeeklyPurchase:
+                self?.viewModel.input.send(.purchase(.weekly))
+            case .onClose:
+                popUp.removeFromSuperview()
+            }
+        }).store(in: &bag)
     }
     
     private func changeViewStateBasedOnItemsCount(hasItems: Bool) {
-        UIView.transition(with: self.mainContainer, duration: 0.5, options: hasItems ? .transitionFlipFromTop : .transitionFlipFromBottom, animations: {
-            self.emptyStateContainer.isHidden = hasItems
-            self.collectionView.isHidden = !hasItems
+        guard hasItems != self.hasItems else { return }
+        self.hasItems.toggle()
+        self.hasItems ? showFilledState() : showEmptyState()
+    }
+    
+    private func showFilledState() {
+        UIView.transition(with: self.mainContainer, duration: viewModel.userSession.itemsTotal > 1 ? 0.5 : 0, options: [.transitionFlipFromTop], animations: {
+            self.emptyStateContainer.isHidden = true
+            self.collectionView.isHidden = !true
         })
-        plusButtonSmall.isEnabled = hasItems
-        checkmarkButton.isEnabled = hasItems
-        layoutChangeButton.isHidden = !hasItems
-        printButton.isEnabled = hasItems
-        giftContentView.isHidden = hasItems
+        plusButtonSmall.isEnabled = true
+        checkmarkButton.isEnabled = true
+        layoutChangeButton.isHidden = !true
+        printButton.isEnabled = true
+        giftContentView.isHidden = true
+    }
+    
+    private func showEmptyState() {
+        UIView.transition(with: self.mainContainer, duration: 0.5, options: [.transitionFlipFromBottom], animations: {
+            self.emptyStateContainer.isHidden = false
+            self.collectionView.isHidden = !false
+        })
+        plusButtonSmall.isEnabled = false
+        checkmarkButton.isEnabled = false
+        layoutChangeButton.isHidden = !false
+        printButton.isEnabled = false
+        giftContentView.isHidden = false
     }
     
     private func changeViewStateBasedOnSelectionMode(isInSelectionMode: Bool) {
@@ -301,6 +376,14 @@ private extension HomeScreenViewController {
     
     private func setHiddenClarifyDeleteDialog(_ isHidden: Bool) {
         dialogContainer.isHidden = isHidden
+    }
+    
+    private func collapseGiftSubscriptionPopup() {
+        UIView.transition(with: view, duration: 0.5, options: .transitionCrossDissolve, animations: {
+            self.subscriptionContainer.isHidden = true
+        })
+        subscriptionContainer.layer.removeAllAnimations()
+        subscriptionContainer.viewWithTag(1)!.removeFromSuperview()
     }
     
     private func updateGiftContainer(isHidden: Bool) {
@@ -327,7 +410,7 @@ private extension HomeScreenViewController {
         giftContentView.addCornerRadius(28)
         subscriptionMenuContainer.addCornerRadius(30)
         subscriptionMenuContainer.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-        subscriptionDiscountLabel.attributedText = makeStrikeThroughText("89.99")
+        subscriptionDiscountLabel.attributedText = String.makeStrikeThroughText("89.99")
         subscriptionMenuContainer.dropShadow(color: .black, opacity: 0.8, offSet: .zero, radius: 30, scale: true)
         dialogButtonsContainer.dropShadow(color: .black, opacity: 0.6, offSet: .zero, radius: 30, scale: true)
         giftTimerContainer.addGradientBorder(to: giftTimerContainer, radius: 16, width: 2, colors: [UIColor(hex: 0x04FFF0), UIColor(hex: 0x0487FF), UIColor(hex: 0x9948FF)])

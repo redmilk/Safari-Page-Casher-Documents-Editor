@@ -31,18 +31,6 @@ final class OnboardingViewController: UIViewController {
     @IBOutlet weak var descriptionText: UILabel!
     @IBOutlet weak var continueButton: UIButton!
     
-    // subscription flow
-    @IBOutlet weak var dimmedView: UIView!
-    @IBOutlet weak var closeButton: UIButton!
-    // 1
-    @IBOutlet weak var subscriptionFlowContainerOne: UIView!
-    @IBOutlet weak var subscriptionFlowOneContinue: UIButton!
-    // 2
-    @IBOutlet weak var subscriptionFlowContainerTwo: UIView!
-    @IBOutlet weak var firstPlanButton: UIButton!
-    @IBOutlet weak var secondPlanButton: UIButton!
-    @IBOutlet weak var subscriptionFlowTwoContinue: UIButton!
-    
     private var bag = Set<AnyCancellable>()
     private let model: OnboardingPageModel
     
@@ -65,83 +53,17 @@ final class OnboardingViewController: UIViewController {
         primaryLabel.text = model.mainTextLine1
         primaryLabelSecondLine.text = model.mainTextLine2
         descriptionText.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"
-        
-        dimmedView.isHidden = true
-        subscriptionFlowContainerOne.isHidden = true
-        subscriptionFlowContainerTwo.isHidden = true
-        
+                
         continueButton.publisher()
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
                 guard let self = self else { return }
                 self.model.continueButtonAction()
                 if self.model.isLastOnboardingPage {
-                    self.dimmedView.isHidden = false
-                    self.setupParticles()
-                    self.subscriptionFlowContainerOne.isHidden = false
                 } else {
                     self.model.continueButtonAction()
                 }
             })
             .store(in: &bag)
-        
-        subscriptionFlowOneContinue.publisher().sink(receiveValue: { [weak self] _ in
-            self?.subscriptionFlowContainerOne.isHidden = true
-            self?.subscriptionFlowContainerTwo.isHidden = false
-        })
-        .store(in: &bag)
-        
-        firstPlanButton.publisher().sink(receiveValue: { [weak self] _ in
-            self?.firstPlanButton.isSelected.toggle()
-            self?.secondPlanButton.isSelected.toggle()
-        })
-        .store(in: &bag)
-
-        secondPlanButton.publisher().sink(receiveValue: { [weak self] _ in
-            self?.secondPlanButton.isSelected.toggle()
-            self?.firstPlanButton.isSelected.toggle()
-        })
-        .store(in: &bag)
-        
-        closeButton.publisher().sink(receiveValue: { [weak self] _ in
-            self?.model.continueButtonAction()
-        })
-        .store(in: &bag)
-        
-        subscriptionFlowTwoContinue.publisher().sink(receiveValue: { [weak self] _ in
-            self?.model.continueButtonAction()
-            /// make purchase
-        })
-        .store(in: &bag)
-        
-        firstPlanButton.isSelected.toggle()
-        
-        subscriptionFlowContainerOne.addCornerRadius(30.0)
-        subscriptionFlowContainerOne.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        subscriptionFlowContainerTwo.addCornerRadius(30.0)
-        subscriptionFlowContainerTwo.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        subscriptionFlowContainerOne.dropShadow(color: .black, opacity: 0.4, offSet: .zero, radius: 30, scale: true)
-        subscriptionFlowContainerTwo.dropShadow(color: .black, opacity: 0.4, offSet: .zero, radius: 30, scale: true)
-    }
-    
-    private func setupParticles() {
-        let emitterForStepOne = ParticleEmitterView()
-        let emitterForStepTwo = ParticleEmitterView()
-        emitterForStepOne.isUserInteractionEnabled = false
-        emitterForStepTwo.isUserInteractionEnabled = false
-        emitterForStepOne.translatesAutoresizingMaskIntoConstraints = false
-        emitterForStepTwo.translatesAutoresizingMaskIntoConstraints = false
-
-        subscriptionFlowContainerOne.insertSubview(emitterForStepOne, at: 0)
-        emitterForStepOne.widthAnchor.constraint(equalTo: subscriptionFlowContainerOne.widthAnchor).isActive = true
-        emitterForStepOne.heightAnchor.constraint(equalTo: subscriptionFlowContainerOne.heightAnchor).isActive = true
-        emitterForStepOne.centerYAnchor.constraint(equalTo: subscriptionFlowContainerOne.centerYAnchor).isActive = true
-        emitterForStepOne.centerXAnchor.constraint(equalTo: subscriptionFlowContainerOne.centerXAnchor).isActive = true
-
-        subscriptionFlowContainerTwo.insertSubview(emitterForStepTwo, at: 0)
-        emitterForStepTwo.widthAnchor.constraint(equalTo: subscriptionFlowContainerTwo.widthAnchor).isActive = true
-        emitterForStepTwo.heightAnchor.constraint(equalTo: subscriptionFlowContainerTwo.heightAnchor).isActive = true
-        emitterForStepTwo.centerYAnchor.constraint(equalTo: subscriptionFlowContainerTwo.centerYAnchor).isActive = true
-        emitterForStepTwo.centerXAnchor.constraint(equalTo: subscriptionFlowContainerTwo.centerXAnchor).isActive = true
     }
 }

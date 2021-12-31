@@ -39,6 +39,8 @@
 		794B571F276C4791001A7FE6 /* SharedMediaFetcherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794B571B276C4791001A7FE6 /* SharedMediaFetcherViewController.swift */; };
 		794B5720276C4791001A7FE6 /* SharedMediaFetcherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794B571C276C4791001A7FE6 /* SharedMediaFetcherViewModel.swift */; };
 		794B5721276C4791001A7FE6 /* SharedMediaFetcherViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 794B571D276C4791001A7FE6 /* SharedMediaFetcherViewController.xib */; };
+		794D466E2778DB110030DF8D /* CustomAlert.xib in Resources */ = {isa = PBXBuildFile; fileRef = 794D466D2778DB110030DF8D /* CustomAlert.xib */; };
+		794D46722778E9EE0030DF8D /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794D46712778E9ED0030DF8D /* CustomAlert.swift */; };
 		794DDDF1274D50FF00CF8255 /* ApplicationGlobalConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794DDDF0274D50FF00CF8255 /* ApplicationGlobalConfig.swift */; };
 		794F73E02746B31D00B07410 /* MarketBoardDisplayManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794F73DF2746B31D00B07410 /* MarketBoardDisplayManager.swift */; };
 		794F73E92746B36900B07410 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794F73E22746B36800B07410 /* UIView+Extensions.swift */; };
@@ -97,6 +99,7 @@
 		79D102A527717CC500F3C4D5 /* SubscriptionPlanPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D102A427717CC500F3C4D5 /* SubscriptionPlanPopup.swift */; };
 		79D1AA7827740A2F00733F20 /* TapAnimatedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D1AA7727740A2F00733F20 /* TapAnimatedButton.swift */; };
 		79F23A6E2760A9710004475D /* PDFComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F23A6D2760A9710004475D /* PDFComposer.swift */; };
+		79F744C0277B597B00EFE7F9 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F744BF277B597A00EFE7F9 /* String+Extensions.swift */; };
 		79F80FBC2752A93C00081C7A /* ServicesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F80FBB2752A93C00081C7A /* ServicesContainer.swift */; };
 		79F80FC22752B00000081C7A /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F80FC12752B00000081C7A /* UIImage+Extensions.swift */; };
 		79F80FCC2752E62500081C7A /* ViewHierarchyDebugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F80FCB2752E62400081C7A /* ViewHierarchyDebugger.swift */; };
@@ -165,6 +168,8 @@
 		794B571B276C4791001A7FE6 /* SharedMediaFetcherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedMediaFetcherViewController.swift; sourceTree = "<group>"; };
 		794B571C276C4791001A7FE6 /* SharedMediaFetcherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedMediaFetcherViewModel.swift; sourceTree = "<group>"; };
 		794B571D276C4791001A7FE6 /* SharedMediaFetcherViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SharedMediaFetcherViewController.xib; sourceTree = "<group>"; };
+		794D466D2778DB110030DF8D /* CustomAlert.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomAlert.xib; sourceTree = "<group>"; };
+		794D46712778E9ED0030DF8D /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
 		794DDDF0274D50FF00CF8255 /* ApplicationGlobalConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationGlobalConfig.swift; sourceTree = "<group>"; };
 		794F73DF2746B31D00B07410 /* MarketBoardDisplayManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketBoardDisplayManager.swift; sourceTree = "<group>"; };
 		794F73E22746B36800B07410 /* UIView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
@@ -233,6 +238,7 @@
 		79D102A427717CC500F3C4D5 /* SubscriptionPlanPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPlanPopup.swift; sourceTree = "<group>"; };
 		79D1AA7727740A2F00733F20 /* TapAnimatedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapAnimatedButton.swift; sourceTree = "<group>"; };
 		79F23A6D2760A9710004475D /* PDFComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFComposer.swift; sourceTree = "<group>"; };
+		79F744BF277B597A00EFE7F9 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		79F80FBB2752A93C00081C7A /* ServicesContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesContainer.swift; sourceTree = "<group>"; };
 		79F80FC12752B00000081C7A /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		79F80FCB2752E62400081C7A /* ViewHierarchyDebugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewHierarchyDebugger.swift; sourceTree = "<group>"; };
@@ -349,6 +355,15 @@
 			path = SharedMediaFetcher;
 			sourceTree = "<group>";
 		};
+		794D466C2778DAFD0030DF8D /* CustomAlert */ = {
+			isa = PBXGroup;
+			children = (
+				794D46712778E9ED0030DF8D /* CustomAlert.swift */,
+				794D466D2778DB110030DF8D /* CustomAlert.xib */,
+			);
+			path = CustomAlert;
+			sourceTree = "<group>";
+		};
 		794F73DB2746B1F500B07410 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -387,6 +402,7 @@
 				79416D352759943000262593 /* Date+Extensions.swift */,
 				79194A73275BDA43003E2539 /* FileManager+Extensions.swift */,
 				795A1CB7275D12650097FA6E /* UIColor+Extensions.swift */,
+				79F744BF277B597A00EFE7F9 /* String+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -482,9 +498,10 @@
 		79A598092762FDA800EB580A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				794D466C2778DAFD0030DF8D /* CustomAlert */,
 				79A5980A2762FDD400EB580A /* BlurredShadowView.swift */,
 				79BBD8AA276319660087B1E0 /* ParticleEmitterView.swift */,
-				79D102A327717CA000F3C4D5 /* SubscriptionPlanPopup */,
+				79D102A327717CA000F3C4D5 /* SubscriptionsPopup */,
 				79C7B2DE2772186A0058C759 /* CirclesActivityIndicator.swift */,
 				79D1AA7727740A2F00733F20 /* TapAnimatedButton.swift */,
 			);
@@ -571,13 +588,13 @@
 			path = HomeScreen;
 			sourceTree = "<group>";
 		};
-		79D102A327717CA000F3C4D5 /* SubscriptionPlanPopup */ = {
+		79D102A327717CA000F3C4D5 /* SubscriptionsPopup */ = {
 			isa = PBXGroup;
 			children = (
 				79D102A127717C9A00F3C4D5 /* SubscriptionPlanPopup.xib */,
 				79D102A427717CC500F3C4D5 /* SubscriptionPlanPopup.swift */,
 			);
-			path = SubscriptionPlanPopup;
+			path = SubscriptionsPopup;
 			sourceTree = "<group>";
 		};
 		79DCEF9B275B9266007BC160 /* Model */ = {
@@ -773,6 +790,7 @@
 				7911B027276B0FEC0058CD26 /* MiscSettingsModulesViewController.xib in Resources */,
 				79B787E22750B2FD009D7655 /* SettingsViewController.xib in Resources */,
 				7997DE382753F82A00B33300 /* Poppins-SemiBold.otf in Resources */,
+				794D466E2778DB110030DF8D /* CustomAlert.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -831,6 +849,7 @@
 				79189E00274672900023628A /* Logger.swift in Sources */,
 				794F73EE2746B36900B07410 /* KeyedDecodingContainer+Extensions.swift in Sources */,
 				7953DE292768B3A00003DF71 /* PreviewController.swift in Sources */,
+				79F744C0277B597B00EFE7F9 /* String+Extensions.swift in Sources */,
 				79C7B2DF2772186A0058C759 /* CirclesActivityIndicator.swift in Sources */,
 				792D66152755394000063F4B /* PhotoalbumManager.swift in Sources */,
 				79B787F62750B429009D7655 /* HomeScreenCoordinator.swift in Sources */,
@@ -864,6 +883,7 @@
 				79194A74275BDA43003E2539 /* FileManager+Extensions.swift in Sources */,
 				79F80FC22752B00000081C7A /* UIImage+Extensions.swift in Sources */,
 				791CC441276441B200813FAC /* ManageSubscriptionsViewModel.swift in Sources */,
+				794D46722778E9EE0030DF8D /* CustomAlert.swift in Sources */,
 				795A1CB8275D12650097FA6E /* UIColor+Extensions.swift in Sources */,
 				79B787B52750B1E4009D7655 /* OnboardingCoordinator.swift in Sources */,
 			);

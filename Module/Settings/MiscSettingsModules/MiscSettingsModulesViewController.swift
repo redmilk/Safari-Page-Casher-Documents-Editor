@@ -20,7 +20,6 @@ final class MiscSettingsModulesViewController: UIViewController, UIGestureRecogn
     }
         
     @IBOutlet weak var navigationBarExtender: UIView!
-    @IBOutlet weak var termsOfUseContainer: UIView!
     @IBOutlet weak var privacyPolicyContainer: UIView!
     @IBOutlet weak var webView: WKWebView!
 
@@ -36,6 +35,9 @@ final class MiscSettingsModulesViewController: UIViewController, UIGestureRecogn
     }
     deinit {
         Logger.log(String(describing: self), type: .deinited)
+    }
+    override var prefersStatusBarHidden: Bool {
+        return true
     }
     
     override func viewDidLoad() {
@@ -55,15 +57,10 @@ private extension MiscSettingsModulesViewController {
         viewModel.output.sink(receiveValue: { [weak self] state in
             switch state {
             case .configure(let isPrivacyPolicy):
-                self?.privacyPolicyContainer.isHidden = !isPrivacyPolicy
-                self?.termsOfUseContainer.isHidden = isPrivacyPolicy
-                if isPrivacyPolicy {
-                    let req = URLRequest(url: URL(string: "https://google.com")!)
-                    self?.webView.load(req)
-                    self?.title = "Privacy Policy"
-                } else {
-                    self?.title = "Terms of Use"
-                }
+                self?.title = isPrivacyPolicy ? "Privacy Policy" : "Terms of Use"
+                let terms = URLRequest(url: URL(string: "https://airprint.devip.surf/terms-and-conditions")!)
+                let privacy = URLRequest(url: URL(string: "https://airprint.devip.surf/privacy-policy")!)
+                self?.webView.load(isPrivacyPolicy ? privacy : terms)
             }
         })
         .store(in: &bag)

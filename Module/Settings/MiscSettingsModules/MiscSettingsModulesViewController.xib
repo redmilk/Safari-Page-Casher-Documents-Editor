@@ -12,7 +12,6 @@
             <connections>
                 <outlet property="navigationBarExtender" destination="0uq-F9-NoD" id="H36-BZ-avW"/>
                 <outlet property="privacyPolicyContainer" destination="VrR-TX-bSn" id="R8M-Cm-B8r"/>
-                <outlet property="termsOfUseContainer" destination="u2k-fU-UdD" id="RwH-eM-mv4"/>
                 <outlet property="view" destination="iN0-l3-epB" id="2LZ-sc-BwG"/>
                 <outlet property="webView" destination="gl3-ge-6td" id="dhs-eU-nzC"/>
             </connections>
@@ -25,15 +24,18 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fO0-zK-fYC">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u2k-fU-UdD" userLabel="TermsOfUse">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                            <color key="backgroundColor" red="0.15600386259999999" green="0.161205709" blue="0.36864712830000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0uq-F9-NoD" userLabel="NavigationExptender">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="110"/>
+                            <color key="backgroundColor" red="0.1165821329" green="0.1141723469" blue="0.30589985850000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="110" id="ria-KR-m0X"/>
+                            </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VrR-TX-bSn" userLabel="PrivacyPolicy">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            <rect key="frame" x="0.0" y="110" width="414" height="786"/>
                             <subviews>
                                 <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gl3-ge-6td">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="786"/>
                                     <color key="backgroundColor" red="0.15600386259999999" green="0.161205709" blue="0.36864712830000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     <wkWebViewConfiguration key="configuration">
                                         <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -43,33 +45,22 @@
                             </subviews>
                             <color key="backgroundColor" red="0.15600386259999999" green="0.161205709" blue="0.36864712830000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             <constraints>
-                                <constraint firstItem="gl3-ge-6td" firstAttribute="top" secondItem="VrR-TX-bSn" secondAttribute="top" id="6cU-hu-SVx"/>
-                                <constraint firstAttribute="bottom" secondItem="gl3-ge-6td" secondAttribute="bottom" id="OOb-UV-o05"/>
-                                <constraint firstItem="gl3-ge-6td" firstAttribute="leading" secondItem="VrR-TX-bSn" secondAttribute="leading" id="gLn-lW-uyD"/>
-                                <constraint firstAttribute="trailing" secondItem="gl3-ge-6td" secondAttribute="trailing" id="w6V-d5-CQR"/>
-                            </constraints>
-                        </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0uq-F9-NoD" userLabel="NavigationExptender">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="110"/>
-                            <color key="backgroundColor" red="0.1165821329" green="0.1141723469" blue="0.30589985850000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="110" id="ria-KR-m0X"/>
+                                <constraint firstAttribute="trailing" secondItem="gl3-ge-6td" secondAttribute="trailing" id="5bC-ed-493"/>
+                                <constraint firstItem="gl3-ge-6td" firstAttribute="leading" secondItem="VrR-TX-bSn" secondAttribute="leading" id="N1m-DB-4f1"/>
+                                <constraint firstItem="gl3-ge-6td" firstAttribute="top" secondItem="VrR-TX-bSn" secondAttribute="top" id="NzT-sJ-KFT"/>
+                                <constraint firstAttribute="bottom" secondItem="gl3-ge-6td" secondAttribute="bottom" id="onz-b7-i3w"/>
                             </constraints>
                         </view>
                     </subviews>
                     <color key="backgroundColor" red="0.15600386259999999" green="0.161205709" blue="0.36864712830000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     <constraints>
-                        <constraint firstItem="VrR-TX-bSn" firstAttribute="centerY" secondItem="u2k-fU-UdD" secondAttribute="centerY" id="2xm-ab-IHm"/>
-                        <constraint firstAttribute="trailing" secondItem="u2k-fU-UdD" secondAttribute="trailing" id="CJH-75-rdn"/>
-                        <constraint firstItem="VrR-TX-bSn" firstAttribute="height" secondItem="u2k-fU-UdD" secondAttribute="height" id="MYO-vq-3Rx"/>
+                        <constraint firstItem="VrR-TX-bSn" firstAttribute="leading" secondItem="fO0-zK-fYC" secondAttribute="leading" id="Afx-T3-b7o"/>
+                        <constraint firstItem="VrR-TX-bSn" firstAttribute="top" secondItem="0uq-F9-NoD" secondAttribute="bottom" id="DE4-4s-ZlK"/>
+                        <constraint firstAttribute="trailing" secondItem="VrR-TX-bSn" secondAttribute="trailing" id="Ijw-qU-pjT"/>
                         <constraint firstItem="0uq-F9-NoD" firstAttribute="leading" secondItem="fO0-zK-fYC" secondAttribute="leading" id="Nf0-pQ-EbU"/>
-                        <constraint firstItem="VrR-TX-bSn" firstAttribute="width" secondItem="u2k-fU-UdD" secondAttribute="width" id="QKW-zk-eoJ"/>
-                        <constraint firstAttribute="bottom" secondItem="u2k-fU-UdD" secondAttribute="bottom" id="Vt4-ya-kRd"/>
-                        <constraint firstItem="u2k-fU-UdD" firstAttribute="top" secondItem="fO0-zK-fYC" secondAttribute="top" id="ZjD-pu-3QR"/>
                         <constraint firstAttribute="trailing" secondItem="0uq-F9-NoD" secondAttribute="trailing" id="eTc-4D-GJa"/>
-                        <constraint firstItem="VrR-TX-bSn" firstAttribute="centerX" secondItem="u2k-fU-UdD" secondAttribute="centerX" id="grP-RP-7qq"/>
                         <constraint firstItem="0uq-F9-NoD" firstAttribute="top" secondItem="fO0-zK-fYC" secondAttribute="top" id="qup-Oi-JGu"/>
-                        <constraint firstItem="u2k-fU-UdD" firstAttribute="leading" secondItem="fO0-zK-fYC" secondAttribute="leading" id="vyj-a7-oO2"/>
+                        <constraint firstAttribute="bottom" secondItem="VrR-TX-bSn" secondAttribute="bottom" id="umC-d9-wvq"/>
                     </constraints>
                 </view>
             </subviews>

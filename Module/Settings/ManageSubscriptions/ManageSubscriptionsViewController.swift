@@ -11,22 +11,38 @@ import UIKit
 import Combine
 
 
+fileprivate let multiSubscriptionPopupViewTag: Int = 123
+
 // MARK: - ManageSubscriptionsViewController
 
-final class ManageSubscriptionsViewController: UIViewController, ActivityIndicatorPresentable, UIGestureRecognizerDelegate {
+final class ManageSubscriptionsViewController: UIViewController,
+                                               ActivityIndicatorPresentable,
+                                               UIGestureRecognizerDelegate,
+                                               SubscriptionsMultiPopupProvidable,
+                                               AlertPresentable,
+                                               PurchesServiceProvidable {
+    
     enum State {
         case currentSubscriptionPlan(Purchase)
         case loadingState(Bool)
+        case removeSubscriptionPop
+        case displayAlert(text: String, title: String?, action: VoidClosure?, buttonTitle: String?)
+        case gotUpdatedPrices(String, String, String, Bool) /// w,m,y, isUserEverHadSubscr
     }
     
+    @IBOutlet weak var monthlyPriceLabel: UILabel!
+    @IBOutlet weak var yearlyPriceLabel: UILabel!
+    /// for trial case
+    @IBOutlet weak var weeklyPlanTextLabel: UILabel!
+    @IBOutlet weak var yearlyPriceDescriptionLabel: UILabel!
+    @IBOutlet weak var weeklyPriceLabel: UILabel!
     @IBOutlet weak var navigationBarExtender: UIView!
     @IBOutlet weak var weekPlanButton: UIButton!
     @IBOutlet weak var monthlyPlanButton: UIButton!
     @IBOutlet weak var yearPlanButton: UIButton!
-    @IBOutlet weak var howToCancelSubscriptionButton: UIButton!
     @IBOutlet weak var howTrialWorksButton: UIButton!
-    @IBOutlet weak var aboutSubscriptionButton: UIButton!
     
+    private var backButton: UIBarButtonItem!
     private let viewModel: ManageSubscriptionsViewModel
     private var bag = Set<AnyCancellable>()
     
@@ -40,16 +56,25 @@ final class ManageSubscriptionsViewController: UIViewController, ActivityIndicat
     deinit {
         Logger.log(String(describing: self), type: .deinited)
     }
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         configureView()
         handleStates()
+        viewModel.input.send(.viewDidLoad)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.input.send(.checkCurrentSubscriptionPlan)
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
 }
 
@@ -60,22 +85,34 @@ private extension ManageSubscriptionsViewController {
     /// Handle ViewModel's states
     func handleStates() {
         viewModel.output.sink(receiveValue: { [weak self] state in
+            guard let self = self else { return }
             switch state {
             case .loadingState(let isHidden):
-                isHidden ? self?.startActivityAnimation() : self?.stopActivityAnimation()
+                isHidden ? self.startActivityAnimation() : self.stopActivityAnimation()
             case .currentSubscriptionPlan(let purchase):
                 switch purchase {
-                case .weekly: self?.toggleWeeklyPlan()
-                case .monthly: self?.toggleMonthlyPlan()
-                case .annual: self?.toggleYearlyPlan()
+                case .weekly: self.toggleWeeklyPlan()
+                case .monthly: self.toggleMonthlyPlan()
+                case .annual: self.toggleYearlyPlan()
                 }
+            case .displayAlert(let text, let title, let action, let buttonTitle):
+                self.displayAlert(fromParentView: self.view, with: text, title: title, action: action)
+            case .removeSubscriptionPop:
+                self.removeMultiSubscripionPopupIfOccures()
+            case .gotUpdatedPrices(let weekly, let monthly, let yearly, let isUserEverHadSubscription):
+                self.weeklyPlanTextLabel.text = isUserEverHadSubscription ?
+                "Weekly Plan" : "Weekly Plan + 3 day free trial"
+                self.weeklyPriceLabel.text = weekly
+                self.monthlyPriceLabel.text =  monthly
+                self.yearlyPriceLabel.text = yearly
+                self.yearlyPriceDescriptionLabel.text = "Yearly Plan: \(yearly) / year"
             }
         })
         .store(in: &bag)
     }
     
     func configureView() {
-        let backButton = UIBarButtonItem(
+        backButton = UIBarButtonItem(
             image: UIImage(named: "settings-navigation-back")!,
             style: .plain,
             target: navigationController,
@@ -85,14 +122,12 @@ private extension ManageSubscriptionsViewController {
         }).store(in: &bag)
         navigationItem.leftBarButtonItem = backButton
         navigationController?.interactivePopGestureRecognizer?.delegate = self
-        
+        navigationBarExtender.layer.zPosition = 999
         let textAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationController?.navigationBar.titleTextAttributes = textAttributes
         navigationController?.navigationBar.tintColor = .white
         title = "Manage Subscriptions"
         navigationBarExtender.addCornerRadius(30)
-        //navigationBarExtender.dropShadow(color: .black, opacity: 0.6, offSet: .zero, radius: 30, scale: true)
-        //weekPlanButton.isSelected.toggle()
         monthlyPlanButton.addCornerRadius(14)
         monthlyPlanButton.addBorder(1, UIColor(hex: 0x4E50BD33).withAlphaComponent(0.2))
         yearPlanButton.addCornerRadius(14)
@@ -109,8 +144,50 @@ private extension ManageSubscriptionsViewController {
                 self?.viewModel.input.send(.subscription(.monthly))
         }).store(in: &bag)
         yearPlanButton.publisher().receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] button in
+            .sink(receiveValue: { [weak self] _ in
                 self?.viewModel.input.send(.subscription(.annual))
+        }).store(in: &bag)
+        howTrialWorksButton.publisher()
+            .sink(receiveValue: { [weak self] _ in
+                guard let self = self else { return }
+                self.navigationController?.setNavigationBarHidden(true, animated: false)
+                self.navigationBarExtender.isHidden = true
+                self.displayMultisubscriptionsPopup(inContainer: self.view, optionToShowFirst: .howItWorks)
+        }).store(in: &bag)
+    }
+    
+    private func removeMultiSubscripionPopupIfOccures() {
+        view.subviews.forEach {
+            if $0.tag == multiSubscriptionPopupViewTag {
+                $0.removeFromSuperview()
+                self.navigationController?.setNavigationBarHidden(false, animated: false)
+                self.navigationBarExtender.isHidden = false
+                return
+            }
+        }
+    }
+    
+    /// universal subscription popup
+    private func displayMultisubscriptionsPopup(
+        inContainer container: UIView,
+        optionToShowFirst: SubscriptionPlanPopup.State
+    ) {
+        let (publisher, popUp) = displayMultiSubscriptions(optionToShowFirst, fromParentView: container)
+        popUp.tag = multiSubscriptionPopupViewTag
+        publisher.sink(receiveValue: { [weak self] response in
+            guard let self = self else { return }
+            switch response {
+            case .restoreSubscription:
+                self.viewModel.input.send(.restoreSubscription)
+            case .onPurchase(let isSecondOptionSelected):
+                self.viewModel.input.send(.subscription(isSecondOptionSelected ? .annual : .monthly))
+            case .onWeeklyPurchase:
+                self.viewModel.input.send(.subscription(.weekly))
+            case .onClose:
+                popUp.removeFromSuperview()
+                self.navigationController?.setNavigationBarHidden(false, animated: false)
+                self.navigationBarExtender.isHidden = false
+            }
         }).store(in: &bag)
     }
     

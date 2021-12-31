@@ -31,6 +31,13 @@ final class WebpageViewController: UIViewController, PdfServiceProvidable {
     private let group = DispatchGroup()
     private var webContentSize: CGSize?
     private var dataBoxList: [PrintableDataBox] = []
+    private var textToSearchbar: String = "" {
+        willSet {
+            let noHttps = newValue.replacingOccurrences(of: "https://", with: "")
+            let noWww = noHttps.replacingOccurrences(of: "www.", with: "")
+            searchBar.text = noWww.last == "/" ? String(noWww.dropLast()) : noWww
+        }
+    }
     
     init(initialUrlString: String, finishCallback: @escaping VoidClosure) {
         self.initialUrlString = initialUrlString
@@ -59,12 +66,13 @@ private extension WebpageViewController {
         webView.uiDelegate = self
         searchBar.delegate = self
         searchBar.autocapitalizationType = .none
-        webView.load(URLRequest(url: URL(string: initialUrlString)!))
+        webView.load(URLRequest(url: URL(string: "https://google.com")!))
         
         closeButton.publisher().sink(receiveValue: { [weak self] _ in
             self?.dismiss(animated: true, completion: self?.finishCallback)
         })
         .store(in: &bag)
+        
         printButton.publisher().receive(on: DispatchQueue.main).sink(receiveValue: { [weak self] _ in
             guard let self = self else { return }
             self.makePdfWithWebPageContent()
@@ -120,27 +128,51 @@ private extension WebpageViewController {
 
 extension WebpageViewController: WKNavigationDelegate, WKUIDelegate, UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let searchText = searchBar.text, let url = URL(string: "https://" + searchText) else { return }
-        searchBar.resignFirstResponder()
-        let req = URLRequest(url: url)
-        self.webView.load(req)
+        defer {
+            searchBar.resignFirstResponder()
+        }
+        guard let searchText = searchBar.text else {
+            webView.load(URLRequest(url: URL(string: "https://google.com")!))
+            return
+        }
+        guard searchText.contains(".") else {
+            let formatted = searchText.replacingOccurrences(of: " ", with: "+")
+            let req = URLRequest(url: URL(string: "https://www.google.com/search?q=\(formatted)")!)
+            webView.load(req)
+            return
+        }
+        guard let url = URL(string: "https://" + searchText) else {
+            let req = URLRequest(url: URL(string: "https://www.google.com/search?q=\(searchText)")!)
+            webView.load(req)
+            return
+        }
+        let request = URLRequest(url: url)
+        self.webView.load(request)
     }
    
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        let req = URLRequest(url: URL(string: "https://google.com")!)
+        let req = URLRequest(url: URL(string: "https://www.google.com/search?q=\(searchBar.text ?? "")")!)
         webView.load(req)
-        searchBar.text = nil
+        //searchBar.text = nil
         return Logger.logError(error)
     }
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse,
                  decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
         guard let response = navigationResponse.response as? HTTPURLResponse else {
-            let req = URLRequest(url: URL(string: "https://google.com")!)
+            let req = URLRequest(url: URL(string: "https://www.google.com/search?q=\(searchBar.text ?? "")")!)
+            textToSearchbar = "https://www.google.com/search?q=\(searchBar.text ?? "")"
             webView.load(req)
             return decisionHandler(.allow)
         }
         Logger.log(response.statusCode.description)
+        decisionHandler(.allow)
+    }
+    
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if let urlStr = navigationAction.request.url?.absoluteString {
+            textToSearchbar = urlStr
+        }
         decisionHandler(.allow)
     }
     

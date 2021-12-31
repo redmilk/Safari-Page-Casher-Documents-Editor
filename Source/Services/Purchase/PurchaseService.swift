@@ -12,6 +12,19 @@ import Combine
 ///                     if let purchase = purchaseResultModel.nonRenewingPurchase, purchase.isActive()
 ///                     what if purchase was refunded
 
+fileprivate let kShouldShowSubscriptionsToNewUser = "kShouldShowSubscriptionsToNewUser"
+fileprivate let kHasUserActiveSubscriptionsCached = "kDoesUserHaveActiveSubscriptionsCachedSinceLastSession"
+fileprivate let kCachedPurchasesPrices = "kCachedPurchasesPrices"
+
+//final class AirPrintError: Error {
+//    var errorType: PurchaseError?
+//    var errorText: String!
+//    init(errorText: String, errorType: PurchaseError) {
+//        self.errorText = errorText
+//
+//    }
+//}
+
 enum PurchaseError: Error {
     case error(String)
 }
@@ -26,12 +39,35 @@ extension SKProduct {
 }
 
 final class PurchesService {
+    
+    enum Action {
+        case congifure
+    }
+    
     enum Response {
         case timerTick(String)
         case hasActiveSubscriptions(Bool)
+        case gotUpdatedPrices(weekly: String, monthly: String, yearly: String)
     }
     
+    static var hasUserActiveSubscriptionPricesCached: [String]? {
+        get { (UserDefaults.standard.value(forKey: kHasUserActiveSubscriptionsCached) as? [String]) ?? nil }
+        set { UserDefaults.standard.set(newValue, forKey: kHasUserActiveSubscriptionsCached) }
+    }
+    
+    static var shouldDisplaySubscriptionsForCurrentUser: Bool {
+        get { (UserDefaults.standard.value(forKey: kShouldShowSubscriptionsToNewUser) as? Bool) ?? true }
+        set { UserDefaults.standard.set(newValue, forKey: kShouldShowSubscriptionsToNewUser) }
+    }
+    
+    static var isUserHasActiveSubscriptionsStatusSinceLastUserSession: Bool {
+        get { (UserDefaults.standard.value(forKey: kHasUserActiveSubscriptionsCached) as? Bool) ?? false }
+        set { UserDefaults.standard.set(newValue, forKey: kHasUserActiveSubscriptionsCached) }
+    }
+    
+    let input = PassthroughSubject<Action, Never>()
     let output = PassthroughSubject<Response, Never>()
+    
     /// determine if user has active subscriptions and which was not canceled during trial period
     var isUserHasActiveSubscription: Bool!
     /// check if user had any subscription
@@ -44,17 +80,28 @@ final class PurchesService {
     /// configured in-app purchases data
     let appPurchasesInfoList = CurrentValueSubject<[ApphudProduct], Never>([])
 
+    private var updatedPrices: (weekly: String, monthly: String, yearly: String) = ("", "", "")
     private var giftOfferTimerCancellable: AnyCancellable?
     private var giftOfferTimerEnds: Date?
     private var bag = Set<AnyCancellable>()
         
     init() {
+        input.sink(receiveValue: { [weak self] action in
+            switch action {
+            case .congifure:
+                self?.configure()
+            }
+        }).store(in: &bag)
+    }
+    
+    private func configure() {
         /// callback when all apphud necessary data is loaded
         Apphud.paywallsDidLoadCallback { [weak self] (paywalls) in
             let paywall = paywalls
             let appPurchasesInfoList = paywall.map({ $0.products }).flatMap({ $0 })
             Logger.log("\(appPurchasesInfoList)", type: .purchase)
             self?.appPurchasesInfoList.send(appPurchasesInfoList)
+            self?.updatedAllPrices()
             self?.refreshUserPurchasesStatus()
         }
     }
@@ -64,9 +111,34 @@ final class PurchesService {
         appPurchasesInfoList.value.filter({ $0.productId == model.productId }).last
     }
     
+    func updatedAllPrices() {
+        updatedPrices.weekly = getPriceForPurchase(model: .weekly) ?? "-"
+        updatedPrices.monthly = getPriceForPurchase(model: .monthly) ?? "-"
+        updatedPrices.yearly = getPriceForPurchase(model: .annual) ?? "-"
+        output.send(.gotUpdatedPrices(weekly: updatedPrices.weekly.withoutTrailingZeros, monthly:updatedPrices.monthly.withoutTrailingZeros, yearly: updatedPrices
+                                        .yearly.withoutTrailingZeros))
+    }
+    
     func getPriceForPurchase(model: Purchase) -> String? {
         appPurchasesInfoList.value.filter({ $0.productId == model.productId })
-            .last?.skProduct?.localizedPrice
+            .last?.skProduct?.localizedPrice.withoutTrailingZeros ?? nil
+    }
+    
+    func getFormattedYearPriceForPurchase(isPurePrice: Bool = false, size: CGFloat = 12) -> NSAttributedString? {
+        let productId = Purchase.annual.productId
+        guard let product = appPurchasesInfoList.value.filter({ $0.productId == productId })
+                .last?.skProduct else { return nil }
+        let price = product.price
+        let currencyCode = " " + (product.priceLocale.currencyCode ?? "")
+        let priceParts = String.makeAttriabutedStringNoFormatting(" / year ", size: size)
+        var priceDoubled = (Int(truncating: price) * 2).description
+        priceDoubled.append(currencyCode)
+        let strikedPrice = String.makeStrikeThroughText(priceDoubled, size: size)
+        if isPurePrice {
+            return strikedPrice
+        }
+        priceParts.append(strikedPrice)
+        return priceParts
     }
     
     /// check if user's specific purchase is still active
@@ -85,23 +157,23 @@ final class PurchesService {
         } else {
             isUserHasActiveSubscription = Apphud.hasActiveSubscription()
         }
-        output.send(.hasActiveSubscriptions(isUserEverHadSubscriptions))
+        PurchesService.isUserHasActiveSubscriptionsStatusSinceLastUserSession = isUserHasActiveSubscription
+        output.send(.hasActiveSubscriptions(isUserHasActiveSubscription))
         Logger.log("Does user have active and not canceled subscriptions: \(isUserHasActiveSubscription.description.uppercased())", type: .purchase)
     }
     
     /// make purchase
-    func buy(model: Purchase) -> AnyPublisher<(), PurchaseError> {
+    func buy(model: Purchase) -> AnyPublisher<(), Error> {
        return Deferred {
-            Future<(), PurchaseError> { [weak self] promise in
+            Future<(), Error> { [weak self] promise in
                 /// attempt to get all data about this purchase
                 guard let product = self?.getCurrentPurchase(model: model) else {
                     return promise(.failure(PurchaseError.error("Couldn't load this product")))
                 }
                 let callback: ((ApphudPurchaseResult) -> Void) = { purchaseResultModel in
                     /// got error during buy subscription process
-                    if let error = purchaseResultModel.error,
-                       let purchaseError = self?.handlePurchasesError(error) {
-                        return promise(.failure(purchaseError))
+                    if let error = purchaseResultModel.error {
+                        return promise(.failure(error))
                         /// attempt to fetch subscription model from purchaseResult and check it isActive state
                     } else if let subscription = purchaseResultModel.subscription, subscription.isActive() {
                         promise(.success(()))
@@ -163,30 +235,46 @@ final class PurchesService {
             })
     }
     
+    func handleErrorAsErrorText(_ error: Error) -> String {
+        let purchaseError: PurchaseError = handlePurchasesError(error)
+        switch purchaseError {
+        case .error(let errorMessage):
+            Logger.log(errorMessage)
+            return errorMessage
+        }
+    }
+    
     /// purchases error handling
     private func handlePurchasesError(_ error: Error) -> PurchaseError {
-        guard let error = error as? SKError else {
-            return PurchaseError.error("Error code: \((error as NSError).code). Message: \((error as NSError).localizedDescription)")
+        if let _ = error as? URLError {
+            return PurchaseError.error("Connection error: \((error as NSError).code). Message: \((error as NSError).localizedDescription)")
+        } else if let appHudError = error as? ApphudError {
+            _ = appHudError.userInfo[NSLocalizedFailureReasonErrorKey] as? NSString
+            _ = appHudError.userInfo[NSLocalizedDescriptionKey] as? NSString
+            return PurchaseError.error("Payments internal error: \((error as NSError).code). Message: \((error as NSError).localizedDescription)")
+        } else if let skError = error as? SKError {
+            switch skError.code {
+            case .clientInvalid:
+                return PurchaseError.error("Indicating that the client is not allowed to perform the attempted purchase action")
+            case .paymentCancelled:
+                return PurchaseError.error("Payment request was canceled by user")
+            case .paymentInvalid:
+                return PurchaseError.error("One of the payment parameters wasn’t recognized by the App Store")
+            case .storeProductNotAvailable:
+                return PurchaseError.error("Requested product is not available in the store")
+            case .paymentNotAllowed:
+                return PurchaseError.error("The user is not allowed to authorize payments")
+            case .cloudServicePermissionDenied:
+                return PurchaseError.error("The user has not allowed access to Cloud service information")
+            case .cloudServiceNetworkConnectionFailed:
+                return PurchaseError.error("Could not connect to network")
+            case .unknown:
+                return PurchaseError.error("Unknown error during purchase")
+            case _:
+                return PurchaseError.error("Unhandled error. Something went wrong during purchase")
+            }
         }
-        switch error.code {
-        case .clientInvalid:
-            return PurchaseError.error("Indicating that the client is not allowed to perform the attempted purchase action")
-        case .paymentCancelled:
-            return PurchaseError.error("Payment request was canceled by user")
-        case .paymentInvalid:
-            return PurchaseError.error("One of the payment parameters wasn’t recognized by the App Store")
-        case .storeProductNotAvailable:
-            return PurchaseError.error("Requested product is not available in the store")
-        case .paymentNotAllowed:
-            return PurchaseError.error("The user is not allowed to authorize payments")
-        case .cloudServicePermissionDenied:
-            return PurchaseError.error("The user has not allowed access to Cloud service information")
-        case .cloudServiceNetworkConnectionFailed:
-            return PurchaseError.error("Could not connect to network")
-        case .unknown:
-            return PurchaseError.error("Unknown error during purchase")
-        case _: return PurchaseError.error("Unhandled error. Something went wrong during purchase")
-        }
+        return PurchaseError.error("Error code: \((error as NSError).code). Message: \((error as NSError).localizedDescription)")
     }
 }
 

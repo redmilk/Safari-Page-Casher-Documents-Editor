@@ -31,6 +31,7 @@ final class ApplicationCoordinator: CoordinatorProtocol, UserSessionServiceProvi
             self?.childCoordinators.removeAll()
             self?.showContent()
             Onboarding.shared?.shouldShowOnboarding = false
+            PurchesService.shouldDisplaySubscriptionsForCurrentUser = true
             Onboarding.shared = nil
         }
         let coordinator = OnboardingCoordinator(window: window)

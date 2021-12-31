@@ -126,7 +126,6 @@ final class HomeCollectionManager: NSObject, InteractionFeedbackService { /// NS
     
     private func reloadSection() {
         let currentSnapshot = dataSource.snapshot()
-        
         dataSource?.apply(currentSnapshot, animatingDifferences: false)
     }
     

@@ -12,11 +12,16 @@ import Combine
 
 // MARK: - HomeScreenMenuViewController
 
-final class HomeScreenMenuViewController: UIViewController, ActivityIndicatorPresentable {
+final class HomeScreenMenuViewController: UIViewController,
+                                            ActivityIndicatorPresentable,
+                                            SubscriptionsMultiPopupProvidable,
+                                            AlertPresentable {
     enum State {
         case showSubscriptionPopup(withContent: (UIImage, UIImage, String, String))
         case hideSubscriptionPopup
         case loadingState(_ isLoading: Bool)
+        case displayAlert(text: String, title: String?, action: VoidClosure?, buttonTitle: String?)
+        case displayHowTrialWorks
     }
     @IBOutlet weak var buttonsContainerView: UIView!
     @IBOutlet weak var cancelButton: TapAnimatedButton!
@@ -33,10 +38,11 @@ final class HomeScreenMenuViewController: UIViewController, ActivityIndicatorPre
     @IBOutlet weak var subscriptionTitleFirstLine: UILabel!
     @IBOutlet weak var subscriptionTitleSecondLine: UILabel!
     @IBOutlet weak var subscriptionContinueButton: UIButton!
-    @IBOutlet weak var secondBlurredShadowView: BlurredShadowView2!
     @IBOutlet weak var firstBlurredShadowView: BlurredShadowView1!
     @IBOutlet weak var restoreSubscriptionButton: UIButton!
-    
+    @IBOutlet weak var plansButton: UIButton!
+    @IBOutlet weak var howTrialWorksButton: UIButton!
+
     private let viewModel: HomeScreenMenuViewModel
     private var bag = Set<AnyCancellable>()
     private var purchaseConntinueAnimationsCancelable: AnyCancellable?
@@ -55,21 +61,9 @@ final class HomeScreenMenuViewController: UIViewController, ActivityIndicatorPre
         super.viewDidLoad()
         configureView()
         applyStyling()
-        buttonsContainerView.isHidden = true
-    }
-    override func viewWillAppear(_ animated: Bool) {
-        let runLoopMode = CFRunLoopMode.commonModes.rawValue
-        CFRunLoopPerformBlock(CFRunLoopGetMain(), runLoopMode) {
-            UIView.transition(with: self.view, duration: 0.5, options: .transitionFlipFromTop, animations: {
-                self.buttonsContainerView.isHidden = false
-            })
-        }
-        CFRunLoopWakeUp(CFRunLoopGetMain())
     }
     override func viewDidAppear(_ animated: Bool) {
         firstBlurredShadowView.animationDuration = 2000
-        secondBlurredShadowView.animationDuration = 2000
-        secondBlurredShadowView.setup()
         firstBlurredShadowView.setup()
     }
 }
@@ -79,17 +73,22 @@ final class HomeScreenMenuViewController: UIViewController, ActivityIndicatorPre
 private extension HomeScreenMenuViewController {
     func configureView() {
         subscriptionPriceLabel.text = viewModel.purchases.getPriceForPurchase(model: .weekly)
-        
+
         viewModel.output.sink(receiveValue: { [weak self] state in
+            guard let self = self else { return }
             switch state {
             case .showSubscriptionPopup(let content):
-                self?.showSubscriptionsPopup(with: content)
+                self.showSubscriptionsPopup(with: content)
             case .loadingState(let isLoading):
                 isLoading ?
-                self?.startActivityAnimation() :
-                self?.stopActivityAnimation()
+                self.startActivityAnimation() :
+                self.stopActivityAnimation()
             case .hideSubscriptionPopup:
-                self?.closeSubscriptionsPopup()
+                self.closeSubscriptionsPopup()
+            case .displayHowTrialWorks:
+                self.viewModel.input.send(.howTrialWorks(container: self.view))
+            case .displayAlert(let text, let title, let action, let buttonTitle):
+                self.displayAlert(fromParentView: self.view, with: text, title: title, action: action, buttonTitle: buttonTitle)
             }
         }).store(in: &bag)
         scanDocumentButton.publisher().sink(receiveValue: { [weak self] _ in
@@ -103,11 +102,8 @@ private extension HomeScreenMenuViewController {
         }).store(in: &bag)
         cancelButton.publisher().sink(receiveValue: { [weak self] _ in
             guard let self = self else { return }
-            UIView.transition(with: self.view, duration: 0.5, options: .transitionFlipFromBottom, animations: {
-                self.buttonsContainerView.isHidden = true
-            }, completion: { _ in
-                self.viewModel.input.send(.closeAction)
-            })
+            self.buttonsContainerView.isHidden = true
+            self.viewModel.input.send(.closeAction)
         }).store(in: &bag)
         printWebPage.publisher().sink(receiveValue: { [weak self] _ in
             self?.viewModel.input.send(.printWebPage)
@@ -119,14 +115,22 @@ private extension HomeScreenMenuViewController {
             self?.closeSubscriptionsPopup()
         }).store(in: &bag)
         subscriptionContinueButton.publisher().sink(receiveValue: { [weak self] _ in
-            self?.viewModel.input.send(.subscriptionBuy)
+            self?.viewModel.input.send(.purchase(.weekly))
         }).store(in: &bag)
         restoreSubscriptionButton.publisher().sink(receiveValue: { [weak self] _ in
             self?.viewModel.input.send(.restoreSubscription)
         }).store(in: &bag)
+        plansButton.publisher().sink(receiveValue: { [weak self] _ in
+            guard let self = self else { return }
+            self.viewModel.input.send(.otherPlans(container: self.view))
+        }).store(in: &bag)
+        howTrialWorksButton.publisher().sink(receiveValue: { [weak self] _ in
+            guard let self = self else { return }
+            self.viewModel.input.send(.howTrialWorks(container: self.view))
+        }).store(in: &bag)
     }
     
-    func showSubscriptionsPopup(with content: (UIImage, UIImage, String, String)) {
+    func showSubscriptionsPopup(with content: (UIImage, UIImage, String, String)) { 
         buttonsContainerView.isHidden = true
         subscriptionPopupImageView.image = content.0
         subscriptionContinueButton.setBackgroundImage(content.1, for: .normal)
@@ -135,8 +139,7 @@ private extension HomeScreenMenuViewController {
         subscriptionContinueButton.dropShadow(color: .white, opacity: 0.0, offSet: CGSize(width: 0, height: 0), radius: 15, scale: true)
         purchaseConntinueAnimationsCancelable = subscriptionContinueButton.animateBounceAndShadow()
         subscriptionCloseButton.animateFadeIn(1, delay: 4, finalAlpha: 0.6)
-        
-        UIView.transition(with: self.view, duration: 0.7, options: .transitionCurlDown, animations: { [weak self] in
+        UIView.transition(with: self.view, duration: 0.4, options: .transitionCrossDissolve, animations: { [weak self] in
             self?.subscriptionPopup.isHidden = false
         })
     }
@@ -145,7 +148,7 @@ private extension HomeScreenMenuViewController {
         subscriptionPopup.isHidden = true
         purchaseConntinueAnimationsCancelable?.cancel()
         subscriptionContinueButton.layer.removeAllAnimations()
-        UIView.transition(with: self.view, duration: 0.7, options: .transitionCurlUp, animations: { [weak self] in
+        UIView.transition(with: self.view, duration: 0.4, options: .transitionCrossDissolve, animations: { [weak self] in
             self?.subscriptionPopup.isHidden = true
         }, completion: { [weak self] _ in
             self?.viewModel.input.send(.closeAction)
@@ -164,10 +167,10 @@ private extension HomeScreenMenuViewController {
         cancelButton.addCornerRadius(StylingConstants.cornerRadiusDefault)
         printWebPage.addCornerRadius(StylingConstants.cornerRadiusDefault)
         printWebPage.addBorder(1.0, .black)
-        buttonsContainerView.dropShadow(color: .black, opacity: 0.6, offSet: .zero, radius: 30, scale: true)
+        buttonsContainerView.dropShadow(color: .black, opacity: 0.6, offSet: .zero, radius: 15, scale: true)
         subscriptionButtonsContainer.addCornerRadius(30.0)
         subscriptionButtonsContainer.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-        subscriptionButtonsContainer.dropShadow(color: .black, opacity: 0.6, offSet: .zero, radius: 30, scale: true)
+        subscriptionButtonsContainer.dropShadow(color: .black, opacity: 0.6, offSet: .zero, radius: 15, scale: true)
         let emitterForStepOne = ParticleEmitterView()
         emitterForStepOne.isUserInteractionEnabled = false
         emitterForStepOne.translatesAutoresizingMaskIntoConstraints = false

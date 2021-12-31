@@ -9,17 +9,17 @@
 
 import Foundation
 import Combine
-
 import PDFKit.PDFDocument
+import UIKit
 
 final class HomeScreenViewModel: UserSessionServiceProvidable,
                                  PdfServiceProvidable,
                                  SharedActivityResultsProvidable,
-                                 PurchesServiceProvidable {
+                                 PurchesServiceProvidable,
+                                 SubscriptionsMultiPopupProvidable {
     enum Action {
         case didPressCell(dataBox: PrintableDataBox)
         case openMenu
-        case deleteSelectedItem
         case deleteAll
         case viewDidAppear
         case viewDisapear
@@ -28,7 +28,7 @@ final class HomeScreenViewModel: UserSessionServiceProvidable,
         case getSelectionCount
         case didTapPrint
         case didTapSettings
-        case purchaseYearly
+        case purchase(Purchase)
         case restoreSubscription
     }
     
@@ -47,6 +47,7 @@ final class HomeScreenViewModel: UserSessionServiceProvidable,
     }
     func configureViewModel() {
         handleActions()
+        purchases.input.send(.congifure)
         coordinator.copyFromClipboardCallback = { [weak self] in
             self?.handleCopyFromClipboard()
         }
@@ -77,17 +78,25 @@ private extension HomeScreenViewModel {
     }
     
     func handleCopyFromClipboard() {
-        guard UIPasteboard.general.hasStrings,
-              let content = UIPasteboard.general.string,
-              let pdf = pdfService.createPDFWithText(content) else { return }
-        Logger.log(content)
-        let dataBox = PrintableDataBox(
-            id: Date().millisecondsSince1970.description,
-            image: self.pdfService.makeImageFromPDFDocument(pdf, withImageSize: UIScreen.main.bounds.size, ofPageIndex: 0),
-            document: pdf)
-        userSession.input.send(.addItems([dataBox]))
+        guard UIPasteboard.general.hasImages || UIPasteboard.general.hasStrings else {
+                return output.send(.displayAlert(text: "No photos or text was found, nothing to paste here",
+                                                 title: "Empty buffer", action: nil, buttonTitle: nil))
+        }
+        if UIPasteboard.general.hasStrings {
+            guard let content = UIPasteboard.general.string,
+                  let pdf = pdfService.createPDFWithText(content) else { return }
+            let dataBox = PrintableDataBox(
+                id: Date().millisecondsSince1970.description,
+                image: self.pdfService.makeImageFromPDFDocument(pdf, withImageSize: UIScreen.main.bounds.size, ofPageIndex: 0),
+                document: pdf)
+            userSession.input.send(.addItems([dataBox]))
+        } else if UIPasteboard.general.hasImages {
+            guard let images = UIPasteboard.general.images, !images.isEmpty else { return }
+            let dataBoxList = images.map { PrintableDataBox(id: Date().millisecondsSince1970.description,
+                                                            image: $0, document: nil) }
+            userSession.input.send(.addItems(dataBoxList))
+        }
     }
-    
     
     func searchForSharedItems() {
         let itemsCount = sharedResults.searchSharedItems()
@@ -109,8 +118,6 @@ private extension HomeScreenViewModel {
             case .viewDidAppear:
                 self?.searchForSharedItems()
                 self?.trackEnterForeground()
-                guard let isUserHasActiveSubscriptions = self?.purchases.isUserHasActiveSubscription else { return}
-                self?.output.send(.giftContainer(isHidden: isUserHasActiveSubscriptions))
             case .viewDisapear:
                 self?.trackingEnterForeground?.cancel()
             case .itemsDeleteConfirmed:
@@ -121,12 +128,10 @@ private extension HomeScreenViewModel {
                 self?.openFileEditorWithData(dataBox)
             case .didTapPrint:
                 self?.coordinator.displayPrintSettings()
-            case .deleteSelectedItem:
-                break
             case .getSelectionCount:
                 self?.userSession.input.send(.getSelectionCount)
-            case .purchaseYearly:
-                self?.purchaseSubscriptionPlan()
+            case .purchase(let purchase):
+                self?.purchaseSubscriptionPlan(purchase)
             case .restoreSubscription:
                 self?.restoreLastSubscription()
             }
@@ -167,7 +172,13 @@ private extension HomeScreenViewModel {
             case .timerTick(let timerTickText):
                 self?.output.send(.timerTick(timerText: timerTickText))
             case .hasActiveSubscriptions(let hasActiveSubscriptions):
-                self?.output.send(.giftContainer(isHidden: hasActiveSubscriptions))
+                guard let self = self else { return }
+                let shouldDisplayMultiSubscrPopup = PurchesService.shouldDisplaySubscriptionsForCurrentUser
+                self.output.send(.subscriptionStatus(hasActiveSubscriptions: hasActiveSubscriptions,
+                                                shouldDisplayMultiSubscrPopup: shouldDisplayMultiSubscrPopup))
+            case .gotUpdatedPrices(_, _, let yearly):
+                guard let yearlyStrike = self?.purchases.getFormattedYearPriceForPurchase(isPurePrice: true, size: 14) else { return }
+                self?.output.send(.gotUpdatedPricesForGift(yearly: yearly, yearlyStrike: yearlyStrike))
             }
         }).store(in: &bag)
     }
@@ -181,35 +192,46 @@ private extension HomeScreenViewModel {
             }
     }
     
-    private func purchaseSubscriptionPlan() {
-        let purchase = Purchase.annual
+    private func purchaseSubscriptionPlan(_ plan: Purchase) {
         output.send(.loadingState(true))
-        purchases.buy(model: purchase).sink(receiveCompletion: { [weak self] completion in
+        purchases.buy(model: plan).sink(receiveCompletion: { [weak self] completion in
             self?.output.send(.loadingState(false))
             switch completion {
             case .failure(let purchaseError):
-                Logger.log(purchaseError.localizedDescription, type: .purchase)
-                Logger.logError(purchaseError)
+                guard let self = self else { return }
+                let errorText = self.purchases.handleErrorAsErrorText(purchaseError)
+                self.output.send(.displayAlert(text: errorText, title: "Something went wrong" , action: nil, buttonTitle: nil))
             case _: break
             }
         }, receiveValue: { [weak self] in
-            Logger.log("Successfully purchased annual subscription", type: .purchase)
+            if self?.purchases.isUserHasActiveSubscription ?? false {
+                self?.output.send(.collapseAllSubscriptionPopupsWhichArePresented)
+                self?.output.send(.displayAlert(text: "Selected subscription plan was successfully purchased", title: "Success", action: nil, buttonTitle: nil))
+                Logger.log("Successfully purchased annual subscription", type: .purchase)
+            }
+            Logger.log("Purchase is not detected", type: .purchase)
         }).store(in: &bag)
     }
     
     private func restoreLastSubscription() {
         output.send(.loadingState(true))
         purchases.restoreLastExpiredPurchase().sink(receiveCompletion: { [weak self] completion in
-            self?.output.send(.loadingState(false))
+            guard let self = self else { return }
+            self.output.send(.loadingState(false))
             switch completion {
             case .failure(let error):
-                Logger.log(error.localizedDescription, type: .error)
+                let errorMessage = self.purchases.handleErrorAsErrorText(error)
+                self.output.send(.displayAlert(text: errorMessage, title: "Failed to restore", action: nil, buttonTitle: nil))
                 Logger.logError(error)
             case _: break
             }
         }, receiveValue: { [weak self] isSuccess in
-            isSuccess ? Logger.log("Subscription was renewed successfully", type: .purchase) :
-            Logger.log("Restore subscription failed", type: .purchase)
+            if isSuccess && self?.purchases.isUserHasActiveSubscription ?? false {
+                self?.output.send(.collapseAllSubscriptionPopupsWhichArePresented)
+                self?.output.send(.displayAlert(text: "Your previous subscription plan was successfully restored", title: "Success", action: nil, buttonTitle: nil))
+            } else {
+                self?.output.send(.displayAlert(text: "Any data related to your previous subscription plan wasn't found", title: "Nothing to restore", action: nil, buttonTitle: nil))
+            }
         }).store(in: &bag)
     }
 }

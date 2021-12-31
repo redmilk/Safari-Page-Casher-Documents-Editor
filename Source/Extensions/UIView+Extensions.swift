@@ -125,17 +125,17 @@ extension UIView: InteractionFeedbackService {
     }
     
     // MARK: - Animations
-    func animateShake() {
+    func animateShake(duration: TimeInterval = 0.6, delay: TimeInterval = 5) {
         let animation = CAKeyframeAnimation(keyPath: "transform.translation.x")
         animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
-        animation.duration = 0.6
+        animation.duration = duration
         animation.values = [-20.0, 20.0, -20.0, 20.0, -10.0, 10.0, -5.0, 5.0, 0.0 ]
-        animation.beginTime = CACurrentMediaTime() + 5
+        animation.beginTime = CACurrentMediaTime() + delay
         layer.add(animation, forKey: "shake")
     }
     func animateBounceAndShadow() -> AnyCancellable? {
         var cancelable: AnyCancellable?
-        cancelable = Timer.publish(every: 3, tolerance: .none, on: RunLoop.main, in: .common, options: nil)
+        cancelable = Timer.publish(every: 2, tolerance: .none, on: RunLoop.main, in: .common, options: nil)
             .autoconnect()
             .eraseToAnyPublisher()
             .sink(receiveValue: { [weak self] _ in
@@ -143,7 +143,7 @@ extension UIView: InteractionFeedbackService {
                 UIView.animate(withDuration: 1.5, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 15, options: [.curveEaseInOut, .allowUserInteraction], animations: {
                     self?.transform = .identity
                 }, completion: nil)
-                self?.generateInteractionFeedback()
+                //self?.generateInteractionFeedback()
                 let animation = CABasicAnimation(keyPath: "shadowOpacity")
                 animation.fromValue = 1.0
                 animation.toValue = 0.0
@@ -166,6 +166,28 @@ extension UIView: InteractionFeedbackService {
         UIView.animate(withDuration: duration, delay: delay, options: [.allowUserInteraction]) {
             self.alpha = finalAlpha
         }
+    }
+    func animateFallingWithDeformation(duration: TimeInterval, delay: TimeInterval) {
+        UIView.animateKeyframes(withDuration: duration, delay: delay, options: [.calculationModeCubic], animations: {
+            UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.0, animations: {
+                self.transform = CGAffineTransform.identity.translatedBy(x: 0, y: -300)
+            })
+            UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.5, animations: {
+                self.transform = .identity
+            })
+            UIView.addKeyframe(withRelativeStartTime: 0.2, relativeDuration: 0.2, animations: {
+                self.transform = CGAffineTransform.identity.scaledBy(x: 1.0, y: 0.4)
+            })
+            UIView.addKeyframe(withRelativeStartTime: 0.6, relativeDuration: 0.2, animations: {
+                self.transform = .identity
+            })
+        }, completion: nil)
+    }
+    func animateRotationAround(_ spinsNumber: Float, duration: TimeInterval) {
+        let spinAnimation = CABasicAnimation.init(keyPath: "transform.rotation")
+        spinAnimation.toValue = NSNumber(value: spinsNumber * -Float.pi)
+        spinAnimation.duration = duration
+        layer.add(spinAnimation, forKey: "spinAnimation")
     }
 }
 

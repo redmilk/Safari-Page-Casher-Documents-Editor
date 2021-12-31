@@ -21,7 +21,7 @@ extension ActivityIndicatorPresentable {
         view.addSubview(dimmView)
         dimmView.constraintToSides(inside: view)
         dimmView.backgroundColor = .black.withAlphaComponent(0.7)
-        dimmView.isUserInteractionEnabled = false
+        view.isUserInteractionEnabled = false
         let indicator = CirclesActivityIndicator().makeActivityIndicator()
         dimmView.addSubview(indicator)
         indicator.center = view.center
@@ -32,6 +32,7 @@ extension ActivityIndicatorPresentable {
             self.view.subviews.forEach {
                 if $0.tag == activityViewTag {
                     $0.removeFromSuperview()
+                    self.view.isUserInteractionEnabled = true
                     return
                 }
             }

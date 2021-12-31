@@ -24,7 +24,12 @@ final class SettingsViewController: UIViewController, MFMailComposeViewControlle
     @IBOutlet private weak var privacyPolicyButton: UIButton!
     @IBOutlet private weak var termsOfUseButton: UIButton!
     @IBOutlet private weak var shareButton: UIButton!
+    @IBOutlet private weak var bluredEffectView: UIButton!
     
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+
     private let viewModel: SettingsViewModel
     private var bag = Set<AnyCancellable>()
     
@@ -44,7 +49,10 @@ final class SettingsViewController: UIViewController, MFMailComposeViewControlle
         configureView()
         handleStates()
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        title = "Settings"
+    }
     func mailComposeController(_ controller: MFMailComposeViewController,
                                didFinishWith result: MFMailComposeResult, error: Error?) {
         controller.dismiss(animated: true)
@@ -72,7 +80,6 @@ private extension SettingsViewController {
         navigationController?.navigationBar.tintColor = .white
         title = "Settings"
         navigationBarExtender.addCornerRadius(30)
-        navigationBarExtender.dropShadow(color: .black, opacity: 0.6, offSet: .zero, radius: 30, scale: true)
         
         manageSubscriptionsButton.publisher()
             .sink(receiveValue: { [weak self] _ in
@@ -125,8 +132,6 @@ private extension SettingsViewController {
             let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
             /// Excluded Activities
             activityVC.excludedActivityTypes = [UIActivity.ActivityType.airDrop, UIActivity.ActivityType.addToReadingList]
-            
-            //activityVC.popoverPresentationController?.sourceView = sender
             self.present(activityVC, animated: true, completion: nil)
         }
     }

@@ -11,7 +11,8 @@ import Combine
 protocol UserSession {
     var input: PassthroughSubject<UserSessionImpl.Action, Never> { get }
     var output: PassthroughSubject<UserSessionImpl.Response, Never> { get }
-    
+    var itemsTotal: Int { get }
+
     /// user session items storage
     var sessionResult: [PrintableDataBox] { get }
     
@@ -47,6 +48,9 @@ final class UserSessionImpl: UserSession {
     var sessionResult: [PrintableDataBox] { Array(sessionData.keys).sorted { $0.id < $1.id } }
     var editingTempFile: TemporaryFile? { _currentEditingFile }
     var editingFileDataBox: PrintableDataBox? { _editingFileDataBox }
+    var itemsTotal: Int {
+        sessionData.count
+    }
     
     private var sessionData: [PrintableDataBox: PrintableDataBox] = [:] {
         didSet {
@@ -68,6 +72,7 @@ final class UserSessionImpl: UserSession {
                 self.output.send(.addedItems(Array(self.sessionData.keys).sorted { $0.id < $1.id }))
             case .deleteAll:
                 self.sessionData.keys.forEach { $0.isSelected = true }
+                self.output.send(.selectionCount(0))
             case .createTempFileForEditing(let filename, let dataBox):
                 self.createTemporaryFile(withNameAndFormat: filename)
                 self._editingFileDataBox = dataBox

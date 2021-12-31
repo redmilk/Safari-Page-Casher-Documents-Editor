@@ -48,7 +48,7 @@ final class HomeScreenCoordinator: CoordinatorProtocol, HomeScreenCoordinatorPro
     private lazy var cameraScaner: CameraScanManager = CameraScanManagerImpl()
     private lazy var photoalbumManager: PhotoalbumManager = PhotoalbumManagerImpl()
     private lazy var cloudFilesManager: CloudFilesManager = CloudFilesManagerImpl()
-    private lazy var webpageManager = WebpageManager(initialUrlString: "www.google.com")
+    private lazy var webpageManager = WebpageManager(initialUrlString: "google.com")
     private var pdfEditManager: PDFEditManager!
     
     private lazy var presentationCallback: VoidClosure = { [weak self] in }
