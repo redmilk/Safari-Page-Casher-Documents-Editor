@@ -93,6 +93,10 @@
 		79B787F82750B429009D7655 /* HomeScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B787F42750B429009D7655 /* HomeScreenViewModel.swift */; };
 		79B787F92750B429009D7655 /* HomeScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79B787F52750B429009D7655 /* HomeScreenViewController.xib */; };
 		79BBD8AB276319660087B1E0 /* ParticleEmitterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BBD8AA276319660087B1E0 /* ParticleEmitterView.swift */; };
+		79BF3844277F0EA100BB3D54 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 79BF3843277F0EA100BB3D54 /* Lottie */; };
+		79BF3851277F23FF00BB3D54 /* signature.json in Resources */ = {isa = PBXBuildFile; fileRef = 79BF384E277F23FF00BB3D54 /* signature.json */; };
+		79BF3852277F23FF00BB3D54 /* scaner.json in Resources */ = {isa = PBXBuildFile; fileRef = 79BF384F277F23FF00BB3D54 /* scaner.json */; };
+		79BF3853277F23FF00BB3D54 /* printer.json in Resources */ = {isa = PBXBuildFile; fileRef = 79BF3850277F23FF00BB3D54 /* printer.json */; };
 		79C362B0276CAB58001B1745 /* SharedActivityResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C362AF276CAB57001B1745 /* SharedActivityResults.swift */; };
 		79C7B2DF2772186A0058C759 /* CirclesActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C7B2DE2772186A0058C759 /* CirclesActivityIndicator.swift */; };
 		79D102A227717C9A00F3C4D5 /* SubscriptionPlanPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79D102A127717C9A00F3C4D5 /* SubscriptionPlanPopup.xib */; };
@@ -232,6 +236,9 @@
 		79B787F42750B429009D7655 /* HomeScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenViewModel.swift; sourceTree = "<group>"; };
 		79B787F52750B429009D7655 /* HomeScreenViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeScreenViewController.xib; sourceTree = "<group>"; };
 		79BBD8AA276319660087B1E0 /* ParticleEmitterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticleEmitterView.swift; sourceTree = "<group>"; };
+		79BF384E277F23FF00BB3D54 /* signature.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = signature.json; sourceTree = "<group>"; };
+		79BF384F277F23FF00BB3D54 /* scaner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = scaner.json; sourceTree = "<group>"; };
+		79BF3850277F23FF00BB3D54 /* printer.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = printer.json; sourceTree = "<group>"; };
 		79C362AF276CAB57001B1745 /* SharedActivityResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedActivityResults.swift; sourceTree = "<group>"; };
 		79C7B2DE2772186A0058C759 /* CirclesActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CirclesActivityIndicator.swift; sourceTree = "<group>"; };
 		79D102A127717C9A00F3C4D5 /* SubscriptionPlanPopup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubscriptionPlanPopup.xib; sourceTree = "<group>"; };
@@ -263,6 +270,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				798874642770C9A10027C121 /* ApphudSDK in Frameworks */,
+				79BF3844277F0EA100BB3D54 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -588,6 +596,16 @@
 			path = HomeScreen;
 			sourceTree = "<group>";
 		};
+		79BF3845277F12EB00BB3D54 /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				79BF384E277F23FF00BB3D54 /* signature.json */,
+				79BF3850277F23FF00BB3D54 /* printer.json */,
+				79BF384F277F23FF00BB3D54 /* scaner.json */,
+			);
+			path = Animations;
+			sourceTree = "<group>";
+		};
 		79D102A327717CA000F3C4D5 /* SubscriptionsPopup */ = {
 			isa = PBXGroup;
 			children = (
@@ -654,6 +672,7 @@
 		79F913C92746509E00771FFE /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				79BF3845277F12EB00BB3D54 /* Animations */,
 				7997DE2C2753F81C00B33300 /* Fonts */,
 				79F913BC2746501900771FFE /* Assets.xcassets */,
 			);
@@ -714,6 +733,7 @@
 			name = AirPrint;
 			packageProductDependencies = (
 				798874632770C9A10027C121 /* ApphudSDK */,
+				79BF3843277F0EA100BB3D54 /* Lottie */,
 			);
 			productName = Jiggle;
 			productReference = 79F913B02746501500771FFE /* AirPrint.app */;
@@ -748,6 +768,7 @@
 			mainGroup = 79F913A72746501500771FFE;
 			packageReferences = (
 				798874622770C9A10027C121 /* XCRemoteSwiftPackageReference "ApphudSDK" */,
+				79BF3842277F0EA100BB3D54 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = 79F913B12746501500771FFE /* Products */;
 			projectDirPath = "";
@@ -772,14 +793,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79BF3853277F23FF00BB3D54 /* printer.json in Resources */,
 				7997DE372753F82A00B33300 /* Poppins-Medium.otf in Resources */,
 				79B787CE2750B250009D7655 /* PrintingOptionsViewController.xib in Resources */,
 				7997DE362753F82A00B33300 /* Poppins-Light.otf in Resources */,
 				79A725B22750C41700D8B330 /* ResultPreviewCollectionCell.xib in Resources */,
 				79697CD8275AF1FC0056B0B0 /* WebpageViewController.xib in Resources */,
+				79BF3852277F23FF00BB3D54 /* scaner.json in Resources */,
 				79F913C02746501900771FFE /* LaunchScreen.storyboard in Resources */,
 				79D102A227717C9A00F3C4D5 /* SubscriptionPlanPopup.xib in Resources */,
 				791CC442276441B200813FAC /* ManageSubscriptionsViewController.xib in Resources */,
+				79BF3851277F23FF00BB3D54 /* signature.json in Resources */,
 				794B5721276C4791001A7FE6 /* SharedMediaFetcherViewController.xib in Resources */,
 				7997DE392753F82A00B33300 /* Poppins-Regular.otf in Resources */,
 				79F913BD2746501900771FFE /* Assets.xcassets in Resources */,
@@ -1189,6 +1213,14 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		79BF3842277F0EA100BB3D54 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1196,6 +1228,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 798874622770C9A10027C121 /* XCRemoteSwiftPackageReference "ApphudSDK" */;
 			productName = ApphudSDK;
+		};
+		79BF3843277F0EA100BB3D54 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 79BF3842277F0EA100BB3D54 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

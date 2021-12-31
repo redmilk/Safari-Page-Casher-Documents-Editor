@@ -9,6 +9,9 @@
 
 import UIKit
 import Combine
+import Lottie
+
+var currentAnimationIndex: Int = -1
 
 // MARK: - OnboardingViewController
 
@@ -23,16 +26,20 @@ struct OnboardingPageModel {
 }
 
 final class OnboardingViewController: UIViewController {
-        
+    @IBOutlet weak var printerAnim: AnimationView!
+    @IBOutlet weak var scanerAnim: AnimationView!
+    @IBOutlet weak var signatureAnim: AnimationView!
+    
     @IBOutlet weak var primaryImageView: UIImageView!
     @IBOutlet weak var pagingImageView: UIImageView!
     @IBOutlet weak var primaryLabel: UILabel!
     @IBOutlet weak var primaryLabelSecondLine: UILabel!
     @IBOutlet weak var descriptionText: UILabel!
     @IBOutlet weak var continueButton: UIButton!
-    
+    private var animationView: AnimationView?
     private var bag = Set<AnyCancellable>()
     private let model: OnboardingPageModel
+
     
     init(model: OnboardingPageModel) {
         self.model = model
@@ -65,5 +72,57 @@ final class OnboardingViewController: UIViewController {
                 }
             })
             .store(in: &bag)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+//        printerAnim.play()
+//
+//        scanerAnim.play()
+//        scanerAnim.isHidden = true
+//        signatureAnim.play()
+//        signatureAnim.isHidden = true
+//        printerAnim.play()
+        changeAnimation()
+    }
+    
+    private func changeAnimation() {
+        currentAnimationIndex += 1
+        
+        switch currentAnimationIndex {
+        case 0:
+            printerAnim.isHidden = true
+            scanerAnim.isHidden = false
+            signatureAnim.isHidden = true
+            scanerAnim.loopMode = .autoReverse
+            scanerAnim.animationSpeed = 1.5
+            signatureAnim.pause()
+            printerAnim.pause()
+            scanerAnim.play()
+            scanerAnim.contentMode = .scaleAspectFit
+        case 1:
+            printerAnim.isHidden = true
+            scanerAnim.isHidden = true
+            signatureAnim.isHidden = false
+            signatureAnim.loopMode = .autoReverse
+            signatureAnim.animationSpeed = 1.5
+            signatureAnim.contentMode = .scaleAspectFit
+            signatureAnim.pause()
+            printerAnim.pause()
+            signatureAnim.play()
+            
+        case 2:
+            printerAnim.isHidden = false
+            printerAnim.loopMode = .autoReverse
+            printerAnim.animationSpeed = 0.5
+            printerAnim.contentMode = .scaleAspectFit
+            scanerAnim.isHidden = true
+            signatureAnim.isHidden = true
+            signatureAnim.pause()
+            printerAnim.play()
+            scanerAnim.pause()
+
+        case _: break
+        }
     }
 }

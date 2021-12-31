@@ -25,6 +25,9 @@
                 <outlet property="primaryImageView" destination="vQZ-nc-PHS" id="kgp-G9-lUF"/>
                 <outlet property="primaryLabel" destination="zhA-jp-hE5" id="bkp-x7-1Yg"/>
                 <outlet property="primaryLabelSecondLine" destination="I9v-Um-izh" id="tY3-Z4-xLP"/>
+                <outlet property="printerAnim" destination="QZz-3V-LBt" id="wMY-xw-F7E"/>
+                <outlet property="scanerAnim" destination="1K0-hh-hCL" id="OpQ-VE-cXV"/>
+                <outlet property="signatureAnim" destination="Nfv-zu-SOE" id="xjw-3n-t8z"/>
                 <outlet property="view" destination="iN0-l3-epB" id="6J3-Kb-OnP"/>
             </connections>
         </placeholder>
@@ -51,7 +54,7 @@
                                 <constraint firstAttribute="width" constant="215" id="bQ3-yh-sQJ"/>
                             </constraints>
                         </view>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="onboarding-image-1" translatesAutoresizingMaskIntoConstraints="NO" id="vQZ-nc-PHS">
+                        <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="onboarding-image-1" translatesAutoresizingMaskIntoConstraints="NO" id="vQZ-nc-PHS">
                             <rect key="frame" x="62" y="100.33333333333334" width="251" height="367.66666666666663"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="vQZ-nc-PHS" secondAttribute="height" multiplier="277:406" id="6DM-Cr-IlZ"/>
@@ -64,6 +67,34 @@
                                 <constraint firstAttribute="height" constant="6" id="tpb-nj-xlp"/>
                             </constraints>
                         </imageView>
+                        <view userInteractionEnabled="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="QZz-3V-LBt" userLabel="Printer" customClass="AnimationView" customModule="Lottie">
+                            <rect key="frame" x="12.666666666666657" y="0.0" width="350" height="650"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="350" id="AYY-eJ-UgN"/>
+                                <constraint firstAttribute="height" constant="650" id="N4I-os-giH"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="animationName" value="printer"/>
+                            </userDefinedRuntimeAttributes>
+                        </view>
+                        <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="1K0-hh-hCL" userLabel="Scaner" customClass="AnimationView" customModule="Lottie">
+                            <rect key="frame" x="12.666666666666657" y="0.0" width="350" height="650"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="animationName" value="scaner"/>
+                            </userDefinedRuntimeAttributes>
+                        </view>
+                        <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nfv-zu-SOE" userLabel="Documents" customClass="AnimationView" customModule="Lottie">
+                            <rect key="frame" x="12.666666666666657" y="0.0" width="350" height="650"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="animationName" value="signature"/>
+                            </userDefinedRuntimeAttributes>
+                        </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scan your documents" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zhA-jp-hE5">
                             <rect key="frame" x="35.666666666666657" y="514" width="303.66666666666674" height="31"/>
                             <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="22"/>
@@ -76,7 +107,7 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZbL-vu-pvX">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZbL-vu-pvX" userLabel="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor">
                             <rect key="frame" x="56.333333333333343" y="590" width="262.33333333333326" height="33.666666666666629"/>
                             <fontDescription key="fontDescription" name="Poppins-Light" family="Poppins" pointSize="12"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -96,25 +127,35 @@
                     <constraints>
                         <constraint firstItem="Gh2-rZ-Hqh" firstAttribute="centerX" secondItem="vQZ-nc-PHS" secondAttribute="centerX" id="0jd-SI-Lch"/>
                         <constraint firstItem="bLG-UY-Yur" firstAttribute="centerX" secondItem="wZU-mK-rTN" secondAttribute="centerX" id="3ea-iW-FaV"/>
+                        <constraint firstItem="Nfv-zu-SOE" firstAttribute="height" secondItem="QZz-3V-LBt" secondAttribute="height" id="61m-tQ-moJ"/>
                         <constraint firstItem="vQZ-nc-PHS" firstAttribute="centerY" secondItem="wZU-mK-rTN" secondAttribute="centerY" multiplier="0.7" id="6hZ-jy-FuC"/>
+                        <constraint firstItem="1K0-hh-hCL" firstAttribute="centerX" secondItem="QZz-3V-LBt" secondAttribute="centerX" id="7Ik-dt-nzN"/>
                         <constraint firstItem="dhI-ji-MyE" firstAttribute="top" secondItem="wZU-mK-rTN" secondAttribute="top" id="AIl-0b-FmQ"/>
                         <constraint firstAttribute="trailing" secondItem="dhI-ji-MyE" secondAttribute="trailing" id="Dxx-fK-XVH"/>
+                        <constraint firstItem="1K0-hh-hCL" firstAttribute="height" secondItem="QZz-3V-LBt" secondAttribute="height" id="G4C-NS-sz1"/>
                         <constraint firstItem="Gh2-rZ-Hqh" firstAttribute="top" secondItem="vQZ-nc-PHS" secondAttribute="bottom" constant="10" id="G9M-pQ-6WE"/>
+                        <constraint firstItem="Nfv-zu-SOE" firstAttribute="centerY" secondItem="QZz-3V-LBt" secondAttribute="centerY" id="Gl1-2Y-sv3"/>
+                        <constraint firstItem="Nfv-zu-SOE" firstAttribute="centerX" secondItem="QZz-3V-LBt" secondAttribute="centerX" id="Lx0-xq-QzH"/>
                         <constraint firstItem="I9v-Um-izh" firstAttribute="centerX" secondItem="zhA-jp-hE5" secondAttribute="centerX" id="OYr-R0-UE9"/>
                         <constraint firstItem="zhA-jp-hE5" firstAttribute="centerX" secondItem="wZU-mK-rTN" secondAttribute="centerX" id="PEd-d1-cdc"/>
                         <constraint firstItem="ZbL-vu-pvX" firstAttribute="width" secondItem="wZU-mK-rTN" secondAttribute="width" multiplier="0.7" id="QR4-6q-xSY"/>
                         <constraint firstItem="bLG-UY-Yur" firstAttribute="centerY" secondItem="wZU-mK-rTN" secondAttribute="centerY" multiplier="1.8" id="RQY-ZK-Hsa"/>
                         <constraint firstItem="vQZ-nc-PHS" firstAttribute="width" secondItem="wZU-mK-rTN" secondAttribute="width" multiplier="0.669082" id="RzX-x8-brw"/>
                         <constraint firstItem="1al-Op-cFy" firstAttribute="leading" secondItem="wZU-mK-rTN" secondAttribute="leading" id="Wk1-yG-3D0"/>
+                        <constraint firstItem="1K0-hh-hCL" firstAttribute="width" secondItem="QZz-3V-LBt" secondAttribute="width" id="Xbf-d7-e7y"/>
                         <constraint firstItem="vQZ-nc-PHS" firstAttribute="centerX" secondItem="wZU-mK-rTN" secondAttribute="centerX" id="Y5r-xI-Sox"/>
+                        <constraint firstItem="QZz-3V-LBt" firstAttribute="centerX" secondItem="wZU-mK-rTN" secondAttribute="centerX" id="Yc1-mi-eoA"/>
                         <constraint firstAttribute="bottom" secondItem="1al-Op-cFy" secondAttribute="bottom" constant="-300" id="YhW-Yl-0jv"/>
                         <constraint firstItem="1al-Op-cFy" firstAttribute="width" secondItem="1al-Op-cFy" secondAttribute="height" multiplier="1:1" id="a9p-ZV-PMu"/>
                         <constraint firstItem="ZbL-vu-pvX" firstAttribute="centerX" secondItem="wZU-mK-rTN" secondAttribute="centerX" id="b4c-YJ-0yI"/>
                         <constraint firstItem="zhA-jp-hE5" firstAttribute="width" secondItem="wZU-mK-rTN" secondAttribute="width" multiplier="0.809179" id="cAv-fd-vBk"/>
+                        <constraint firstItem="1K0-hh-hCL" firstAttribute="centerY" secondItem="QZz-3V-LBt" secondAttribute="centerY" id="g0y-V5-aJo"/>
                         <constraint firstItem="zhA-jp-hE5" firstAttribute="top" secondItem="Gh2-rZ-Hqh" secondAttribute="bottom" constant="30" id="gLL-X0-ixD"/>
+                        <constraint firstItem="QZz-3V-LBt" firstAttribute="top" secondItem="wZU-mK-rTN" secondAttribute="top" id="iTU-WJ-LqE"/>
                         <constraint firstItem="I9v-Um-izh" firstAttribute="width" secondItem="zhA-jp-hE5" secondAttribute="width" id="iVJ-y3-zqg"/>
                         <constraint firstItem="I9v-Um-izh" firstAttribute="top" secondItem="zhA-jp-hE5" secondAttribute="bottom" constant="4" id="nOV-lN-LZB"/>
                         <constraint firstItem="ZbL-vu-pvX" firstAttribute="top" secondItem="I9v-Um-izh" secondAttribute="bottom" constant="10" id="srS-ei-dr4"/>
+                        <constraint firstItem="Nfv-zu-SOE" firstAttribute="width" secondItem="QZz-3V-LBt" secondAttribute="width" id="v2r-CU-c5j"/>
                     </constraints>
                 </view>
             </subviews>
