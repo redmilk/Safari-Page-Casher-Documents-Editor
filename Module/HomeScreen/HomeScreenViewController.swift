@@ -255,7 +255,7 @@ private extension HomeScreenViewController {
         }).store(in: &bag)
         otherPlansButton.publisher().sink(receiveValue: { [weak self] _ in
             guard let self = self else { return }
-            self.displayMultisubscriptionsPopup(inContainer: self.subscriptionContainer, optionToShowFirst: .weekly)
+            self.displayMultisubscriptionsPopup(inContainer: self.subscriptionContainer, optionToShowFirst: .planOptions)
         }).store(in: &bag)
         howTrialWorksButton.publisher().sink(receiveValue: { [weak self] _ in
             guard let self = self else { return }
