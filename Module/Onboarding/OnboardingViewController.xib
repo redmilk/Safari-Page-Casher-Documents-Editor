@@ -55,13 +55,13 @@
                             </constraints>
                         </view>
                         <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="onboarding-image-1" translatesAutoresizingMaskIntoConstraints="NO" id="vQZ-nc-PHS">
-                            <rect key="frame" x="62" y="100.33333333333334" width="251" height="367.66666666666663"/>
+                            <rect key="frame" x="49" y="121.66666666666669" width="277" height="325"/>
                             <constraints>
-                                <constraint firstAttribute="width" secondItem="vQZ-nc-PHS" secondAttribute="height" multiplier="277:406" id="6DM-Cr-IlZ"/>
+                                <constraint firstAttribute="width" constant="277" id="tvf-TL-Rf3"/>
                             </constraints>
                         </imageView>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="onboarding-pagination-1" translatesAutoresizingMaskIntoConstraints="NO" id="Gh2-rZ-Hqh">
-                            <rect key="frame" x="165" y="478" width="45" height="6"/>
+                            <rect key="frame" x="165" y="456.66666666666669" width="45" height="6"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="45" id="POl-XY-69Z"/>
                                 <constraint firstAttribute="height" constant="6" id="tpb-nj-xlp"/>
@@ -96,25 +96,25 @@
                             </userDefinedRuntimeAttributes>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scan your documents" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zhA-jp-hE5">
-                            <rect key="frame" x="35.666666666666657" y="514" width="303.66666666666674" height="31"/>
+                            <rect key="frame" x="35.666666666666657" y="492.66666666666669" width="303.66666666666674" height="31.000000000000057"/>
                             <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="22"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="quickly and easely" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I9v-Um-izh">
-                            <rect key="frame" x="35.666666666666657" y="549" width="303.66666666666674" height="31"/>
+                            <rect key="frame" x="35.666666666666657" y="527.66666666666663" width="303.66666666666674" height="31"/>
                             <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="22"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZbL-vu-pvX" userLabel="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor">
-                            <rect key="frame" x="56.333333333333343" y="590" width="262.33333333333326" height="33.666666666666629"/>
+                            <rect key="frame" x="56.333333333333343" y="568.66666666666663" width="262.33333333333326" height="33.666666666666629"/>
                             <fontDescription key="fontDescription" name="Poppins-Light" family="Poppins" pointSize="12"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bLG-UY-Yur" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
-                            <rect key="frame" x="20" y="700.66666666666663" width="335" height="60"/>
+                            <rect key="frame" x="20" y="722" width="335" height="60"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="335" id="5Jy-m5-3Zv"/>
                                 <constraint firstAttribute="height" constant="60" id="O2d-Ag-p0s"/>
@@ -135,12 +135,11 @@
                         <constraint firstItem="1K0-hh-hCL" firstAttribute="height" secondItem="QZz-3V-LBt" secondAttribute="height" id="G4C-NS-sz1"/>
                         <constraint firstItem="Gh2-rZ-Hqh" firstAttribute="top" secondItem="vQZ-nc-PHS" secondAttribute="bottom" constant="10" id="G9M-pQ-6WE"/>
                         <constraint firstItem="Nfv-zu-SOE" firstAttribute="centerY" secondItem="QZz-3V-LBt" secondAttribute="centerY" id="Gl1-2Y-sv3"/>
+                        <constraint firstItem="vQZ-nc-PHS" firstAttribute="height" secondItem="wZU-mK-rTN" secondAttribute="height" multiplier="0.4" id="KBk-gm-rV5"/>
                         <constraint firstItem="Nfv-zu-SOE" firstAttribute="centerX" secondItem="QZz-3V-LBt" secondAttribute="centerX" id="Lx0-xq-QzH"/>
                         <constraint firstItem="I9v-Um-izh" firstAttribute="centerX" secondItem="zhA-jp-hE5" secondAttribute="centerX" id="OYr-R0-UE9"/>
                         <constraint firstItem="zhA-jp-hE5" firstAttribute="centerX" secondItem="wZU-mK-rTN" secondAttribute="centerX" id="PEd-d1-cdc"/>
                         <constraint firstItem="ZbL-vu-pvX" firstAttribute="width" secondItem="wZU-mK-rTN" secondAttribute="width" multiplier="0.7" id="QR4-6q-xSY"/>
-                        <constraint firstItem="bLG-UY-Yur" firstAttribute="centerY" secondItem="wZU-mK-rTN" secondAttribute="centerY" multiplier="1.8" id="RQY-ZK-Hsa"/>
-                        <constraint firstItem="vQZ-nc-PHS" firstAttribute="width" secondItem="wZU-mK-rTN" secondAttribute="width" multiplier="0.669082" id="RzX-x8-brw"/>
                         <constraint firstItem="1al-Op-cFy" firstAttribute="leading" secondItem="wZU-mK-rTN" secondAttribute="leading" id="Wk1-yG-3D0"/>
                         <constraint firstItem="1K0-hh-hCL" firstAttribute="width" secondItem="QZz-3V-LBt" secondAttribute="width" id="Xbf-d7-e7y"/>
                         <constraint firstItem="vQZ-nc-PHS" firstAttribute="centerX" secondItem="wZU-mK-rTN" secondAttribute="centerX" id="Y5r-xI-Sox"/>
@@ -154,6 +153,7 @@
                         <constraint firstItem="QZz-3V-LBt" firstAttribute="top" secondItem="wZU-mK-rTN" secondAttribute="top" id="iTU-WJ-LqE"/>
                         <constraint firstItem="I9v-Um-izh" firstAttribute="width" secondItem="zhA-jp-hE5" secondAttribute="width" id="iVJ-y3-zqg"/>
                         <constraint firstItem="I9v-Um-izh" firstAttribute="top" secondItem="zhA-jp-hE5" secondAttribute="bottom" constant="4" id="nOV-lN-LZB"/>
+                        <constraint firstAttribute="bottom" secondItem="bLG-UY-Yur" secondAttribute="bottom" constant="30" id="qsV-CT-aRv"/>
                         <constraint firstItem="ZbL-vu-pvX" firstAttribute="top" secondItem="I9v-Um-izh" secondAttribute="bottom" constant="10" id="srS-ei-dr4"/>
                         <constraint firstItem="Nfv-zu-SOE" firstAttribute="width" secondItem="QZz-3V-LBt" secondAttribute="width" id="v2r-CU-c5j"/>
                     </constraints>
