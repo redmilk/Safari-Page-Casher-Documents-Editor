@@ -601,8 +601,8 @@
                                         </label>
                                     </subviews>
                                 </stackView>
-                                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" translatesAutoresizingMaskIntoConstraints="NO" id="GcM-cF-HH4">
-                                    <rect key="frame" x="20.5" y="311" width="373" height="29"/>
+                                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="GcM-cF-HH4">
+                                    <rect key="frame" x="95" y="311" width="224" height="29"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="752" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="prc-mo-asu" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="122" height="29"/>
@@ -613,15 +613,15 @@
                                             </state>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1TZ-bP-uo1" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
-                                            <rect key="frame" x="159.5" y="0.0" width="70" height="29"/>
+                                            <rect key="frame" x="154" y="0.0" width="70" height="29"/>
                                             <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="12"/>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                             <state key="normal" title="Other plans">
                                                 <color key="titleColor" red="0.33623573179999999" green="0.67496186489999999" blue="0.94124519819999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             </state>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3d0-F4-THD" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
-                                            <rect key="frame" x="283" y="0.0" width="90" height="29"/>
+                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3d0-F4-THD" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
+                                            <rect key="frame" x="224" y="0.0" width="0.0" height="29"/>
                                             <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="12"/>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                             <state key="normal" title="How trial works">
@@ -645,7 +645,6 @@
                                 <constraint firstItem="QY0-gN-3Lb" firstAttribute="top" secondItem="wcV-v9-Lgf" secondAttribute="bottom" constant="20" id="b23-lU-Q0F"/>
                                 <constraint firstItem="GcM-cF-HH4" firstAttribute="centerX" secondItem="AmA-DZ-MOr" secondAttribute="centerX" id="er8-Cw-p0D"/>
                                 <constraint firstItem="wcV-v9-Lgf" firstAttribute="top" secondItem="AmA-DZ-MOr" secondAttribute="top" constant="30" id="muW-uM-pKE"/>
-                                <constraint firstItem="GcM-cF-HH4" firstAttribute="width" secondItem="AmA-DZ-MOr" secondAttribute="width" multiplier="0.9" id="uPp-PQ-6PE"/>
                                 <constraint firstItem="dps-bv-rr3" firstAttribute="top" secondItem="LqU-E2-Z3a" secondAttribute="bottom" constant="30" id="uRP-3L-VDe"/>
                                 <constraint firstItem="P3l-ku-WnT" firstAttribute="centerX" secondItem="AmA-DZ-MOr" secondAttribute="centerX" id="y1n-V7-Jny"/>
                                 <constraint firstItem="LqU-E2-Z3a" firstAttribute="centerX" secondItem="AmA-DZ-MOr" secondAttribute="centerX" id="zBu-Qw-6Xq"/>

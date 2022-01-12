@@ -46,7 +46,6 @@ final class HomeScreenMenuViewController: UIViewController,
     private let viewModel: HomeScreenMenuViewModel
     private var bag = Set<AnyCancellable>()
     private var purchaseConntinueAnimationsCancelable: AnyCancellable?
-
     init(viewModel: HomeScreenMenuViewModel) {
         self.viewModel = viewModel
         super.init(nibName: String(describing: HomeScreenMenuViewController.self), bundle: nil)
@@ -71,9 +70,23 @@ final class HomeScreenMenuViewController: UIViewController,
 // MARK: - Internal
 
 private extension HomeScreenMenuViewController {
+    @objc func handleTapCloseMainMenu(_ sender: UITapGestureRecognizer? = nil) {
+        buttonsContainerView.isHidden = true
+        viewModel.input.send(.closeAction)
+    }
+    
     func configureView() {
-        subscriptionPriceLabel.text = viewModel.purchases.getPriceForPurchase(model: .weekly)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTapCloseMainMenu(_:)))
+        let tapView = UIView()
+        view.addSubview(tapView)
+        tapView.translatesAutoresizingMaskIntoConstraints = false
+        tapView.bottomAnchor.constraint(equalTo: buttonsContainerView.topAnchor, constant: 0).isActive = true
+        tapView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
+        tapView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
+        tapView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
+        tapView.addGestureRecognizer(tap)
 
+        subscriptionPriceLabel.text = viewModel.purchases.getPriceForPurchase(model: .weekly)
         viewModel.output.sink(receiveValue: { [weak self] state in
             guard let self = self else { return }
             switch state {

@@ -42,7 +42,6 @@
 		794D466E2778DB110030DF8D /* CustomAlert.xib in Resources */ = {isa = PBXBuildFile; fileRef = 794D466D2778DB110030DF8D /* CustomAlert.xib */; };
 		794D46722778E9EE0030DF8D /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794D46712778E9ED0030DF8D /* CustomAlert.swift */; };
 		794DDDF1274D50FF00CF8255 /* ApplicationGlobalConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794DDDF0274D50FF00CF8255 /* ApplicationGlobalConfig.swift */; };
-		794F73E02746B31D00B07410 /* MarketBoardDisplayManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794F73DF2746B31D00B07410 /* MarketBoardDisplayManager.swift */; };
 		794F73E92746B36900B07410 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794F73E22746B36800B07410 /* UIView+Extensions.swift */; };
 		794F73EA2746B36900B07410 /* Collection+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794F73E32746B36900B07410 /* Collection+Extensions.swift */; };
 		794F73EB2746B36900B07410 /* UIBarButtonItem+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794F73E42746B36900B07410 /* UIBarButtonItem+Extensions.swift */; };
@@ -64,6 +63,8 @@
 		7988745E2770BCC40027C121 /* PurchaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7988745D2770BCC40027C121 /* PurchaseService.swift */; };
 		798874612770C09B0027C121 /* Purchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798874602770C09B0027C121 /* Purchase.swift */; };
 		798874642770C9A10027C121 /* ApphudSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 798874632770C9A10027C121 /* ApphudSDK */; };
+		798F5D82278DE2AE0042BA98 /* UIDevice+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798F5D81278DE2AE0042BA98 /* UIDevice+Extensions.swift */; };
+		798F5D85278E05F40042BA98 /* PrintSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798F5D84278E05F40042BA98 /* PrintSettingsController.swift */; };
 		7997DE352753F82A00B33300 /* Poppins-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7997DE2F2753F82A00B33300 /* Poppins-ExtraLight.otf */; };
 		7997DE362753F82A00B33300 /* Poppins-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7997DE302753F82A00B33300 /* Poppins-Light.otf */; };
 		7997DE372753F82A00B33300 /* Poppins-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7997DE312753F82A00B33300 /* Poppins-Medium.otf */; };
@@ -175,7 +176,6 @@
 		794D466D2778DB110030DF8D /* CustomAlert.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomAlert.xib; sourceTree = "<group>"; };
 		794D46712778E9ED0030DF8D /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
 		794DDDF0274D50FF00CF8255 /* ApplicationGlobalConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationGlobalConfig.swift; sourceTree = "<group>"; };
-		794F73DF2746B31D00B07410 /* MarketBoardDisplayManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketBoardDisplayManager.swift; sourceTree = "<group>"; };
 		794F73E22746B36800B07410 /* UIView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		794F73E32746B36900B07410 /* Collection+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Collection+Extensions.swift"; sourceTree = "<group>"; };
 		794F73E42746B36900B07410 /* UIBarButtonItem+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Extensions.swift"; sourceTree = "<group>"; };
@@ -207,6 +207,8 @@
 		7983ECE02750B0D500B5C2AF /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
 		7988745D2770BCC40027C121 /* PurchaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseService.swift; sourceTree = "<group>"; };
 		798874602770C09B0027C121 /* Purchase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Purchase.swift; sourceTree = "<group>"; };
+		798F5D81278DE2AE0042BA98 /* UIDevice+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extensions.swift"; sourceTree = "<group>"; };
+		798F5D84278E05F40042BA98 /* PrintSettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintSettingsController.swift; sourceTree = "<group>"; };
 		7997DE2F2753F82A00B33300 /* Poppins-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-ExtraLight.otf"; sourceTree = "<group>"; };
 		7997DE302753F82A00B33300 /* Poppins-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Light.otf"; sourceTree = "<group>"; };
 		7997DE312753F82A00B33300 /* Poppins-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Medium.otf"; sourceTree = "<group>"; };
@@ -386,14 +388,6 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
-		794F73DD2746B2CA00B07410 /* Examples */ = {
-			isa = PBXGroup;
-			children = (
-				794F73DF2746B31D00B07410 /* MarketBoardDisplayManager.swift */,
-			);
-			path = Examples;
-			sourceTree = "<group>";
-		};
 		794F73DE2746B2DE00B07410 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -411,6 +405,7 @@
 				79194A73275BDA43003E2539 /* FileManager+Extensions.swift */,
 				795A1CB7275D12650097FA6E /* UIColor+Extensions.swift */,
 				79F744BF277B597A00EFE7F9 /* String+Extensions.swift */,
+				798F5D81278DE2AE0042BA98 /* UIDevice+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -471,6 +466,14 @@
 				798874602770C09B0027C121 /* Purchase.swift */,
 			);
 			path = Purchase;
+			sourceTree = "<group>";
+		};
+		798F5D83278E05C60042BA98 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				798F5D84278E05F40042BA98 /* PrintSettingsController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		7997DE2C2753F81C00B33300 /* Fonts */ = {
@@ -682,13 +685,13 @@
 		79F913CD274652E200771FFE /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				798F5D83278E05C60042BA98 /* Controller */,
 				79A598092762FDA800EB580A /* View */,
 				79DCEF9B275B9266007BC160 /* Model */,
 				79B576FC2754EC7D006969F5 /* Constants */,
 				7983ECDD2750B06400B5C2AF /* CarouselView */,
 				794F73F52746CEA000B07410 /* ModuleTemplates */,
 				794F73DE2746B2DE00B07410 /* Extensions */,
-				794F73DD2746B2CA00B07410 /* Examples */,
 				794F73DB2746B1F500B07410 /* Services */,
 				79189DFE274672420023628A /* Debug */,
 				7963FC4427466F7C007B8449 /* Protocols */,
@@ -837,6 +840,7 @@
 				794F73EB2746B36900B07410 /* UIBarButtonItem+Extensions.swift in Sources */,
 				791CC440276441B200813FAC /* ManageSubscriptionsViewController.swift in Sources */,
 				79F913B42746501500771FFE /* AppDelegate.swift in Sources */,
+				798F5D85278E05F40042BA98 /* PrintSettingsController.swift in Sources */,
 				79A5980B2762FDD400EB580A /* BlurredShadowView.swift in Sources */,
 				79B576FA2754EC76006969F5 /* StylingConstants.swift in Sources */,
 				79A725B12750C41700D8B330 /* ResultPreviewCollectionCell.swift in Sources */,
@@ -881,7 +885,6 @@
 				7911B024276B0FEC0058CD26 /* MiscSettingsModulesCoordinator.swift in Sources */,
 				79416D362759943000262593 /* Date+Extensions.swift in Sources */,
 				793ADF5F2754E36100F58923 /* HomeScreenMenuViewModel.swift in Sources */,
-				794F73E02746B31D00B07410 /* MarketBoardDisplayManager.swift in Sources */,
 				794F73EC2746B36900B07410 /* UICollectionView+Extensions.swift in Sources */,
 				79D102A527717CC500F3C4D5 /* SubscriptionPlanPopup.swift in Sources */,
 				79BBD8AB276319660087B1E0 /* ParticleEmitterView.swift in Sources */,
@@ -904,6 +907,7 @@
 				79A725AA2750BEA200D8B330 /* ResultPreviewSection.swift in Sources */,
 				79B787F82750B429009D7655 /* HomeScreenViewModel.swift in Sources */,
 				793ADF5E2754E36100F58923 /* HomeScreenMenuViewController.swift in Sources */,
+				798F5D82278DE2AE0042BA98 /* UIDevice+Extensions.swift in Sources */,
 				79194A74275BDA43003E2539 /* FileManager+Extensions.swift in Sources */,
 				79F80FC22752B00000081C7A /* UIImage+Extensions.swift in Sources */,
 				791CC441276441B200813FAC /* ManageSubscriptionsViewModel.swift in Sources */,

@@ -47,7 +47,7 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N0z-el-oHM">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N0z-el-oHM" userLabel="menuContainer">
                     <rect key="frame" x="0.0" y="362" width="414" height="534"/>
                     <subviews>
                         <stackView verifyAmbiguity="ignoreSizes" opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="n2Z-pN-kUV">
@@ -125,7 +125,7 @@
                         <constraint firstItem="n2Z-pN-kUV" firstAttribute="centerX" secondItem="N0z-el-oHM" secondAttribute="centerX" id="pSK-VH-ooi"/>
                     </constraints>
                 </view>
-                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9et-Pv-eNY">
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9et-Pv-eNY" userLabel="subscriptionPopup">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                     <subviews>
                         <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aqu-KG-1H5" customClass="BlurredShadowView1" customModule="AirPrint" customModuleProvider="target">
@@ -151,8 +151,8 @@
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <stackView verifyAmbiguity="ignoreSizes" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y4d-Ls-2QY">
-                                    <rect key="frame" x="112" y="109" width="190" height="20"/>
+                                <stackView verifyAmbiguity="ignoreSizes" opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="y4d-Ls-2QY">
+                                    <rect key="frame" x="121" y="109" width="196" height="20"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Auto-renews at" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rkl-3C-Dp5">
                                             <rect key="frame" x="0.0" y="0.0" width="95" height="20"/>
@@ -160,8 +160,8 @@
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$4.99 / week" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wu1-Ex-thg">
-                                            <rect key="frame" x="95" y="0.0" width="95" height="20"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="$4.99 / week" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wu1-Ex-thg">
+                                            <rect key="frame" x="101" y="0.0" width="95" height="20"/>
                                             <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="14"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
@@ -208,11 +208,11 @@
                                         <constraint firstAttribute="height" constant="30" id="ATT-rW-ULT"/>
                                     </constraints>
                                 </stackView>
-                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="x4m-Qn-wf4">
-                                    <rect key="frame" x="20" y="311" width="374" height="29"/>
+                                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="x4m-Qn-wf4">
+                                    <rect key="frame" x="91.5" y="311" width="231" height="29"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LaV-QC-PeB" userLabel="Restore subscriptions">
-                                            <rect key="frame" x="0.0" y="0.0" width="187" height="29"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="129" height="29"/>
                                             <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="12"/>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                             <state key="normal" title="Restore subscriptions">
@@ -220,7 +220,7 @@
                                             </state>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MoT-ut-0DC">
-                                            <rect key="frame" x="187" y="0.0" width="187" height="29"/>
+                                            <rect key="frame" x="161" y="0.0" width="70" height="29"/>
                                             <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="12"/>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                             <state key="normal" title="Other plans">
@@ -228,7 +228,7 @@
                                             </state>
                                         </button>
                                         <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yQW-gr-bdg" userLabel="How trial works">
-                                            <rect key="frame" x="374" y="0.0" width="0.0" height="29"/>
+                                            <rect key="frame" x="231" y="0.0" width="0.0" height="29"/>
                                             <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="12"/>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                             <state key="normal" title="How trial works">
@@ -240,12 +240,11 @@
                             </subviews>
                             <color key="backgroundColor" red="0.1165821329" green="0.1141723469" blue="0.30589985850000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             <constraints>
-                                <constraint firstAttribute="trailing" secondItem="x4m-Qn-wf4" secondAttribute="trailing" constant="20" id="27o-55-LGo"/>
-                                <constraint firstItem="x4m-Qn-wf4" firstAttribute="leading" secondItem="PQp-h1-CNj" secondAttribute="leading" constant="20" id="2cI-Z7-d0A"/>
                                 <constraint firstItem="Xc5-1L-wA7" firstAttribute="top" secondItem="4nF-ho-azj" secondAttribute="bottom" id="4Cy-jg-ggU"/>
                                 <constraint firstItem="3TX-46-0Yc" firstAttribute="top" secondItem="Q9k-fi-8tI" secondAttribute="bottom" constant="25" id="4sF-be-JDN"/>
                                 <constraint firstItem="Q9k-fi-8tI" firstAttribute="centerX" secondItem="PQp-h1-CNj" secondAttribute="centerX" id="5ut-pp-cG6"/>
                                 <constraint firstItem="Q9k-fi-8tI" firstAttribute="top" secondItem="xff-A8-70J" secondAttribute="bottom" constant="25" id="FoZ-K6-5lV"/>
+                                <constraint firstItem="x4m-Qn-wf4" firstAttribute="centerX" secondItem="3TX-46-0Yc" secondAttribute="centerX" id="OdO-RJ-uA9"/>
                                 <constraint firstAttribute="bottom" secondItem="x4m-Qn-wf4" secondAttribute="bottom" constant="40" id="Raf-dJ-M2m"/>
                                 <constraint firstItem="Xc5-1L-wA7" firstAttribute="centerX" secondItem="PQp-h1-CNj" secondAttribute="centerX" id="U1r-Hk-Gw0"/>
                                 <constraint firstAttribute="height" constant="380" id="VbR-ic-b1v"/>
@@ -255,7 +254,7 @@
                                 <constraint firstItem="3TX-46-0Yc" firstAttribute="centerX" secondItem="PQp-h1-CNj" secondAttribute="centerX" id="j7J-wE-Zpp"/>
                                 <constraint firstItem="xff-A8-70J" firstAttribute="centerX" secondItem="PQp-h1-CNj" secondAttribute="centerX" id="oVw-Je-tyV"/>
                                 <constraint firstItem="4nF-ho-azj" firstAttribute="centerX" secondItem="PQp-h1-CNj" secondAttribute="centerX" id="udQ-sR-aBq"/>
-                                <constraint firstItem="y4d-Ls-2QY" firstAttribute="centerX" secondItem="PQp-h1-CNj" secondAttribute="centerX" id="ygq-tG-cvH"/>
+                                <constraint firstItem="y4d-Ls-2QY" firstAttribute="centerX" secondItem="PQp-h1-CNj" secondAttribute="centerX" constant="12" id="ygq-tG-cvH"/>
                             </constraints>
                         </view>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="menu-subscription-document" translatesAutoresizingMaskIntoConstraints="NO" id="yWA-af-hfR">

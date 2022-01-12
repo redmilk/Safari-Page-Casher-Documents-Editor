@@ -17,6 +17,7 @@ protocol PrintingOptionsCoordinatorProtocol {
 
 final class PrintingOptionsCoordinator: CoordinatorProtocol, PrintingOptionsCoordinatorProtocol {
     weak var navigationController: UINavigationController?
+    var didPresentCallback: VoidClosure?
     
     lazy var printingOptionsManager = PrintingOptionsManager(finishCallback: { [weak self] in
         self?.end()
@@ -36,6 +37,7 @@ final class PrintingOptionsCoordinator: CoordinatorProtocol, PrintingOptionsCoor
     }
     
     func displayDefaultPrintingOptionsDialog(withPdfData data: Data) {
+        printingOptionsManager.didPresentCallback = didPresentCallback
         printingOptionsManager.printUserSessionDataToLocalPrinter(pdfData: data, jobName: "Printing AirPrint's app current session result...")
     }
     

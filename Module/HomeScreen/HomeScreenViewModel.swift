@@ -127,7 +127,9 @@ private extension HomeScreenViewModel {
             case .didPressCell(let dataBox):
                 self?.openFileEditorWithData(dataBox)
             case .didTapPrint:
-                self?.coordinator.displayPrintSettings()
+                self?.coordinator.displayPrintSettings(didPresentCallback: { [weak self] in
+                    self?.output.send(.loadingState(false))
+                })
             case .getSelectionCount:
                 self?.userSession.input.send(.getSelectionCount)
             case .purchase(let purchase):

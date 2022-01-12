@@ -237,8 +237,8 @@
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <stackView verifyAmbiguity="ignoreSizes" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w3T-w8-vS9">
-                                    <rect key="frame" x="112.33333333333333" y="110" width="189.33333333333337" height="20"/>
+                                <stackView verifyAmbiguity="ignoreSizes" opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="w3T-w8-vS9">
+                                    <rect key="frame" x="121.33333333333333" y="110" width="195.33333333333337" height="20"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Auto-renews at" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aze-gf-cBt">
                                             <rect key="frame" x="0.0" y="0.0" width="94.666666666666671" height="20"/>
@@ -246,8 +246,8 @@
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$4.99 / week" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NS2-cd-tyJ">
-                                            <rect key="frame" x="94.666666666666657" y="0.0" width="94.666666666666657" height="20"/>
+                                        <label verifyAmbiguity="ignoreSizes" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="$4.99 / week" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NS2-cd-tyJ">
+                                            <rect key="frame" x="100.66666666666666" y="0.0" width="94.666666666666657" height="20"/>
                                             <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="14"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
@@ -300,8 +300,8 @@
                                         <constraint firstAttribute="height" constant="30" id="hhU-sD-ij7"/>
                                     </constraints>
                                 </stackView>
-                                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" translatesAutoresizingMaskIntoConstraints="NO" id="8bi-zP-UmM">
-                                    <rect key="frame" x="0.0" y="310" width="414" height="35"/>
+                                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="8bi-zP-UmM">
+                                    <rect key="frame" x="75" y="310" width="264" height="35"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DvA-mY-F3e" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
                                             <rect key="frame" x="20" y="0.0" width="122" height="35"/>
@@ -312,15 +312,15 @@
                                             </state>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qo5-1h-1HL" userLabel="Other plans" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
-                                            <rect key="frame" x="180" y="0.0" width="70" height="35"/>
+                                            <rect key="frame" x="174" y="0.0" width="70" height="35"/>
                                             <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="12"/>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                             <state key="normal" title="Other plans">
                                                 <color key="titleColor" red="0.33623573179999999" green="0.67496186489999999" blue="0.94124519819999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             </state>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uoe-Ft-phV" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
-                                            <rect key="frame" x="304" y="0.0" width="90" height="35"/>
+                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uoe-Ft-phV" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
+                                            <rect key="frame" x="244" y="0.0" width="0.0" height="35"/>
                                             <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="12"/>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                             <state key="normal" title="How trial works">
@@ -337,10 +337,10 @@
                             <color key="backgroundColor" red="0.1165821329" green="0.1141723469" blue="0.30589985850000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             <constraints>
                                 <constraint firstItem="Amh-F7-p1q" firstAttribute="centerX" secondItem="AMN-HA-25p" secondAttribute="centerX" id="7Em-Kz-ogQ"/>
+                                <constraint firstItem="8bi-zP-UmM" firstAttribute="centerX" secondItem="Amh-F7-p1q" secondAttribute="centerX" id="7nA-WN-02z"/>
                                 <constraint firstAttribute="bottom" secondItem="8bi-zP-UmM" secondAttribute="bottom" id="DN6-S0-76f"/>
                                 <constraint firstItem="arN-UI-NoB" firstAttribute="top" secondItem="cYL-Qp-Kjq" secondAttribute="bottom" id="K2x-fQ-JTc"/>
-                                <constraint firstItem="w3T-w8-vS9" firstAttribute="centerX" secondItem="AMN-HA-25p" secondAttribute="centerX" id="LZU-os-uWg"/>
-                                <constraint firstAttribute="trailing" secondItem="8bi-zP-UmM" secondAttribute="trailing" id="QcH-6B-pkd"/>
+                                <constraint firstItem="w3T-w8-vS9" firstAttribute="centerX" secondItem="AMN-HA-25p" secondAttribute="centerX" constant="12" id="LZU-os-uWg"/>
                                 <constraint firstItem="Amh-F7-p1q" firstAttribute="top" secondItem="X5V-uG-AtW" secondAttribute="bottom" constant="20" id="UNz-7o-hOw"/>
                                 <constraint firstItem="cYL-Qp-Kjq" firstAttribute="centerX" secondItem="AMN-HA-25p" secondAttribute="centerX" id="aNl-c3-pWd"/>
                                 <constraint firstAttribute="bottom" secondItem="rsM-6E-w8Q" secondAttribute="bottom" constant="-40" id="eDd-QR-g8r"/>
@@ -349,7 +349,6 @@
                                 <constraint firstItem="w3T-w8-vS9" firstAttribute="top" secondItem="arN-UI-NoB" secondAttribute="bottom" constant="20" id="iYY-KJ-z1Y"/>
                                 <constraint firstItem="cYL-Qp-Kjq" firstAttribute="top" secondItem="AMN-HA-25p" secondAttribute="top" constant="20" id="ocA-td-4KZ"/>
                                 <constraint firstItem="X5V-uG-AtW" firstAttribute="centerX" secondItem="AMN-HA-25p" secondAttribute="centerX" id="pbd-rX-p6f"/>
-                                <constraint firstItem="8bi-zP-UmM" firstAttribute="leading" secondItem="AMN-HA-25p" secondAttribute="leading" id="pgV-Y7-URt"/>
                                 <constraint firstItem="ID5-ag-wHe" firstAttribute="top" secondItem="w3T-w8-vS9" secondAttribute="bottom" constant="10" id="tvT-Hb-aSu"/>
                                 <constraint firstItem="ID5-ag-wHe" firstAttribute="centerX" secondItem="AMN-HA-25p" secondAttribute="centerX" id="w40-QE-11l"/>
                                 <constraint firstItem="X5V-uG-AtW" firstAttribute="top" secondItem="ID5-ag-wHe" secondAttribute="bottom" constant="30" id="xOb-hi-eNs"/>
@@ -451,7 +450,7 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Save 50%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ea5-nM-Jam">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yearly. Save 50%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ea5-nM-Jam">
                                                     <rect key="frame" x="0.0" y="24" width="107.66666666666667" height="17"/>
                                                     <color key="tintColor" red="0.33623573179999999" green="0.67496186489999999" blue="0.94124519819999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="12"/>
@@ -524,7 +523,7 @@
                                     </constraints>
                                 </stackView>
                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="cMc-Rt-NIP">
-                                    <rect key="frame" x="42.666666666666657" y="325" width="329" height="35"/>
+                                    <rect key="frame" x="126" y="325" width="162" height="35"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PjU-LA-xiB" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
                                             <rect key="frame" x="20" y="0.0" width="122" height="35"/>
@@ -534,8 +533,8 @@
                                                 <color key="titleColor" red="0.33623573179999999" green="0.67496186489999999" blue="0.94124519819999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             </state>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u7d-xJ-L7R" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
-                                            <rect key="frame" x="192" y="0.0" width="117" height="35"/>
+                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u7d-xJ-L7R" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="35"/>
                                             <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="12"/>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                             <state key="normal" title="How free trial works">

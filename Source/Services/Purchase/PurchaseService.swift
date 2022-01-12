@@ -130,7 +130,7 @@ final class PurchesService {
                 .last?.skProduct else { return nil }
         let price = product.price
         let currencyCode = " " + (product.priceLocale.currencyCode ?? "")
-        let priceParts = String.makeAttriabutedStringNoFormatting(" / year ", size: size)
+        let priceParts = String.makeAttriabutedStringNoFormatting(" / ", size: size)
         var priceDoubled = (Int(truncating: price) * 2).description
         priceDoubled.append(currencyCode)
         let strikedPrice = String.makeStrikeThroughText(priceDoubled, size: size)

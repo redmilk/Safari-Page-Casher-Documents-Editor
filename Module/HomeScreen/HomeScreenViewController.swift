@@ -102,7 +102,6 @@ final class HomeScreenViewController: UIViewController,
     deinit {
         Logger.log(String(describing: self), type: .deinited)
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         handleStates()
@@ -111,7 +110,6 @@ final class HomeScreenViewController: UIViewController,
         viewModel.configureViewModel()
         configureView()
     }
-    
     override var prefersStatusBarHidden: Bool {
         return true
     }
@@ -194,7 +192,10 @@ private extension HomeScreenViewController {
             }).store(in: &bag)
         
         printButton.publisher().sink(receiveValue: { [weak self] _ in
-            self?.viewModel.input.send(.didTapPrint)
+            self?.startActivityAnimation()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: { [weak self] in
+                self?.viewModel.input.send(.didTapPrint)
+            })
         }).store(in: &bag)
         
         settingsButton.publisher().print("SETTINGS").sink(receiveValue: { [weak self] _ in
@@ -226,9 +227,8 @@ private extension HomeScreenViewController {
         
         dialogCancelButton.publisher().sink(receiveValue: { [weak self] _ in
             self?.viewModel.input.send(.itemsDeleteRejected)
-            self?.changeViewStateBasedOnSelectionMode(isInSelectionMode: false)
-            guard let self = self, self.selectionCount == 0 else { return }
-            self.setHiddenClarifyDeleteDialog(true)
+            self?.setHiddenClarifyDeleteDialog(true)
+            self?.collectionManager.input.send(.reloadCollection)
         }).store(in: &bag)
         
         layoutChangeButton.publisher().sink(receiveValue: { [weak self] _ in

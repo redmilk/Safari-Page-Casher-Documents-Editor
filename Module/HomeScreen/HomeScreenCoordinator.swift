@@ -23,7 +23,7 @@ protocol HomeScreenCoordinatorProtocol {
     func showMainMenuAndHandleActions()
     func displaySettings()
     func closeMenu()
-    func displayPrintSettings()
+    func displayPrintSettings(didPresentCallback: VoidClosure?)
     func displayFileEditor(fileURL: URL)
 }
 
@@ -93,8 +93,9 @@ final class HomeScreenCoordinator: CoordinatorProtocol, HomeScreenCoordinatorPro
         coordinator.start()
     }
     
-    func displayPrintSettings() {
+    func displayPrintSettings(didPresentCallback: VoidClosure?) {
         let coordinator = PrintingOptionsCoordinator(navigationController: navigationController)
+        coordinator.didPresentCallback = didPresentCallback
         coordinator.start()
     }
     

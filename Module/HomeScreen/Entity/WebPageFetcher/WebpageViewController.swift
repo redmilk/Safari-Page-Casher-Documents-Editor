@@ -137,7 +137,10 @@ extension WebpageViewController: WKNavigationDelegate, WKUIDelegate, UISearchBar
         }
         guard searchText.contains(".") else {
             let formatted = searchText.replacingOccurrences(of: " ", with: "+")
-            let req = URLRequest(url: URL(string: "https://www.google.com/search?q=\(formatted)")!)
+            var components = URLComponents(string: "https://www.google.com/search")
+            let query = URLQueryItem(name: "q", value: formatted)
+            components?.queryItems = [query]
+            let req = URLRequest(url: components!.url!)
             webView.load(req)
             return
         }

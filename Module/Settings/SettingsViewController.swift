@@ -120,15 +120,9 @@ private extension SettingsViewController {
     }
     
     func share() {
-        UIGraphicsBeginImageContext(view.frame.size)
-        view.layer.render(in: UIGraphicsGetCurrentContext()!)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
         let textToShare = "Check out AirPrinter app"
-        
-        if let myWebsite = URL(string: "https://apps.apple.com/us/app/clawee/id1315539131") {
-            let objectsToShare = [textToShare, myWebsite, image ?? UIImage(named: "icon-logo")!] as [Any]
+        if let myWebsite = URL(string: "https://apps.apple.com/app/id1596570780") {
+            let objectsToShare = [textToShare, myWebsite, UIImage(named: "icon-logo-big")!] as [Any]
             let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
             /// Excluded Activities
             activityVC.excludedActivityTypes = [UIActivity.ActivityType.airDrop, UIActivity.ActivityType.addToReadingList]
@@ -137,9 +131,11 @@ private extension SettingsViewController {
     }
     
     func sendEmail() {
-        let recipientEmail = "test@gmail.com"
-        let subject = "Multi client email support"
-        let body = "This code supports sending email via multiple different email apps on iOS! :)"
+        let recipientEmail = "app@smedia.tech"
+        let subject = "AirPrint"
+        let iosVersion = UIDevice.current.systemVersion
+        let deviceName = UIDevice.current.modelName
+        let body = "Device: \(deviceName), iOS version: \(iosVersion)\n"
         
         if MFMailComposeViewController.canSendMail() {
             let mail = MFMailComposeViewController()

@@ -13,9 +13,9 @@ import Combine
 
 // MARK: - PrintingOptionsViewController
 
-final class PrintingOptionsViewController: UIViewController {
+final class PrintingOptionsViewController: UIViewController, ActivityIndicatorPresentable {
     enum State {
-        case dummyState
+        case loadingState(_ isLoading: Bool)
     }
         
     private let viewModel: PrintingOptionsViewModel
@@ -49,8 +49,10 @@ private extension PrintingOptionsViewController {
     func handleStates() {
         viewModel.output.sink(receiveValue: { state in
             switch state {
-            case .dummyState:
-                break
+            case .loadingState(let isLoading):
+                isLoading ?
+                self.startActivityAnimation() :
+                self.stopActivityAnimation()
             }
         })
         .store(in: &bag)

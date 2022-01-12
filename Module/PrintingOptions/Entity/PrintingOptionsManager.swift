@@ -10,6 +10,7 @@ import Foundation
 final class PrintingOptionsManager: NSObject {
     
     private let finishCallback: VoidClosure
+    var didPresentCallback: VoidClosure?
     
     init(finishCallback: @escaping VoidClosure) {
         self.finishCallback = finishCallback
@@ -35,7 +36,13 @@ final class PrintingOptionsManager: NSObject {
 }
 
 extension PrintingOptionsManager: UIPrintInteractionControllerDelegate {
-    func printInteractionControllerDidDismissPrinterOptions(_ printInteractionController: UIPrintInteractionController) {
+    
+    func printInteractionControllerDidPresentPrinterOptions(_ printInteractionController: UIPrintInteractionController) {
+        didPresentCallback?()
+    }
+    
+    
+    func printInteractionControllerWillDismissPrinterOptions(_ printInteractionController: UIPrintInteractionController) {
         finishCallback()
     }
     func printInteractionControllerWillStartJob(_ printInteractionController: UIPrintInteractionController) {

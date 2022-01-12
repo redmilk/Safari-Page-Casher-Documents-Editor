@@ -84,6 +84,7 @@ final class UserSessionImpl: UserSession {
                 self.output.send(.allCurrentData(Array(self.sessionData.keys).sorted { $0.id < $1.id }))
             case .cancelSelection:
                 self.sessionData.keys.forEach { $0.isSelected = false }
+                self.output.send(.selectionCount(self.getSelectedCount()))
             case .getSelectionCount:
                 self.output.send(.selectionCount(self.getSelectedCount()))
             case .deleteSelected:

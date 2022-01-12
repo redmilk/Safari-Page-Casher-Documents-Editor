@@ -21,6 +21,7 @@ final class HomeCollectionManager: NSObject, InteractionFeedbackService { /// NS
         case toggleLayout
         case toggleSelectionMode
         case disableSelectionMode
+        case reloadCollection
     }
     
     enum Response {
@@ -91,9 +92,9 @@ final class HomeCollectionManager: NSObject, InteractionFeedbackService { /// NS
                 self.output.send(.selectionMode(isOn: self.isInSelectionMode))
             case .disableSelectionMode:
                 self.isInSelectionMode = false
-                //if !self.isGridLayout { self.input.send(.toggleLayout) }
                 self.collectionView.reloadData()
-                //self.output.send(.selectionMode(isOn: self.isInSelectionMode))
+            case .reloadCollection:
+                self.collectionView.reloadData()
             }
         })
         .store(in: &bag)
