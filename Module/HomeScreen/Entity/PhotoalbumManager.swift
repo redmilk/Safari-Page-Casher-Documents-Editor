@@ -21,9 +21,9 @@ final class PhotoalbumManagerImpl: NSObject, PhotoalbumManager {
     var output: AnyPublisher<PrintableDataBox, Never> { _output.eraseToAnyPublisher() }
     private let _output = PassthroughSubject<PrintableDataBox, Never>()
     private var picker: PHPickerViewController!
-    private let group = DispatchGroup()
     private var finishCallback: VoidClosure!
-    var totalConversionsCompleted = 0 {
+    private var selectedPhotosCount = 0
+    private var totalConversionsCompleted = 0 {
         didSet {
             if totalConversionsCompleted >= selectedPhotosCount {
                 guard let finishCallback = finishCallback else { return }
@@ -33,13 +33,6 @@ final class PhotoalbumManagerImpl: NSObject, PhotoalbumManager {
             }
         }
     }
-    private var selectedPhotosCount = 0
-    private lazy var queue: OperationQueue = {
-       let queue = OperationQueue()
-        queue.maxConcurrentOperationCount = 60
-        queue.qualityOfService = .userInitiated
-        return queue
-    }()
     
     func displayPhotoLibrary(_ parentController: UIViewController, presentationCallback: @escaping VoidClosure) {
         finishCallback = presentationCallback
