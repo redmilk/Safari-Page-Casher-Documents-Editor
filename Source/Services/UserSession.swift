@@ -55,7 +55,7 @@ final class UserSessionImpl: UserSession {
     private var sessionData: [PrintableDataBox: PrintableDataBox] = [:] {
         didSet {
             sessionData.count == 0 ? output.send(.empty) : ()
-            Logger.log("sessionData.count: \(sessionData.count)")
+            //Logger.log("sessionData.count: \(sessionData.count)")
         }
     }
     

@@ -7,12 +7,14 @@
 
 import Foundation
 import PDFKit.PDFDocument
+import UIKit
 
 final class PrintableDataBox: Hashable, Equatable {
     
     var isSelected: Bool = false
     let id: String
-    
+    var thumbnail: UIImage?
+
     /// scan or photoalbum item
     var image: UIImage?
     
@@ -20,11 +22,11 @@ final class PrintableDataBox: Hashable, Equatable {
     var document: PDFDocument?
     var documentPage: Int?
     
-    init(id: String, image: UIImage?, document: PDFDocument?) {
+    init(id: String, image: UIImage?, document: PDFDocument?, thumbnail: UIImage? = nil) {
         self.id = id
-        print("PrintableDataBox id: \(id)")
         self.image = image
         self.document = document
+        self.thumbnail = thumbnail
     }
     
     func hash(into hasher: inout Hasher) {
@@ -32,9 +34,10 @@ final class PrintableDataBox: Hashable, Equatable {
         hasher.combine(image)
         hasher.combine(document)
         hasher.combine(documentPage)
+        hasher.combine(thumbnail)
     }
     
     static func == (lhs: PrintableDataBox, rhs: PrintableDataBox) -> Bool {
-        lhs.id == rhs.id && lhs.image == rhs.image && lhs.document == rhs.document && lhs.documentPage == rhs.documentPage
+        lhs.id == rhs.id
     }
 }

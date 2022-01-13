@@ -40,10 +40,12 @@ final class PDFServiceImpl: PDFService {
         guard pdf.pageCount != 0 else { return [] }
         var pdfList: [PDFDocument] = []
         for i in 0...pdf.pageCount {
-            guard let page = pdf.page(at: i) else { break }
-            let newPdf = PDFDocument()
-            newPdf.insert(page, at: 0)
-            pdfList.append(newPdf)
+            autoreleasepool {
+                guard let page = pdf.page(at: i) else { return }
+                let newPdf = PDFDocument()
+                newPdf.insert(page, at: 0)
+                pdfList.append(newPdf)
+            }
         }
         return pdfList
     }

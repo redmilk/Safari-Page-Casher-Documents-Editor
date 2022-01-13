@@ -10,7 +10,7 @@ import UIKit
 final class ResultPreviewCollectionCell: UICollectionViewCell {
     
     @IBOutlet private weak var containerView: UIView!
-    @IBOutlet private weak var thumbnailImageView: UIImageView!
+    @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var selectionCheckmark: UIButton!
     
     var dataBox: PrintableDataBox!
@@ -20,11 +20,11 @@ final class ResultPreviewCollectionCell: UICollectionViewCell {
         containerView.addCornerRadius(12.0)
         contentView.addCornerRadius(17.0)
     }
-    
+        
     func configure(withDataBox dataBox: PrintableDataBox, isInSelectionMode: Bool) {
         self.dataBox = dataBox
         selectionCheckmark.isHidden = !isInSelectionMode
         selectionCheckmark.isSelected = dataBox.isSelected
-        thumbnailImageView.image = dataBox.image
+        thumbnailImageView.image = dataBox.thumbnail ?? dataBox.image
     }
 }

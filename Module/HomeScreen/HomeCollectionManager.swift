@@ -114,9 +114,6 @@ final class HomeCollectionManager: NSObject, InteractionFeedbackService { /// NS
         snapshot.appendItems(items)
         Logger.log("collection items count: \(items.count)")
         dataSource?.apply(snapshot, animatingDifferences: false)
-//        var currentSnapshot = dataSource.snapshot()
-//        currentSnapshot.appendItems(items, toSection: section)
-//        dataSource?.apply(currentSnapshot, animatingDifferences: true)
     }
     
     private func removeItems(_ items: [PrintableDataBox]) {
@@ -227,6 +224,7 @@ private extension HomeCollectionManager {
 }
 
 extension HomeCollectionManager: UICollectionViewDelegate {
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? ResultPreviewCollectionCell,
               let dataBox = cell.dataBox else { return }
