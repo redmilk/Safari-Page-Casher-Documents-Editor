@@ -22,11 +22,19 @@ final class PhotoalbumManagerImpl: NSObject, PhotoalbumManager {
     private let _output = PassthroughSubject<PrintableDataBox, Never>()
     private var picker: PHPickerViewController!
     private var finishCallback: VoidClosure!
+    private var isAlreadyProcessingFiles: Bool = false
     private var selectedPhotosCount = 0
-    private var totalConversionsCompleted = 0 {
+    private var tapGesture = UITapGestureRecognizer()
+    private var totalConversionsCompleted = -1 {
         didSet {
+            print(selectedPhotosCount)
+            print(totalConversionsCompleted)
+            
             if totalConversionsCompleted >= selectedPhotosCount {
                 guard let finishCallback = finishCallback else { return }
+                isAlreadyProcessingFiles = false
+                totalConversionsCompleted = -1
+                selectedPhotosCount = 0
                 DispatchQueue.main.async {
                     self.picker.dismiss(animated: true, completion: finishCallback)
                 }
@@ -50,19 +58,25 @@ final class PhotoalbumManagerImpl: NSObject, PhotoalbumManager {
 
 extension PhotoalbumManagerImpl: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        guard results.count != 0 else {
+        guard !isAlreadyProcessingFiles else { return }
+        if results.count == 0 {
             return DispatchQueue.main.async {
                 picker.dismiss(animated: true, completion: self.finishCallback)
+                self.isAlreadyProcessingFiles = false
+                self.totalConversionsCompleted = -1
+                self.selectedPhotosCount = 0
             }
         }
         picker.startActivityAnimation()
-        picker.view.isUserInteractionEnabled = false
-        let dispatchQueue = DispatchQueue(label: "image-processing-photoalbum")
-        var selectedImageDatas = [Data?](repeating: nil, count: results.count)
+        isAlreadyProcessingFiles = true
         selectedPhotosCount = results.count
-        
+        totalConversionsCompleted = 0
+        let dispatchQueue = DispatchQueue(label: "image-processing-photoalbum")
+        var selectedImageDataList = [Data?](repeating: nil, count: results.count)
+
         for (index, result) in results.enumerated() {
-            result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.image.identifier) { (url, error) in
+            result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.image.identifier) { [weak self] (url, error) in
+                guard let self = self else { return }
                 guard let url = url else {
                     dispatchQueue.sync { self.totalConversionsCompleted += 1 }
                     return
@@ -96,7 +110,7 @@ extension PhotoalbumManagerImpl: PHPickerViewControllerDelegate {
                 CGImageDestinationAddImage(imageDestination, cgImage, destinationProperties)
                 CGImageDestinationFinalize(imageDestination)
                 dispatchQueue.sync {
-                    selectedImageDatas[index] = data as Data
+                    selectedImageDataList[index] = data as Data
                     if let image = UIImage(data: data as Data) {
                         let origW = image.size.width / 4
                         let origH = image.size.height / 4

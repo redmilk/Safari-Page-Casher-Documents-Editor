@@ -26,8 +26,8 @@ extension UIImage {
     
     func resizedImage(for size: CGSize) -> UIImage? {
         let renderer = UIGraphicsImageRenderer(size: size)
-        return renderer.image { (context) in
-            self.draw(in: CGRect(origin: .zero, size: size))
+        return renderer.image { [weak self] (context) in
+            self?.draw(in: CGRect(origin: .zero, size: size))
         }
     }
     

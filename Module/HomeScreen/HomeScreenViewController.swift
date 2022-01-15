@@ -22,7 +22,10 @@ final class HomeScreenViewController: UIViewController,
         case addedItems([PrintableDataBox])
         case deletedItems([PrintableDataBox])
         case selectedItems([PrintableDataBox])
-        case subscriptionStatus(hasActiveSubscriptions: Bool, shouldDisplayMultiSubscrPopup: Bool)
+        case subscriptionStatus(
+            hasActiveSubscriptions: Bool,
+            shouldDisplayMultiSubscrPopup: Bool,
+            shouldShowHowItWorks: Bool)
         case selectionCount(Int)
         case selectionMode
         case exitSelectionMode
@@ -41,13 +44,15 @@ final class HomeScreenViewController: UIViewController,
     @IBOutlet private weak var subscriptionContainer: UIView!
     @IBOutlet private weak var subscriptionMenuContainer: UIView!
     @IBOutlet private weak var subscriptionContinueButton: TapAnimatedButton!
-    @IBOutlet private weak var subscriptionMenuOpenButton: TapAnimatedButton!
+    @IBOutlet private weak var giftOrHowItWorksOpenButton: TapAnimatedButton!
     @IBOutlet private weak var subscriptionDiscountLabel: UILabel!
     @IBOutlet private weak var subscriptionCloseButton: TapAnimatedButton!
     @IBOutlet private weak var giftContainerHeightConstraint: NSLayoutConstraint!
     @IBOutlet private weak var giftContainerTopSpacing: NSLayoutConstraint!
     @IBOutlet private weak var giftTimerContainer: UIView!
     @IBOutlet private weak var giftTimerLabel: UILabel!
+    @IBOutlet private weak var giftIconImageView: UIImageView!
+    @IBOutlet private weak var giftTitleLabel: UILabel!
     @IBOutlet private weak var restorePurchaseButton: TapAnimatedButton!
     @IBOutlet private weak var giftYearlyPriceLabel: UILabel!
     /// Filled state controls
@@ -91,6 +96,7 @@ final class HomeScreenViewController: UIViewController,
     private var gradient: CAGradientLayer?
     private var hasItems: Bool = false
     private var selectionCount: Int = 0
+    private var shouldShowHowItWorks: Bool = false
 
     init(viewModel: HomeScreenViewModel) {
         self.viewModel = viewModel
@@ -102,6 +108,15 @@ final class HomeScreenViewController: UIViewController,
     deinit {
         Logger.log(String(describing: self), type: .deinited)
     }
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        viewModel.input.send(.memoryWarning)
+        displayAlert(
+            fromParentView: self.view,
+            with: "Your device's memory is too low. Unfortunately, the application will partially purge your previously added files that hav't yet been edited", title: "Warning", action: { [weak self] in
+            })
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         handleStates()
@@ -109,9 +124,6 @@ final class HomeScreenViewController: UIViewController,
         collectionManager.input.send(.configure)
         viewModel.configureViewModel()
         configureView()
-    }
-    override var prefersStatusBarHidden: Bool {
-        return true
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -163,9 +175,12 @@ private extension HomeScreenViewController {
                 self?.giftTimerLabel.text = timerText
             case .loadingState(let isLoading):
                 isLoading ? self?.startActivityAnimation() : self?.stopActivityAnimation()
-            case .subscriptionStatus(let hasActiveSubscriptions, let shouldDisplayMultiSubscrPopup):
+            case .subscriptionStatus(
+                let hasActiveSubscriptions,
+                let shouldDisplayMultiSubscrPopup,
+                let shouldShowHowItWorks):
                 guard let self = self else { return }
-                self.updateGiftContainer(isHidden: hasActiveSubscriptions)
+                self.updateGiftContainer(isHidden: hasActiveSubscriptions, shouldShowHowItWorks: shouldShowHowItWorks)
                 if shouldDisplayMultiSubscrPopup {
                     self.displayMultisubscriptionsPopup(inContainer: self.view, optionToShowFirst: .weekly)
                     PurchesService.shouldDisplaySubscriptionsForCurrentUser = false
@@ -235,9 +250,12 @@ private extension HomeScreenViewController {
             self?.collectionManager.input.send(.toggleLayout)
         }).store(in: &bag)
         
-        subscriptionMenuOpenButton.publisher()
+        giftOrHowItWorksOpenButton.publisher()
             .sink(receiveValue: { [weak self] _ in
                 guard let self = self else { return }
+                guard !self.shouldShowHowItWorks else {
+                    return self.displayMultisubscriptionsPopup(inContainer: self.view, optionToShowFirst: .howItWorks)
+                }
                 UIView.transition(with: self.view, duration: 0.5, options: .transitionCrossDissolve, animations: {
                     self.subscriptionContainer.isHidden = false
                 })
@@ -386,9 +404,12 @@ private extension HomeScreenViewController {
         subscriptionContainer.viewWithTag(1)!.removeFromSuperview()
     }
     
-    private func updateGiftContainer(isHidden: Bool) {
+    private func updateGiftContainer(isHidden: Bool, shouldShowHowItWorks: Bool) {
         giftContainerHeightConstraint.constant = isHidden ? 0 : 56
         giftContainerTopSpacing.constant = isHidden ? 0 : 15
+        giftIconImageView.image = UIImage(named: shouldShowHowItWorks ? "icon-how-it-works" : "icon-gift")
+        giftTitleLabel.text = shouldShowHowItWorks ? "How it works" : "Special gift for you"
+        self.shouldShowHowItWorks = shouldShowHowItWorks
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.2, options: [.curveEaseIn], animations: { [weak self] in
             self?.mainContainer.layoutIfNeeded()
         }, completion: nil)

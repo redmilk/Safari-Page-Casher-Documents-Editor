@@ -20,9 +20,13 @@ extension AlertPresentable {
         fromParentView view: UIView, with text: String, title: String?,
         action: VoidClosure? = nil, buttonTitle: String? = ""
     ) -> UIView {
-        let dimmView = UIView()
-        dimmView.backgroundColor = .black.withAlphaComponent(0.7)
+        if let alreadyPresentedAlert = view.subviews.filter({ $0.tag == 666 }).first {
+            alreadyPresentedAlert.removeFromSuperview()
+        }
         
+        let dimmView = UIView()
+        dimmView.tag = 666
+        dimmView.backgroundColor = .black.withAlphaComponent(0.7)
         
         let alert = CustomAlert()
         alert.alertText.text = text

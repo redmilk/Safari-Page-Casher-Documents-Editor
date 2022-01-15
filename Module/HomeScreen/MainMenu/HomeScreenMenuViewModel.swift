@@ -28,6 +28,10 @@ final class HomeScreenMenuViewModel: PurchesServiceProvidable, SubscriptionsMult
     let input = PassthroughSubject<HomeScreenMenuViewModel.Action, Never>()
     let output = PassthroughSubject<HomeScreenMenuViewController.State, Never>()
     
+    var isPaidUser: Bool {
+        purchases.isUserHasActiveSubscription
+    }
+    
     private let coordinator: HomeScreenMenuCoordinatorProtocol & CoordinatorProtocol
     private var bag = Set<AnyCancellable>()
     
@@ -58,7 +62,7 @@ final class HomeScreenMenuViewModel: PurchesServiceProvidable, SubscriptionsMult
         
         purchases.output.sink(receiveValue: { [weak self] response in
             switch response {
-            case .hasActiveSubscriptions(let hasActiveSubscriptions):
+            case .hasActiveSubscriptions(let hasActiveSubscriptions, let shouldShowHowItWorks):
                 guard hasActiveSubscriptions,
                         let action = self?.proceedWithActionAfterSubscriptionReady,
                         let popUpContent = self?.actionContent else { return }

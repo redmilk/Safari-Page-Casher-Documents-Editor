@@ -56,13 +56,8 @@ final class ManageSubscriptionsViewController: UIViewController,
     deinit {
         Logger.log(String(describing: self), type: .deinited)
     }
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         configureView()
         handleStates()
         viewModel.input.send(.viewDidLoad)
@@ -128,6 +123,7 @@ private extension ManageSubscriptionsViewController {
         navigationController?.navigationBar.tintColor = .white
         title = "Manage Subscriptions"
         navigationBarExtender.addCornerRadius(30)
+        navigationBarExtender.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMinXMaxYCorner]
         monthlyPlanButton.addCornerRadius(14)
         monthlyPlanButton.addBorder(1, UIColor(hex: 0x4E50BD33).withAlphaComponent(0.2))
         yearPlanButton.addCornerRadius(14)
@@ -154,6 +150,13 @@ private extension ManageSubscriptionsViewController {
                 self.navigationBarExtender.isHidden = true
                 self.displayMultisubscriptionsPopup(inContainer: self.view, optionToShowFirst: .howItWorks)
         }).store(in: &bag)
+        
+        self.weeklyPlanTextLabel.text = PurchesService.isUserHasActiveSubscriptionsStatusSinceLastUserSession ?
+        "Weekly Plan" : "Weekly Plan + 3 day free trial"
+        self.weeklyPriceLabel.text = PurchesService.previousWeeklyPrice
+        self.monthlyPriceLabel.text =  PurchesService.previousMonthlyPrice
+        self.yearlyPriceLabel.text = PurchesService.previousYearlyPrice
+        self.yearlyPriceDescriptionLabel.text = "Yearly Plan: \(PurchesService.previousYearlyPrice) / year"
     }
     
     private func removeMultiSubscripionPopupIfOccures() {

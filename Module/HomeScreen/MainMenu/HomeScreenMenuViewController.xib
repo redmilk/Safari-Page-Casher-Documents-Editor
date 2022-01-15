@@ -20,10 +20,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeScreenMenuViewController" customModule="AirPrint" customModuleProvider="target">
             <connections>
-                <outlet property="buttonsContainerView" destination="N0z-el-oHM" id="C8X-wd-NF1"/>
+                <outlet property="buttonsContainerView" destination="N0z-el-oHM" id="9vB-rA-wjD"/>
                 <outlet property="cancelButton" destination="mKP-1H-lbP" id="A17-Nd-Bv6"/>
                 <outlet property="firstBlurredShadowView" destination="Aqu-KG-1H5" id="YfA-eB-zlp"/>
                 <outlet property="howTrialWorksButton" destination="yQW-gr-bdg" id="8uv-wo-rVY"/>
+                <outlet property="menuContainer" destination="Ta9-Pn-xno" id="UFN-ZH-LHJ"/>
                 <outlet property="plansButton" destination="MoT-ut-0DC" id="Dz0-M8-MM3"/>
                 <outlet property="printDocumentButton" destination="MgE-Zl-44o" id="GaS-6N-jTq"/>
                 <outlet property="printFromClipboard" destination="6rt-fY-WT6" id="6Or-vG-cRJ"/>
@@ -47,82 +48,97 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N0z-el-oHM" userLabel="menuContainer">
-                    <rect key="frame" x="0.0" y="362" width="414" height="534"/>
+                <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ta9-Pn-xno">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                     <subviews>
-                        <stackView verifyAmbiguity="ignoreSizes" opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="n2Z-pN-kUV">
-                            <rect key="frame" x="39.5" y="25" width="335" height="484"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N0z-el-oHM" userLabel="menuContainer">
+                            <rect key="frame" x="0.0" y="362" width="414" height="534"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PS8-al-TF7" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="335" height="64"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="335" id="6tK-xE-zFI"/>
-                                        <constraint firstAttribute="height" constant="64" id="fHz-kJ-pNY"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="15"/>
-                                    <inset key="titleEdgeInsets" minX="100" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                    <inset key="imageEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                    <state key="normal" backgroundImage="button-menu-scan">
-                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </state>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6rt-fY-WT6" userLabel="buffer" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="84" width="335" height="64"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="15"/>
-                                    <inset key="titleEdgeInsets" minX="100" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                    <inset key="imageEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                    <state key="normal" backgroundImage="button-menu-buffer">
-                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </state>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EEb-Pc-fgQ" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="168" width="335" height="64"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="15"/>
-                                    <inset key="titleEdgeInsets" minX="100" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                    <inset key="imageEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                    <state key="normal" backgroundImage="button-menu-photo">
-                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </state>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MgE-Zl-44o" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="252" width="335" height="64"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="15"/>
-                                    <inset key="titleEdgeInsets" minX="100" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                    <inset key="imageEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                    <state key="normal" backgroundImage="button-menu-document">
-                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </state>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DFi-f8-sYa" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="336" width="335" height="64"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="15"/>
-                                    <inset key="titleEdgeInsets" minX="100" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                    <inset key="imageEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                    <state key="normal" backgroundImage="button-menu-web">
-                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </state>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mKP-1H-lbP" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="420" width="335" height="64"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="15"/>
-                                    <state key="normal" backgroundImage="button-menu-cancel">
-                                        <color key="titleColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </state>
-                                </button>
+                                <stackView verifyAmbiguity="ignoreSizes" opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="n2Z-pN-kUV">
+                                    <rect key="frame" x="39.5" y="25" width="335" height="484"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PS8-al-TF7" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="335" height="64"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="335" id="6tK-xE-zFI"/>
+                                                <constraint firstAttribute="height" constant="64" id="fHz-kJ-pNY"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="15"/>
+                                            <inset key="titleEdgeInsets" minX="100" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                            <inset key="imageEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                            <state key="normal" backgroundImage="button-menu-scan">
+                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </state>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6rt-fY-WT6" userLabel="buffer" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="84" width="335" height="64"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="15"/>
+                                            <inset key="titleEdgeInsets" minX="100" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                            <inset key="imageEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                            <state key="normal" backgroundImage="button-menu-buffer">
+                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </state>
+                                            <state key="selected" backgroundImage="main-menu-button-paid-pasteboard"/>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EEb-Pc-fgQ" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="168" width="335" height="64"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="15"/>
+                                            <inset key="titleEdgeInsets" minX="100" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                            <inset key="imageEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                            <state key="normal" backgroundImage="button-menu-photo">
+                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </state>
+                                            <state key="selected" backgroundImage="main-menu-button-paid-photos"/>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MgE-Zl-44o" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="252" width="335" height="64"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="15"/>
+                                            <inset key="titleEdgeInsets" minX="100" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                            <inset key="imageEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                            <state key="normal" backgroundImage="button-menu-document">
+                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </state>
+                                            <state key="selected" backgroundImage="main-menu-button-paid-document"/>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DFi-f8-sYa" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="336" width="335" height="64"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="15"/>
+                                            <inset key="titleEdgeInsets" minX="100" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                            <inset key="imageEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                            <state key="normal" backgroundImage="button-menu-web">
+                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </state>
+                                            <state key="selected" backgroundImage="main-menu-button-paid-webpage"/>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mKP-1H-lbP" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="420" width="335" height="64"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="15"/>
+                                            <state key="normal" backgroundImage="button-menu-cancel">
+                                                <color key="titleColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </state>
+                                        </button>
+                                    </subviews>
+                                </stackView>
                             </subviews>
-                        </stackView>
+                            <color key="backgroundColor" red="0.15649890899999999" green="0.16101852059999999" blue="0.36866408589999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <constraints>
+                                <constraint firstItem="n2Z-pN-kUV" firstAttribute="top" secondItem="N0z-el-oHM" secondAttribute="top" constant="25" id="JD6-M6-EuA"/>
+                                <constraint firstItem="n2Z-pN-kUV" firstAttribute="centerY" secondItem="N0z-el-oHM" secondAttribute="centerY" id="X1Y-FI-MuK"/>
+                                <constraint firstItem="n2Z-pN-kUV" firstAttribute="centerX" secondItem="N0z-el-oHM" secondAttribute="centerX" id="pSK-VH-ooi"/>
+                            </constraints>
+                        </view>
                     </subviews>
-                    <color key="backgroundColor" red="0.15649890899999999" green="0.16101852059999999" blue="0.36866408589999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.53936103465025909" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstItem="n2Z-pN-kUV" firstAttribute="top" secondItem="N0z-el-oHM" secondAttribute="top" constant="25" id="JD6-M6-EuA"/>
-                        <constraint firstItem="n2Z-pN-kUV" firstAttribute="centerY" secondItem="N0z-el-oHM" secondAttribute="centerY" id="X1Y-FI-MuK"/>
-                        <constraint firstItem="n2Z-pN-kUV" firstAttribute="centerX" secondItem="N0z-el-oHM" secondAttribute="centerX" id="pSK-VH-ooi"/>
+                        <constraint firstItem="N0z-el-oHM" firstAttribute="leading" secondItem="Ta9-Pn-xno" secondAttribute="leading" id="cuB-UE-JOp"/>
+                        <constraint firstAttribute="bottom" secondItem="N0z-el-oHM" secondAttribute="bottom" id="key-57-30h"/>
+                        <constraint firstAttribute="trailing" secondItem="N0z-el-oHM" secondAttribute="trailing" id="zb9-K9-VxR"/>
                     </constraints>
                 </view>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9et-Pv-eNY" userLabel="subscriptionPopup">
@@ -292,12 +308,13 @@
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstItem="Ta9-Pn-xno" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Gd1-R1-6pG"/>
                 <constraint firstAttribute="bottom" secondItem="9et-Pv-eNY" secondAttribute="bottom" id="I8j-OR-09R"/>
-                <constraint firstItem="N0z-el-oHM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="N5z-1t-X1I"/>
-                <constraint firstAttribute="trailing" secondItem="N0z-el-oHM" secondAttribute="trailing" id="TPe-Yc-TVM"/>
+                <constraint firstAttribute="trailing" secondItem="Ta9-Pn-xno" secondAttribute="trailing" id="OA6-1k-elB"/>
+                <constraint firstItem="Ta9-Pn-xno" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="UpA-Ku-sIH"/>
                 <constraint firstAttribute="trailing" secondItem="9et-Pv-eNY" secondAttribute="trailing" id="VBX-aR-XIX"/>
-                <constraint firstAttribute="bottom" secondItem="N0z-el-oHM" secondAttribute="bottom" id="cnM-MG-5k0"/>
                 <constraint firstItem="9et-Pv-eNY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="jDK-f4-Bqu"/>
+                <constraint firstAttribute="bottom" secondItem="Ta9-Pn-xno" secondAttribute="bottom" id="kqf-Su-jpq"/>
                 <constraint firstItem="9et-Pv-eNY" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="sB4-Vn-uHo"/>
             </constraints>
             <point key="canvasLocation" x="137.68115942028987" y="152.67857142857142"/>
@@ -312,6 +329,10 @@
         <image name="button-menu-photo" width="336" height="64"/>
         <image name="button-menu-scan" width="336" height="65"/>
         <image name="button-menu-web" width="335" height="64"/>
+        <image name="main-menu-button-paid-document" width="336" height="66"/>
+        <image name="main-menu-button-paid-pasteboard" width="336" height="66"/>
+        <image name="main-menu-button-paid-photos" width="336" height="66"/>
+        <image name="main-menu-button-paid-webpage" width="336" height="66"/>
         <image name="menu-subscription-document" width="286" height="406"/>
         <image name="subscription-shield-icon" width="17" height="18"/>
     </resources>

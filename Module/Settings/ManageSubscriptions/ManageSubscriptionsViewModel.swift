@@ -54,8 +54,7 @@ final class ManageSubscriptionsViewModel: PurchesServiceProvidable,
             switch response {
             case .gotUpdatedPrices(let weekly, let monthly, let yearly):
                 self.output.send(.gotUpdatedPrices(weekly, monthly, yearly, self.purchases.isUserEverHadSubscriptions))
-            case .hasActiveSubscriptions(let hasActiveSubscription):
-                break
+            case .hasActiveSubscriptions: break
             case _: break
             }
         }).store(in: &self.bag)

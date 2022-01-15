@@ -24,6 +24,7 @@ protocol UserSession {
 final class UserSessionImpl: UserSession {
     enum Action {
         case addItems([PrintableDataBox])
+        case handleMemoryWarning
         case deleteAll
         case deleteSelected
         case cancelSelection
@@ -52,7 +53,7 @@ final class UserSessionImpl: UserSession {
         sessionData.count
     }
     
-    private var sessionData: [PrintableDataBox: PrintableDataBox] = [:] {
+    private var sessionData: [PrintableDataBox: Bool] = [:] {
         didSet {
             sessionData.count == 0 ? output.send(.empty) : ()
             //Logger.log("sessionData.count: \(sessionData.count)")
@@ -68,7 +69,7 @@ final class UserSessionImpl: UserSession {
             guard let self = self else { return }
             switch action {
             case .addItems(let data):
-                data.forEach { self.sessionData[$0] = $0 }
+                data.forEach { self.sessionData[$0] = true }
                 self.output.send(.addedItems(Array(self.sessionData.keys).sorted { $0.id < $1.id }))
             case .deleteAll:
                 self.sessionData.keys.forEach { $0.isSelected = true }
@@ -96,6 +97,27 @@ final class UserSessionImpl: UserSession {
                     return nil
                 })
                 self.output.send(.deletedItems(Array(deleted)))
+            case .handleMemoryWarning:
+                /**
+                 let allData = Array(self.sessionData.keys).sorted { $0.id < $1.id }
+                 for item in allData {
+                     guard !item.isEditedByUser else { continue }
+                     self.sessionData.removeValue(forKey: item)
+                 }
+                 guard !self.sessionData.isEmpty else { return }
+                 self.output.send(.allCurrentData(Array(self.sessionData.keys).sorted { $0.id < $1.id }))
+                 */
+                let allData = Array(self.sessionData.keys).sorted { $0.id < $1.id }
+                let limit = Int(allData.count / 3)
+                guard limit >= 1 else { return }
+                for (index, key) in allData.enumerated() {
+                    guard index < limit else { break }
+                    if key.isEditedByUser {
+                        continue
+                    }
+                    self.sessionData.removeValue(forKey: key)
+                }
+                self.output.send(.allCurrentData(Array(self.sessionData.keys).sorted { $0.id < $1.id }))
             }
         })
         .store(in: &bag)
@@ -107,8 +129,9 @@ final class UserSessionImpl: UserSession {
         
     // MARK: - Update file after edit flow
     private func updateEditedFilesData(newDataBox: PrintableDataBox, oldDataBox: PrintableDataBox) {
+        newDataBox.isEditedByUser = true
         sessionData[oldDataBox] = nil
-        sessionData[newDataBox] = newDataBox
+        sessionData[newDataBox] = true
     }
     /// used for writing the file into temp folder before open with QL
     /// QL requires URL path for the file to edit, remove temp folder after editing

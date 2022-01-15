@@ -9,21 +9,13 @@ import ApphudSDK
 import StoreKit
 import Combine
 
-///                     if let purchase = purchaseResultModel.nonRenewingPurchase, purchase.isActive()
-///                     what if purchase was refunded
 
 fileprivate let kShouldShowSubscriptionsToNewUser = "kShouldShowSubscriptionsToNewUser"
 fileprivate let kHasUserActiveSubscriptionsCached = "kDoesUserHaveActiveSubscriptionsCachedSinceLastSession"
-fileprivate let kCachedPurchasesPrices = "kCachedPurchasesPrices"
 
-//final class AirPrintError: Error {
-//    var errorType: PurchaseError?
-//    var errorText: String!
-//    init(errorText: String, errorType: PurchaseError) {
-//        self.errorText = errorText
-//
-//    }
-//}
+fileprivate let kPreviousWeeklyPrice = "kPreviousWeeklyPrice"
+fileprivate let kPreviousMonthlyPrice = "kPreviousMonthlyPrice"
+fileprivate let kPreviousYearlyPrice = "kPreviousYearlyPrice"
 
 enum PurchaseError: Error {
     case error(String)
@@ -46,7 +38,7 @@ final class PurchesService {
     
     enum Response {
         case timerTick(String)
-        case hasActiveSubscriptions(Bool)
+        case hasActiveSubscriptions(hasActiveSubscription: Bool, shouldShowHowItWorks: Bool)
         case gotUpdatedPrices(weekly: String, monthly: String, yearly: String)
     }
     
@@ -64,18 +56,41 @@ final class PurchesService {
         get { (UserDefaults.standard.value(forKey: kHasUserActiveSubscriptionsCached) as? Bool) ?? false }
         set { UserDefaults.standard.set(newValue, forKey: kHasUserActiveSubscriptionsCached) }
     }
+    /// cached prices
+    static var previousWeeklyPrice: String {
+        get { (UserDefaults.standard.value(forKey: kPreviousWeeklyPrice) as? String) ?? "" }
+        set { UserDefaults.standard.set(newValue, forKey: kPreviousWeeklyPrice) }
+    }
+    static var previousMonthlyPrice: String {
+        get { (UserDefaults.standard.value(forKey: kPreviousMonthlyPrice) as? String) ?? "" }
+        set { UserDefaults.standard.set(newValue, forKey: kPreviousMonthlyPrice) }
+    }
+    static var previousYearlyPrice: String {
+        get { (UserDefaults.standard.value(forKey: kPreviousYearlyPrice) as? String) ?? "" }
+        set { UserDefaults.standard.set(newValue, forKey: kPreviousYearlyPrice) }
+    }
     
     let input = PassthroughSubject<Action, Never>()
     let output = PassthroughSubject<Response, Never>()
     
     /// determine if user has active subscriptions and which was not canceled during trial period
-    var isUserHasActiveSubscription: Bool!
+    private var _isUserHasActiveSubscription: Bool?
+    var isUserHasActiveSubscription: Bool {
+        _isUserHasActiveSubscription ?? PurchesService.isUserHasActiveSubscriptionsStatusSinceLastUserSession
+    }
     /// check if user had any subscription
-    var isUserEverHadSubscriptions: Bool { !(Apphud.subscriptions()?.isEmpty ?? true) }
+    var isUserEverHadSubscriptions: Bool {
+        let d = Apphud.subscriptions()?.isEmpty ?? false
+        return d
+    }
     /// weekly discaunt prices case: no active subs && no previus subs
     var isWeeklyPlanWithDiscaunt: Bool { !isUserHasActiveSubscription && !isUserEverHadSubscriptions }
     /// gift section should be visible: no active subs
     var isGiftPopupShouldBeVisibleForUser: Bool { !isUserHasActiveSubscription }
+    /// how it works should be shown: not even trial was tried
+    var isHowItWorksShouldBeVisibleForUser: Bool { !isUserHasActiveSubscription && !isUserEverHadSubscriptions }
+    /// was at least one request for update
+    var isConnectionWasOccuredAndReceivedUpdates: Bool = false
     
     /// configured in-app purchases data
     let appPurchasesInfoList = CurrentValueSubject<[ApphudProduct], Never>([])
@@ -103,6 +118,7 @@ final class PurchesService {
             self?.appPurchasesInfoList.send(appPurchasesInfoList)
             self?.updatedAllPrices()
             self?.refreshUserPurchasesStatus()
+            self?.isConnectionWasOccuredAndReceivedUpdates = true
         }
     }
     
@@ -112,16 +128,32 @@ final class PurchesService {
     }
     
     func updatedAllPrices() {
-        updatedPrices.weekly = getPriceForPurchase(model: .weekly) ?? "-"
-        updatedPrices.monthly = getPriceForPurchase(model: .monthly) ?? "-"
-        updatedPrices.yearly = getPriceForPurchase(model: .annual) ?? "-"
+        updatedPrices.weekly = getPriceForPurchase(model: .weekly) ?? ""
+        if updatedPrices.weekly != "" {
+            PurchesService.previousWeeklyPrice = updatedPrices.weekly
+        }
+        updatedPrices.monthly = getPriceForPurchase(model: .monthly) ?? ""
+        if updatedPrices.monthly != "" {
+            PurchesService.previousMonthlyPrice = updatedPrices.monthly
+        }
+        updatedPrices.yearly = getPriceForPurchase(model: .annual) ?? ""
+        if updatedPrices.yearly != "" {
+            PurchesService.previousYearlyPrice = updatedPrices.yearly
+        }
         output.send(.gotUpdatedPrices(weekly: updatedPrices.weekly.withoutTrailingZeros, monthly:updatedPrices.monthly.withoutTrailingZeros, yearly: updatedPrices
                                         .yearly.withoutTrailingZeros))
     }
     
     func getPriceForPurchase(model: Purchase) -> String? {
-        appPurchasesInfoList.value.filter({ $0.productId == model.productId })
+        let price = appPurchasesInfoList.value.filter({ $0.productId == model.productId })
             .last?.skProduct?.localizedPrice.withoutTrailingZeros ?? nil
+        guard let price = price else { return nil }
+        switch model {
+        case .weekly: PurchesService.previousWeeklyPrice = price
+        case .monthly: PurchesService.previousMonthlyPrice = price
+        case .annual: PurchesService.previousYearlyPrice = price
+        }
+        return price
     }
     
     func getFormattedYearPriceForPurchase(isPurePrice: Bool = false, size: CGFloat = 12) -> NSAttributedString? {
@@ -153,12 +185,13 @@ final class PurchesService {
         /// if subscription was cancelled on trial period
         if let activeSubscription = Apphud.subscriptions()?.first(where: { $0.isActive() }),
            activeSubscription.status == .trial && activeSubscription.canceledAt != nil {
-            isUserHasActiveSubscription = false
+            _isUserHasActiveSubscription = false
         } else {
-            isUserHasActiveSubscription = Apphud.hasActiveSubscription()
+            _isUserHasActiveSubscription = Apphud.hasActiveSubscription()
         }
-        PurchesService.isUserHasActiveSubscriptionsStatusSinceLastUserSession = isUserHasActiveSubscription
-        output.send(.hasActiveSubscriptions(isUserHasActiveSubscription))
+        PurchesService.isUserHasActiveSubscriptionsStatusSinceLastUserSession = _isUserHasActiveSubscription ?? isUserHasActiveSubscription
+        output.send(.hasActiveSubscriptions(
+            hasActiveSubscription: _isUserHasActiveSubscription ?? isUserHasActiveSubscription, shouldShowHowItWorks: isHowItWorksShouldBeVisibleForUser))
         Logger.log("Does user have active and not canceled subscriptions: \(isUserHasActiveSubscription.description.uppercased())", type: .purchase)
     }
     
@@ -257,7 +290,7 @@ final class PurchesService {
             case .clientInvalid:
                 return PurchaseError.error("Indicating that the client is not allowed to perform the attempted purchase action")
             case .paymentCancelled:
-                return PurchaseError.error("Payment request was canceled by user")
+                return PurchaseError.error("Payment request was canceled")
             case .paymentInvalid:
                 return PurchaseError.error("One of the payment parameters wasn’t recognized by the App Store")
             case .storeProductNotAvailable:
@@ -273,8 +306,10 @@ final class PurchesService {
             case _:
                 return PurchaseError.error("Unhandled error. Something went wrong during purchase")
             }
+        } else if (error as NSError).code == -1001 {
+            return PurchaseError.error("Please check your network connection")
         }
-        return PurchaseError.error("Error code: \((error as NSError).code). Message: \((error as NSError).localizedDescription)")
+        return PurchaseError.error("Feels like something went wrong...")
     }
 }
 

@@ -30,6 +30,7 @@ final class HomeScreenViewModel: UserSessionServiceProvidable,
         case didTapSettings
         case purchase(Purchase)
         case restoreSubscription
+        case memoryWarning
     }
     
     let input = PassthroughSubject<HomeScreenViewModel.Action, Never>()
@@ -79,7 +80,7 @@ private extension HomeScreenViewModel {
     
     func handleCopyFromClipboard() {
         guard UIPasteboard.general.hasImages || UIPasteboard.general.hasStrings else {
-                return output.send(.displayAlert(text: "No photos or text was found, nothing to paste here",
+                return output.send(.displayAlert(text: "Photos or text not found, nothing to paste here",
                                                  title: "Empty buffer", action: nil, buttonTitle: nil))
         }
         if UIPasteboard.general.hasStrings {
@@ -136,6 +137,8 @@ private extension HomeScreenViewModel {
                 self?.purchaseSubscriptionPlan(purchase)
             case .restoreSubscription:
                 self?.restoreLastSubscription()
+            case .memoryWarning:
+                self?.userSession.input.send(.handleMemoryWarning)
             }
         }).store(in: &bag)
         
@@ -173,11 +176,13 @@ private extension HomeScreenViewModel {
             switch response {
             case .timerTick(let timerTickText):
                 self?.output.send(.timerTick(timerText: timerTickText))
-            case .hasActiveSubscriptions(let hasActiveSubscriptions):
+            case .hasActiveSubscriptions(let hasActiveSubscriptions, let shouldShowHowItWorks):
                 guard let self = self else { return }
                 let shouldDisplayMultiSubscrPopup = PurchesService.shouldDisplaySubscriptionsForCurrentUser
-                self.output.send(.subscriptionStatus(hasActiveSubscriptions: hasActiveSubscriptions,
-                                                shouldDisplayMultiSubscrPopup: shouldDisplayMultiSubscrPopup))
+                self.output.send(.subscriptionStatus(
+                    hasActiveSubscriptions: hasActiveSubscriptions,
+                    shouldDisplayMultiSubscrPopup: shouldDisplayMultiSubscrPopup,
+                    shouldShowHowItWorks: shouldShowHowItWorks))
             case .gotUpdatedPrices(_, _, let yearly):
                 guard let yearlyStrike = self?.purchases.getFormattedYearPriceForPurchase(isPurePrice: true, size: 14) else { return }
                 self?.output.send(.gotUpdatedPricesForGift(yearly: yearly, yearlyStrike: yearlyStrike))

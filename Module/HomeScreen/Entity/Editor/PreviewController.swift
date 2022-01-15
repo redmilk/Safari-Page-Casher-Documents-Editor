@@ -13,13 +13,13 @@ class PreviewController: QLPreviewController, PdfServiceProvidable, UserSessionS
     var fileURL: URL!
     var toolbars: [UIView] = []
     var observations: [NSKeyValueObservation] = []
+    var isFileWasEdited: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         delegate = self
         dataSource = self
         overrideUserInterfaceStyle = .dark
-        
         navigationItem.setRightBarButton(UIBarButtonItem(), animated: false)
     }
     
@@ -65,6 +65,7 @@ class PreviewController: QLPreviewController, PdfServiceProvidable, UserSessionS
     }
     
     private func replaceEditedFileWithUpdated(_ fileURL: URL) {
+        guard isFileWasEdited else { return }
         if let editedPDF = PDFDocument(url: fileURL),
            let oldDataBox = userSession.editingFileDataBox,
            let updatedThumbnail = pdfService.makeImageFromPDFDocument(
@@ -90,7 +91,7 @@ extension PreviewController: QLPreviewControllerDelegate {
         return .updateContents
     }
     func previewController(_ controller: QLPreviewController, didUpdateContentsOf previewItem: QLPreviewItem) {
-
+        isFileWasEdited = true
     }
     func previewControllerWillDismiss(_ controller: QLPreviewController) {
         replaceEditedFileWithUpdated(fileURL)

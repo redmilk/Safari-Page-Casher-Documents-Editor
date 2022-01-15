@@ -24,11 +24,6 @@ final class SettingsViewController: UIViewController, MFMailComposeViewControlle
     @IBOutlet private weak var privacyPolicyButton: UIButton!
     @IBOutlet private weak var termsOfUseButton: UIButton!
     @IBOutlet private weak var shareButton: UIButton!
-    @IBOutlet private weak var bluredEffectView: UIButton!
-    
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
 
     private let viewModel: SettingsViewModel
     private var bag = Set<AnyCancellable>()
@@ -43,7 +38,6 @@ final class SettingsViewController: UIViewController, MFMailComposeViewControlle
     deinit {
         Logger.log(String(describing: self), type: .deinited)
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
@@ -79,6 +73,7 @@ private extension SettingsViewController {
         navigationController?.navigationBar.titleTextAttributes = textAttributes
         navigationController?.navigationBar.tintColor = .white
         title = "Settings"
+        navigationBarExtender.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         navigationBarExtender.addCornerRadius(30)
         
         manageSubscriptionsButton.publisher()

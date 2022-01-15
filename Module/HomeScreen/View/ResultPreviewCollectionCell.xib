@@ -23,24 +23,27 @@
                                 <rect key="frame" x="0.0" y="0.0" width="287" height="416"/>
                             </imageView>
                             <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bux-kE-qrh" userLabel="selection">
-                                <rect key="frame" x="261" y="2" width="24" height="24"/>
+                                <rect key="frame" x="253" y="10" width="24" height="24"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="24" id="ruj-XC-Ani"/>
                                     <constraint firstAttribute="width" secondItem="Bux-kE-qrh" secondAttribute="height" multiplier="1:1" id="zFQ-12-Drc"/>
                                 </constraints>
-                                <state key="normal" title=" " backgroundImage="delete-selection-mode-unselected"/>
+                                <size key="titleShadowOffset" width="1" height="-1"/>
+                                <state key="normal" title=" " backgroundImage="delete-selection-mode-unselected">
+                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
                                 <state key="selected" backgroundImage="delete-selection-mode-selected"/>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Wp8-cn-QwH" firstAttribute="top" secondItem="dcb-kN-OuT" secondAttribute="top" id="ATK-av-1Kb"/>
-                            <constraint firstItem="Bux-kE-qrh" firstAttribute="top" secondItem="dcb-kN-OuT" secondAttribute="top" constant="2" id="C6S-aA-ng7"/>
+                            <constraint firstItem="Bux-kE-qrh" firstAttribute="top" secondItem="dcb-kN-OuT" secondAttribute="top" constant="10" id="C6S-aA-ng7"/>
                             <constraint firstItem="Wp8-cn-QwH" firstAttribute="leading" secondItem="dcb-kN-OuT" secondAttribute="leading" id="UuH-MD-2j7"/>
                             <constraint firstAttribute="trailing" secondItem="Wp8-cn-QwH" secondAttribute="trailing" id="hok-GZ-Gjw"/>
                             <constraint firstAttribute="bottom" secondItem="Wp8-cn-QwH" secondAttribute="bottom" id="iyL-tP-3jt"/>
-                            <constraint firstAttribute="trailing" secondItem="Bux-kE-qrh" secondAttribute="trailing" constant="2" id="lm8-Ys-ZgI"/>
+                            <constraint firstAttribute="trailing" secondItem="Bux-kE-qrh" secondAttribute="trailing" constant="10" id="lm8-Ys-ZgI"/>
                         </constraints>
                     </view>
                 </subviews>

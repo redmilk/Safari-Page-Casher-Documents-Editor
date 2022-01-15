@@ -40,7 +40,6 @@ final class OnboardingViewController: UIViewController {
     private var bag = Set<AnyCancellable>()
     private let model: OnboardingPageModel
 
-    
     init(model: OnboardingPageModel) {
         self.model = model
         super.init(nibName: String(describing: OnboardingViewController.self), bundle: nil)

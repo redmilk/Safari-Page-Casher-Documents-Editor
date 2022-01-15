@@ -18,5 +18,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return true
     }
+    
+    func applicationDidReceiveMemoryWarning(_ application: UIApplication) {
+        
+    }
 }
 

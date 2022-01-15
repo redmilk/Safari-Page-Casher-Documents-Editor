@@ -10,14 +10,13 @@ import PDFKit.PDFDocument
 import UIKit
 
 final class PrintableDataBox: Hashable, Equatable {
-    
+    var isEditedByUser: Bool = false
     var isSelected: Bool = false
+    
     let id: String
     var thumbnail: UIImage?
-
     /// scan or photoalbum item
     var image: UIImage?
-    
     /// document from icloud
     var document: PDFDocument?
     var documentPage: Int?
@@ -38,6 +37,7 @@ final class PrintableDataBox: Hashable, Equatable {
     }
     
     static func == (lhs: PrintableDataBox, rhs: PrintableDataBox) -> Bool {
-        lhs.id == rhs.id
+        lhs.id == rhs.id && lhs.isSelected == rhs.isSelected && lhs.thumbnail == rhs.thumbnail &&
+        lhs.image == rhs.image && lhs.document == rhs.document && lhs.documentPage == rhs.documentPage
     }
 }

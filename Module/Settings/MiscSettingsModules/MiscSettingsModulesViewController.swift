@@ -36,10 +36,6 @@ final class MiscSettingsModulesViewController: UIViewController, UIGestureRecogn
     deinit {
         Logger.log(String(describing: self), type: .deinited)
     }
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 

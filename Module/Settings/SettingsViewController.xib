@@ -52,7 +52,7 @@
                             </constraints>
                         </view>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="7f8-No-ca8">
-                            <rect key="frame" x="20" y="130" width="374" height="475"/>
+                            <rect key="frame" x="20" y="128.5" width="374" height="475"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="K3c-op-Sue">
                                     <rect key="frame" x="0.0" y="0.0" width="374" height="153"/>
@@ -433,20 +433,18 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="71K-IC-Y1G" userLabel="NavigationExptender">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="110"/>
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="98.5"/>
                     <color key="backgroundColor" red="0.11278515309999999" green="0.1184124723" blue="0.30589970950000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="110" id="8qi-D8-pAP"/>
-                    </constraints>
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <constraints>
+                <constraint firstItem="7f8-No-ca8" firstAttribute="top" secondItem="71K-IC-Y1G" secondAttribute="bottom" constant="30" id="0YO-Ua-DPN"/>
                 <constraint firstItem="SDa-az-od4" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ClE-gx-xh2"/>
                 <constraint firstItem="71K-IC-Y1G" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="Fyi-Vw-NSf"/>
-                <constraint firstItem="7f8-No-ca8" firstAttribute="top" secondItem="71K-IC-Y1G" secondAttribute="bottom" constant="20" id="NBF-46-aZI"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="SDa-az-od4" secondAttribute="trailing" id="UXW-Rz-zwi"/>
                 <constraint firstItem="RM5-HP-8LQ" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.903382" id="WjC-Xe-TJh"/>
+                <constraint firstItem="71K-IC-Y1G" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="0.11" id="Zdt-rw-Zi1"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="71K-IC-Y1G" secondAttribute="trailing" id="eOZ-P5-ghg"/>
                 <constraint firstItem="SDa-az-od4" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="gLZ-Bk-XFm"/>
                 <constraint firstAttribute="bottom" secondItem="SDa-az-od4" secondAttribute="bottom" id="rug-ue-UdM"/>

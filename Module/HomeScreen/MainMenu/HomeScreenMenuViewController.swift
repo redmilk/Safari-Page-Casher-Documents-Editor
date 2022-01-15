@@ -23,6 +23,8 @@ final class HomeScreenMenuViewController: UIViewController,
         case displayAlert(text: String, title: String?, action: VoidClosure?, buttonTitle: String?)
         case displayHowTrialWorks
     }
+    
+    @IBOutlet weak var menuContainer: UIView!
     @IBOutlet weak var buttonsContainerView: UIView!
     @IBOutlet weak var cancelButton: TapAnimatedButton!
     @IBOutlet weak var scanDocumentButton: TapAnimatedButton!
@@ -56,6 +58,7 @@ final class HomeScreenMenuViewController: UIViewController,
     deinit {
         Logger.log(String(describing: self), type: .deinited)
     }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
@@ -71,22 +74,28 @@ final class HomeScreenMenuViewController: UIViewController,
 
 private extension HomeScreenMenuViewController {
     @objc func handleTapCloseMainMenu(_ sender: UITapGestureRecognizer? = nil) {
-        buttonsContainerView.isHidden = true
+        menuContainer.isHidden = true
         viewModel.input.send(.closeAction)
     }
     
     func configureView() {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTapCloseMainMenu(_:)))
-        let tapView = UIView()
-        view.addSubview(tapView)
-        tapView.translatesAutoresizingMaskIntoConstraints = false
-        tapView.bottomAnchor.constraint(equalTo: buttonsContainerView.topAnchor, constant: 0).isActive = true
-        tapView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
-        tapView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
-        tapView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
-        tapView.addGestureRecognizer(tap)
-
-        subscriptionPriceLabel.text = viewModel.purchases.getPriceForPurchase(model: .weekly)
+        let isPaidUser = viewModel.isPaidUser
+        printPhotoButton.isSelected = isPaidUser
+        printDocumentButton.isSelected = isPaidUser
+        printWebPage.isSelected = isPaidUser
+        printFromClipboard.isSelected = isPaidUser
+        
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTapCloseMainMenu(_:)))
+//        let tapView = UIView()
+//        view.addSubview(tapView)
+//        tapView.translatesAutoresizingMaskIntoConstraints = false
+//        tapView.bottomAnchor.constraint(equalTo: buttonsContainerView.topAnchor, constant: 0).isActive = true
+//        tapView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
+//        tapView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
+//        tapView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
+//        tapView.addGestureRecognizer(tap)
+//
+        subscriptionPriceLabel.text = viewModel.purchases.getPriceForPurchase(model: .weekly) ?? PurchesService.previousWeeklyPrice
         viewModel.output.sink(receiveValue: { [weak self] state in
             guard let self = self else { return }
             switch state {
@@ -115,7 +124,7 @@ private extension HomeScreenMenuViewController {
         }).store(in: &bag)
         cancelButton.publisher().sink(receiveValue: { [weak self] _ in
             guard let self = self else { return }
-            self.buttonsContainerView.isHidden = true
+            self.menuContainer.isHidden = true
             self.viewModel.input.send(.closeAction)
         }).store(in: &bag)
         printWebPage.publisher().sink(receiveValue: { [weak self] _ in
@@ -144,7 +153,7 @@ private extension HomeScreenMenuViewController {
     }
     
     func showSubscriptionsPopup(with content: (UIImage, UIImage, String, String)) { 
-        buttonsContainerView.isHidden = true
+        menuContainer.isHidden = true
         subscriptionPopupImageView.image = content.0
         subscriptionContinueButton.setBackgroundImage(content.1, for: .normal)
         subscriptionTitleFirstLine.text = content.2
@@ -172,14 +181,10 @@ private extension HomeScreenMenuViewController {
         buttonsContainerView.addCornerRadius(StylingConstants.cornerRadiusDefault)
         buttonsContainerView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         scanDocumentButton.addCornerRadius(StylingConstants.cornerRadiusDefault)
-        scanDocumentButton.addBorder(1.0, .black)
         printDocumentButton.addCornerRadius(StylingConstants.cornerRadiusDefault)
-        printDocumentButton.addBorder(1.0, .black)
         printPhotoButton.addCornerRadius(StylingConstants.cornerRadiusDefault)
-        printPhotoButton.addBorder(1.0, .black)
         cancelButton.addCornerRadius(StylingConstants.cornerRadiusDefault)
         printWebPage.addCornerRadius(StylingConstants.cornerRadiusDefault)
-        printWebPage.addBorder(1.0, .black)
         buttonsContainerView.dropShadow(color: .black, opacity: 0.6, offSet: .zero, radius: 15, scale: true)
         subscriptionButtonsContainer.addCornerRadius(30.0)
         subscriptionButtonsContainer.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
