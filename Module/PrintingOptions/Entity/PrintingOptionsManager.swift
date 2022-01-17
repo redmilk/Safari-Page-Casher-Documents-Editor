@@ -29,8 +29,8 @@ final class PrintingOptionsManager: NSObject {
         printController.delegate = self
         printController.printInfo = printInfo
         printController.showsNumberOfCopies = true
-        printController.printingItem = pdfData
         printController.showsPaperSelectionForLoadedPapers = true
+        printController.printingItem = pdfData
         printController.present(animated: false, completionHandler: nil)
     }
 }
@@ -40,8 +40,6 @@ extension PrintingOptionsManager: UIPrintInteractionControllerDelegate {
     func printInteractionControllerDidPresentPrinterOptions(_ printInteractionController: UIPrintInteractionController) {
         didPresentCallback?()
     }
-    
-    
     func printInteractionControllerWillDismissPrinterOptions(_ printInteractionController: UIPrintInteractionController) {
         finishCallback()
     }

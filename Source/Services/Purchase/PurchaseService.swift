@@ -230,9 +230,7 @@ final class PurchesService {
         return Deferred {
             Future<Bool, PurchaseError> { promise in
                 Apphud.restorePurchases { [weak self] subscriptions, purchases, error in
-                    guard error == nil else {
-                        guard let self = self else { return }
-                        let purchaseError = self.handlePurchasesError(error!)
+                    if let error = error, let purchaseError = self?.handlePurchasesError(error) {
                         Logger.logError(purchaseError)
                         return promise(.failure(purchaseError))
                     }
