@@ -316,7 +316,7 @@ private extension HomeScreenViewController {
         
         NotificationCenter.default.publisher(for: .pdfImportProcessDidStart, object: nil)
             .sink(receiveValue: { [weak self] _ in
-                self!.startActivityAnimation()
+                self?.startActivityAnimation()
             }).store(in: &bag)
         NotificationCenter.default.publisher(for: .pdfImportProcessDidStop, object: nil)
             .sink(receiveValue: { [weak self] _ in
@@ -430,6 +430,8 @@ private extension HomeScreenViewController {
         printButton.addCornerRadius(StylingConstants.cornerRadiusDefault)
         navigationBarExtenderView.addCornerRadius(30)
         navigationBarExtenderView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+        selectionModeTopContainer.addCornerRadius(30)
+        selectionModeTopContainer.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         bottomBarContainer.addCornerRadius(30)
         bottomBarContainer.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         dialogButtonsContainer.addCornerRadius(30)
