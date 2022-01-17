@@ -44,6 +44,7 @@ final class PhotoalbumManagerImpl: NSObject, PhotoalbumManager {
     
     func displayPhotoLibrary(_ parentController: UIViewController, presentationCallback: @escaping VoidClosure) {
         finishCallback = presentationCallback
+        UINavigationBar.appearance().setBackgroundImage(UIImage(named: "blackquad")!, for: .default)
         var configuration = PHPickerConfiguration()
         configuration.selectionLimit = 20
         configuration.filter = .any(of: [.livePhotos, .images])
@@ -52,7 +53,9 @@ final class PhotoalbumManagerImpl: NSObject, PhotoalbumManager {
         picker.overrideUserInterfaceStyle = .dark
         picker.delegate = self
         picker.modalPresentationStyle = .fullScreen
-        parentController.present(picker, animated: true, completion: nil)
+        parentController.present(picker, animated: true, completion: {
+            UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
+        })
     }
 }
 
