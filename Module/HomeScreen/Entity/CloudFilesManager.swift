@@ -29,18 +29,35 @@ final class CloudFilesManagerImpl: NSObject, CloudFilesManager, PdfServiceProvid
     }
 }
 
+
+extension UIDocumentPickerViewController: ActivityIndicatorPresentable {
+    
+}
+
+
+extension Notification.Name {
+    static let pdfImportProcessDidStart = Notification.Name("pdf-import-process-start")
+    static let pdfImportProcessDidStop = Notification.Name("pdf-import-process-stop")
+}
+
 extension CloudFilesManagerImpl: UIDocumentPickerDelegate {
     
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         guard let url = urls.first, let pdf = PDFDocument(url: url) else { return }
-        let pdfPagesAsDocuments = pdfService.makeSeparatePDFDocumentsFromPDF(pdf)
-        let dataBoxList = pdfPagesAsDocuments.map {
-            PrintableDataBox(id: Date().millisecondsSince1970.description,
-                             image: self.pdfService.makeImageFromPDFDocument($0, withImageSize: UIScreen.main.bounds.size, ofPageIndex: 0),
-                             document: $0)
-        }
-        _output.send(dataBoxList)
-        controller.dismiss(animated: true, completion: finishCallback)
+        NotificationCenter.default.post(name: Notification.Name.pdfImportProcessDidStart, object: nil)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [weak self] in
+            guard let self = self else { return }
+            let pdfPagesAsDocuments = self.pdfService.makeSeparatePDFDocumentsFromPDF(pdf)
+            let dataBoxList = pdfPagesAsDocuments.map { page in
+                autoreleasepool {
+                    PrintableDataBox(id: Date().millisecondsSince1970.description,
+                                     image: self.pdfService.makeImageFromPDFDocument(page, withImageSize: UIScreen.main.bounds.size, ofPageIndex: 0),
+                                     document: page)
+                }
+            }
+            NotificationCenter.default.post(name: Notification.Name.pdfImportProcessDidStop, object: nil)
+            self._output.send(dataBoxList)
+        })
     }
     
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {

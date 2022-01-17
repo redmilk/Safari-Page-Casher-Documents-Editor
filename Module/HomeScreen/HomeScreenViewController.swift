@@ -113,8 +113,7 @@ final class HomeScreenViewController: UIViewController,
         viewModel.input.send(.memoryWarning)
         displayAlert(
             fromParentView: self.view,
-            with: "Your device's memory is too low. Unfortunately, the application will partially purge your previously added files that hav't yet been edited", title: "Warning", action: { [weak self] in
-            })
+            with: "Your device's memory is too low. Unfortunately, the application will partially purge your previously added files that have not yet been edited", title: "Warning")
     }
 
     override func viewDidLoad() {
@@ -124,6 +123,16 @@ final class HomeScreenViewController: UIViewController,
         collectionManager.input.send(.configure)
         viewModel.configureViewModel()
         configureView()
+        
+        
+        NotificationCenter.default.publisher(for: .pdfImportProcessDidStart, object: nil)
+            .sink(receiveValue: { [weak self] _ in
+                self!.startActivityAnimation()
+            }).store(in: &bag)
+        NotificationCenter.default.publisher(for: .pdfImportProcessDidStop, object: nil)
+            .sink(receiveValue: { [weak self] _ in
+                self?.stopActivityAnimation()
+            }).store(in: &bag)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
