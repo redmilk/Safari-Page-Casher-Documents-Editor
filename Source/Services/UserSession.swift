@@ -97,6 +97,7 @@ final class UserSessionImpl: UserSession {
                     return nil
                 })
                 self.output.send(.deletedItems(Array(deleted)))
+                self.output.send(.selectionCount(self.getSelectedCount()))
             case .handleMemoryWarning:
                 /**
                  let allData = Array(self.sessionData.keys).sorted { $0.id < $1.id }
