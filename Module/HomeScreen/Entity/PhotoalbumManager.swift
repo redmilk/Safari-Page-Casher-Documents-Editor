@@ -45,7 +45,7 @@ final class PhotoalbumManagerImpl: NSObject, PhotoalbumManager {
     func displayPhotoLibrary(_ parentController: UIViewController, presentationCallback: @escaping VoidClosure) {
         finishCallback = presentationCallback
         var configuration = PHPickerConfiguration()
-        configuration.selectionLimit = 100
+        configuration.selectionLimit = 20
         configuration.filter = .any(of: [.livePhotos, .images])
         configuration.preferredAssetRepresentationMode = .automatic
         picker = PHPickerViewController(configuration: configuration)
