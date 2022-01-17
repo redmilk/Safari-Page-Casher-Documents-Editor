@@ -537,84 +537,6 @@
                         <constraint firstItem="Qer-i0-R1r" firstAttribute="centerX" secondItem="wzP-ou-u7F" secondAttribute="centerX" id="yq9-lm-rgt"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dYB-fm-JnI" userLabel="Selection Mode Container">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="98.5"/>
-                    <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n7T-eX-CwZ" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
-                            <rect key="frame" x="20" y="51.5" width="32" height="32"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="32" id="M8v-Mx-AFQ"/>
-                                <constraint firstAttribute="width" secondItem="n7T-eX-CwZ" secondAttribute="height" multiplier="1:1" id="mJ7-RY-wT0"/>
-                            </constraints>
-                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                            <state key="normal" backgroundImage="button-close-small"/>
-                        </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Selected items: 0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QER-0I-vXa">
-                            <rect key="frame" x="0.0" y="47.5" width="414" height="40"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="40" id="880-s2-WPi"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="14"/>
-                            <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                    </subviews>
-                    <color key="backgroundColor" red="0.11719965189999999" green="0.11395696549999999" blue="0.30591475959999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                    <constraints>
-                        <constraint firstItem="QER-0I-vXa" firstAttribute="centerX" secondItem="dYB-fm-JnI" secondAttribute="centerX" id="4lt-Wp-htT"/>
-                        <constraint firstItem="QER-0I-vXa" firstAttribute="centerY" secondItem="n7T-eX-CwZ" secondAttribute="centerY" id="6ms-au-A4K"/>
-                        <constraint firstAttribute="bottom" secondItem="n7T-eX-CwZ" secondAttribute="bottom" constant="15" id="YR2-7k-hAg"/>
-                        <constraint firstAttribute="trailing" secondItem="QER-0I-vXa" secondAttribute="trailing" id="l3f-OL-Xce"/>
-                        <constraint firstItem="n7T-eX-CwZ" firstAttribute="leading" secondItem="dYB-fm-JnI" secondAttribute="leading" constant="20" id="rcf-Jh-Zie"/>
-                    </constraints>
-                </view>
-                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JuQ-s1-O5r" userLabel="Clarify Dialog Container">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                    <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ugq-i7-Wjc" userLabel="Buttons Container">
-                            <rect key="frame" x="0.0" y="634" width="414" height="262"/>
-                            <subviews>
-                                <stackView verifyAmbiguity="ignoreSizes" opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="mMm-5E-yL7">
-                                    <rect key="frame" x="39.5" y="10" width="335" height="220"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Are you sure you want to delete this item?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dWI-ur-zVO">
-                                            <rect key="frame" x="0.0" y="0.0" width="335" height="60"/>
-                                            <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="20"/>
-                                            <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nec-YO-hOI" userLabel="delete button" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="80" width="335" height="60"/>
-                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                            <state key="normal" backgroundImage="button-dialog-delete"/>
-                                        </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mqb-Cb-O2n" userLabel="cancel button" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="160" width="335" height="60"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="60" id="4Yy-dP-8ZL"/>
-                                                <constraint firstAttribute="width" constant="335" id="7JH-AW-Rpn"/>
-                                            </constraints>
-                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                            <state key="normal" backgroundImage="button-menu-cancel"/>
-                                        </button>
-                                    </subviews>
-                                </stackView>
-                            </subviews>
-                            <color key="backgroundColor" red="0.15600386259999999" green="0.161205709" blue="0.36864712830000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                            <constraints>
-                                <constraint firstItem="mMm-5E-yL7" firstAttribute="centerX" secondItem="Ugq-i7-Wjc" secondAttribute="centerX" id="E4j-hw-8Uw"/>
-                                <constraint firstItem="mMm-5E-yL7" firstAttribute="top" secondItem="Ugq-i7-Wjc" secondAttribute="top" constant="10" id="TuK-1g-J1A"/>
-                                <constraint firstAttribute="height" constant="262" id="lkE-Hn-Nt3"/>
-                            </constraints>
-                        </view>
-                    </subviews>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstItem="Ugq-i7-Wjc" firstAttribute="leading" secondItem="JuQ-s1-O5r" secondAttribute="leading" id="7db-rZ-PTT"/>
-                        <constraint firstAttribute="trailing" secondItem="Ugq-i7-Wjc" secondAttribute="trailing" id="gMh-Hg-aXe"/>
-                        <constraint firstAttribute="bottom" secondItem="Ugq-i7-Wjc" secondAttribute="bottom" id="oW0-1t-ExO"/>
-                    </constraints>
-                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SqB-k3-Rm0" userLabel="NavigationBarExtender">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="98.5"/>
                     <subviews>
@@ -685,6 +607,84 @@
                         <constraint firstItem="8gq-UL-Uhh" firstAttribute="centerY" secondItem="4Q8-A1-7v2" secondAttribute="centerY" id="qkO-K9-VUV"/>
                         <constraint firstItem="co0-vw-K7C" firstAttribute="leading" secondItem="5Sr-pF-jf2" secondAttribute="trailing" constant="8" id="rMy-OI-dGf"/>
                         <constraint firstItem="co0-vw-K7C" firstAttribute="centerY" secondItem="5Sr-pF-jf2" secondAttribute="centerY" id="tMg-vA-tpp"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dYB-fm-JnI" userLabel="Selection Mode Container">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="98.5"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n7T-eX-CwZ" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
+                            <rect key="frame" x="20" y="54.5" width="32" height="32"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="32" id="M8v-Mx-AFQ"/>
+                                <constraint firstAttribute="width" secondItem="n7T-eX-CwZ" secondAttribute="height" multiplier="1:1" id="mJ7-RY-wT0"/>
+                            </constraints>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" backgroundImage="button-close-small"/>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Selected items: 0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QER-0I-vXa">
+                            <rect key="frame" x="0.0" y="50.5" width="414" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="880-s2-WPi"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="14"/>
+                            <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" red="0.1165821329" green="0.1141723469" blue="0.30589985850000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <constraints>
+                        <constraint firstItem="QER-0I-vXa" firstAttribute="centerX" secondItem="dYB-fm-JnI" secondAttribute="centerX" id="4lt-Wp-htT"/>
+                        <constraint firstItem="QER-0I-vXa" firstAttribute="centerY" secondItem="n7T-eX-CwZ" secondAttribute="centerY" id="6ms-au-A4K"/>
+                        <constraint firstAttribute="bottom" secondItem="n7T-eX-CwZ" secondAttribute="bottom" constant="12" id="YR2-7k-hAg"/>
+                        <constraint firstAttribute="trailing" secondItem="QER-0I-vXa" secondAttribute="trailing" id="l3f-OL-Xce"/>
+                        <constraint firstItem="n7T-eX-CwZ" firstAttribute="leading" secondItem="dYB-fm-JnI" secondAttribute="leading" constant="20" id="rcf-Jh-Zie"/>
+                    </constraints>
+                </view>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JuQ-s1-O5r" userLabel="Clarify Dialog Container">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ugq-i7-Wjc" userLabel="Buttons Container">
+                            <rect key="frame" x="0.0" y="634" width="414" height="262"/>
+                            <subviews>
+                                <stackView verifyAmbiguity="ignoreSizes" opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="mMm-5E-yL7">
+                                    <rect key="frame" x="39.5" y="10" width="335" height="220"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Are you sure you want to delete this item?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dWI-ur-zVO">
+                                            <rect key="frame" x="0.0" y="0.0" width="335" height="60"/>
+                                            <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="20"/>
+                                            <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nec-YO-hOI" userLabel="delete button" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="80" width="335" height="60"/>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                            <state key="normal" backgroundImage="button-dialog-delete"/>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mqb-Cb-O2n" userLabel="cancel button" customClass="TapAnimatedButton" customModule="AirPrint" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="160" width="335" height="60"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="60" id="4Yy-dP-8ZL"/>
+                                                <constraint firstAttribute="width" constant="335" id="7JH-AW-Rpn"/>
+                                            </constraints>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                            <state key="normal" backgroundImage="button-menu-cancel"/>
+                                        </button>
+                                    </subviews>
+                                </stackView>
+                            </subviews>
+                            <color key="backgroundColor" red="0.15600386259999999" green="0.161205709" blue="0.36864712830000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <constraints>
+                                <constraint firstItem="mMm-5E-yL7" firstAttribute="centerX" secondItem="Ugq-i7-Wjc" secondAttribute="centerX" id="E4j-hw-8Uw"/>
+                                <constraint firstItem="mMm-5E-yL7" firstAttribute="top" secondItem="Ugq-i7-Wjc" secondAttribute="top" constant="10" id="TuK-1g-J1A"/>
+                                <constraint firstAttribute="height" constant="262" id="lkE-Hn-Nt3"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="Ugq-i7-Wjc" firstAttribute="leading" secondItem="JuQ-s1-O5r" secondAttribute="leading" id="7db-rZ-PTT"/>
+                        <constraint firstAttribute="trailing" secondItem="Ugq-i7-Wjc" secondAttribute="trailing" id="gMh-Hg-aXe"/>
+                        <constraint firstAttribute="bottom" secondItem="Ugq-i7-Wjc" secondAttribute="bottom" id="oW0-1t-ExO"/>
                     </constraints>
                 </view>
             </subviews>

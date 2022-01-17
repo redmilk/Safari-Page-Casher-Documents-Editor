@@ -22,7 +22,7 @@ final class PDFServiceImpl: PDFService {
     
     func makeImageFromPDFDocument(_ pdfDocument: PDFDocument, withImageSize size: CGSize, ofPageIndex page: Int) -> UIImage? {
         let pdfDocumentPage = pdfDocument.page(at: page)
-        return pdfDocumentPage?.thumbnail(of: size, for: PDFDisplayBox.trimBox)
+        return pdfDocumentPage?.thumbnail(of: size, for: .cropBox)
     }
     
     func makePDFFilesFromImages(_ images: [UIImage]) -> [PDFDocument] {
