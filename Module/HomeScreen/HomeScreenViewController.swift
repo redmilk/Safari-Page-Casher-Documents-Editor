@@ -123,16 +123,6 @@ final class HomeScreenViewController: UIViewController,
         collectionManager.input.send(.configure)
         viewModel.configureViewModel()
         configureView()
-        
-        
-        NotificationCenter.default.publisher(for: .pdfImportProcessDidStart, object: nil)
-            .sink(receiveValue: { [weak self] _ in
-                self!.startActivityAnimation()
-            }).store(in: &bag)
-        NotificationCenter.default.publisher(for: .pdfImportProcessDidStop, object: nil)
-            .sink(receiveValue: { [weak self] _ in
-                self?.stopActivityAnimation()
-            }).store(in: &bag)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -323,6 +313,15 @@ private extension HomeScreenViewController {
                 self?.viewModel.input.send(.getSelectionCount)
             }
         }).store(in: &bag)
+        
+        NotificationCenter.default.publisher(for: .pdfImportProcessDidStart, object: nil)
+            .sink(receiveValue: { [weak self] _ in
+                self!.startActivityAnimation()
+            }).store(in: &bag)
+        NotificationCenter.default.publisher(for: .pdfImportProcessDidStop, object: nil)
+            .sink(receiveValue: { [weak self] _ in
+                self?.stopActivityAnimation()
+            }).store(in: &bag)
         
         showEmptyState()
         setHiddenClarifyDeleteDialog(true)

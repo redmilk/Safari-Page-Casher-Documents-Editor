@@ -25,17 +25,14 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0uq-F9-NoD" userLabel="NavigationExptender">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="110"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="98.5"/>
                             <color key="backgroundColor" red="0.1165821329" green="0.1141723469" blue="0.30589985850000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="110" id="ria-KR-m0X"/>
-                            </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VrR-TX-bSn" userLabel="PrivacyPolicy">
-                            <rect key="frame" x="0.0" y="110" width="414" height="786"/>
+                            <rect key="frame" x="0.0" y="98.5" width="414" height="797.5"/>
                             <subviews>
                                 <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gl3-ge-6td">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="786"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="797.5"/>
                                     <color key="backgroundColor" red="0.15600386259999999" green="0.161205709" blue="0.36864712830000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     <wkWebViewConfiguration key="configuration">
                                         <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -56,6 +53,7 @@
                     <constraints>
                         <constraint firstItem="VrR-TX-bSn" firstAttribute="leading" secondItem="fO0-zK-fYC" secondAttribute="leading" id="Afx-T3-b7o"/>
                         <constraint firstItem="VrR-TX-bSn" firstAttribute="top" secondItem="0uq-F9-NoD" secondAttribute="bottom" id="DE4-4s-ZlK"/>
+                        <constraint firstItem="0uq-F9-NoD" firstAttribute="height" secondItem="fO0-zK-fYC" secondAttribute="height" multiplier="0.11" id="IQ6-n9-7Py"/>
                         <constraint firstAttribute="trailing" secondItem="VrR-TX-bSn" secondAttribute="trailing" id="Ijw-qU-pjT"/>
                         <constraint firstItem="0uq-F9-NoD" firstAttribute="leading" secondItem="fO0-zK-fYC" secondAttribute="leading" id="Nf0-pQ-EbU"/>
                         <constraint firstAttribute="trailing" secondItem="0uq-F9-NoD" secondAttribute="trailing" id="eTc-4D-GJa"/>
