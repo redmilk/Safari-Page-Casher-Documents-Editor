@@ -67,6 +67,7 @@ private extension WebpageViewController {
         searchBar.delegate = self
         searchBar.autocapitalizationType = .none
         webView.load(URLRequest(url: URL(string: "https://google.com")!))
+        searchBar.searchTextField.clearButtonMode = .never
         
         closeButton.publisher().sink(receiveValue: { [weak self] _ in
             self?.dismiss(animated: true, completion: self?.finishCallback)
@@ -90,6 +91,7 @@ private extension WebpageViewController {
         func defineNextPdfPageRectWithContentSize(_ contentSize: CGSize) -> [CGRect] {
             let pageHeight = UIScreen.main.bounds.height
             let pageWidth = UIScreen.main.bounds.width
+            // 1 : 1.4142
             let pagesCount = Int((contentSize.height / pageHeight).rounded(.down))
             var result: [CGRect] = []
             for i in 0...pagesCount {
@@ -127,6 +129,9 @@ private extension WebpageViewController {
 // MARK: - Delegates: WKNavigationDelegate, WKUIDelegate, UISearchBarDelegate
 
 extension WebpageViewController: WKNavigationDelegate, WKUIDelegate, UISearchBarDelegate {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.text = nil
+    }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         defer {
             searchBar.resignFirstResponder()
@@ -145,7 +150,11 @@ extension WebpageViewController: WKNavigationDelegate, WKUIDelegate, UISearchBar
             return
         }
         guard let url = URL(string: "https://" + searchText) else {
-            let req = URLRequest(url: URL(string: "https://www.google.com/search?q=\(searchText)")!)
+            let formatted = searchText.replacingOccurrences(of: " ", with: "+")
+            var components = URLComponents(string: "https://www.google.com/search")
+            let query = URLQueryItem(name: "q", value: formatted)
+            components?.queryItems = [query]
+            let req = URLRequest(url: components!.url!)
             webView.load(req)
             return
         }
@@ -156,7 +165,6 @@ extension WebpageViewController: WKNavigationDelegate, WKUIDelegate, UISearchBar
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         let req = URLRequest(url: URL(string: "https://www.google.com/search?q=\(searchBar.text ?? "")")!)
         webView.load(req)
-        //searchBar.text = nil
         return Logger.logError(error)
     }
     
@@ -173,17 +181,14 @@ extension WebpageViewController: WKNavigationDelegate, WKUIDelegate, UISearchBar
     }
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        if let urlStr = navigationAction.request.url?.absoluteString {
-            textToSearchbar = urlStr
-        }
         decisionHandler(.allow)
     }
     
     func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration,
                  for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
         let configuration = WKWebViewConfiguration()
-        let config = WKWebViewConfiguration()
-        config.dataDetectorTypes = [.all]
+        configuration.allowsInlineMediaPlayback = false
+        configuration.dataDetectorTypes = [.all]
         return WKWebView(frame: webView.frame, configuration: configuration)
     }
     
@@ -201,5 +206,8 @@ extension WebpageViewController: WKNavigationDelegate, WKUIDelegate, UISearchBar
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         Logger.log("webView.scrollView.contentSize: \(webView.scrollView.contentSize)")
         webContentSize = webView.scrollView.contentSize
+        if let urlString = webView.url?.absoluteString {
+            textToSearchbar = urlString
+        }
     }
 }
