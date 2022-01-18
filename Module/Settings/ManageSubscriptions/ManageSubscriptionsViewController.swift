@@ -100,7 +100,14 @@ private extension ManageSubscriptionsViewController {
                 self.weeklyPriceLabel.text = weekly
                 self.monthlyPriceLabel.text =  monthly
                 self.yearlyPriceLabel.text = yearly
-                self.yearlyPriceDescriptionLabel.text = "Yearly Plan: \(yearly) / year"
+                
+                if let yearlyStriked = self.purchases.getFormattedYearPriceForPurchase(isPurePrice: true, size: 13) {
+                    let planText = String.makeAttriabutedStringNoFormatting("Yearly Plan: ", size: 12)
+                    let yearText = String.makeAttriabutedStringNoFormatting(" / year", size: 12)
+                    planText.append(yearlyStriked)
+                    planText.append(yearText)
+                    self.yearlyPriceDescriptionLabel.attributedText = planText
+                }
             }
         })
         .store(in: &bag)

@@ -26,7 +26,7 @@ extension SKProduct {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
         formatter.locale = priceLocale
-        return formatter.string(from: price)!
+        return formatter.string(from: price) ?? ""
     }
 }
 
