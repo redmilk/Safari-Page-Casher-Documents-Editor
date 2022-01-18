@@ -115,7 +115,6 @@ final class HomeScreenViewController: UIViewController,
             fromParentView: self.view,
             with: "Your device's memory is too low. Unfortunately, the application will partially purge your previously added files that have not yet been edited", title: "Warning")
     }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         handleStates()
@@ -333,6 +332,7 @@ private extension HomeScreenViewController {
     }
     
     private func removeMultisubscriptionsPopupIfDisplayed() {
+        guard subscriptionContainer != nil else { return }
         subscriptionContainer.subviews.forEach {
             if $0.tag == multiSubscriptionPopupViewTag {
                 $0.removeFromSuperview()
@@ -381,7 +381,8 @@ private extension HomeScreenViewController {
     }
     
     private func showEmptyState() {
-        UIView.transition(with: self.mainContainer, duration: 0.5, options: [.transitionFlipFromBottom], animations: {
+        UIView.transition(with: self.mainContainer, duration: 0.5, options: [.transitionFlipFromBottom], animations: { [weak self] in
+            guard let self = self, self.emptyStateContainer != nil, self.collectionView != nil else { return }
             self.emptyStateContainer.isHidden = false
             self.collectionView.isHidden = !false
         })
@@ -405,11 +406,9 @@ private extension HomeScreenViewController {
     }
     
     private func collapseGiftSubscriptionPopup() {
-        UIView.transition(with: view, duration: 0.5, options: .transitionCrossDissolve, animations: {
-            self.subscriptionContainer.isHidden = true
-        })
+        subscriptionContainer.isHidden = true
         subscriptionContainer.layer.removeAllAnimations()
-        subscriptionContainer.viewWithTag(1)!.removeFromSuperview()
+        subscriptionContainer.viewWithTag(1)?.removeFromSuperview()
     }
     
     private func updateGiftContainer(isHidden: Bool, shouldShowHowItWorks: Bool) {
