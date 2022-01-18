@@ -130,7 +130,7 @@ private extension WebpageViewController {
 
 extension WebpageViewController: WKNavigationDelegate, WKUIDelegate, UISearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        searchBar.text = nil
+        UIApplication.shared.sendAction((#selector(selectAll(_:))), to: nil, from: nil, for: nil)
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         defer {
@@ -187,7 +187,9 @@ extension WebpageViewController: WKNavigationDelegate, WKUIDelegate, UISearchBar
     func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration,
                  for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
         let configuration = WKWebViewConfiguration()
-        configuration.allowsInlineMediaPlayback = false
+        configuration.allowsInlineMediaPlayback = true
+        configuration.allowsAirPlayForMediaPlayback = false
+        configuration.allowsPictureInPictureMediaPlayback = false
         configuration.dataDetectorTypes = [.all]
         return WKWebView(frame: webView.frame, configuration: configuration)
     }
