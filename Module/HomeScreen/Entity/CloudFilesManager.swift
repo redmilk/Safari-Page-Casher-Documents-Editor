@@ -44,7 +44,9 @@ extension CloudFilesManagerImpl: UIDocumentPickerDelegate {
     
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         guard let url = urls.first, let pdf = PDFDocument(url: url) else { return }
-        NotificationCenter.default.post(name: Notification.Name.pdfImportProcessDidStart, object: nil)
+        if pdf.pageCount > 5 {
+            NotificationCenter.default.post(name: Notification.Name.pdfImportProcessDidStart, object: nil)
+        }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [weak self] in
             guard let self = self else { return }
             let pdfPagesAsDocuments = self.pdfService.makeSeparatePDFDocumentsFromPDF(pdf)
