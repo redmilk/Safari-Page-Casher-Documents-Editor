@@ -134,20 +134,28 @@ final class HomeCollectionManager: NSObject, InteractionFeedbackService { /// NS
     }
     
     private func layoutCollectionAsGrid() {
+        let aspectRatio = 1.45
+        let height = UIScreen.main.bounds.height / 2.5
+        let targetHeight = height / aspectRatio
+        let width = UIScreen.main.bounds.width
+        let targetWidth = width * aspectRatio
+        let spacing = UIScreen.main.bounds.width * 0.06
+        
         let layout = UICollectionViewCompositionalLayout(sectionProvider: { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
             /// item
-            let size = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+            let size = NSCollectionLayoutSize(widthDimension: .absolute(targetWidth),
+                                              heightDimension: .absolute(targetHeight))
             let item = NSCollectionLayoutItem(layoutSize: size)
             item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
             /// group
-            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(self.collectionView.bounds.height / 2.5))
+            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(targetHeight))
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 2)
-            group.interItemSpacing = .fixed(20)
-            group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20)
+            group.interItemSpacing = .fixed(spacing)
+            group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: spacing, bottom: 0, trailing: spacing)
             /// section
             let section = NSCollectionLayoutSection(group: group)
-            section.interGroupSpacing = 20
-            section.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 0, bottom: 20, trailing: 0)
+            section.interGroupSpacing = spacing
+            section.contentInsets = NSDirectionalEdgeInsets(top: spacing, leading: 0, bottom: spacing, trailing: 0)
             return section
         })
         let config = UICollectionViewCompositionalLayoutConfiguration()
