@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WebpageViewController" customModule="AirPrint" customModuleProvider="target">
             <connections>
+                <outlet property="backButton" destination="Rbz-0Z-V0u" id="j9I-5q-6Wx"/>
                 <outlet property="closeButton" destination="N8q-fp-MQf" id="Mh9-kL-rxh"/>
                 <outlet property="printButton" destination="j4J-ld-0Bo" id="pSs-6P-UyW"/>
                 <outlet property="searchBar" destination="r3B-Xx-B85" id="yTI-rF-JcP"/>
@@ -27,7 +28,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bU9-wi-Ubf">
                     <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="z9U-9v-LB1">
+                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z9U-9v-LB1">
                             <rect key="frame" x="8" y="0.0" width="398" height="50"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N8q-fp-MQf">
@@ -37,8 +38,15 @@
                                     </constraints>
                                     <state key="normal" image="button-close-small"/>
                                 </button>
+                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rbz-0Z-V0u">
+                                    <rect key="frame" x="40" y="0.0" width="40" height="50"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="40" id="ZjY-Q6-zRX"/>
+                                    </constraints>
+                                    <state key="normal" image="settings-navigation-back"/>
+                                </button>
                                 <searchBar contentMode="redraw" barStyle="black" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="r3B-Xx-B85">
-                                    <rect key="frame" x="45" y="0.0" width="308" height="50"/>
+                                    <rect key="frame" x="40" y="0.0" width="318" height="50"/>
                                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <color key="tintColor" systemColor="tintColor"/>
                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="webSearch" keyboardAppearance="alert" returnKeyType="go" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="url"/>
@@ -67,7 +75,7 @@
                         <wkWebView contentMode="scaleToFill" allowsBackForwardNavigationGestures="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6iW-dB-S9h">
                             <rect key="frame" x="0.0" y="50" width="414" height="768"/>
                             <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <wkWebViewConfiguration key="configuration">
+                            <wkWebViewConfiguration key="configuration" allowsAirPlayForMediaPlayback="NO" allowsInlineMediaPlayback="YES">
                                 <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
                                 <wkPreferences key="preferences"/>
                             </wkWebViewConfiguration>
@@ -99,6 +107,7 @@
     <resources>
         <image name="button-close-small" width="32" height="32"/>
         <image name="icon-checkmark-subscription" width="25" height="25"/>
+        <image name="settings-navigation-back" width="20" height="20"/>
         <systemColor name="tintColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
