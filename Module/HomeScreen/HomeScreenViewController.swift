@@ -179,7 +179,8 @@ private extension HomeScreenViewController {
                 let shouldDisplayMultiSubscrPopup,
                 let shouldShowHowItWorks):
                 guard let self = self else { return }
-                self.updateGiftOrHowItWorksPresentation(shouldShowGift: hasActiveSubscriptions, shouldShowHowItWorks: shouldShowHowItWorks)
+                self.updateGiftOrHowItWorksPresentation(
+                    hasActiveSubscriptions: hasActiveSubscriptions, shouldShowHowItWorks: shouldShowHowItWorks)
                 if shouldDisplayMultiSubscrPopup {
                     self.displayMultisubscriptionsPopup(inContainer: self.view, optionToShowFirst: .weekly)
                     PurchesService.shouldDisplaySubscriptionsForCurrentUser = false
@@ -411,17 +412,50 @@ private extension HomeScreenViewController {
         giftOrHowItWorksContainer.layer.removeAllAnimations()
         view.viewWithTag(multiSubscriptionPopupViewTag)?.removeFromSuperview()
     }
-    
-    private func updateGiftOrHowItWorksPresentation(shouldShowGift: Bool, shouldShowHowItWorks: Bool) {
-        if !shouldShowGift && !shouldShowHowItWorks {
+    enum SubscrContent {
+        case none
+        case gift
+        case howItWorks
+    }
+    private func updateGiftOrHowItWorksPresentation(hasActiveSubscriptions: Bool, shouldShowHowItWorks: Bool) {
+        var willBeShown: SubscrContent = .none
+        var randomFlag: Bool?
+        
+        if !hasActiveSubscriptions && shouldShowHowItWorks {
+            randomFlag = PurchesService.currentRandomFlag
+            if let shouldChooseRandom = randomFlag {
+                willBeShown = shouldChooseRandom ? .gift : .howItWorks
+            }
+        } else if shouldShowHowItWorks {
+            willBeShown = .howItWorks
+            /// has active subscription, nothing to show
+        } else if hasActiveSubscriptions {
             giftOrHowItWorksButtonAnimation?.cancel()
             giftOrHowItWorksOpenButton.layer.removeAllAnimations()
+            willBeShown = .none
+            /// no active subscription and should show how it works
+            /// only show gift
+        } else {
+            willBeShown = .gift
         }
-        giftContainerHeightConstraint.constant = shouldShowGift ? 0 : 56
-        giftContainerTopSpacing.constant = shouldShowGift ? 0 : 15
-        giftIconImageView.image = UIImage(named: shouldShowHowItWorks ? "icon-how-it-works" : "icon-gift")
-        giftTitleLabel.text = shouldShowHowItWorks ? "How it works" : "Special gift for you"
-        self.shouldShowHowItWorks = shouldShowHowItWorks
+        
+        var isHiden: Bool!
+        var howItWorks: Bool!
+        switch willBeShown {
+        case .none:
+            isHiden = true
+        case .howItWorks:
+            isHiden = false
+            howItWorks = true
+        case .gift:
+            howItWorks = false
+            isHiden = false
+        }
+        giftContainerHeightConstraint.constant = isHiden ? 0 : 56
+        giftContainerTopSpacing.constant = isHiden ? 0 : 15
+        giftIconImageView.image = UIImage(named: howItWorks ? "icon-how-it-works" : "icon-gift")
+        giftTitleLabel.text = howItWorks ? "How it works" : "Special gift for you"
+        self.shouldShowHowItWorks = howItWorks//shouldShowHowItWorks
         giftOrHowItWorksOpenButton.dropShadow(color: .white, opacity: 0.0, offSet: CGSize(width: 0, height: 0), radius: 15, scale: true)
         giftOrHowItWorksButtonAnimation = giftOrHowItWorksOpenButton.animateBounceAndShadow()
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.2, options: [.curveEaseIn], animations: { [weak self] in

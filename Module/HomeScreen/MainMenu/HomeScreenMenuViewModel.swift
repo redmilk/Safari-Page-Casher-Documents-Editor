@@ -67,7 +67,6 @@ final class HomeScreenMenuViewModel: PurchesServiceProvidable, SubscriptionsMult
                         let action = self?.proceedWithActionAfterSubscriptionReady,
                         let popUpContent = self?.actionContent else { return }
                 self?.coordinator.endWithSelectedAction(action)
-                //self?.output.send(.showSubscriptionPopup(withContent: popUpContent))
             case _: break
             }
         }).store(in: &bag)
@@ -78,7 +77,7 @@ final class HomeScreenMenuViewModel: PurchesServiceProvidable, SubscriptionsMult
     
     private func handleActions() {
         input.sink(receiveValue: { [weak self] action in
-            guard let hasSubscription = self?.purchases.isUserHasActiveSubscription, hasSubscription else {
+            guard let hasSubscription = self?.purchases.isUserHasActiveSubscription, !hasSubscription else {
                 var content: (UIImage, UIImage, String, String)?
                 switch action {
                 case .printDocument:
@@ -138,22 +137,6 @@ final class HomeScreenMenuViewModel: PurchesServiceProvidable, SubscriptionsMult
         }).store(in: &bag)
     }
     
-//    func displayHowItWorks() {
-//        displaySubscriptions(.howItWorks)
-//            .sink(receiveValue: { [weak self] response in
-//                switch response {
-//                case .restoreSubscription:
-//                    self?.viewModel.input.send(.restoreSubscription)
-//                case .onPurchase(let isSecondOptionSelected):
-//                    self?.viewModel.input.send(.purchase(isSecondOptionSelected ? .annual : .monthly))
-//                case .onWeeklyPurchase:
-//                    self?.viewModel.input.send(.purchase(.weekly))
-//                case .onClose:
-//                    self?.removeSubscriptionsPopup()
-//                }
-//            }).store(in: &bag)
-//    }
-//
     private func purchaseSubscriptionPlan(_ plan: Purchase) {
         output.send(.loadingState(true))
         purchases.buy(model: plan).sink(receiveCompletion: { [weak self] completion in

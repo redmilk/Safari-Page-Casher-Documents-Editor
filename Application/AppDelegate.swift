@@ -17,6 +17,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ApplicationGlobalConfig().configure()
         Apphud.start(apiKey: "app_EaKCtoJCJkjJV73Dc7XA2L2ikP7KST")
         
+        let flag = PurchesService.currentRandomFlag
+        PurchesService.currentRandomFlag = !flag
+        print(PurchesService.currentRandomFlag)
+        
         return true
     }
 }
