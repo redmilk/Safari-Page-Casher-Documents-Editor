@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import Combine
 
-fileprivate let subscriptionsPopupViewTag: Int = 9876543210
+let subscriptionsPopupViewTag: Int = 9876543210
 protocol SubscriptionsMultiPopupProvidable {
     func displayMultiSubscriptions(_ subscriptionsScreen: SubscriptionPlanPopup.State, fromParentView view: UIView
     ) -> (publisher: AnyPublisher<SubscriptionPlanPopup.Response, Never>, popup: SubscriptionPlanPopup)

@@ -42,6 +42,7 @@
                 <outlet property="giftContainerTopSpacing" destination="cM7-ia-oZa" id="CNl-2A-4ED"/>
                 <outlet property="giftContentView" destination="Qer-i0-R1r" id="xnC-Pu-V9x"/>
                 <outlet property="giftIconImageView" destination="iAF-PR-IJ9" id="7oW-Gm-1tu"/>
+                <outlet property="giftOrHowItWorksContainer" destination="zGC-sp-sWG" id="CWO-at-kCp"/>
                 <outlet property="giftOrHowItWorksOpenButton" destination="jwu-bc-4ZH" id="fi5-rK-m6z"/>
                 <outlet property="giftTimerContainer" destination="QY0-gN-3Lb" id="Ngj-xj-fmc"/>
                 <outlet property="giftTimerLabel" destination="aKN-zc-KK1" id="gGy-fO-SuR"/>
@@ -61,7 +62,6 @@
                 <outlet property="selectionModeTopContainer" destination="dYB-fm-JnI" id="SsK-8v-IVT"/>
                 <outlet property="settingsButton" destination="4Q8-A1-7v2" id="eh0-tS-hNX"/>
                 <outlet property="subscriptionCloseButton" destination="rj2-SL-ICz" id="n6y-4O-ghX"/>
-                <outlet property="subscriptionContainer" destination="zGC-sp-sWG" id="CWO-at-kCp"/>
                 <outlet property="subscriptionContinueButton" destination="dps-bv-rr3" id="UC6-MB-tGn"/>
                 <outlet property="subscriptionDiscountLabel" destination="MDq-h9-j7e" id="LpQ-Cv-IIN"/>
                 <outlet property="subscriptionMenuContainer" destination="AmA-DZ-MOr" id="Qx6-yf-mBc"/>

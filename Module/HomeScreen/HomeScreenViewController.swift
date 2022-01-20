@@ -41,7 +41,7 @@ final class HomeScreenViewController: UIViewController,
     @IBOutlet weak var centerImageView: UIImageView!
     /// Gift menu
     @IBOutlet private weak var mainContainer: UIView!
-    @IBOutlet private weak var subscriptionContainer: UIView!
+    @IBOutlet private weak var giftOrHowItWorksContainer: UIView!
     @IBOutlet private weak var subscriptionMenuContainer: UIView!
     @IBOutlet private weak var subscriptionContinueButton: TapAnimatedButton!
     @IBOutlet private weak var giftOrHowItWorksOpenButton: TapAnimatedButton!
@@ -91,6 +91,7 @@ final class HomeScreenViewController: UIViewController,
     private let viewModel: HomeScreenViewModel
     private var bag = Set<AnyCancellable>()
     private var purchaseConntinueAnimationsCancelable: AnyCancellable?
+    private var giftOrHowItWorksButtonAnimation: AnyCancellable?
     
     private var dashedLineLayer: CAShapeLayer?
     private var gradient: CAGradientLayer?
@@ -178,7 +179,7 @@ private extension HomeScreenViewController {
                 let shouldDisplayMultiSubscrPopup,
                 let shouldShowHowItWorks):
                 guard let self = self else { return }
-                self.updateGiftContainer(isHidden: hasActiveSubscriptions, shouldShowHowItWorks: shouldShowHowItWorks)
+                self.updateGiftOrHowItWorksPresentation(shouldShowGift: hasActiveSubscriptions, shouldShowHowItWorks: shouldShowHowItWorks)
                 if shouldDisplayMultiSubscrPopup {
                     self.displayMultisubscriptionsPopup(inContainer: self.view, optionToShowFirst: .weekly)
                     PurchesService.shouldDisplaySubscriptionsForCurrentUser = false
@@ -251,11 +252,11 @@ private extension HomeScreenViewController {
         giftOrHowItWorksOpenButton.publisher()
             .sink(receiveValue: { [weak self] _ in
                 guard let self = self else { return }
-                guard !self.shouldShowHowItWorks else {
+                if self.shouldShowHowItWorks {
                     return self.displayMultisubscriptionsPopup(inContainer: self.view, optionToShowFirst: .howItWorks)
                 }
                 UIView.transition(with: self.view, duration: 0.5, options: .transitionCrossDissolve, animations: {
-                    self.subscriptionContainer.isHidden = false
+                    self.giftOrHowItWorksContainer.isHidden = false
                 })
                 self.subscriptionContinueButton.dropShadow(color: .white, opacity: 0.0, offSet: CGSize(width: 0, height: 0), radius: 15, scale: true)
                 self.purchaseConntinueAnimationsCancelable = self.subscriptionContinueButton.animateBounceAndShadow()
@@ -271,20 +272,20 @@ private extension HomeScreenViewController {
         }).store(in: &bag)
         otherPlansButton.publisher().sink(receiveValue: { [weak self] _ in
             guard let self = self else { return }
-            self.displayMultisubscriptionsPopup(inContainer: self.subscriptionContainer, optionToShowFirst: .planOptions)
+            self.displayMultisubscriptionsPopup(inContainer: self.giftOrHowItWorksContainer, optionToShowFirst: .planOptions)
         }).store(in: &bag)
         howTrialWorksButton.publisher().sink(receiveValue: { [weak self] _ in
             guard let self = self else { return }
-            self.displayMultisubscriptionsPopup(inContainer: self.subscriptionContainer, optionToShowFirst: .howItWorks)
+            self.displayMultisubscriptionsPopup(inContainer: self.giftOrHowItWorksContainer, optionToShowFirst: .howItWorks)
         }).store(in: &bag)
         subscriptionCloseButton.publisher()
             .sink(receiveValue: { [weak self] _ in
                 guard let self = self else { return }
                 UIView.transition(with: self.view, duration: 0.5, options: .transitionCrossDissolve, animations: {
-                    self.subscriptionContainer.isHidden = true
+                    self.giftOrHowItWorksContainer.isHidden = true
                 })
                 self.subscriptionContinueButton.layer.removeAllAnimations()
-                self.subscriptionContainer.viewWithTag(1)!.removeFromSuperview()
+                self.giftOrHowItWorksContainer.viewWithTag(1)!.removeFromSuperview()
                 self.purchaseConntinueAnimationsCancelable?.cancel()
             }).store(in: &bag)
         checkmarkButton.publisher().sink(receiveValue: { [weak self] _ in
@@ -327,13 +328,13 @@ private extension HomeScreenViewController {
         changeViewStateBasedOnSelectionMode(isInSelectionMode: false)
         deleteButton.isHidden = true
         layoutChangeButton.isSelected = true
-        subscriptionContainer.isHidden.toggle()
+        giftOrHowItWorksContainer.isHidden.toggle()
         deleteSelectedButton.isEnabled = false
     }
     
     private func removeMultisubscriptionsPopupIfDisplayed() {
-        guard subscriptionContainer != nil else { return }
-        subscriptionContainer.subviews.forEach {
+        guard giftOrHowItWorksContainer != nil else { return }
+        giftOrHowItWorksContainer.subviews.forEach {
             if $0.tag == multiSubscriptionPopupViewTag {
                 $0.removeFromSuperview()
                 return
@@ -406,17 +407,23 @@ private extension HomeScreenViewController {
     }
     
     private func collapseGiftSubscriptionPopup() {
-        subscriptionContainer.isHidden = true
-        subscriptionContainer.layer.removeAllAnimations()
-        subscriptionContainer.viewWithTag(1)?.removeFromSuperview()
+        giftOrHowItWorksContainer.isHidden = true
+        giftOrHowItWorksContainer.layer.removeAllAnimations()
+        view.viewWithTag(multiSubscriptionPopupViewTag)?.removeFromSuperview()
     }
     
-    private func updateGiftContainer(isHidden: Bool, shouldShowHowItWorks: Bool) {
-        giftContainerHeightConstraint.constant = isHidden ? 0 : 56
-        giftContainerTopSpacing.constant = isHidden ? 0 : 15
+    private func updateGiftOrHowItWorksPresentation(shouldShowGift: Bool, shouldShowHowItWorks: Bool) {
+        if !shouldShowGift && !shouldShowHowItWorks {
+            giftOrHowItWorksButtonAnimation?.cancel()
+            giftOrHowItWorksOpenButton.layer.removeAllAnimations()
+        }
+        giftContainerHeightConstraint.constant = shouldShowGift ? 0 : 56
+        giftContainerTopSpacing.constant = shouldShowGift ? 0 : 15
         giftIconImageView.image = UIImage(named: shouldShowHowItWorks ? "icon-how-it-works" : "icon-gift")
         giftTitleLabel.text = shouldShowHowItWorks ? "How it works" : "Special gift for you"
         self.shouldShowHowItWorks = shouldShowHowItWorks
+        giftOrHowItWorksOpenButton.dropShadow(color: .white, opacity: 0.0, offSet: CGSize(width: 0, height: 0), radius: 15, scale: true)
+        giftOrHowItWorksButtonAnimation = giftOrHowItWorksOpenButton.animateBounceAndShadow()
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.2, options: [.curveEaseIn], animations: { [weak self] in
             self?.mainContainer.layoutIfNeeded()
         }, completion: nil)
@@ -452,11 +459,11 @@ private extension HomeScreenViewController {
         emitter.alpha = 0.6
         emitter.isUserInteractionEnabled = false
         emitter.translatesAutoresizingMaskIntoConstraints = false
-        subscriptionContainer.insertSubview(emitter, at: 0)
-        emitter.topAnchor.constraint(equalTo: subscriptionContainer.topAnchor).isActive = true
-        emitter.heightAnchor.constraint(equalToConstant: subscriptionContainer.bounds.height - subscriptionMenuContainer.bounds.height).isActive = true
-        emitter.leadingAnchor.constraint(equalTo: subscriptionContainer.leadingAnchor).isActive = true
-        emitter.trailingAnchor.constraint(equalTo: subscriptionContainer.trailingAnchor).isActive = true
+        giftOrHowItWorksContainer.insertSubview(emitter, at: 0)
+        emitter.topAnchor.constraint(equalTo: giftOrHowItWorksContainer.topAnchor).isActive = true
+        emitter.heightAnchor.constraint(equalToConstant: giftOrHowItWorksContainer.bounds.height - subscriptionMenuContainer.bounds.height).isActive = true
+        emitter.leadingAnchor.constraint(equalTo: giftOrHowItWorksContainer.leadingAnchor).isActive = true
+        emitter.trailingAnchor.constraint(equalTo: giftOrHowItWorksContainer.trailingAnchor).isActive = true
     }
     
     private func addDashedLineAnimation() {
