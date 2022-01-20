@@ -104,8 +104,9 @@ private extension WebpageViewController {
     private func makePdfWithWebPageContent() {
         guard let webpageContentSize = self.webContentSize else { return }
         func defineNextPdfPageRectWithContentSize(_ contentSize: CGSize) -> [CGRect] {
-            let pageHeight = UIScreen.main.bounds.height
+            var pageHeight = UIScreen.main.bounds.height
             let pageWidth = UIScreen.main.bounds.width
+            pageHeight = pageWidth * 1.45
             // 1 : 1.4142
             let pagesCount = Int((contentSize.height / pageHeight).rounded(.down))
             var result: [CGRect] = []

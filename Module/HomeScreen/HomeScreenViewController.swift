@@ -444,6 +444,7 @@ private extension HomeScreenViewController {
         switch willBeShown {
         case .none:
             isHiden = true
+            howItWorks = false
         case .howItWorks:
             isHiden = false
             howItWorks = true
