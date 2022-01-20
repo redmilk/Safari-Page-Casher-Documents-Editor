@@ -54,6 +54,9 @@
 		796B1AD6275A127F005864B0 /* ColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796B1AD5275A127F005864B0 /* ColorPalette.swift */; };
 		796B1AD9275A12A0005864B0 /* Typealias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796B1AD8275A12A0005864B0 /* Typealias.swift */; };
 		79763582274E88B9001D2155 /* InteractionFeedbackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79763581274E88B9001D2155 /* InteractionFeedbackService.swift */; };
+		7983E3132798B4450098A2D7 /* BackgroundTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7983E3122798B4450098A2D7 /* BackgroundTimer.swift */; };
+		7983E3152798BC310098A2D7 /* TaskBackgroundKeeper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7983E3142798BC310098A2D7 /* TaskBackgroundKeeper.swift */; };
+		7983E3172798C5640098A2D7 /* BackgroundScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7983E3162798C5640098A2D7 /* BackgroundScheduler.swift */; };
 		7983ECCC275092AF00B5C2AF /* PDFService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7983ECCB275092AF00B5C2AF /* PDFService.swift */; };
 		7988745E2770BCC40027C121 /* PurchaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7988745D2770BCC40027C121 /* PurchaseService.swift */; };
 		798874612770C09B0027C121 /* Purchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798874602770C09B0027C121 /* Purchase.swift */; };
@@ -191,6 +194,9 @@
 		796B1AD5275A127F005864B0 /* ColorPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPalette.swift; sourceTree = "<group>"; };
 		796B1AD8275A12A0005864B0 /* Typealias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typealias.swift; sourceTree = "<group>"; };
 		79763581274E88B9001D2155 /* InteractionFeedbackService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractionFeedbackService.swift; sourceTree = "<group>"; };
+		7983E3122798B4450098A2D7 /* BackgroundTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundTimer.swift; sourceTree = "<group>"; };
+		7983E3142798BC310098A2D7 /* TaskBackgroundKeeper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskBackgroundKeeper.swift; sourceTree = "<group>"; };
+		7983E3162798C5640098A2D7 /* BackgroundScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundScheduler.swift; sourceTree = "<group>"; };
 		7983ECCB275092AF00B5C2AF /* PDFService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFService.swift; sourceTree = "<group>"; };
 		7983ECDE2750B0D500B5C2AF /* AirPrint-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AirPrint-Bridging-Header.h"; sourceTree = "<group>"; };
 		7983ECDF2750B0D500B5C2AF /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
@@ -363,6 +369,7 @@
 				79763581274E88B9001D2155 /* InteractionFeedbackService.swift */,
 				799DA1692762CFE2003EA17F /* Onboarding.swift */,
 				79C362AF276CAB57001B1745 /* SharedActivityResults.swift */,
+				7983E3162798C5640098A2D7 /* BackgroundScheduler.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -425,6 +432,15 @@
 				7963FC4527466FAD007B8449 /* CoordinatorProtocol.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		7983E3112798B4260098A2D7 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				7983E3122798B4450098A2D7 /* BackgroundTimer.swift */,
+				7983E3142798BC310098A2D7 /* TaskBackgroundKeeper.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		7983ECDD2750B06400B5C2AF /* CarouselView */ = {
@@ -662,6 +678,7 @@
 		79F913CD274652E200771FFE /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				7983E3112798B4260098A2D7 /* Utils */,
 				798F5D83278E05C60042BA98 /* Controller */,
 				79A598092762FDA800EB580A /* View */,
 				79DCEF9B275B9266007BC160 /* Model */,
@@ -821,6 +838,7 @@
 				79A725B12750C41700D8B330 /* ResultPreviewCollectionCell.swift in Sources */,
 				79D1AA7827740A2F00733F20 /* TapAnimatedButton.swift in Sources */,
 				794F73ED2746B36900B07410 /* Publisher+Extensions.swift in Sources */,
+				7983E3172798C5640098A2D7 /* BackgroundScheduler.swift in Sources */,
 				792D661127552DE300063F4B /* CameraScanManager.swift in Sources */,
 				79F80FBC2752A93C00081C7A /* ServicesContainer.swift in Sources */,
 				79C362B0276CAB58001B1745 /* SharedActivityResults.swift in Sources */,
@@ -860,6 +878,7 @@
 				793ADF5F2754E36100F58923 /* HomeScreenMenuViewModel.swift in Sources */,
 				794F73EC2746B36900B07410 /* UICollectionView+Extensions.swift in Sources */,
 				79D102A527717CC500F3C4D5 /* SubscriptionPlanPopup.swift in Sources */,
+				7983E3152798BC310098A2D7 /* TaskBackgroundKeeper.swift in Sources */,
 				79BBD8AB276319660087B1E0 /* ParticleEmitterView.swift in Sources */,
 				79F913B62746501500771FFE /* SceneDelegate.swift in Sources */,
 				7911B025276B0FEC0058CD26 /* MiscSettingsModulesViewController.swift in Sources */,
@@ -873,6 +892,7 @@
 				794F73EF2746B36900B07410 /* UIControl+Extensions.swift in Sources */,
 				793ADF5D2754E36100F58923 /* HomeScreenMenuCoordinator.swift in Sources */,
 				79A725A62750BE3B00D8B330 /* HomeCollectionManager.swift in Sources */,
+				7983E3132798B4450098A2D7 /* BackgroundTimer.swift in Sources */,
 				79697CD6275AF1FC0056B0B0 /* WebpageViewController.swift in Sources */,
 				79B787CD2750B250009D7655 /* PrintingOptionsViewModel.swift in Sources */,
 				796B1AD6275A127F005864B0 /* ColorPalette.swift in Sources */,

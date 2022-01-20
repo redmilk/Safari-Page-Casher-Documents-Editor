@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window!.makeKeyAndVisible()
         
         applicationCoordinator = ApplicationCoordinator(window: window!)
-        applicationCoordinator.start()
+        applicationCoordinator.start()        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -34,10 +34,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneWillEnterForeground(_ scene: UIScene) {
+        //BackgroundScheduler.shared.cancelPendingTask()
+        //print("🥲🥲🥲")
+        //print(UserDefaults.standard.value(forKey: "123") as? String)
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
+        BackgroundScheduler.shared.scheduleBackgroundFetch(in: 10)
     }
-
 }
 

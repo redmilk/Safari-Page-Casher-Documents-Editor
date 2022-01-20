@@ -12,7 +12,8 @@ import ApphudSDK
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
+        BackgroundScheduler.shared.register()
+
         ApplicationGlobalConfig().configure()
         Apphud.start(apiKey: "app_EaKCtoJCJkjJV73Dc7XA2L2ikP7KST")
         

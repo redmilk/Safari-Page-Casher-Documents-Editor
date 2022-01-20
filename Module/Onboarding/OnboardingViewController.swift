@@ -29,7 +29,6 @@ final class OnboardingViewController: UIViewController {
     @IBOutlet weak var printerAnim: AnimationView!
     @IBOutlet weak var scanerAnim: AnimationView!
     @IBOutlet weak var signatureAnim: AnimationView!
-    
     @IBOutlet weak var primaryImageView: UIImageView!
     @IBOutlet weak var pagingImageView: UIImageView!
     @IBOutlet weak var primaryLabel: UILabel!
@@ -75,13 +74,6 @@ final class OnboardingViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-//        printerAnim.play()
-//
-//        scanerAnim.play()
-//        scanerAnim.isHidden = true
-//        signatureAnim.play()
-//        signatureAnim.isHidden = true
-//        printerAnim.play()
         changeAnimation()
     }
     
