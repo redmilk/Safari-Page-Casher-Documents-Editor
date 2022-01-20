@@ -16,6 +16,7 @@ fileprivate let kHasUserActiveSubscriptionsCached = "kDoesUserHaveActiveSubscrip
 fileprivate let kPreviousWeeklyPrice = "kPreviousWeeklyPrice"
 fileprivate let kPreviousMonthlyPrice = "kPreviousMonthlyPrice"
 fileprivate let kPreviousYearlyPrice = "kPreviousYearlyPrice"
+fileprivate let kCurrentRandomFlag = "kCurrentRandomFlag"
 
 enum PurchaseError: Error {
     case error(String)
@@ -52,6 +53,11 @@ final class PurchesService {
         set { UserDefaults.standard.set(newValue, forKey: kShouldShowSubscriptionsToNewUser) }
     }
     
+    static var currentRandomFlag: Bool {
+        get { (UserDefaults.standard.value(forKey: kCurrentRandomFlag) as? Bool) ?? true }
+        set { UserDefaults.standard.set(newValue, forKey: kCurrentRandomFlag) }
+    }
+    
     static var isUserHasActiveSubscriptionsStatusSinceLastUserSession: Bool {
         get { (UserDefaults.standard.value(forKey: kHasUserActiveSubscriptionsCached) as? Bool) ?? false }
         set { UserDefaults.standard.set(newValue, forKey: kHasUserActiveSubscriptionsCached) }
@@ -79,16 +85,15 @@ final class PurchesService {
         _isUserHasActiveSubscription ?? PurchesService.isUserHasActiveSubscriptionsStatusSinceLastUserSession
     }
     /// check if user had any subscription
-    var isUserEverHadSubscriptions: Bool {
-        let d = Apphud.subscriptions()?.isEmpty ?? false
-        return d
+    var isUserEverHadSubscription: Bool {
+        return !(Apphud.subscriptions()?.isEmpty ?? true)
     }
     /// weekly discaunt prices case: no active subs && no previus subs
-    var isWeeklyPlanWithDiscaunt: Bool { !isUserHasActiveSubscription && !isUserEverHadSubscriptions }
+    var isWeeklyPlanWithDiscaunt: Bool { !isUserHasActiveSubscription && !isUserEverHadSubscription }
     /// gift section should be visible: no active subs
     var isGiftPopupShouldBeVisibleForUser: Bool { !isUserHasActiveSubscription }
     /// how it works should be shown: not even trial was tried
-    var isHowItWorksShouldBeVisibleForUser: Bool { !isUserHasActiveSubscription && !isUserEverHadSubscriptions }
+    var isHowItWorksShouldBeVisibleForUser: Bool { !isUserEverHadSubscription }
     /// was at least one request for update
     var isConnectionWasOccuredAndReceivedUpdates: Bool = false
     

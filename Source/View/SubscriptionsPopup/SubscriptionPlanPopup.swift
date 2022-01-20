@@ -114,7 +114,7 @@ final class SubscriptionPlanPopup: UIView, PurchesServiceProvidable {
     }
     
     private func configureView() {
-        trialMessageLabel.text = purchases.isUserEverHadSubscriptions ?
+        trialMessageLabel.text = purchases.isUserEverHadSubscription ?
         "Start your full access. Manage anytime." : "After a 3-day free trial. Manage anytime."
         weeklyPlanPrice.text = purchases.getPriceForPurchase(model: .weekly) ?? PurchesService.previousWeeklyPrice
         montlyPriceLabel.text = purchases.getPriceForPurchase(model: .monthly) ?? PurchesService.previousMonthlyPrice
