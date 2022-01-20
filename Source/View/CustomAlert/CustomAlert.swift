@@ -29,6 +29,7 @@ extension AlertPresentable {
         dimmView.backgroundColor = .black.withAlphaComponent(0.7)
         
         let alert = CustomAlert()
+        alert.primaryButtonAction = action
         alert.alertText.text = text
         alert.titleLabel.text = title
         if let buttonTitle = buttonTitle {
@@ -64,7 +65,8 @@ final class CustomAlert: UIView {
     
     private weak var dimmedContainer: UIView?
     private var disposable: AnyCancellable?
-    private var primaryButtonAction: VoidClosure?
+    
+    var primaryButtonAction: VoidClosure?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -89,6 +91,7 @@ final class CustomAlert: UIView {
         self.dimmedContainer = dimmedContainer
         contentView.layer.masksToBounds = true
         contentView.layer.cornerRadius = 30
+        contentView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         mainContainer.dropShadow(color: .blue, opacity: 0.8, offSet: .zero, radius: 15, scale: true)
 
        disposable = primaryButton.publisher().sink(receiveValue: { [weak self] _ in
@@ -100,7 +103,13 @@ final class CustomAlert: UIView {
                }, completion: nil)
                return
            }
-           primaryAction()
+           UIView.animate(withDuration: 0.4, delay: 0, options: [], animations: {
+               let translateY = CGAffineTransform(translationX: 0, y: 300)
+               self?.transform = translateY
+               self?.dimmedContainer?.alpha = 0.0
+           }, completion: { _ in
+               primaryAction()
+           })
         })
     }
 }
