@@ -156,7 +156,7 @@ final class PurchesService {
         return price
     }
     
-    func getFormattedYearPriceForPurchase(isPurePrice: Bool = false, size: CGFloat = 12) -> NSAttributedString? {
+    func getFormattedYearPriceForPurchase(isPurePrice: Bool = false, size: CGFloat = 12) -> NSMutableAttributedString? {
         let productId = Purchase.annual.productId
         guard let product = appPurchasesInfoList.value.filter({ $0.productId == productId })
                 .last?.skProduct else { return nil }

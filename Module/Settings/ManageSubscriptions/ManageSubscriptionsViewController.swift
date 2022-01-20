@@ -90,7 +90,7 @@ private extension ManageSubscriptionsViewController {
                 case .monthly: self.toggleMonthlyPlan()
                 case .annual: self.toggleYearlyPlan()
                 }
-            case .displayAlert(let text, let title, let action, let buttonTitle):
+            case .displayAlert(let text, let title, let action, _):
                 self.displayAlert(fromParentView: self.view, with: text, title: title, action: action)
             case .removeSubscriptionPop:
                 self.removeMultiSubscripionPopupIfOccures()
@@ -99,14 +99,13 @@ private extension ManageSubscriptionsViewController {
                 "Weekly Plan" : "Weekly Plan + 3 day free trial"
                 self.weeklyPriceLabel.text = weekly
                 self.monthlyPriceLabel.text =  monthly
-                self.yearlyPriceLabel.text = yearly
-                
+                self.yearlyPriceDescriptionLabel.text = "Yearly Plan"
                 if let yearlyStriked = self.purchases.getFormattedYearPriceForPurchase(isPurePrice: true, size: 13) {
-                    let planText = String.makeAttriabutedStringNoFormatting("Yearly Plan: ", size: 12)
-                    let yearText = String.makeAttriabutedStringNoFormatting(" / year", size: 12)
-                    planText.append(yearlyStriked)
-                    planText.append(yearText)
-                    self.yearlyPriceDescriptionLabel.attributedText = planText
+                    let yearlyPrice = String.makeAttriabutedStringNoFormatting(yearly, size: 12)
+                    let separator = String.makeAttriabutedStringNoFormatting(" / ", size: 12)
+                    yearlyStriked.append(separator)
+                    yearlyStriked.append(yearlyPrice)
+                    self.yearlyPriceLabel.attributedText = yearlyStriked
                 }
             }
         })
