@@ -234,8 +234,7 @@ private extension HomeScreenViewModel {
             }
         }, receiveValue: { [weak self] isSuccess in
             if isSuccess && self?.purchases.isUserHasActiveSubscription ?? false {
-                self?.output.send(.collapseAllSubscriptionPopupsWhichArePresented)
-                self?.output.send(.displayAlert(text: "Your previous subscription plan was successfully restored", title: "Success", action: nil, buttonTitle: nil))
+                self?.output.send(.displayAlert(text: "Your previous subscription plan was successfully restored", title: "Success", action: { self?.output.send(.collapseAllSubscriptionPopupsWhichArePresented) }, buttonTitle: nil))
             } else {
                 self?.output.send(.displayAlert(text: "Any data related to your previous subscription plan wasn't found", title: "Nothing to restore", action: nil, buttonTitle: nil))
             }
