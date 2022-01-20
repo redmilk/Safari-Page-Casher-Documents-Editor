@@ -120,7 +120,7 @@ private extension SettingsViewController {
             let objectsToShare = [textToShare, myWebsite, UIImage(named: "icon-logo-big")!] as [Any]
             let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
             /// Excluded Activities
-            activityVC.excludedActivityTypes = [UIActivity.ActivityType.airDrop, UIActivity.ActivityType.addToReadingList]
+            activityVC.excludedActivityTypes = [UIActivity.ActivityType.addToReadingList]
             self.present(activityVC, animated: true, completion: nil)
         }
     }
