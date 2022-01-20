@@ -17,15 +17,30 @@ import PDFKit.PDFDocument
 final class WebpageViewController: UIViewController, PdfServiceProvidable {
     @IBOutlet private weak var searchBar: UISearchBar!
     @IBOutlet private weak var webView: WKWebView!
-    @IBOutlet private weak var printButton: UIButton!
-    @IBOutlet private weak var closeButton: UIButton!
-
+    @IBOutlet private weak var printButton: TapAnimatedButton!
+    @IBOutlet private weak var closeButton: TapAnimatedButton!
+    @IBOutlet private weak var backButton: TapAnimatedButton!
+    
     var output: AnyPublisher<[PrintableDataBox], Never> { _output.eraseToAnyPublisher() }
 
     private let _output = PassthroughSubject<[PrintableDataBox], Never>()
     private var bag = Set<AnyCancellable>()
     private var initialUrlString: String
     private var finishCallback: VoidClosure
+    
+    private var isAlreadyLoadedPrevPage: Bool = false
+    private var previousURL: URL?
+    private var currentURL: URL = URL(string: "https://google.com")! {
+        willSet {
+            guard previousURL != currentURL else { return }
+            previousURL = currentURL
+            guard previousURL != nil else { return }
+            backButton.layer.removeAllAnimations()
+            UIView.animate(withDuration: 0.5, delay: 0, options: [.allowUserInteraction], animations: { [weak self] in
+                self?.backButton.isHidden = false
+            }, completion: nil)
+        }
+    }
     
     /// convert webpage content to pdf helpers
     private let group = DispatchGroup()
@@ -50,7 +65,6 @@ final class WebpageViewController: UIViewController, PdfServiceProvidable {
     deinit {
         Logger.log(String(describing: self), type: .deinited)
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
@@ -60,7 +74,6 @@ final class WebpageViewController: UIViewController, PdfServiceProvidable {
 // MARK: - Private
 
 private extension WebpageViewController {
-    
     private func configureView() {
         webView.navigationDelegate = self
         webView.uiDelegate = self
@@ -68,12 +81,14 @@ private extension WebpageViewController {
         searchBar.autocapitalizationType = .none
         webView.load(URLRequest(url: URL(string: "https://google.com")!))
         searchBar.searchTextField.clearButtonMode = .never
-        
         closeButton.publisher().sink(receiveValue: { [weak self] _ in
             self?.dismiss(animated: true, completion: self?.finishCallback)
         })
         .store(in: &bag)
-        
+        backButton.publisher().sink(receiveValue: { [weak self] _ in
+            self?.webView.goBack()
+        })
+        .store(in: &bag)
         printButton.publisher().receive(on: DispatchQueue.main).sink(receiveValue: { [weak self] _ in
             guard let self = self else { return }
             self.makePdfWithWebPageContent()
@@ -128,9 +143,11 @@ private extension WebpageViewController {
 
 // MARK: - Delegates: WKNavigationDelegate, WKUIDelegate, UISearchBarDelegate
 
-extension WebpageViewController: WKNavigationDelegate, WKUIDelegate, UISearchBarDelegate {
+extension WebpageViewController: WKNavigationDelegate, WKUIDelegate, UISearchBarDelegate, UITextFieldDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        UIApplication.shared.sendAction((#selector(selectAll(_:))), to: nil, from: nil, for: nil)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+            searchBar.searchTextField.selectAll(nil)
+        })
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         defer {
@@ -186,9 +203,9 @@ extension WebpageViewController: WKNavigationDelegate, WKUIDelegate, UISearchBar
     
     func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration,
                  for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
-        let configuration = WKWebViewConfiguration()
         configuration.allowsInlineMediaPlayback = true
         configuration.allowsAirPlayForMediaPlayback = false
+        configuration.mediaTypesRequiringUserActionForPlayback = [.all]
         configuration.allowsPictureInPictureMediaPlayback = false
         configuration.dataDetectorTypes = [.all]
         return WKWebView(frame: webView.frame, configuration: configuration)
@@ -205,11 +222,17 @@ extension WebpageViewController: WKNavigationDelegate, WKUIDelegate, UISearchBar
         completionHandler(.useCredential, URLCredential(trust: serverTrust));
     }
     
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        Logger.log("webView.scrollView.contentSize: \(webView.scrollView.contentSize)")
-        webContentSize = webView.scrollView.contentSize
-        if let urlString = webView.url?.absoluteString {
-            textToSearchbar = urlString
+    func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
+        if let url = webView.url {
+            textToSearchbar = url.absoluteString
+            if isAlreadyLoadedPrevPage {
+                currentURL = url
+            }
+            isAlreadyLoadedPrevPage = true
         }
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        webContentSize = webView.scrollView.contentSize
     }
 }
