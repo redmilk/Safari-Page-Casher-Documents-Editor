@@ -77,7 +77,7 @@ final class HomeScreenMenuViewModel: PurchesServiceProvidable, SubscriptionsMult
     
     private func handleActions() {
         input.sink(receiveValue: { [weak self] action in
-            guard let hasSubscription = self?.purchases.isUserHasActiveSubscription, !hasSubscription else {
+            guard let hasSubscription = self?.purchases.isUserHasActiveSubscription, hasSubscription else {
                 var content: (UIImage, UIImage, String, String)?
                 switch action {
                 case .printDocument:
