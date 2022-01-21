@@ -20,7 +20,7 @@ final class HomeScreenViewModel: UserSessionServiceProvidable,
     enum Action {
         case didPressCell(dataBox: PrintableDataBox)
         case openMenu
-        case deleteAll
+        case deleteAll(shouldConfirm: Bool)
         case viewDidAppear
         case viewDisapear
         case itemsDeleteConfirmed
@@ -116,8 +116,9 @@ private extension HomeScreenViewModel {
                 self?.coordinator.showMainMenuAndHandleActions()
             case .didTapSettings:
                 self?.coordinator.displaySettings()
-            case .deleteAll:
-                self?.userSession.input.send(.deleteAll)
+            case .deleteAll(let shouldConfirm):
+                shouldConfirm ? self?.userSession.input.send(.deleteAll) :
+                self?.userSession.input.send(.deleteAllWithoutConfirmation)
             case .viewDidAppear:
                 self?.searchForSharedItems()
                 self?.trackEnterForeground()

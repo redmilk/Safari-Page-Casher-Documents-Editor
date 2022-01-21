@@ -96,7 +96,7 @@ final class BlurredShadowView3: UIView {
     }
     
     var animationDuration: CFTimeInterval = 6
-    var isAnimated: Bool = true
+    var isAnimated: Bool = false
     
     func setup() {
         self.layer.removeAllAnimations()
@@ -109,16 +109,5 @@ final class BlurredShadowView3: UIView {
         layer.shouldRasterize = true
         layer.rasterizationScale = 1
         backgroundColor = UIColor.clear
-        
-        guard isAnimated else { return }
-
-        UIView.animate(withDuration: animationDuration, delay: 0, options: [.autoreverse, .repeat, .curveEaseInOut], animations: {
-            self.transform = CGAffineTransform(scaleX: 2.0, y: 2.0)
-        }, completion: { _ in
-            UIView.animate(withDuration: 5.0, delay: 0, options: [.autoreverse, .repeat, .curveEaseInOut], animations: {
-                self.center.x -= 1000
-                self.transform = CGAffineTransform(scaleX: 1.6, y: 1.6)
-            })
-        })
     }
 }

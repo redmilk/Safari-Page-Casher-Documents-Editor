@@ -35,7 +35,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SDa-az-od4" userLabel="CommonContainer">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                     <subviews>
-                        <view alpha="0.84999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ODC-51-4zi" customClass="BlurredShadowView2" customModule="AirPrint" customModuleProvider="target">
+                        <view hidden="YES" alpha="0.84999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ODC-51-4zi" customClass="BlurredShadowView2" customModule="AirPrint" customModuleProvider="target">
                             <rect key="frame" x="-40" y="726" width="200" height="200"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
@@ -43,7 +43,7 @@
                                 <constraint firstAttribute="width" secondItem="ODC-51-4zi" secondAttribute="height" multiplier="1:1" id="gaz-01-Lky"/>
                             </constraints>
                         </view>
-                        <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rAi-Mn-sPp" customClass="BlurredShadowView1" customModule="AirPrint" customModuleProvider="target">
+                        <view hidden="YES" alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rAi-Mn-sPp" customClass="BlurredShadowView1" customModule="AirPrint" customModuleProvider="target">
                             <rect key="frame" x="384" y="100" width="200" height="200"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>

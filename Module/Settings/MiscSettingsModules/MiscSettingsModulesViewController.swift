@@ -78,7 +78,7 @@ private extension MiscSettingsModulesViewController {
         navigationController?.navigationBar.titleTextAttributes = textAttributes
         navigationController?.navigationBar.tintColor = .white
         navigationBarExtender.addCornerRadius(30)
-        navigationBarExtender.dropShadow(color: .black, opacity: 0.6, offSet: .zero, radius: 30, scale: true)
+        navigationBarExtender.dropShadow(color: .black, opacity: 0.3, offSet: .zero, radius: 30, scale: true)
         webView.navigationDelegate = self
     }
 }

@@ -20,6 +20,7 @@ struct OnboardingPageModel {
     let paginImageName: String
     let mainTextLine1: String
     let mainTextLine2: String
+    let smallDescription: String
     let isLastOnboardingPage: Bool
     let continueButtonAction: VoidClosure
     let closeButtonAction: VoidClosure?
@@ -57,14 +58,14 @@ final class OnboardingViewController: UIViewController {
         pagingImageView.image = UIImage(named: model.paginImageName)!
         primaryLabel.text = model.mainTextLine1
         primaryLabelSecondLine.text = model.mainTextLine2
-        descriptionText.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"
+        descriptionText.text = model.smallDescription
                 
         continueButton.publisher()
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
                 guard let self = self else { return }
-                self.model.continueButtonAction()
                 if self.model.isLastOnboardingPage {
+                    Onboarding.shared?.onboardingFinishAction()
                 } else {
                     self.model.continueButtonAction()
                 }

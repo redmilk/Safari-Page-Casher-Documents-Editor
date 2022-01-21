@@ -24,9 +24,8 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-logo-big" translatesAutoresizingMaskIntoConstraints="NO" id="avl-Cn-Zyx">
-                                        <rect key="frame" x="144.5" y="340.5" width="125" height="125"/>
+                                        <rect key="frame" x="166.5" y="363" width="81" height="80.5"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="125" id="MNE-qK-GYl"/>
                                             <constraint firstAttribute="width" secondItem="avl-Cn-Zyx" secondAttribute="height" multiplier="1:1" id="fN6-Qj-dPO"/>
                                         </constraints>
                                     </imageView>
@@ -34,6 +33,7 @@
                                 <color key="backgroundColor" red="0.11719965189999999" green="0.11395696549999999" blue="0.30591475959999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstItem="avl-Cn-Zyx" firstAttribute="centerY" secondItem="QAt-jQ-kOA" secondAttribute="centerY" multiplier="0.9" id="Ikt-hR-UMZ"/>
+                                    <constraint firstItem="avl-Cn-Zyx" firstAttribute="height" secondItem="QAt-jQ-kOA" secondAttribute="height" multiplier="0.09" id="IpI-KU-yTr"/>
                                     <constraint firstItem="avl-Cn-Zyx" firstAttribute="centerX" secondItem="QAt-jQ-kOA" secondAttribute="centerX" id="WG0-5c-ufZ"/>
                                 </constraints>
                             </view>

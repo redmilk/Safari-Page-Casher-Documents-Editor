@@ -34,12 +34,6 @@ extension UIDocumentPickerViewController: ActivityIndicatorPresentable {
     
 }
 
-
-extension Notification.Name {
-    static let pdfImportProcessDidStart = Notification.Name("pdf-import-process-start")
-    static let pdfImportProcessDidStop = Notification.Name("pdf-import-process-stop")
-}
-
 extension CloudFilesManagerImpl: UIDocumentPickerDelegate {
     
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {

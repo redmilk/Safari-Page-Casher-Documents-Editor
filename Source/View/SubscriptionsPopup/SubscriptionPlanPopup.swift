@@ -116,7 +116,7 @@ final class SubscriptionPlanPopup: UIView, PurchesServiceProvidable {
     private func configureView() {
         trialMessageLabel.text = purchases.isUserEverHadSubscription ?
         "Start your full access. Manage anytime." : "After a 3-day free trial. Manage anytime."
-        weeklyPlanPrice.text = purchases.getPriceForPurchase(model: .weekly) ?? PurchesService.previousWeeklyPrice
+        weeklyPlanPrice.text = (purchases.getPriceForPurchase(model: .weekly) ?? PurchesService.previousWeeklyPrice) + " / week"
         montlyPriceLabel.text = purchases.getPriceForPurchase(model: .monthly) ?? PurchesService.previousMonthlyPrice
         let yearly = purchases.getPriceForPurchase(model: .annual) ?? PurchesService.previousYearlyPrice
         yearlyPriceFirstPartLabel.text = yearly
@@ -129,9 +129,9 @@ final class SubscriptionPlanPopup: UIView, PurchesServiceProvidable {
         weeklyContainer.addCornerRadius(30)
         hideOtherPlansButton.imageView?.contentMode = .center
         planSelectionContainer.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        planSelectionContainer.dropShadow(color: .black, opacity: 0.7, offSet: .zero, radius: 15, scale: true)
+        planSelectionContainer.dropShadow(color: .black, opacity: 0.3, offSet: .zero, radius: 15, scale: true)
         weeklyContainer.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        weeklyContainer.dropShadow(color: .black, opacity: 0.7, offSet: .zero, radius: 15, scale: true)
+        weeklyContainer.dropShadow(color: .black, opacity: 0.3, offSet: .zero, radius: 15, scale: true)
         planSelectionContinueButton.dropShadow(color: .white, opacity: 0.0, offSet: CGSize(width: 0, height: 0), radius: 15, scale: true)
         
         firstButton.publisher().sink(receiveValue: { [weak self] _ in

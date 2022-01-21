@@ -40,19 +40,19 @@ final class HomeScreenMenuViewModel: PurchesServiceProvidable, SubscriptionsMult
     
     private let subscriptionPopupContent = [
         (UIImage(named: "menu-subscription-photos")!,
-         UIImage(named: "menu-subscription-photo-button")!,
+         UIImage(named: "button-green-blank")!,
          "Print photos directly from", "the gallery"),
         
         (UIImage(named: "menu-subscription-document")!,
-         UIImage(named: "menu-subscription-doc-button")!,
+         UIImage(named: "button-yellow-blank")!,
          "Select documents from", "your iCloud"),
         
         (UIImage(named: "menu-subscription-webpage")!,
-         UIImage(named: "menu-subscription-web-button")!,
+         UIImage(named: "button-red-blank")!,
          "Ability to quickly print", "web page"),
         
         (UIImage(named: "menu-subscription-clipboard")!,
-         UIImage(named: "menu-subscription-clipb-button")!,
+         UIImage(named: "button-blue-blank")!,
          "Copy and paste the text", "you want to print")
     ]
 

@@ -185,14 +185,14 @@ private extension HomeScreenMenuViewController {
         printPhotoButton.addCornerRadius(StylingConstants.cornerRadiusDefault)
         cancelButton.addCornerRadius(StylingConstants.cornerRadiusDefault)
         printWebPage.addCornerRadius(StylingConstants.cornerRadiusDefault)
-        buttonsContainerView.dropShadow(color: .black, opacity: 0.6, offSet: .zero, radius: 15, scale: true)
+        buttonsContainerView.dropShadow(color: .black, opacity: 0.3, offSet: .zero, radius: 15, scale: true)
         subscriptionButtonsContainer.addCornerRadius(30.0)
         subscriptionButtonsContainer.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-        subscriptionButtonsContainer.dropShadow(color: .black, opacity: 0.6, offSet: .zero, radius: 15, scale: true)
+        subscriptionButtonsContainer.dropShadow(color: .black, opacity: 0.3, offSet: .zero, radius: 15, scale: true)
         let emitterForStepOne = ParticleEmitterView()
         emitterForStepOne.isUserInteractionEnabled = false
         emitterForStepOne.translatesAutoresizingMaskIntoConstraints = false
-        
+        //emitterForStepOne.isHidden = true
         subscriptionPopup.insertSubview(emitterForStepOne, at: 0)
         emitterForStepOne.widthAnchor.constraint(equalTo: subscriptionPopup.widthAnchor).isActive = true
         emitterForStepOne.heightAnchor.constraint(equalTo: subscriptionPopup.heightAnchor).isActive = true

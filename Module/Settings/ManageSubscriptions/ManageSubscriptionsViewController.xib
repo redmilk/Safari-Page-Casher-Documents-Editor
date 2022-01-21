@@ -42,7 +42,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LwN-QN-IY1">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                     <subviews>
-                        <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O3X-wV-u9Y" customClass="BlurredShadowView1" customModule="AirPrint" customModuleProvider="target">
+                        <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O3X-wV-u9Y" customClass="BlurredShadowView1" customModule="AirPrint" customModuleProvider="target">
                             <rect key="frame" x="-50" y="612" width="150" height="150"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
@@ -50,7 +50,7 @@
                                 <constraint firstAttribute="width" secondItem="O3X-wV-u9Y" secondAttribute="height" multiplier="1:1" id="uFJ-RP-QOJ"/>
                             </constraints>
                         </view>
-                        <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TEX-8R-4XP" customClass="BlurredShadowView2" customModule="AirPrint" customModuleProvider="target">
+                        <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TEX-8R-4XP" customClass="BlurredShadowView2" customModule="AirPrint" customModuleProvider="target">
                             <rect key="frame" x="265" y="-50" width="150" height="150"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>

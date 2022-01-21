@@ -15,7 +15,7 @@ class BackgroundScheduler {
     
     var taskProcess: VoidClosure?
     var shouldRepeating: Bool = true
-    
+
     private var taskIdentifierFromPlist: String!
     
     func register(taskIdentifier: String = "com.surf.devip") {

@@ -129,13 +129,13 @@ private extension ManageSubscriptionsViewController {
         navigationController?.navigationBar.tintColor = .white
         title = "Manage Subscriptions"
         navigationBarExtender.addCornerRadius(30)
-        navigationBarExtender.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMinXMaxYCorner]
+        navigationBarExtender.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         monthlyPlanButton.addCornerRadius(14)
-        monthlyPlanButton.addBorder(1, UIColor(hex: 0x4E50BD33).withAlphaComponent(0.2))
+        monthlyPlanButton.addBorder(1, .systemBlue.withAlphaComponent(0.3))
         yearPlanButton.addCornerRadius(14)
-        yearPlanButton.addBorder(1, UIColor(hex: 0x4E50BD33).withAlphaComponent(0.2))
+        yearPlanButton.addBorder(1, .systemBlue.withAlphaComponent(0.3))
         weekPlanButton.addCornerRadius(14)
-        weekPlanButton.addBorder(1, UIColor(hex: 0x4E50BD33).withAlphaComponent(0.2))
+        weekPlanButton.addBorder(1, .systemBlue.withAlphaComponent(0.3))
         
         weekPlanButton.publisher().receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] button in

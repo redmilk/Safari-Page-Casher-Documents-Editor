@@ -19,8 +19,9 @@ final class OnboardingCoordinator: CoordinatorProtocol {
         OnboardingPageModel(
             mainImageName: "onboarding-image-1",
             paginImageName: "onboarding-pagination-1",
-            mainTextLine1: "Scan your documents",
+            mainTextLine1: "Print files from your phone",
             mainTextLine2: "quickly and easily",
+            smallDescription: "Choose files to print from your iCloud or phone gallery",
             isLastOnboardingPage: false,
             continueButtonAction: { [weak self] in
                 self?.showPage2()
@@ -28,8 +29,9 @@ final class OnboardingCoordinator: CoordinatorProtocol {
         OnboardingPageModel(
             mainImageName: "onboarding-image-2",
             paginImageName: "onboarding-pagination-2",
-            mainTextLine1: "It is possible to add signature",
-            mainTextLine2: "to the document",
+            mainTextLine1: "Add your signature to a",
+            mainTextLine2: "document in a second",
+            smallDescription: "Select the type of edits you want to make to your document including an option to add a signature",
             isLastOnboardingPage: false,
             continueButtonAction: { [weak self] in
                 self?.showPage3()
@@ -37,8 +39,9 @@ final class OnboardingCoordinator: CoordinatorProtocol {
         OnboardingPageModel(
             mainImageName: "onboarding-image-3",
             paginImageName: "onboarding-pagination-3",
-            mainTextLine1: "Simple printing of documents",
-            mainTextLine2: "photos from the phone.",
+            mainTextLine1: "Scan documents with a",
+            mainTextLine2: "couple of clicks",
+            smallDescription: "Scan your documents, cards, and whiteboards with your phone, making them more readable and editable",
             isLastOnboardingPage: true,
             continueButtonAction: { [weak self] in
                 Onboarding.shared?.onboardingFinishAction()

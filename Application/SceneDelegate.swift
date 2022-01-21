@@ -34,13 +34,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneWillEnterForeground(_ scene: UIScene) {
-        //BackgroundScheduler.shared.cancelPendingTask()
-        //print("🥲🥲🥲")
-        //print(UserDefaults.standard.value(forKey: "123") as? String)
+        let thisTime = Date().timeIntervalSince1970
+        if let lastTimeSinceBackground = UserSessionImpl.lastBackgroundDate {
+            if thisTime > lastTimeSinceBackground {
+                NotificationCenter.default.post(name: Notification.Name.cleanUserSession, object: nil)
+            }
+        }
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
-        BackgroundScheduler.shared.scheduleBackgroundFetch(in: 10)
+        let timeToSet = Date().addingTimeInterval(60 * 30).timeIntervalSince1970
+        UserSessionImpl.lastBackgroundDate = timeToSet
     }
 }
 
