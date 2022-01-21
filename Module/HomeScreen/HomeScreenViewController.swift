@@ -11,6 +11,9 @@ import UIKit
 import Combine
 
 fileprivate let multiSubscriptionPopupViewTag: Int = 123
+fileprivate let kDialogLabelSingleItem: String = "Are you sure you want to delete this item?"
+fileprivate let kDialogLabelMultipleItems: String = "Are you sure you want to delete these items?"
+
 
 final class HomeScreenViewController: UIViewController,
                                       ActivityIndicatorPresentable,
@@ -83,7 +86,8 @@ final class HomeScreenViewController: UIViewController,
     @IBOutlet private weak var dialogButtonsContainer: UIView!
     @IBOutlet private weak var dialogDeleteButton: TapAnimatedButton!
     @IBOutlet private weak var dialogCancelButton: TapAnimatedButton!
-
+    @IBOutlet private weak var dialogLabel: UILabel!
+    
     @IBOutlet weak var howTrialWorksButton: TapAnimatedButton!
     @IBOutlet weak var otherPlansButton: TapAnimatedButton!
     
@@ -225,7 +229,7 @@ private extension HomeScreenViewController {
         }).store(in: &bag)
         
         deleteAllButton.publisher().sink(receiveValue: { [weak self] _ in
-            self?.viewModel.input.send(.deleteAll)
+            self?.viewModel.input.send(.deleteAll(shouldConfirm: true))
             self?.setHiddenClarifyDeleteDialog(false)
         }).store(in: &bag)
         
@@ -320,6 +324,10 @@ private extension HomeScreenViewController {
             .sink(receiveValue: { [weak self] _ in
                 self?.stopActivityAnimation()
             }).store(in: &bag)
+        NotificationCenter.default.publisher(for: .printingJobDone, object: nil)
+            .sink(receiveValue: { [weak self] _ in
+                self?.showPrintingJobFinishedAlert()
+            }).store(in: &bag)
         
         showEmptyState()
         setHiddenClarifyDeleteDialog(true)
@@ -338,6 +346,15 @@ private extension HomeScreenViewController {
                 return
             }
         }
+    }
+    
+    private func showPrintingJobFinishedAlert() {
+        displayAlert(fromParentView: view, with: "Do you want to delete your files?", title: "Cleanup", action: {
+            print("Keep them")
+        }, buttonTitle: "Cancel", extraAction: { [weak self] in
+            print("Delete all")
+            self?.viewModel.input.send(.deleteAll(shouldConfirm: false))
+        }, extraActionTitle: "Delete all")
     }
     
     /// universal subscription popup
@@ -401,6 +418,7 @@ private extension HomeScreenViewController {
     }
     
     private func setHiddenClarifyDeleteDialog(_ isHidden: Bool) {
+        dialogLabel.text = selectionCount == 1 ? kDialogLabelSingleItem : kDialogLabelMultipleItems
         dialogContainer.isHidden = isHidden
     }
     
@@ -479,8 +497,8 @@ private extension HomeScreenViewController {
         subscriptionMenuContainer.addCornerRadius(30)
         subscriptionMenuContainer.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         subscriptionDiscountLabel.attributedText = String.makeStrikeThroughText("89.99")
-        subscriptionMenuContainer.dropShadow(color: .black, opacity: 0.8, offSet: .zero, radius: 30, scale: true)
-        dialogButtonsContainer.dropShadow(color: .black, opacity: 0.6, offSet: .zero, radius: 30, scale: true)
+        subscriptionMenuContainer.dropShadow(color: .black, opacity: 0.3, offSet: .zero, radius: 30, scale: true)
+        dialogButtonsContainer.dropShadow(color: .black, opacity: 0.3, offSet: .zero, radius: 30, scale: true)
         giftTimerContainer.addGradientBorder(to: giftTimerContainer, radius: 16, width: 2, colors: [UIColor(hex: 0x04FFF0), UIColor(hex: 0x0487FF), UIColor(hex: 0x9948FF)])
     }
     

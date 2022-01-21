@@ -8,6 +8,8 @@
 import Foundation
 import Combine
 
+fileprivate let kLastBackgroundDate = "kLastBackgroundDate"
+
 protocol UserSession {
     var input: PassthroughSubject<UserSessionImpl.Action, Never> { get }
     var output: PassthroughSubject<UserSessionImpl.Response, Never> { get }
@@ -26,6 +28,7 @@ final class UserSessionImpl: UserSession {
         case addItems([PrintableDataBox])
         case handleMemoryWarning
         case deleteAll
+        case deleteAllWithoutConfirmation
         case deleteSelected
         case cancelSelection
         case getSelectionCount
@@ -41,6 +44,11 @@ final class UserSessionImpl: UserSession {
         case allCurrentData([PrintableDataBox])
         case selectionCount(Int)
         case empty
+    }
+    
+    static var lastBackgroundDate: TimeInterval? {
+        get { UserDefaults.standard.value(forKey: kLastBackgroundDate) as? TimeInterval }
+        set { UserDefaults.standard.set(newValue, forKey: kLastBackgroundDate) }
     }
     
     var input = PassthroughSubject<Action, Never>()
@@ -74,6 +82,9 @@ final class UserSessionImpl: UserSession {
             case .deleteAll:
                 self.sessionData.keys.forEach { $0.isSelected = true }
                 self.output.send(.selectionCount(0))
+            case .deleteAllWithoutConfirmation:
+                self.sessionData.removeAll()
+                self.output.send(.empty)
             case .createTempFileForEditing(let filename, let dataBox):
                 self.createTemporaryFile(withNameAndFormat: filename)
                 self._editingFileDataBox = dataBox
@@ -99,29 +110,23 @@ final class UserSessionImpl: UserSession {
                 self.output.send(.deletedItems(Array(deleted)))
                 self.output.send(.selectionCount(self.getSelectedCount()))
             case .handleMemoryWarning:
-                /**
-                 let allData = Array(self.sessionData.keys).sorted { $0.id < $1.id }
-                 for item in allData {
-                     guard !item.isEditedByUser else { continue }
-                     self.sessionData.removeValue(forKey: item)
-                 }
-                 guard !self.sessionData.isEmpty else { return }
-                 self.output.send(.allCurrentData(Array(self.sessionData.keys).sorted { $0.id < $1.id }))
-                 */
                 let allData = Array(self.sessionData.keys).sorted { $0.id < $1.id }
                 let limit = Int(allData.count / 3)
                 guard limit >= 1 else { return }
                 for (index, key) in allData.enumerated() {
                     guard index < limit else { break }
-                    if key.isEditedByUser {
-                        continue
-                    }
+                    if key.isEditedByUser { continue }
                     self.sessionData.removeValue(forKey: key)
                 }
                 self.output.send(.allCurrentData(Array(self.sessionData.keys).sorted { $0.id < $1.id }))
             }
         })
         .store(in: &bag)
+        NotificationCenter.default.publisher(for: .cleanUserSession, object: nil)
+            .sink(receiveValue: { [weak self] _ in
+                self?.sessionData.removeAll()
+                self?.output.send(.empty)
+            }).store(in: &bag)
     }
     
     private func getSelectedCount() -> Int {

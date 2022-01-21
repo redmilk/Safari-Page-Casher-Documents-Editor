@@ -46,4 +46,7 @@ extension PrintingOptionsManager: UIPrintInteractionControllerDelegate {
     func printInteractionControllerWillStartJob(_ printInteractionController: UIPrintInteractionController) {
         finishCallback()
     }
+    func printInteractionControllerDidFinishJob(_ printInteractionController: UIPrintInteractionController) {
+        NotificationCenter.default.post(name: Notification.Name.printingJobDone, object: nil)
+    }
 }

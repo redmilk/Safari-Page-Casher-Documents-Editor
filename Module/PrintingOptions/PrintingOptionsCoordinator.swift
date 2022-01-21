@@ -42,6 +42,8 @@ final class PrintingOptionsCoordinator: CoordinatorProtocol, PrintingOptionsCoor
     }
     
     func end() {
-        navigationController?.popToRootViewController(animated: false)
+        DispatchQueue.main.async {
+            self.navigationController?.popToRootViewController(animated: false)
+        }
     }
 }
