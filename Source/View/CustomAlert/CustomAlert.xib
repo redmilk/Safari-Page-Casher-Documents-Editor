@@ -20,6 +20,7 @@
             <connections>
                 <outlet property="alertText" destination="5KS-HB-LnI" id="E6R-KW-Id1"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="Pnj-Gt-fkH"/>
+                <outlet property="extraActionButton" destination="qLY-wM-jUu" id="V4x-gr-2AS"/>
                 <outlet property="mainContainer" destination="2fK-Xx-xRs" id="RPP-aO-IAz"/>
                 <outlet property="primaryButton" destination="IzG-Hz-cUf" id="YB1-3X-HFM"/>
                 <outlet property="titleLabel" destination="ORt-FO-pp4" id="Qd7-HY-Y76"/>
@@ -44,18 +45,21 @@
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Kw9-kI-FfR">
                             <rect key="frame" x="20" y="20" width="321" height="187"/>
                             <subviews>
-                                <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="cJt-xs-2bR">
-                                    <rect key="frame" x="0.0" y="0.0" width="321" height="107"/>
+                                <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" axis="vertical" distribution="fillProportionally" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="cJt-xs-2bR">
+                                    <rect key="frame" x="0.0" y="0.0" width="321" height="61.5"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" text="Alert title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ORt-FO-pp4" userLabel="title">
-                                            <rect key="frame" x="0.0" y="0.0" width="321" height="73.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="321" height="28"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="28" id="UcN-c9-BXJ"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="20"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <color key="highlightedColor" systemColor="secondarySystemBackgroundColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="254" text="Alert message" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.20000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="5KS-HB-LnI">
-                                            <rect key="frame" x="0.0" y="88.5" width="321" height="18.5"/>
+                                            <rect key="frame" x="0.0" y="43" width="321" height="18.5"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <fontDescription key="fontDescription" name="Poppins-Light" family="Poppins" pointSize="13"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -63,18 +67,24 @@
                                         </label>
                                     </subviews>
                                 </stackView>
-                                <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="JGK-F3-FXr">
-                                    <rect key="frame" x="0.0" y="127" width="321" height="60"/>
+                                <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="JGK-F3-FXr">
+                                    <rect key="frame" x="0.0" y="81.5" width="321" height="105.5"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IzG-Hz-cUf" userLabel="primary button">
-                                            <rect key="frame" x="0.0" y="0.0" width="321" height="60"/>
+                                        <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qLY-wM-jUu" userLabel="button-action1">
+                                            <rect key="frame" x="0.0" y="0.0" width="321" height="43"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="60" id="tfh-YR-AFZ"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" name="Poppins-Light" family="Poppins" pointSize="14"/>
+                                            <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="15"/>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                            <state key="normal" backgroundImage="button-popup-okay">
+                                            <state key="normal" backgroundImage="button-blue-blank">
+                                                <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </state>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IzG-Hz-cUf" userLabel="button-cancel">
+                                            <rect key="frame" x="0.0" y="63" width="321" height="42.5"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="15"/>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                            <state key="normal" title="Cancel" backgroundImage="button-stroke-blank">
                                                 <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </state>
                                         </button>
@@ -107,7 +117,8 @@
         </view>
     </objects>
     <resources>
-        <image name="button-popup-okay" width="335" height="60"/>
+        <image name="button-blue-blank" width="336" height="61"/>
+        <image name="button-stroke-blank" width="336" height="61"/>
         <systemColor name="secondarySystemBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

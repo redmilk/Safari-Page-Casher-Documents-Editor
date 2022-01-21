@@ -9,7 +9,8 @@ import Foundation
 import Combine
 
 protocol AlertPresentable: AnyObject {
-    func displayAlert(fromParentView view: UIView, with text: String, title: String?, action: VoidClosure?, buttonTitle: String?
+    func displayAlert(fromParentView view: UIView, with text: String, title: String?,
+                      action: VoidClosure?, buttonTitle: String?, extraAction: VoidClosure?, extraActionTitle: String?
     ) -> UIView
 }
 
@@ -18,7 +19,7 @@ extension AlertPresentable {
     @discardableResult
     func displayAlert(
         fromParentView view: UIView, with text: String, title: String?,
-        action: VoidClosure? = nil, buttonTitle: String? = ""
+        action: VoidClosure? = nil, buttonTitle: String? = nil, extraAction: VoidClosure? = nil, extraActionTitle: String? = nil
     ) -> UIView {
         if let alreadyPresentedAlert = view.subviews.filter({ $0.tag == 666 }).first {
             alreadyPresentedAlert.removeFromSuperview()
@@ -29,11 +30,15 @@ extension AlertPresentable {
         dimmView.backgroundColor = .black.withAlphaComponent(0.7)
         
         let alert = CustomAlert()
+        alert.extraActionButton.isHidden = true
         alert.primaryButtonAction = action
         alert.alertText.text = text
         alert.titleLabel.text = title
-        if let buttonTitle = buttonTitle {
-            alert.primaryButton.setTitle(buttonTitle, for: .normal)
+        alert.primaryButton.setTitle(buttonTitle ?? "Okay", for: .normal)
+        if let extraAction = extraAction, let extraButtonTitle = extraActionTitle {
+            alert.extraActionButton.isHidden = false
+            alert.extraButonAction = extraAction
+            alert.extraActionButton.setTitle(extraButtonTitle, for: .normal)
         }
         dimmView.addSubview(alert)
         alert.translatesAutoresizingMaskIntoConstraints = false
@@ -62,11 +67,13 @@ final class CustomAlert: UIView {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var primaryButton: UIButton!
     @IBOutlet weak var alertText: UILabel!
+    @IBOutlet weak var extraActionButton: UIButton!
     
     private weak var dimmedContainer: UIView?
-    private var disposable: AnyCancellable?
+    private var bag = Set<AnyCancellable>()
     
     var primaryButtonAction: VoidClosure?
+    var extraButonAction: VoidClosure?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -94,7 +101,8 @@ final class CustomAlert: UIView {
         contentView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         mainContainer.dropShadow(color: .blue, opacity: 0.8, offSet: .zero, radius: 15, scale: true)
 
-       disposable = primaryButton.publisher().sink(receiveValue: { [weak self] _ in
+        // MARK: - Main action
+       primaryButton.publisher().sink(receiveValue: { [weak self] _ in
            guard let primaryAction = self?.primaryButtonAction else {
                UIView.animate(withDuration: 0.4, delay: 0, options: [], animations: {
                    let translateY = CGAffineTransform(translationX: 0, y: 300)
@@ -110,6 +118,17 @@ final class CustomAlert: UIView {
            }, completion: { _ in
                primaryAction()
            })
-        })
+       }).store(in: &bag)
+        // MARK: - Extra action
+        guard let extraAction = self.extraButonAction else { return }
+        extraActionButton.publisher().sink(receiveValue: { [weak self] _ in
+            UIView.animate(withDuration: 0.4, delay: 0, options: [], animations: {
+                let translateY = CGAffineTransform(translationX: 0, y: 300)
+                self?.transform = translateY
+                self?.dimmedContainer?.alpha = 0.0
+            }, completion: { _ in
+                extraAction()
+            })
+        }).store(in: &bag)
     }
 }
