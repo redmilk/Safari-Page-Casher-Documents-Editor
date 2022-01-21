@@ -86,6 +86,8 @@ final class PurchesService {
     }
     /// check if user had any subscription
     var isUserEverHadSubscription: Bool {
+        Logger.log("Apphud.subscriptions()?.isEmpty", type: .purchase)
+        print(Apphud.subscriptions()?.isEmpty)
         return !(Apphud.subscriptions()?.isEmpty ?? true)
     }
     /// weekly discaunt prices case: no active subs && no previus subs

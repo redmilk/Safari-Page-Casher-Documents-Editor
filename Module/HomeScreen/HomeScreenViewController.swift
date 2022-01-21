@@ -112,9 +112,6 @@ final class HomeScreenViewController: UIViewController,
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         viewModel.input.send(.memoryWarning)
-        displayAlert(
-            fromParentView: self.view,
-            with: "Your device's memory is too low. Unfortunately, the application will partially purge your previously added files that have not yet been edited", title: "Warning")
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -349,7 +346,7 @@ private extension HomeScreenViewController {
         optionToShowFirst: SubscriptionPlanPopup.State
     ) {
         let (publisher, popUp) = displayMultiSubscriptions(optionToShowFirst, fromParentView: container)
-        popUp.tag = 123
+        popUp.tag = multiSubscriptionPopupViewTag
         publisher.sink(receiveValue: { [weak self] response in
             switch response {
             case .restoreSubscription:
@@ -420,8 +417,11 @@ private extension HomeScreenViewController {
     private func updateGiftOrHowItWorksPresentation(hasActiveSubscriptions: Bool, shouldShowHowItWorks: Bool) {
         var willBeShown: SubscrContent = .none
         var randomFlag: Bool?
+        var isHiden: Bool = true
+        var howItWorks: Bool = false
         
         if !hasActiveSubscriptions && shouldShowHowItWorks {
+            /// no active subscription and should show how it works
             randomFlag = PurchesService.currentRandomFlag
             if let shouldChooseRandom = randomFlag {
                 willBeShown = shouldChooseRandom ? .gift : .howItWorks
@@ -433,14 +433,10 @@ private extension HomeScreenViewController {
             giftOrHowItWorksButtonAnimation?.cancel()
             giftOrHowItWorksOpenButton.layer.removeAllAnimations()
             willBeShown = .none
-            /// no active subscription and should show how it works
             /// only show gift
         } else {
             willBeShown = .gift
         }
-        
-        var isHiden: Bool!
-        var howItWorks: Bool!
         switch willBeShown {
         case .none:
             isHiden = true

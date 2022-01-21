@@ -79,11 +79,12 @@ private extension HomeScreenViewModel {
     }
     
     func handleCopyFromClipboard() {
-        guard UIPasteboard.general.hasImages || UIPasteboard.general.hasStrings else {
+        
+        guard !(UIPasteboard.general.images ?? []).isEmpty || !(UIPasteboard.general.string ?? "").isEmpty else {
                 return output.send(.displayAlert(text: "Photos or text not found, nothing to paste here",
                                                  title: "Empty buffer", action: nil, buttonTitle: nil))
         }
-        if UIPasteboard.general.hasStrings {
+        if !(UIPasteboard.general.string ?? "").isEmpty {
             guard let content = UIPasteboard.general.string,
                   let pdf = pdfService.createPDFWithText(content) else { return }
             let dataBox = PrintableDataBox(
@@ -91,12 +92,13 @@ private extension HomeScreenViewModel {
                 image: self.pdfService.makeImageFromPDFDocument(pdf, withImageSize: UIScreen.main.bounds.size, ofPageIndex: 0),
                 document: pdf)
             userSession.input.send(.addItems([dataBox]))
-        } else if UIPasteboard.general.hasImages {
+        } else {
             guard let images = UIPasteboard.general.images, !images.isEmpty else { return }
             let dataBoxList = images.map { PrintableDataBox(id: Date().millisecondsSince1970.description,
                                                             image: $0, document: nil) }
             userSession.input.send(.addItems(dataBoxList))
         }
+        
     }
     
     func searchForSharedItems() {
@@ -138,6 +140,8 @@ private extension HomeScreenViewModel {
             case .restoreSubscription:
                 self?.restoreLastSubscription()
             case .memoryWarning:
+                guard let itemsTotal = self?.userSession.itemsTotal, itemsTotal > 20 else { return }
+                self?.output.send(.displayAlert(text: "Your device's memory is too low. Unfortunately, the application will partially purge your previously added files that have not yet been edited", title: "Warning", action: nil, buttonTitle: nil))
                 self?.userSession.input.send(.handleMemoryWarning)
             }
         }).store(in: &bag)
@@ -177,6 +181,7 @@ private extension HomeScreenViewModel {
             case .timerTick(let timerTickText):
                 self?.output.send(.timerTick(timerText: timerTickText))
             case .hasActiveSubscriptions(let hasActiveSubscriptions, let shouldShowHowItWorks):
+
                 guard let self = self else { return }
                 let shouldDisplayMultiSubscrPopup = PurchesService.shouldDisplaySubscriptionsForCurrentUser
                 self.output.send(.subscriptionStatus(
@@ -211,12 +216,9 @@ private extension HomeScreenViewModel {
             case _: break
             }
         }, receiveValue: { [weak self] in
-            if self?.purchases.isUserHasActiveSubscription ?? false {
+            self?.output.send(.displayAlert(text: "Selected subscription plan was successfully purchased", title: "Success", action: {
                 self?.output.send(.collapseAllSubscriptionPopupsWhichArePresented)
-                self?.output.send(.displayAlert(text: "Selected subscription plan was successfully purchased", title: "Success", action: nil, buttonTitle: nil))
-                Logger.log("Successfully purchased annual subscription", type: .purchase)
-            }
-            Logger.log("Purchase is not detected", type: .purchase)
+            }, buttonTitle: nil))
         }).store(in: &bag)
     }
     
@@ -233,7 +235,7 @@ private extension HomeScreenViewModel {
             case _: break
             }
         }, receiveValue: { [weak self] isSuccess in
-            if isSuccess && self?.purchases.isUserHasActiveSubscription ?? false {
+            if isSuccess {
                 self?.output.send(.displayAlert(text: "Your previous subscription plan was successfully restored", title: "Success", action: { self?.output.send(.collapseAllSubscriptionPopupsWhichArePresented) }, buttonTitle: nil))
             } else {
                 self?.output.send(.displayAlert(text: "Any data related to your previous subscription plan wasn't found", title: "Nothing to restore", action: nil, buttonTitle: nil))
