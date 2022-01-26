@@ -31,7 +31,7 @@ extension SKProduct {
     }
 }
 
-final class PurchesService {
+final class PurchesService: AnalyticServiceProvider {
     
     enum Action {
         case congifure
@@ -234,6 +234,7 @@ final class PurchesService {
     /// refresh available in-app purchases for app and user's subscriptions status
     func restoreLastExpiredPurchase() -> AnyPublisher<Bool, PurchaseError> {
         /// refresh available in-app purchases for app
+        analytics.eventPurchaseDidPressed(plan: "restore")
         return Deferred {
             Future<Bool, PurchaseError> { promise in
                 Apphud.restorePurchases { [weak self] subscriptions, purchases, error in

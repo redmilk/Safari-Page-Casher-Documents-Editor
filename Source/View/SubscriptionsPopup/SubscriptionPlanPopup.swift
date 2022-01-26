@@ -29,7 +29,7 @@ extension SubscriptionsMultiPopupProvidable {
 
 
 // MARK: -
-final class SubscriptionPlanPopup: UIView, PurchesServiceProvidable {
+final class SubscriptionPlanPopup: UIView, PurchesServiceProvidable, AnalyticServiceProvider {
     enum State {
         case weekly
         case planOptions
@@ -148,6 +148,7 @@ final class SubscriptionPlanPopup: UIView, PurchesServiceProvidable {
         
         planSelectionContinueButton.publisher().sink(receiveValue: { [weak self] _ in
             guard let self = self else { return }
+            self.analytics.eventPurchaseDidPressed(plan: self.isSecondOptionSelected ? "annual" : "monthly")
             self.output.send(.onPurchase(isSecondOptionSelected: self.isSecondOptionSelected))
         }).store(in: &bag)
         
@@ -189,6 +190,7 @@ final class SubscriptionPlanPopup: UIView, PurchesServiceProvidable {
         }).store(in: &bag)
 
         weeklyPurchaseContinue.publisher().sink(receiveValue: { [weak self] _ in
+            self?.analytics.eventPurchaseDidPressed(plan: "weekly")
             self?.output.send(.onWeeklyPurchase)
         }).store(in: &bag)
     }

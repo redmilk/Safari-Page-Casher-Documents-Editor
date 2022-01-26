@@ -14,7 +14,10 @@ import QuickLook
 
 // MARK: - SettingsViewController
 
-final class SettingsViewController: UIViewController, MFMailComposeViewControllerDelegate, UIGestureRecognizerDelegate {
+final class SettingsViewController: UIViewController,
+                                        MFMailComposeViewControllerDelegate,
+                                        UIGestureRecognizerDelegate,
+                                        AnalyticServiceProvider {
     enum State {
         case dummyState
     }
@@ -46,6 +49,7 @@ final class SettingsViewController: UIViewController, MFMailComposeViewControlle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         title = "Settings"
+        analytics.eventVisitScreen(screen: "settings")
     }
     func mailComposeController(_ controller: MFMailComposeViewController,
                                didFinishWith result: MFMailComposeResult, error: Error?) {

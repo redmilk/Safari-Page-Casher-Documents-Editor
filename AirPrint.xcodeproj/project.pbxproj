@@ -25,6 +25,9 @@
 		792D661127552DE300063F4B /* CameraScanManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792D661027552DE300063F4B /* CameraScanManager.swift */; };
 		792D66152755394000063F4B /* PhotoalbumManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792D66142755394000063F4B /* PhotoalbumManager.swift */; };
 		792D661827553D6D00063F4B /* CloudFilesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792D661727553D6D00063F4B /* CloudFilesManager.swift */; };
+		79386DEB27A0529100B98E02 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 79386DEA27A0529100B98E02 /* FirebaseAnalytics */; };
+		79386DED27A0529100B98E02 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 79386DEC27A0529100B98E02 /* FirebaseCrashlytics */; };
+		79386DF027A1850B00B98E02 /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = 79386DEF27A1850B00B98E02 /* FacebookCore */; };
 		793ADF552754DFAE00F58923 /* UserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793ADF542754DFAE00F58923 /* UserSession.swift */; };
 		793ADF5D2754E36100F58923 /* HomeScreenMenuCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793ADF592754E36100F58923 /* HomeScreenMenuCoordinator.swift */; };
 		793ADF5E2754E36100F58923 /* HomeScreenMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793ADF5A2754E36100F58923 /* HomeScreenMenuViewController.swift */; };
@@ -98,6 +101,8 @@
 		79BF3853277F23FF00BB3D54 /* printer.json in Resources */ = {isa = PBXBuildFile; fileRef = 79BF3850277F23FF00BB3D54 /* printer.json */; };
 		79C362B0276CAB58001B1745 /* SharedActivityResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C362AF276CAB57001B1745 /* SharedActivityResults.swift */; };
 		79C7B2DF2772186A0058C759 /* CirclesActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C7B2DE2772186A0058C759 /* CirclesActivityIndicator.swift */; };
+		79CD4C7727A1A38100FD7F4E /* AnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CD4C7527A1A38100FD7F4E /* AnalyticsService.swift */; };
+		79CD4C7A27A1CAD600FD7F4E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 79CD4C7927A1CAD600FD7F4E /* GoogleService-Info.plist */; };
 		79D102A227717C9A00F3C4D5 /* SubscriptionPlanPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79D102A127717C9A00F3C4D5 /* SubscriptionPlanPopup.xib */; };
 		79D102A527717CC500F3C4D5 /* SubscriptionPlanPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D102A427717CC500F3C4D5 /* SubscriptionPlanPopup.swift */; };
 		79D1AA7827740A2F00733F20 /* TapAnimatedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D1AA7727740A2F00733F20 /* TapAnimatedButton.swift */; };
@@ -239,6 +244,8 @@
 		79BF3850277F23FF00BB3D54 /* printer.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = printer.json; sourceTree = "<group>"; };
 		79C362AF276CAB57001B1745 /* SharedActivityResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedActivityResults.swift; sourceTree = "<group>"; };
 		79C7B2DE2772186A0058C759 /* CirclesActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CirclesActivityIndicator.swift; sourceTree = "<group>"; };
+		79CD4C7527A1A38100FD7F4E /* AnalyticsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
+		79CD4C7927A1CAD600FD7F4E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		79D102A127717C9A00F3C4D5 /* SubscriptionPlanPopup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubscriptionPlanPopup.xib; sourceTree = "<group>"; };
 		79D102A427717CC500F3C4D5 /* SubscriptionPlanPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPlanPopup.swift; sourceTree = "<group>"; };
 		79D1AA7727740A2F00733F20 /* TapAnimatedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapAnimatedButton.swift; sourceTree = "<group>"; };
@@ -268,7 +275,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				798874642770C9A10027C121 /* ApphudSDK in Frameworks */,
+				79386DF027A1850B00B98E02 /* FacebookCore in Frameworks */,
+				79386DED27A0529100B98E02 /* FirebaseCrashlytics in Frameworks */,
 				79BF3844277F0EA100BB3D54 /* Lottie in Frameworks */,
+				79386DEB27A0529100B98E02 /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -362,6 +372,7 @@
 		794F73DB2746B1F500B07410 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				79CD4C7527A1A38100FD7F4E /* AnalyticsService.swift */,
 				7988745F2770C07F0027C121 /* Purchase */,
 				79F80FBB2752A93C00081C7A /* ServicesContainer.swift */,
 				793ADF542754DFAE00F58923 /* UserSession.swift */,
@@ -615,6 +626,7 @@
 		79F913A72746501500771FFE = {
 			isa = PBXGroup;
 			children = (
+				79CD4C7927A1CAD600FD7F4E /* GoogleService-Info.plist */,
 				794B5716276C446F001A7FE6 /* AirPrint.entitlements */,
 				79F913C82746502300771FFE /* Application */,
 				79F913CD274652E200771FFE /* Source */,
@@ -723,6 +735,9 @@
 			packageProductDependencies = (
 				798874632770C9A10027C121 /* ApphudSDK */,
 				79BF3843277F0EA100BB3D54 /* Lottie */,
+				79386DEA27A0529100B98E02 /* FirebaseAnalytics */,
+				79386DEC27A0529100B98E02 /* FirebaseCrashlytics */,
+				79386DEF27A1850B00B98E02 /* FacebookCore */,
 			);
 			productName = Jiggle;
 			productReference = 79F913B02746501500771FFE /* AirPrint.app */;
@@ -758,6 +773,8 @@
 			packageReferences = (
 				798874622770C9A10027C121 /* XCRemoteSwiftPackageReference "ApphudSDK" */,
 				79BF3842277F0EA100BB3D54 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				79386DE927A0529100B98E02 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				79386DEE27A1850A00B98E02 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
 			);
 			productRefGroup = 79F913B12746501500771FFE /* Products */;
 			projectDirPath = "";
@@ -783,6 +800,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				79BF3853277F23FF00BB3D54 /* printer.json in Resources */,
+				79CD4C7A27A1CAD600FD7F4E /* GoogleService-Info.plist in Resources */,
 				7997DE372753F82A00B33300 /* Poppins-Medium.otf in Resources */,
 				79B787CE2750B250009D7655 /* PrintingOptionsViewController.xib in Resources */,
 				7997DE362753F82A00B33300 /* Poppins-Light.otf in Resources */,
@@ -835,6 +853,7 @@
 				79C362B0276CAB58001B1745 /* SharedActivityResults.swift in Sources */,
 				792D661827553D6D00063F4B /* CloudFilesManager.swift in Sources */,
 				79194A6E275BD568003E2539 /* PDFEditManager.swift in Sources */,
+				79CD4C7727A1A38100FD7F4E /* AnalyticsService.swift in Sources */,
 				79B787CC2750B250009D7655 /* PrintingOptionsViewController.swift in Sources */,
 				79B787B62750B1E4009D7655 /* OnboardingViewController.swift in Sources */,
 				794F73E92746B36900B07410 /* UIView+Extensions.swift in Sources */,
@@ -937,7 +956,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 21;
+				CURRENT_PROJECT_VERSION = 22;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = GU282P75T9;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -951,7 +970,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = surf.devip.print.share;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -967,7 +986,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 21;
+				CURRENT_PROJECT_VERSION = 22;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = GU282P75T9;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -981,7 +1000,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = surf.devip.print.share;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1116,7 +1135,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = AirPrint.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 21;
+				CURRENT_PROJECT_VERSION = 22;
 				DEVELOPMENT_TEAM = GU282P75T9;
 				INFOPLIST_FILE = "$(SRCROOT)/Application/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
@@ -1124,7 +1143,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = surf.devip.print;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/CarouselView/AirPrint-Bridging-Header.h";
@@ -1143,7 +1162,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = AirPrint.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 21;
+				CURRENT_PROJECT_VERSION = 22;
 				DEVELOPMENT_TEAM = GU282P75T9;
 				INFOPLIST_FILE = "$(SRCROOT)/Application/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
@@ -1151,7 +1170,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = surf.devip.print;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/CarouselView/AirPrint-Bridging-Header.h";
@@ -1193,6 +1212,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		79386DE927A0529100B98E02 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
+		79386DEE27A1850A00B98E02 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/facebook/facebook-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
 		798874622770C9A10027C121 /* XCRemoteSwiftPackageReference "ApphudSDK" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apphud/ApphudSDK";
@@ -1212,6 +1247,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		79386DEA27A0529100B98E02 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 79386DE927A0529100B98E02 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		79386DEC27A0529100B98E02 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 79386DE927A0529100B98E02 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		79386DEF27A1850B00B98E02 /* FacebookCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 79386DEE27A1850A00B98E02 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookCore;
+		};
 		798874632770C9A10027C121 /* ApphudSDK */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 798874622770C9A10027C121 /* XCRemoteSwiftPackageReference "ApphudSDK" */;

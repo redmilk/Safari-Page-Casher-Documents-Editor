@@ -18,6 +18,16 @@ final class ServicesContainer {
 
 // MARK: - add specific service dependency to object
 
+
+protocol AnalyticServiceProvider {
+    var analytics: AnalyticsService { get }
+}
+extension AnalyticServiceProvider {
+    var analytics: AnalyticsService {
+        return (UIApplication.shared.delegate as! AppDelegate).analytics
+    }
+}
+
 /// Purchase Service
 protocol PurchesServiceProvidable { }
 extension PurchesServiceProvidable {

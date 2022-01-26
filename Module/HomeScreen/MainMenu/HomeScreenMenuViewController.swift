@@ -15,7 +15,8 @@ import Combine
 final class HomeScreenMenuViewController: UIViewController,
                                             ActivityIndicatorPresentable,
                                             SubscriptionsMultiPopupProvidable,
-                                            AlertPresentable {
+                                            AlertPresentable,
+                                            AnalyticServiceProvider {
     enum State {
         case showSubscriptionPopup(withContent: (UIImage, UIImage, String, String))
         case hideSubscriptionPopup
@@ -67,6 +68,7 @@ final class HomeScreenMenuViewController: UIViewController,
     override func viewDidAppear(_ animated: Bool) {
         firstBlurredShadowView.animationDuration = 2000
         firstBlurredShadowView.setup()
+        analytics.eventVisitScreen(screen: "home_menu_screen")
     }
 }
 
@@ -114,12 +116,15 @@ private extension HomeScreenMenuViewController {
             }
         }).store(in: &bag)
         scanDocumentButton.publisher().sink(receiveValue: { [weak self] _ in
+            self?.analytics.eventMenuOptionPressed(option: "scan")
             self?.viewModel.input.send(.scanAction)
         }).store(in: &bag)
         printPhotoButton.publisher().sink(receiveValue: { [weak self] _ in
+            self?.analytics.eventMenuOptionPressed(option: "photo")
             self?.viewModel.input.send(.printPhoto)
         }).store(in: &bag)
         printDocumentButton.publisher().sink(receiveValue: { [weak self] _ in
+            self?.analytics.eventMenuOptionPressed(option: "document")
             self?.viewModel.input.send(.printDocument)
         }).store(in: &bag)
         cancelButton.publisher().sink(receiveValue: { [weak self] _ in
@@ -128,9 +133,11 @@ private extension HomeScreenMenuViewController {
             self.viewModel.input.send(.closeAction)
         }).store(in: &bag)
         printWebPage.publisher().sink(receiveValue: { [weak self] _ in
+            self?.analytics.eventMenuOptionPressed(option: "webpage")
             self?.viewModel.input.send(.printWebPage)
         }).store(in: &bag)
         printFromClipboard.publisher().sink(receiveValue: { [weak self] _ in
+            self?.analytics.eventMenuOptionPressed(option: "clipboard")
             self?.viewModel.input.send(.printFromClipboard)
         }).store(in: &bag)
         subscriptionCloseButton.publisher().sink(receiveValue: { [weak self] _ in

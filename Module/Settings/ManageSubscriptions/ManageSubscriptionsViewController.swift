@@ -20,7 +20,8 @@ final class ManageSubscriptionsViewController: UIViewController,
                                                UIGestureRecognizerDelegate,
                                                SubscriptionsMultiPopupProvidable,
                                                AlertPresentable,
-                                               PurchesServiceProvidable {
+                                               PurchesServiceProvidable,
+                                               AnalyticServiceProvider {
     
     enum State {
         case currentSubscriptionPlan(Purchase)
@@ -66,6 +67,7 @@ final class ManageSubscriptionsViewController: UIViewController,
         super.viewWillAppear(animated)
         viewModel.input.send(.checkCurrentSubscriptionPlan)
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        analytics.eventVisitScreen(screen: "manage_subscriptions")
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -139,14 +141,17 @@ private extension ManageSubscriptionsViewController {
         
         weekPlanButton.publisher().receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] button in
+                self?.analytics.eventPurchaseDidPressed(plan: "weekly")
                 self?.viewModel.input.send(.subscription(.weekly))
         }).store(in: &bag)
         monthlyPlanButton.publisher().receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] button in
+                self?.analytics.eventPurchaseDidPressed(plan: "monthly")
                 self?.viewModel.input.send(.subscription(.monthly))
         }).store(in: &bag)
         yearPlanButton.publisher().receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
+                self?.analytics.eventPurchaseDidPressed(plan: "annual")
                 self?.viewModel.input.send(.subscription(.annual))
         }).store(in: &bag)
         howTrialWorksButton.publisher()

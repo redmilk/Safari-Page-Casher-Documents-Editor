@@ -18,7 +18,8 @@ fileprivate let kDialogLabelMultipleItems: String = "Are you sure you want to de
 final class HomeScreenViewController: UIViewController,
                                       ActivityIndicatorPresentable,
                                       AlertPresentable,
-                                      SubscriptionsMultiPopupProvidable {
+                                      SubscriptionsMultiPopupProvidable,
+                                      AnalyticServiceProvider {
     
     enum State {
         case allCurrentData([PrintableDataBox])
@@ -119,6 +120,9 @@ final class HomeScreenViewController: UIViewController,
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        analytics.eventSetUserId()
+        analytics.eventVisitApp()
+        
         handleStates()
         applyStyling()
         collectionManager.input.send(.configure)
@@ -131,6 +135,7 @@ final class HomeScreenViewController: UIViewController,
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        analytics.eventVisitScreen(screen: "home_screen")
         viewModel.input.send(.viewDidAppear)
         addDashedLineAnimation()
     }
@@ -214,7 +219,7 @@ private extension HomeScreenViewController {
             })
         }).store(in: &bag)
         
-        settingsButton.publisher().print("SETTINGS").sink(receiveValue: { [weak self] _ in
+        settingsButton.publisher().sink(receiveValue: { [weak self] _ in
             self?.viewModel.input.send(.didTapSettings)
         }).store(in: &bag)
         

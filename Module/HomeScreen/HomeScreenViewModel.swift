@@ -16,7 +16,8 @@ final class HomeScreenViewModel: UserSessionServiceProvidable,
                                  PdfServiceProvidable,
                                  SharedActivityResultsProvidable,
                                  PurchesServiceProvidable,
-                                 SubscriptionsMultiPopupProvidable {
+                                 SubscriptionsMultiPopupProvidable,
+                                 AnalyticServiceProvider {
     enum Action {
         case didPressCell(dataBox: PrintableDataBox)
         case openMenu
@@ -131,6 +132,8 @@ private extension HomeScreenViewModel {
             case .didPressCell(let dataBox):
                 self?.openFileEditorWithData(dataBox)
             case .didTapPrint:
+                guard let itemsTotal = self?.userSession.itemsTotal else { return }
+                self?.analytics.eventPrintItemsTotal(count: itemsTotal)
                 self?.coordinator.displayPrintSettings(didPresentCallback: { [weak self] in
                     self?.output.send(.loadingState(false))
                 })

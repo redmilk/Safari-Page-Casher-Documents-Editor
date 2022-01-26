@@ -31,12 +31,15 @@ final class PrintingOptionsManager: NSObject {
         printController.showsNumberOfCopies = true
         printController.showsPaperSelectionForLoadedPapers = true
         printController.printingItem = pdfData
-        printController.present(animated: false, completionHandler: nil)
+        printController.present(animated: false, completionHandler: { _, isPrinted, error in
+            if isPrinted {
+                NotificationCenter.default.post(name: Notification.Name.printingJobDone, object: nil)
+            }
+        })
     }
 }
 
 extension PrintingOptionsManager: UIPrintInteractionControllerDelegate {
-    
     func printInteractionControllerDidPresentPrinterOptions(_ printInteractionController: UIPrintInteractionController) {
         didPresentCallback?()
     }
@@ -47,6 +50,5 @@ extension PrintingOptionsManager: UIPrintInteractionControllerDelegate {
         finishCallback()
     }
     func printInteractionControllerDidFinishJob(_ printInteractionController: UIPrintInteractionController) {
-        NotificationCenter.default.post(name: Notification.Name.printingJobDone, object: nil)
     }
 }

@@ -8,7 +8,10 @@
 import Foundation
 import QuickLook
 
-class PreviewController: QLPreviewController, PdfServiceProvidable, UserSessionServiceProvidable {
+final class PreviewController: QLPreviewController,
+                         PdfServiceProvidable,
+                         UserSessionServiceProvidable,
+                         AnalyticServiceProvider {
     
     var fileURL: URL!
     var toolbars: [UIView] = []
@@ -72,6 +75,7 @@ class PreviewController: QLPreviewController, PdfServiceProvidable, UserSessionS
             editedPDF, withImageSize: oldDataBox.image?.size ?? UIScreen.main.bounds.size, ofPageIndex: 0) {
             let newDataBox = PrintableDataBox(id: oldDataBox.id, image: updatedThumbnail, document: editedPDF)
             userSession.input.send(.updateEditedFilesData(newDataBox: newDataBox, oldDataBox: oldDataBox))
+            analytics.eventFileEditDidFinished()
         }
     }
 }

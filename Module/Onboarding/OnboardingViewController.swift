@@ -26,7 +26,7 @@ struct OnboardingPageModel {
     let closeButtonAction: VoidClosure?
 }
 
-final class OnboardingViewController: UIViewController {
+final class OnboardingViewController: UIViewController, AnalyticServiceProvider {
     @IBOutlet weak var printerAnim: AnimationView!
     @IBOutlet weak var scanerAnim: AnimationView!
     @IBOutlet weak var signatureAnim: AnimationView!
@@ -76,6 +76,7 @@ final class OnboardingViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         changeAnimation()
+        analytics.eventVisitScreen(screen: "onboarding")
     }
     
     private func changeAnimation() {
