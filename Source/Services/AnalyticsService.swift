@@ -24,7 +24,7 @@ final class AnalyticsService: NSObject {
     }
     
     private func trackCommonEvent(_ event: String, params: [String : Any]? = nil) {
-        params == nil ? AppEvents.logEvent(AppEvents.Name(event)) : AppEvents.logEvent(AppEvents.Name(event), parameters: params!)
+        //params == nil ? AppEvents.logEvent(AppEvents.Name(event)) : AppEvents.logEvent(AppEvents.Name(event), parameters: params!)
         Analytics.logEvent(event, parameters: params)
     }
 }

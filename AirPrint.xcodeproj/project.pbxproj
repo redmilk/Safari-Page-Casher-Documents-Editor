@@ -27,7 +27,6 @@
 		792D661827553D6D00063F4B /* CloudFilesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792D661727553D6D00063F4B /* CloudFilesManager.swift */; };
 		79386DEB27A0529100B98E02 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 79386DEA27A0529100B98E02 /* FirebaseAnalytics */; };
 		79386DED27A0529100B98E02 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 79386DEC27A0529100B98E02 /* FirebaseCrashlytics */; };
-		79386DF027A1850B00B98E02 /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = 79386DEF27A1850B00B98E02 /* FacebookCore */; };
 		793ADF552754DFAE00F58923 /* UserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793ADF542754DFAE00F58923 /* UserSession.swift */; };
 		793ADF5D2754E36100F58923 /* HomeScreenMenuCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793ADF592754E36100F58923 /* HomeScreenMenuCoordinator.swift */; };
 		793ADF5E2754E36100F58923 /* HomeScreenMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793ADF5A2754E36100F58923 /* HomeScreenMenuViewController.swift */; };
@@ -103,6 +102,7 @@
 		79C7B2DF2772186A0058C759 /* CirclesActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C7B2DE2772186A0058C759 /* CirclesActivityIndicator.swift */; };
 		79CD4C7727A1A38100FD7F4E /* AnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CD4C7527A1A38100FD7F4E /* AnalyticsService.swift */; };
 		79CD4C7A27A1CAD600FD7F4E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 79CD4C7927A1CAD600FD7F4E /* GoogleService-Info.plist */; };
+		79CD4C7D27A2D78500FD7F4E /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = 79CD4C7C27A2D78500FD7F4E /* FacebookCore */; };
 		79D102A227717C9A00F3C4D5 /* SubscriptionPlanPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79D102A127717C9A00F3C4D5 /* SubscriptionPlanPopup.xib */; };
 		79D102A527717CC500F3C4D5 /* SubscriptionPlanPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D102A427717CC500F3C4D5 /* SubscriptionPlanPopup.swift */; };
 		79D1AA7827740A2F00733F20 /* TapAnimatedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D1AA7727740A2F00733F20 /* TapAnimatedButton.swift */; };
@@ -275,7 +275,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				798874642770C9A10027C121 /* ApphudSDK in Frameworks */,
-				79386DF027A1850B00B98E02 /* FacebookCore in Frameworks */,
+				79CD4C7D27A2D78500FD7F4E /* FacebookCore in Frameworks */,
 				79386DED27A0529100B98E02 /* FirebaseCrashlytics in Frameworks */,
 				79BF3844277F0EA100BB3D54 /* Lottie in Frameworks */,
 				79386DEB27A0529100B98E02 /* FirebaseAnalytics in Frameworks */,
@@ -737,7 +737,7 @@
 				79BF3843277F0EA100BB3D54 /* Lottie */,
 				79386DEA27A0529100B98E02 /* FirebaseAnalytics */,
 				79386DEC27A0529100B98E02 /* FirebaseCrashlytics */,
-				79386DEF27A1850B00B98E02 /* FacebookCore */,
+				79CD4C7C27A2D78500FD7F4E /* FacebookCore */,
 			);
 			productName = Jiggle;
 			productReference = 79F913B02746501500771FFE /* AirPrint.app */;
@@ -774,7 +774,7 @@
 				798874622770C9A10027C121 /* XCRemoteSwiftPackageReference "ApphudSDK" */,
 				79BF3842277F0EA100BB3D54 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				79386DE927A0529100B98E02 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				79386DEE27A1850A00B98E02 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
+				79CD4C7B27A2D78500FD7F4E /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
 			);
 			productRefGroup = 79F913B12746501500771FFE /* Products */;
 			projectDirPath = "";
@@ -1220,14 +1220,6 @@
 				minimumVersion = 8.0.0;
 			};
 		};
-		79386DEE27A1850A00B98E02 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/facebook/facebook-ios-sdk";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 9.0.0;
-			};
-		};
 		798874622770C9A10027C121 /* XCRemoteSwiftPackageReference "ApphudSDK" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apphud/ApphudSDK";
@@ -1244,6 +1236,14 @@
 				minimumVersion = 3.0.0;
 			};
 		};
+		79CD4C7B27A2D78500FD7F4E /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/facebook/facebook-ios-sdk";
+			requirement = {
+				kind = exactVersion;
+				version = 12.3.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1257,11 +1257,6 @@
 			package = 79386DE927A0529100B98E02 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCrashlytics;
 		};
-		79386DEF27A1850B00B98E02 /* FacebookCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 79386DEE27A1850A00B98E02 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
-			productName = FacebookCore;
-		};
 		798874632770C9A10027C121 /* ApphudSDK */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 798874622770C9A10027C121 /* XCRemoteSwiftPackageReference "ApphudSDK" */;
@@ -1271,6 +1266,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 79BF3842277F0EA100BB3D54 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		};
+		79CD4C7C27A2D78500FD7F4E /* FacebookCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 79CD4C7B27A2D78500FD7F4E /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookCore;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

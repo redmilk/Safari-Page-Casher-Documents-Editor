@@ -8,8 +8,12 @@
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string></string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleGetInfoString</key>
+	<string></string>
 	<key>CFBundleIconName</key>
 	<string>AppIcon</string>
 	<key>CFBundleIdentifier</key>
@@ -33,18 +37,10 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
-    <key>UIUserInterfaceStyle</key>
-    <string>Dark</string>
-	<key>CFBundleDisplayName</key>
-	<string></string>
-	<key>CFBundleGetInfoString</key>
-	<string></string>
 	<key>FacebookAppID</key>
 	<string>surf.devip.print</string>
 	<key>FacebookClientToken</key>
 	<string>1289344748202821</string>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
 	<key>FacebookDisplayName</key>
 	<string>AirPrint</string>
 	<key>LSApplicationCategoryType</key>
@@ -106,5 +102,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UIUserInterfaceStyle</key>
+	<string>Dark</string>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
 </dict>
 </plist>

@@ -20,9 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ApplicationGlobalConfig().configure()
         Apphud.start(apiKey: "app_EaKCtoJCJkjJV73Dc7XA2L2ikP7KST")
         
-        FBSDKCoreKit.Settings.isAutoLogAppEventsEnabled = false
-        FBSDKCoreKit.Settings.isAdvertiserIDCollectionEnabled = true
-        FBSDKCoreKit.AppEvents.activateApp()
+        //FBSDKCoreKit.Settings.isAutoLogAppEventsEnabled = false
+        Settings.shared.isAdvertiserIDCollectionEnabled = true
+        FBSDKCoreKit.AppEvents.shared.activateApp()
         
         analytics = AnalyticsService(application, launchOptions)
 
