@@ -9,6 +9,19 @@ import Foundation
 
 public extension UIDevice {
     
+//    static var hasTopNotch: Bool {
+//        UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0 > 20
+//    }
+    
+    static var hasNotch: Bool {
+        guard #available(iOS 11.0, *), let window = UIApplication.shared.windows.filter({$0.isKeyWindow}).first else { return false }
+        if UIDevice.current.orientation.isPortrait {
+            return window.safeAreaInsets.top >= 44
+        } else {
+            return window.safeAreaInsets.left > 0 || window.safeAreaInsets.right > 0
+        }
+    }
+    
     var modelName: String {
         var systemInfo = utsname()
         uname(&systemInfo)

@@ -89,6 +89,7 @@ final class HomeScreenViewController: UIViewController,
     @IBOutlet private weak var dialogCancelButton: TapAnimatedButton!
     @IBOutlet private weak var dialogLabel: UILabel!
     
+    @IBOutlet weak var bottomConstraintHeight: NSLayoutConstraint!
     @IBOutlet weak var howTrialWorksButton: TapAnimatedButton!
     @IBOutlet weak var otherPlansButton: TapAnimatedButton!
     
@@ -128,6 +129,7 @@ final class HomeScreenViewController: UIViewController,
         collectionManager.input.send(.configure)
         viewModel.configureViewModel()
         configureView()
+        bottomConstraintHeight.constant = UIDevice.hasNotch ? 80 : 70
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

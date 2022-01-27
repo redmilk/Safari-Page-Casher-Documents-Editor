@@ -45,7 +45,8 @@ final class HomeScreenMenuViewController: UIViewController,
     @IBOutlet weak var restoreSubscriptionButton: UIButton!
     @IBOutlet weak var plansButton: UIButton!
     @IBOutlet weak var howTrialWorksButton: UIButton!
-
+    @IBOutlet weak var subscriptionBottomSpace: NSLayoutConstraint!
+    
     private let viewModel: HomeScreenMenuViewModel
     private var bag = Set<AnyCancellable>()
     private var purchaseConntinueAnimationsCancelable: AnyCancellable?
@@ -64,6 +65,7 @@ final class HomeScreenMenuViewController: UIViewController,
         super.viewDidLoad()
         configureView()
         applyStyling()
+        subscriptionBottomSpace.constant = UIDevice.hasNotch ? 30 : 20
     }
     override func viewDidAppear(_ animated: Bool) {
         firstBlurredShadowView.animationDuration = 2000
