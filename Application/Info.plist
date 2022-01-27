@@ -33,10 +33,18 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+    <key>UIUserInterfaceStyle</key>
+    <string>Dark</string>
+	<key>CFBundleDisplayName</key>
+	<string></string>
+	<key>CFBundleGetInfoString</key>
+	<string></string>
 	<key>FacebookAppID</key>
 	<string>surf.devip.print</string>
 	<key>FacebookClientToken</key>
 	<string>1289344748202821</string>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
 	<key>FacebookDisplayName</key>
 	<string>AirPrint</string>
 	<key>LSApplicationCategoryType</key>
