@@ -9,9 +9,13 @@ import Foundation
 
 public extension UIDevice {
     
-//    static var hasTopNotch: Bool {
-//        UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0 > 20
-//    }
+    static func gotoAppSettings() {
+        guard let url = URL(string: UIApplication.openSettingsURLString),
+            UIApplication.shared.canOpenURL(url) else {
+                return
+        }
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
     
     static var hasNotch: Bool {
         guard #available(iOS 11.0, *), let window = UIApplication.shared.windows.filter({$0.isKeyWindow}).first else { return false }

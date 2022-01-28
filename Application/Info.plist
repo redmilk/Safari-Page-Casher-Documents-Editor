@@ -58,6 +58,8 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>Please provide camera access to permit documents scan</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>This lets us connect to Facebook and improves our marketing. We will never show any ads inside of AirPrint.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Poppins-Regular.otf</string>

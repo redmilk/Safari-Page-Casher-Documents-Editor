@@ -9,6 +9,9 @@
 
 import UIKit
 import Combine
+import AppTrackingTransparency
+import AdSupport
+
 
 fileprivate let multiSubscriptionPopupViewTag: Int = 123
 fileprivate let kDialogLabelSingleItem: String = "Are you sure you want to delete this item?"
@@ -146,6 +149,26 @@ final class HomeScreenViewController: UIViewController,
         navigationController?.setNavigationBarHidden(false, animated: animated)
         viewModel.input.send(.viewDisapear)
     }
+    
+    private func requestPermission() {
+        if #available(iOS 14, *) {
+            ATTrackingManager.requestTrackingAuthorization { status in
+                switch status {
+                case .authorized:
+                    print("Authorized")
+                    print(ASIdentifierManager.shared().advertisingIdentifier)
+                case .denied:
+                    print("Denied")
+                case .notDetermined:
+                    print("Not Determined")
+                case .restricted:
+                    print("Restricted")
+                @unknown default:
+                    print("Unknown")
+                }
+            }
+        }
+    }
 }
 
 // MARK: - Internal
@@ -211,6 +234,7 @@ private extension HomeScreenViewController {
     func configureView() {
         Publishers.Merge(plusButton.publisher(), plusButtonSmall.publisher())
             .sink(receiveValue: { [weak self] _ in
+                self?.requestPermission()
                 self?.viewModel.input.send(.openMenu)
             }).store(in: &bag)
         
