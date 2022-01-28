@@ -9,7 +9,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string></string>
+	<string>iPrint</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleGetInfoString</key>
@@ -42,7 +42,7 @@
 	<key>FacebookClientToken</key>
 	<string>1289344748202821</string>
 	<key>FacebookDisplayName</key>
-	<string>AirPrint</string>
+	<string>iPrint</string>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>LSApplicationQueriesSchemes</key>
@@ -59,7 +59,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Please provide camera access to permit documents scan</string>
 	<key>NSUserTrackingUsageDescription</key>
-	<string>This lets us connect to Facebook and improves our marketing. We will never show any ads inside of AirPrint.</string>
+	<string>This lets us connect to Facebook and improves our marketing. We will never show any ads inside of iPrint.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Poppins-Regular.otf</string>
