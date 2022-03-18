@@ -47,7 +47,7 @@ final class HomeScreenMenuViewModel: PurchesServiceProvidable, SubscriptionsMult
          UIImage(named: "button-yellow-blank")!,
          "Select documents from", "your iCloud"),
         
-        (UIImage(named: "menu-subscription-webpage")!,
+        (UIImage(named: "menu-subscription-webprint")!,
          UIImage(named: "button-red-blank")!,
          "Ability to quickly print", "web page"),
         

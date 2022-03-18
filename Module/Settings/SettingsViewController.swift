@@ -28,6 +28,8 @@ final class SettingsViewController: UIViewController,
     @IBOutlet private weak var termsOfUseButton: UIButton!
     @IBOutlet private weak var shareButton: UIButton!
 
+    @IBOutlet weak var navigationBarExtenderHeight: NSLayoutConstraint!
+    
     private let viewModel: SettingsViewModel
     private var bag = Set<AnyCancellable>()
     
@@ -45,6 +47,9 @@ final class SettingsViewController: UIViewController,
         super.viewDidLoad()
         configureView()
         handleStates()
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            navigationBarExtenderHeight.isActive = false
+        }
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

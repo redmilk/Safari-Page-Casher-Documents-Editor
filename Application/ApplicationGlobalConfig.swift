@@ -12,9 +12,5 @@ struct ApplicationGlobalConfig {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
         UINavigationBar.appearance().isTranslucent = true
-        
-//        UIToolbar.appearance().setBackgroundImage(UIImage(), forToolbarPosition: .any, barMetrics: .default)
-//        UIToolbar.appearance().setShadowImage(UIImage(), forToolbarPosition: .any)
-//        UIToolbar.appearance().isTranslucent = true
     }
 }

@@ -96,6 +96,10 @@ final class HomeScreenViewController: UIViewController,
     @IBOutlet weak var howTrialWorksButton: TapAnimatedButton!
     @IBOutlet weak var otherPlansButton: TapAnimatedButton!
     
+    // Autolayout for phone / tablet
+    @IBOutlet weak var navigationBarExtenderHeight: NSLayoutConstraint! // p 0.11
+    @IBOutlet weak var emptyStateImageHeight: NSLayoutConstraint! // p 0.389
+    
     private lazy var collectionManager = HomeCollectionManager(collectionView: collectionView)
     private let viewModel: HomeScreenViewModel
     private var bag = Set<AnyCancellable>()
@@ -133,10 +137,17 @@ final class HomeScreenViewController: UIViewController,
         viewModel.configureViewModel()
         configureView()
         bottomConstraintHeight.constant = UIDevice.hasNotch ? 80 : 70
+        // adopt layout for device type
+        // replace high priority constraints
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            navigationBarExtenderHeight.isActive = false
+            emptyStateImageHeight.isActive = false
+        }
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
+       
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)

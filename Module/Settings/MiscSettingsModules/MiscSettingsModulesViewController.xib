@@ -11,6 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MiscSettingsModulesViewController" customModule="AirPrint" customModuleProvider="target">
             <connections>
                 <outlet property="navigationBarExtender" destination="0uq-F9-NoD" id="H36-BZ-avW"/>
+                <outlet property="navigationBarExtenderHeight" destination="IQ6-n9-7Py" id="p18-LN-Ism"/>
                 <outlet property="privacyPolicyContainer" destination="VrR-TX-bSn" id="R8M-Cm-B8r"/>
                 <outlet property="view" destination="iN0-l3-epB" id="2LZ-sc-BwG"/>
                 <outlet property="webView" destination="gl3-ge-6td" id="dhs-eU-nzC"/>
@@ -56,6 +57,7 @@
                         <constraint firstItem="0uq-F9-NoD" firstAttribute="height" secondItem="fO0-zK-fYC" secondAttribute="height" multiplier="0.11" id="IQ6-n9-7Py"/>
                         <constraint firstAttribute="trailing" secondItem="VrR-TX-bSn" secondAttribute="trailing" id="Ijw-qU-pjT"/>
                         <constraint firstItem="0uq-F9-NoD" firstAttribute="leading" secondItem="fO0-zK-fYC" secondAttribute="leading" id="Nf0-pQ-EbU"/>
+                        <constraint firstItem="0uq-F9-NoD" firstAttribute="height" secondItem="fO0-zK-fYC" secondAttribute="height" multiplier="0.07" priority="750" id="Nfk-xL-gve"/>
                         <constraint firstAttribute="trailing" secondItem="0uq-F9-NoD" secondAttribute="trailing" id="eTc-4D-GJa"/>
                         <constraint firstItem="0uq-F9-NoD" firstAttribute="top" secondItem="fO0-zK-fYC" secondAttribute="top" id="qup-Oi-JGu"/>
                         <constraint firstAttribute="bottom" secondItem="VrR-TX-bSn" secondAttribute="bottom" id="umC-d9-wvq"/>

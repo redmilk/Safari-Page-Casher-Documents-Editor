@@ -23,6 +23,7 @@ final class MiscSettingsModulesViewController: UIViewController, UIGestureRecogn
     @IBOutlet weak var privacyPolicyContainer: UIView!
     @IBOutlet weak var webView: WKWebView!
 
+    @IBOutlet weak var navigationBarExtenderHeight: NSLayoutConstraint!
     private let viewModel: MiscSettingsModulesViewModel
     private var bag = Set<AnyCancellable>()
     
@@ -42,6 +43,9 @@ final class MiscSettingsModulesViewController: UIViewController, UIGestureRecogn
         handleActions()
         configureView()
         viewModel.input.send(.requestState)
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            navigationBarExtenderHeight.isActive = false
+        }
     }
 }
 

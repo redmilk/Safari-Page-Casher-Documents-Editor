@@ -43,6 +43,7 @@ final class ManageSubscriptionsViewController: UIViewController,
     @IBOutlet weak var yearPlanButton: UIButton!
     @IBOutlet weak var howTrialWorksButton: UIButton!
     
+    @IBOutlet weak var navigationBarExtenderHeight: NSLayoutConstraint!
     private var backButton: UIBarButtonItem!
     private let viewModel: ManageSubscriptionsViewModel
     private var bag = Set<AnyCancellable>()
@@ -62,6 +63,9 @@ final class ManageSubscriptionsViewController: UIViewController,
         configureView()
         handleStates()
         viewModel.input.send(.viewDidLoad)
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            navigationBarExtenderHeight.isActive = false
+        }
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
