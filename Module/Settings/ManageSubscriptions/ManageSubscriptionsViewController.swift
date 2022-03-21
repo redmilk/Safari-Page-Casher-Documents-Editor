@@ -106,9 +106,11 @@ private extension ManageSubscriptionsViewController {
                 self.weeklyPriceLabel.text = weekly
                 self.monthlyPriceLabel.text =  monthly
                 self.yearlyPriceDescriptionLabel.text = "Yearly Plan"
-                if let yearlyStriked = self.purchases.getFormattedYearPriceForPurchase(isPurePrice: true, size: 13) {
-                    let yearlyPrice = String.makeAttriabutedStringNoFormatting(yearly, size: 12)
-                    let separator = String.makeAttriabutedStringNoFormatting(" / ", size: 12)
+                let strikedSize: CGFloat = UIDevice.current.userInterfaceIdiom == .pad ? 18 : 13
+                let fontSize: CGFloat = UIDevice.current.userInterfaceIdiom == .pad ? 17 : 12
+                if let yearlyStriked = self.purchases.getFormattedYearPriceForPurchase(isPurePrice: true, size: strikedSize) {
+                    let yearlyPrice = String.makeAttriabutedStringNoFormatting(yearly, size: fontSize)
+                    let separator = String.makeAttriabutedStringNoFormatting(" / ", size: fontSize)
                     yearlyStriked.append(separator)
                     yearlyStriked.append(yearlyPrice)
                     self.yearlyPriceLabel.attributedText = yearlyStriked

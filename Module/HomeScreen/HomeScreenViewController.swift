@@ -538,7 +538,10 @@ private extension HomeScreenViewController {
         giftContentView.addCornerRadius(28)
         subscriptionMenuContainer.addCornerRadius(30)
         subscriptionMenuContainer.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-        subscriptionDiscountLabel.attributedText = String.makeStrikeThroughText("89.99")
+        
+        let fontSize: CGFloat = UIDevice.current.userInterfaceIdiom == .pad ? 18 : 12
+
+        subscriptionDiscountLabel.attributedText = String.makeStrikeThroughText("89.99", size: fontSize)
         subscriptionMenuContainer.dropShadow(color: .black, opacity: 0.3, offSet: .zero, radius: 30, scale: true)
         dialogButtonsContainer.dropShadow(color: .black, opacity: 0.3, offSet: .zero, radius: 30, scale: true)
         giftTimerContainer.addGradientBorder(to: giftTimerContainer, radius: 16, width: 2, colors: [UIColor(hex: 0x04FFF0), UIColor(hex: 0x0487FF), UIColor(hex: 0x9948FF)])
