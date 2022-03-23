@@ -20,6 +20,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SubscriptionPlanPopup" customModule="AirPrint" customModuleProvider="target">
             <connections>
+                <outlet property="advantagesContainerBottom" destination="Iwj-gp-4jE" id="5Ug-O7-bTd"/>
+                <outlet property="advantagesContainerTop" destination="wX8-dn-8rS" id="h2d-jI-scw"/>
                 <outlet property="blurViewStatic" destination="cEj-I9-lvi" id="O9Y-jR-Fd6"/>
                 <outlet property="closeButton" destination="p4d-dK-nEi" id="sch-VB-i4D"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="nQS-6P-geZ"/>
@@ -74,138 +76,6 @@
                                 <constraint firstAttribute="width" constant="250" id="3D0-nK-yJi"/>
                             </constraints>
                         </view>
-                        <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="f90-Vf-LeP">
-                            <rect key="frame" x="20" y="129.5" width="374" height="336.5"/>
-                            <subviews>
-                                <stackView opaque="NO" contentMode="left" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="yw9-bb-8B9">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="25"/>
-                                    <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="255" verticalHuggingPriority="251" image="icon-checkmark-subscription" translatesAutoresizingMaskIntoConstraints="NO" id="LuF-bN-kKA">
-                                            <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" secondItem="LuF-bN-kKA" secondAttribute="height" multiplier="1:1" id="3Xo-vq-P1e"/>
-                                            </constraints>
-                                        </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="760" text="Send unlimited documents for printing" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="none" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="vgk-uR-gHQ">
-                                            <rect key="frame" x="33" y="0.0" width="341" height="25"/>
-                                            <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="13"/>
-                                            <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <nil key="highlightedColor"/>
-                                            <variation key="heightClass=regular-widthClass=compact">
-                                                <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="13"/>
-                                            </variation>
-                                            <variation key="heightClass=regular-widthClass=regular">
-                                                <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="18"/>
-                                            </variation>
-                                        </label>
-                                    </subviews>
-                                </stackView>
-                                <stackView opaque="NO" contentMode="left" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="FDn-7U-ghR">
-                                    <rect key="frame" x="0.0" y="78" width="374" height="25"/>
-                                    <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="255" verticalHuggingPriority="251" image="icon-checkmark-subscription" translatesAutoresizingMaskIntoConstraints="NO" id="RNv-6K-clD">
-                                            <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" secondItem="RNv-6K-clD" secondAttribute="height" multiplier="1:1" id="TgU-5r-THl"/>
-                                            </constraints>
-                                        </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copy and paste text to print from clipboard" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="none" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="NHo-s6-Iqp">
-                                            <rect key="frame" x="33" y="0.0" width="341" height="25"/>
-                                            <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="13"/>
-                                            <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <nil key="highlightedColor"/>
-                                            <variation key="heightClass=regular-widthClass=compact">
-                                                <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="13"/>
-                                            </variation>
-                                            <variation key="heightClass=regular-widthClass=regular">
-                                                <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="18"/>
-                                            </variation>
-                                        </label>
-                                    </subviews>
-                                </stackView>
-                                <stackView opaque="NO" contentMode="left" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="tr4-6s-COK">
-                                    <rect key="frame" x="0.0" y="156" width="374" height="25"/>
-                                    <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="255" verticalHuggingPriority="251" image="icon-checkmark-subscription" translatesAutoresizingMaskIntoConstraints="NO" id="MtJ-u2-vFQ">
-                                            <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" secondItem="MtJ-u2-vFQ" secondAttribute="height" multiplier="1:1" id="Hwv-FN-sZi"/>
-                                            </constraints>
-                                        </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select photos in the gallery to send for printing" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="none" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="KfA-Vf-zuZ">
-                                            <rect key="frame" x="33" y="0.0" width="341" height="25"/>
-                                            <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="13"/>
-                                            <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <nil key="highlightedColor"/>
-                                            <variation key="heightClass=regular-widthClass=compact">
-                                                <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="13"/>
-                                            </variation>
-                                            <variation key="heightClass=regular-widthClass=regular">
-                                                <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="18"/>
-                                            </variation>
-                                        </label>
-                                    </subviews>
-                                </stackView>
-                                <stackView opaque="NO" contentMode="left" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="3TZ-BO-Wq5">
-                                    <rect key="frame" x="0.0" y="233.5" width="374" height="25"/>
-                                    <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="255" verticalHuggingPriority="251" image="icon-checkmark-subscription" translatesAutoresizingMaskIntoConstraints="NO" id="A7N-5H-LJ6">
-                                            <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" secondItem="A7N-5H-LJ6" secondAttribute="height" multiplier="1:1" id="8sQ-Vb-VPo"/>
-                                            </constraints>
-                                        </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose files to print from your iCloud " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="none" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Ljv-JK-kXB">
-                                            <rect key="frame" x="33" y="0.0" width="341" height="25"/>
-                                            <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="13"/>
-                                            <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <nil key="highlightedColor"/>
-                                            <variation key="heightClass=regular-widthClass=compact">
-                                                <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="13"/>
-                                            </variation>
-                                            <variation key="heightClass=regular-widthClass=regular">
-                                                <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="18"/>
-                                            </variation>
-                                        </label>
-                                    </subviews>
-                                </stackView>
-                                <stackView opaque="NO" contentMode="left" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Lb3-5e-DvZ">
-                                    <rect key="frame" x="0.0" y="311.5" width="374" height="25"/>
-                                    <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="255" verticalHuggingPriority="251" image="icon-checkmark-subscription" translatesAutoresizingMaskIntoConstraints="NO" id="J4T-DX-zUE">
-                                            <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" secondItem="J4T-DX-zUE" secondAttribute="height" multiplier="1:1" id="U3T-FB-EJP"/>
-                                            </constraints>
-                                        </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Input site URL to print webpage copy" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="none" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="MOx-zd-FUa">
-                                            <rect key="frame" x="33" y="0.0" width="341" height="25"/>
-                                            <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="13"/>
-                                            <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <nil key="highlightedColor"/>
-                                            <variation key="heightClass=regular-widthClass=compact">
-                                                <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="13"/>
-                                            </variation>
-                                            <variation key="heightClass=regular-widthClass=regular">
-                                                <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="18"/>
-                                            </variation>
-                                        </label>
-                                    </subviews>
-                                </stackView>
-                            </subviews>
-                            <constraints>
-                                <constraint firstItem="J4T-DX-zUE" firstAttribute="height" secondItem="f90-Vf-LeP" secondAttribute="height" multiplier="0.074331" id="865-Pi-LIM"/>
-                                <constraint firstItem="RNv-6K-clD" firstAttribute="height" secondItem="f90-Vf-LeP" secondAttribute="height" multiplier="0.074331" id="Se6-QA-EYF"/>
-                                <constraint firstItem="MtJ-u2-vFQ" firstAttribute="height" secondItem="f90-Vf-LeP" secondAttribute="height" multiplier="0.074331" id="ZXu-JV-p9W"/>
-                                <constraint firstItem="LuF-bN-kKA" firstAttribute="height" secondItem="f90-Vf-LeP" secondAttribute="height" multiplier="0.074331" id="lLG-Z0-ZIX"/>
-                                <constraint firstItem="A7N-5H-LJ6" firstAttribute="height" secondItem="f90-Vf-LeP" secondAttribute="height" multiplier="0.074331" id="lfa-QL-Snp"/>
-                            </constraints>
-                        </stackView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Our advantages" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jyp-jo-ODw">
                             <rect key="frame" x="20" y="69.5" width="282" height="40"/>
                             <constraints>
@@ -223,6 +93,152 @@
                                 <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="34"/>
                             </variation>
                         </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JIp-U4-02H">
+                            <rect key="frame" x="0.0" y="109.5" width="414" height="376.5"/>
+                            <subviews>
+                                <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="f90-Vf-LeP">
+                                    <rect key="frame" x="20" y="0.0" width="374" height="376.5"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="left" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="yw9-bb-8B9">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="28"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="255" verticalHuggingPriority="251" image="icon-checkmark-subscription" translatesAutoresizingMaskIntoConstraints="NO" id="LuF-bN-kKA">
+                                                    <rect key="frame" x="0.0" y="0.0" width="28" height="28"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="LuF-bN-kKA" secondAttribute="height" multiplier="1:1" id="3Xo-vq-P1e"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="760" text="Send unlimited documents for printing" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="none" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="vgk-uR-gHQ">
+                                                    <rect key="frame" x="36" y="0.0" width="338" height="28"/>
+                                                    <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="13"/>
+                                                    <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                        <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="13"/>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=regular">
+                                                        <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="18"/>
+                                                    </variation>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                        <stackView opaque="NO" contentMode="left" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="FDn-7U-ghR">
+                                            <rect key="frame" x="0.0" y="87" width="374" height="28"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="255" verticalHuggingPriority="251" image="icon-checkmark-subscription" translatesAutoresizingMaskIntoConstraints="NO" id="RNv-6K-clD">
+                                                    <rect key="frame" x="0.0" y="0.0" width="28" height="28"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="RNv-6K-clD" secondAttribute="height" multiplier="1:1" id="TgU-5r-THl"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copy and paste text to print from clipboard" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="none" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="NHo-s6-Iqp">
+                                                    <rect key="frame" x="36" y="0.0" width="338" height="28"/>
+                                                    <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="13"/>
+                                                    <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                        <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="13"/>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=regular">
+                                                        <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="18"/>
+                                                    </variation>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                        <stackView opaque="NO" contentMode="left" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="tr4-6s-COK">
+                                            <rect key="frame" x="0.0" y="174.5" width="374" height="28"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="255" verticalHuggingPriority="251" image="icon-checkmark-subscription" translatesAutoresizingMaskIntoConstraints="NO" id="MtJ-u2-vFQ">
+                                                    <rect key="frame" x="0.0" y="0.0" width="28" height="28"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="MtJ-u2-vFQ" secondAttribute="height" multiplier="1:1" id="Hwv-FN-sZi"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select photos in the gallery to send for printing" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="none" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="KfA-Vf-zuZ">
+                                                    <rect key="frame" x="36" y="0.0" width="338" height="28"/>
+                                                    <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="13"/>
+                                                    <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                        <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="13"/>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=regular">
+                                                        <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="18"/>
+                                                    </variation>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                        <stackView opaque="NO" contentMode="left" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="3TZ-BO-Wq5">
+                                            <rect key="frame" x="0.0" y="261.5" width="374" height="28"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="255" verticalHuggingPriority="251" image="icon-checkmark-subscription" translatesAutoresizingMaskIntoConstraints="NO" id="A7N-5H-LJ6">
+                                                    <rect key="frame" x="0.0" y="0.0" width="28" height="28"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="A7N-5H-LJ6" secondAttribute="height" multiplier="1:1" id="8sQ-Vb-VPo"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose files to print from your iCloud " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="none" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Ljv-JK-kXB">
+                                                    <rect key="frame" x="36" y="0.0" width="338" height="28"/>
+                                                    <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="13"/>
+                                                    <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                        <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="13"/>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=regular">
+                                                        <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="18"/>
+                                                    </variation>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                        <stackView opaque="NO" contentMode="left" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Lb3-5e-DvZ">
+                                            <rect key="frame" x="0.0" y="348.5" width="374" height="28"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="255" verticalHuggingPriority="251" image="icon-checkmark-subscription" translatesAutoresizingMaskIntoConstraints="NO" id="J4T-DX-zUE">
+                                                    <rect key="frame" x="0.0" y="0.0" width="28" height="28"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="J4T-DX-zUE" secondAttribute="height" multiplier="1:1" id="U3T-FB-EJP"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Input site URL to print webpage copy" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="none" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="MOx-zd-FUa">
+                                                    <rect key="frame" x="36" y="0.0" width="338" height="28"/>
+                                                    <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="13"/>
+                                                    <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                        <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="13"/>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=regular">
+                                                        <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="18"/>
+                                                    </variation>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="J4T-DX-zUE" firstAttribute="height" secondItem="f90-Vf-LeP" secondAttribute="height" multiplier="0.074331" id="865-Pi-LIM"/>
+                                        <constraint firstItem="RNv-6K-clD" firstAttribute="height" secondItem="f90-Vf-LeP" secondAttribute="height" multiplier="0.074331" id="Se6-QA-EYF"/>
+                                        <constraint firstItem="MtJ-u2-vFQ" firstAttribute="height" secondItem="f90-Vf-LeP" secondAttribute="height" multiplier="0.074331" id="ZXu-JV-p9W"/>
+                                        <constraint firstItem="LuF-bN-kKA" firstAttribute="height" secondItem="f90-Vf-LeP" secondAttribute="height" multiplier="0.074331" id="lLG-Z0-ZIX"/>
+                                        <constraint firstItem="A7N-5H-LJ6" firstAttribute="height" secondItem="f90-Vf-LeP" secondAttribute="height" multiplier="0.074331" id="lfa-QL-Snp"/>
+                                    </constraints>
+                                </stackView>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="f90-Vf-LeP" firstAttribute="leading" secondItem="JIp-U4-02H" secondAttribute="leading" constant="20" id="4c5-LD-vLx"/>
+                                <constraint firstAttribute="bottom" secondItem="f90-Vf-LeP" secondAttribute="bottom" id="Iwj-gp-4jE"/>
+                                <constraint firstItem="f90-Vf-LeP" firstAttribute="top" secondItem="JIp-U4-02H" secondAttribute="top" priority="750" constant="150" id="LhA-es-szN"/>
+                                <constraint firstAttribute="bottom" secondItem="f90-Vf-LeP" secondAttribute="bottom" priority="750" constant="150" id="NQz-WW-8Ps"/>
+                                <constraint firstAttribute="trailing" secondItem="f90-Vf-LeP" secondAttribute="trailing" constant="20" id="f6z-dN-mnd"/>
+                                <constraint firstItem="f90-Vf-LeP" firstAttribute="top" secondItem="JIp-U4-02H" secondAttribute="top" id="wX8-dn-8rS"/>
+                            </constraints>
+                        </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AMN-HA-25p" userLabel="WeeklyTrialContainer">
                             <rect key="frame" x="0.0" y="511" width="414" height="345"/>
                             <subviews>
@@ -760,7 +776,6 @@
                     </subviews>
                     <color key="backgroundColor" red="0.1165821329" green="0.1141723469" blue="0.30589985850000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="f90-Vf-LeP" secondAttribute="trailing" constant="20" id="2fn-7a-qB5"/>
                         <constraint firstItem="HX6-Bl-Ofp" firstAttribute="leading" secondItem="qml-Cw-J6W" secondAttribute="leading" id="5Ew-Hh-jet"/>
                         <constraint firstItem="cEj-I9-lvi" firstAttribute="leading" secondItem="MFp-KQ-jb2" secondAttribute="leading" constant="-50" id="5Vl-rl-bTP"/>
                         <constraint firstItem="Jyp-jo-ODw" firstAttribute="leading" secondItem="MFp-KQ-jb2" secondAttribute="leading" constant="20" id="5hg-ac-k2N"/>
@@ -768,8 +783,8 @@
                         <constraint firstItem="6D0-T9-emM" firstAttribute="leading" secondItem="MFp-KQ-jb2" secondAttribute="leading" id="7D0-oI-mV9"/>
                         <constraint firstItem="qml-Cw-J6W" firstAttribute="top" secondItem="6D0-T9-emM" secondAttribute="bottom" id="7Js-cF-hcI"/>
                         <constraint firstItem="cEj-I9-lvi" firstAttribute="width" secondItem="cEj-I9-lvi" secondAttribute="height" multiplier="1:1" id="88p-Mu-zF0"/>
-                        <constraint firstItem="qml-Cw-J6W" firstAttribute="top" secondItem="f90-Vf-LeP" secondAttribute="bottom" constant="30" id="B52-w1-Z1Y"/>
                         <constraint firstAttribute="trailing" secondItem="p4d-dK-nEi" secondAttribute="trailing" constant="10" id="Bud-XT-Vj3"/>
+                        <constraint firstItem="JIp-U4-02H" firstAttribute="leading" secondItem="HX6-Bl-Ofp" secondAttribute="leading" id="Cob-xF-0G2"/>
                         <constraint firstItem="tJr-s6-Qfo" firstAttribute="top" secondItem="MFp-KQ-jb2" secondAttribute="top" id="Cus-DC-7n7"/>
                         <constraint firstAttribute="trailing" secondItem="AMN-HA-25p" secondAttribute="trailing" id="Gug-Qn-Q67"/>
                         <constraint firstAttribute="bottom" secondItem="AMN-HA-25p" secondAttribute="bottom" constant="40" id="OVe-hi-gIm"/>
@@ -781,9 +796,10 @@
                         <constraint firstItem="AMN-HA-25p" firstAttribute="leading" secondItem="MFp-KQ-jb2" secondAttribute="leading" id="crr-GQ-SY8"/>
                         <constraint firstItem="Jyp-jo-ODw" firstAttribute="centerY" secondItem="MFp-KQ-jb2" secondAttribute="centerY" multiplier="0.2" id="fFQ-rp-xse"/>
                         <constraint firstItem="6D0-T9-emM" firstAttribute="top" secondItem="Jyp-jo-ODw" secondAttribute="bottom" id="fXX-kD-8fJ"/>
-                        <constraint firstItem="f90-Vf-LeP" firstAttribute="top" secondItem="Jyp-jo-ODw" secondAttribute="bottom" constant="20" id="h3w-LQ-GAv"/>
+                        <constraint firstItem="qml-Cw-J6W" firstAttribute="top" secondItem="JIp-U4-02H" secondAttribute="bottom" constant="10" id="gCz-Y1-Yp7"/>
+                        <constraint firstItem="JIp-U4-02H" firstAttribute="trailing" secondItem="HX6-Bl-Ofp" secondAttribute="trailing" id="qEJ-Wq-PHE"/>
                         <constraint firstItem="qml-Cw-J6W" firstAttribute="top" secondItem="HX6-Bl-Ofp" secondAttribute="bottom" id="r8Q-9B-tcm"/>
-                        <constraint firstItem="f90-Vf-LeP" firstAttribute="leading" secondItem="MFp-KQ-jb2" secondAttribute="leading" constant="20" id="rtP-Qh-V0k"/>
+                        <constraint firstItem="JIp-U4-02H" firstAttribute="top" secondItem="Jyp-jo-ODw" secondAttribute="bottom" id="rbl-Zo-LNq"/>
                         <constraint firstItem="HX6-Bl-Ofp" firstAttribute="trailing" secondItem="qml-Cw-J6W" secondAttribute="trailing" id="ske-zS-Rwg"/>
                         <constraint firstAttribute="trailing" secondItem="tJr-s6-Qfo" secondAttribute="trailing" id="uSi-UA-Vez"/>
                         <constraint firstAttribute="bottom" secondItem="qml-Cw-J6W" secondAttribute="bottom" constant="-50" id="xyc-Ca-Bz0"/>

@@ -82,6 +82,9 @@ final class SubscriptionPlanPopup: UIView, PurchesServiceProvidable, AnalyticSer
     @IBOutlet weak var yearlyPriceSecondPart: UILabel!
     @IBOutlet weak var montlyPriceLabel: UILabel!
     
+    @IBOutlet weak var advantagesContainerBottom: NSLayoutConstraint!
+    @IBOutlet weak var advantagesContainerTop: NSLayoutConstraint!
+    
     private var bag = Set<AnyCancellable>()
     private var weeklyContinueAnimationsCancelable: AnyCancellable?
     private var planSelectionContinueAnimationsCanelable: AnyCancellable?
@@ -114,6 +117,10 @@ final class SubscriptionPlanPopup: UIView, PurchesServiceProvidable, AnalyticSer
     }
     
     private func configureView() {
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            advantagesContainerTop.isActive = false
+            advantagesContainerBottom.isActive = false
+        }
         trialMessageLabel.text = purchases.isUserEverHadSubscription ?
         "Start your full access. Manage anytime." : "After a 3-day free trial. Manage anytime."
         weeklyPlanPrice.text = (purchases.getPriceForPurchase(model: .weekly) ?? PurchesService.previousWeeklyPrice) + " / week"
