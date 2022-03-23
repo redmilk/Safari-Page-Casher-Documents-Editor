@@ -92,6 +92,8 @@ final class HomeScreenViewController: UIViewController,
     @IBOutlet private weak var dialogCancelButton: TapAnimatedButton!
     @IBOutlet private weak var dialogLabel: UILabel!
     
+    @IBOutlet weak var clarifyDialogHeight: NSLayoutConstraint!
+    @IBOutlet weak var clarifyDialogBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var bottomConstraintHeight: NSLayoutConstraint!
     @IBOutlet weak var howTrialWorksButton: TapAnimatedButton!
     @IBOutlet weak var otherPlansButton: TapAnimatedButton!
@@ -142,12 +144,14 @@ final class HomeScreenViewController: UIViewController,
         if UIDevice.current.userInterfaceIdiom == .pad {
             navigationBarExtenderHeight.isActive = false
             emptyStateImageHeight.isActive = false
+            bottomConstraintHeight.constant = 100
+            clarifyDialogHeight.isActive = false
+            //clarifyDialogBottomConstraint.constant = 32
         }
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
-       
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)

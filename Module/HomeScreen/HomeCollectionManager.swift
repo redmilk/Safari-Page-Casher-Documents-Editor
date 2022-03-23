@@ -140,7 +140,7 @@ final class HomeCollectionManager: NSObject, InteractionFeedbackService { /// NS
         let width = UIScreen.main.bounds.width
         let targetWidth = width * aspectRatio
         let spacing = UIScreen.main.bounds.width * 0.06
-        
+        let rowItemsCount = UIDevice.current.userInterfaceIdiom == .pad ? 3 : 2
         let layout = UICollectionViewCompositionalLayout(sectionProvider: { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
             /// item
             let size = NSCollectionLayoutSize(widthDimension: .absolute(targetWidth),
@@ -149,7 +149,7 @@ final class HomeCollectionManager: NSObject, InteractionFeedbackService { /// NS
             item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
             /// group
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(targetHeight))
-            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 2)
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: rowItemsCount)
             group.interItemSpacing = .fixed(spacing)
             group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: spacing, bottom: 0, trailing: spacing)
             /// section

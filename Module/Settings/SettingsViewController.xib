@@ -67,7 +67,7 @@
                                                 <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="12"/>
                                             </variation>
                                             <variation key="heightClass=regular-widthClass=regular">
-                                                <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="18"/>
+                                                <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="15"/>
                                             </variation>
                                         </label>
                                         <stackView verifyAmbiguity="ignoreSizes" opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="qlP-MP-qhz">
@@ -115,7 +115,7 @@
                                                                 <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="14"/>
                                                             </variation>
                                                             <variation key="heightClass=regular-widthClass=regular">
-                                                                <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="20"/>
+                                                                <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="18"/>
                                                             </variation>
                                                         </label>
                                                     </subviews>
@@ -181,7 +181,7 @@
                                                                 <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="14"/>
                                                             </variation>
                                                             <variation key="heightClass=regular-widthClass=regular">
-                                                                <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="20"/>
+                                                                <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="18"/>
                                                             </variation>
                                                         </label>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MSA-tw-wT8" userLabel="separatorTop">
@@ -233,7 +233,7 @@
                                                 <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="12"/>
                                             </variation>
                                             <variation key="heightClass=regular-widthClass=regular">
-                                                <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="18"/>
+                                                <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="15"/>
                                             </variation>
                                         </label>
                                         <stackView verifyAmbiguity="ignoreSizes" opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="xQk-kW-cq0">
@@ -281,7 +281,7 @@
                                                                 <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="14"/>
                                                             </variation>
                                                             <variation key="heightClass=regular-widthClass=regular">
-                                                                <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="20"/>
+                                                                <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="18"/>
                                                             </variation>
                                                         </label>
                                                     </subviews>
@@ -347,7 +347,7 @@
                                                                 <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="14"/>
                                                             </variation>
                                                             <variation key="heightClass=regular-widthClass=regular">
-                                                                <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="20"/>
+                                                                <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="18"/>
                                                             </variation>
                                                         </label>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SOw-Vu-Wht" userLabel="separatorTop">
@@ -399,7 +399,7 @@
                                                 <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="12"/>
                                             </variation>
                                             <variation key="heightClass=regular-widthClass=regular">
-                                                <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="18"/>
+                                                <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="15"/>
                                             </variation>
                                         </label>
                                         <stackView verifyAmbiguity="ignoreSizes" opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="RM5-HP-8LQ">
@@ -447,7 +447,7 @@
                                                                 <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="14"/>
                                                             </variation>
                                                             <variation key="heightClass=regular-widthClass=regular">
-                                                                <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="20"/>
+                                                                <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="18"/>
                                                             </variation>
                                                         </label>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2TM-Cy-zr5" userLabel="separatorTop">

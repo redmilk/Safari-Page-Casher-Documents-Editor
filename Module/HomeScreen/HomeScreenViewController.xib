@@ -28,6 +28,8 @@
                 <outlet property="bottomConstraintHeight" destination="bqI-vb-lu1" id="f0E-WH-s43"/>
                 <outlet property="centerImageView" destination="nh4-LX-aGx" id="eta-l8-Rna"/>
                 <outlet property="checkmarkButton" destination="hoU-mT-VJx" id="hoa-uN-O7B"/>
+                <outlet property="clarifyDialogBottomConstraint" destination="oW0-1t-ExO" id="JNY-DW-hBA"/>
+                <outlet property="clarifyDialogHeight" destination="S73-EW-qYM" id="4WI-mL-BD1"/>
                 <outlet property="closeSelectionModeButton" destination="n7T-eX-CwZ" id="GsJ-jE-ut6"/>
                 <outlet property="collectionView" destination="zTA-bp-dXM" id="XbD-Qb-W32"/>
                 <outlet property="deleteAllButton" destination="HJ8-UR-Fjb" id="FEl-wD-mjB"/>
@@ -505,8 +507,9 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="Ugq-i7-Wjc" firstAttribute="leading" secondItem="JuQ-s1-O5r" secondAttribute="leading" id="7db-rZ-PTT"/>
+                        <constraint firstItem="Ugq-i7-Wjc" firstAttribute="height" secondItem="JuQ-s1-O5r" secondAttribute="height" multiplier="0.2" id="S73-EW-qYM"/>
                         <constraint firstAttribute="trailing" secondItem="Ugq-i7-Wjc" secondAttribute="trailing" id="gMh-Hg-aXe"/>
-                        <constraint firstItem="Ugq-i7-Wjc" firstAttribute="height" secondItem="JuQ-s1-O5r" secondAttribute="height" multiplier="0.2" id="jtt-Ki-Wb7"/>
+                        <constraint firstItem="Ugq-i7-Wjc" firstAttribute="height" secondItem="JuQ-s1-O5r" secondAttribute="height" multiplier="0.23" priority="750" id="jtt-Ki-Wb7"/>
                         <constraint firstAttribute="bottom" secondItem="Ugq-i7-Wjc" secondAttribute="bottom" id="oW0-1t-ExO"/>
                     </constraints>
                 </view>

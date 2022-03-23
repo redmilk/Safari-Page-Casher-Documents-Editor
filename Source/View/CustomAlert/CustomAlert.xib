@@ -21,6 +21,7 @@
                 <outlet property="alertText" destination="5KS-HB-LnI" id="E6R-KW-Id1"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="Pnj-Gt-fkH"/>
                 <outlet property="extraActionButton" destination="qLY-wM-jUu" id="V4x-gr-2AS"/>
+                <outlet property="fullWidthConstraint" destination="BFN-jQ-FdR" id="FgZ-RS-G1p"/>
                 <outlet property="mainContainer" destination="2fK-Xx-xRs" id="RPP-aO-IAz"/>
                 <outlet property="primaryButton" destination="IzG-Hz-cUf" id="YB1-3X-HFM"/>
                 <outlet property="titleLabel" destination="ORt-FO-pp4" id="Qd7-HY-Y76"/>
@@ -57,6 +58,12 @@
                                             <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="20"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <color key="highlightedColor" systemColor="secondarySystemBackgroundColor"/>
+                                            <variation key="heightClass=regular-widthClass=compact">
+                                                <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="20"/>
+                                            </variation>
+                                            <variation key="heightClass=regular-widthClass=regular">
+                                                <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="24"/>
+                                            </variation>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="254" text="Alert message" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.20000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="5KS-HB-LnI">
                                             <rect key="frame" x="0.0" y="43" width="321" height="18.5"/>
@@ -64,33 +71,64 @@
                                             <fontDescription key="fontDescription" name="Poppins-Light" family="Poppins" pointSize="13"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <variation key="heightClass=regular-widthClass=compact">
+                                                <fontDescription key="fontDescription" name="Poppins-Light" family="Poppins" pointSize="13"/>
+                                            </variation>
+                                            <variation key="heightClass=regular-widthClass=regular">
+                                                <fontDescription key="fontDescription" name="Poppins-Light" family="Poppins" pointSize="17"/>
+                                            </variation>
                                         </label>
                                     </subviews>
                                 </stackView>
-                                <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="JGK-F3-FXr">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Gd-On-S4s">
                                     <rect key="frame" x="0.0" y="81.5" width="321" height="105.5"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qLY-wM-jUu" userLabel="button-action1">
-                                            <rect key="frame" x="0.0" y="0.0" width="321" height="43"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="15"/>
-                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                            <state key="normal" backgroundImage="button-blue-blank">
-                                                <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </state>
-                                        </button>
-                                        <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IzG-Hz-cUf" userLabel="button-cancel">
-                                            <rect key="frame" x="0.0" y="63" width="321" height="42.5"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="15"/>
-                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                            <state key="normal" title="Cancel" backgroundImage="button-stroke-blank">
-                                                <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </state>
-                                        </button>
+                                        <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="JGK-F3-FXr">
+                                            <rect key="frame" x="16" y="0.0" width="289" height="105.5"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qLY-wM-jUu" userLabel="button-action1">
+                                                    <rect key="frame" x="0.0" y="0.0" width="289" height="43"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="15"/>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <state key="normal" backgroundImage="button-blue-blank">
+                                                        <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </state>
+                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                        <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="15"/>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=regular">
+                                                        <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="19"/>
+                                                    </variation>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IzG-Hz-cUf" userLabel="button-cancel">
+                                                    <rect key="frame" x="0.0" y="63" width="289" height="42.5"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="15"/>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <state key="normal" title="Cancel" backgroundImage="button-stroke-blank">
+                                                        <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </state>
+                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                        <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="15"/>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=regular">
+                                                        <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="19"/>
+                                                    </variation>
+                                                </button>
+                                            </subviews>
+                                            <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
+                                        </stackView>
                                     </subviews>
-                                    <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
-                                </stackView>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstItem="JGK-F3-FXr" firstAttribute="height" secondItem="4Gd-On-S4s" secondAttribute="height" id="0nP-7A-OvM"/>
+                                        <constraint firstItem="JGK-F3-FXr" firstAttribute="width" secondItem="4Gd-On-S4s" secondAttribute="width" multiplier="0.9" id="BFN-jQ-FdR"/>
+                                        <constraint firstItem="JGK-F3-FXr" firstAttribute="width" secondItem="4Gd-On-S4s" secondAttribute="width" multiplier="0.5" priority="750" id="f5m-1h-Kkc"/>
+                                        <constraint firstItem="JGK-F3-FXr" firstAttribute="centerX" secondItem="4Gd-On-S4s" secondAttribute="centerX" id="v9z-xH-KjZ"/>
+                                        <constraint firstItem="JGK-F3-FXr" firstAttribute="centerY" secondItem="4Gd-On-S4s" secondAttribute="centerY" id="wKM-k8-fFv"/>
+                                    </constraints>
+                                </view>
                             </subviews>
                         </stackView>
                     </subviews>

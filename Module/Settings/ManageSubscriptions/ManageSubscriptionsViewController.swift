@@ -43,6 +43,7 @@ final class ManageSubscriptionsViewController: UIViewController,
     @IBOutlet weak var yearPlanButton: UIButton!
     @IBOutlet weak var howTrialWorksButton: UIButton!
     
+    @IBOutlet weak var buttonsContainerWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var navigationBarExtenderHeight: NSLayoutConstraint!
     private var backButton: UIBarButtonItem!
     private let viewModel: ManageSubscriptionsViewModel
@@ -65,6 +66,7 @@ final class ManageSubscriptionsViewController: UIViewController,
         viewModel.input.send(.viewDidLoad)
         if UIDevice.current.userInterfaceIdiom == .pad {
             navigationBarExtenderHeight.isActive = false
+            buttonsContainerWidthConstraint.isActive = false
         }
     }
     override func viewWillAppear(_ animated: Bool) {

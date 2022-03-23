@@ -68,7 +68,7 @@ final class CustomAlert: UIView {
     @IBOutlet weak var primaryButton: UIButton!
     @IBOutlet weak var alertText: UILabel!
     @IBOutlet weak var extraActionButton: UIButton!
-    
+    @IBOutlet weak var fullWidthConstraint: NSLayoutConstraint!
     private weak var dimmedContainer: UIView?
     private var bag = Set<AnyCancellable>()
     
@@ -91,6 +91,9 @@ final class CustomAlert: UIView {
         let bundle = Bundle(for: Self.self)
         bundle.loadNibNamed(String(describing: Self.self), owner: self, options: nil)
         addSubview(contentView)
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            fullWidthConstraint.isActive = false
+        }
         contentView.constraintToSides(inside: self)
     }
     
