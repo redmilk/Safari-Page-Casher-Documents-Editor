@@ -15,9 +15,10 @@ import QuickLook
 // MARK: - SettingsViewController
 
 final class SettingsViewController: UIViewController,
-                                        MFMailComposeViewControllerDelegate,
-                                        UIGestureRecognizerDelegate,
-                                        AnalyticServiceProvider {
+                                    MFMailComposeViewControllerDelegate,
+                                    UIGestureRecognizerDelegate,
+                                    AnalyticServiceProvider,
+                                    UIPopoverPresentationControllerDelegate {
     enum State {
         case dummyState
     }
@@ -27,8 +28,8 @@ final class SettingsViewController: UIViewController,
     @IBOutlet private weak var privacyPolicyButton: UIButton!
     @IBOutlet private weak var termsOfUseButton: UIButton!
     @IBOutlet private weak var shareButton: UIButton!
-
-    @IBOutlet weak var navigationBarExtenderHeight: NSLayoutConstraint!
+    @IBOutlet private weak var navigationBarExtenderHeight: NSLayoutConstraint!
+    @IBOutlet private weak var popoverView: UIView!
     
     private let viewModel: SettingsViewModel
     private var bag = Set<AnyCancellable>()
@@ -84,7 +85,6 @@ private extension SettingsViewController {
         title = "Settings"
         navigationBarExtender.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         navigationBarExtender.addCornerRadius(30)
-        
         manageSubscriptionsButton.publisher()
             .sink(receiveValue: { [weak self] _ in
                 self?.viewModel.input.send(.manageSubscriptions)
@@ -130,7 +130,17 @@ private extension SettingsViewController {
             let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
             /// Excluded Activities
             activityVC.excludedActivityTypes = [UIActivity.ActivityType.addToReadingList]
-            self.present(activityVC, animated: true, completion: nil)
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                popoverView.isHidden = false
+                activityVC.popoverPresentationController?.sourceView = popoverView
+                activityVC.popoverPresentationController?.sourceRect = popoverView.frame
+                activityVC.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.down
+                UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
+            } else {
+                self.present(activityVC, animated: true, completion: { [weak self] in
+                    self?.popoverView.isHidden = true
+                })
+            }
         }
     }
     

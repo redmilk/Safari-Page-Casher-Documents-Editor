@@ -138,15 +138,15 @@ final class HomeScreenViewController: UIViewController,
         collectionManager.input.send(.configure)
         viewModel.configureViewModel()
         configureView()
-        bottomConstraintHeight.constant = UIDevice.hasNotch ? 80 : 70
         // adopt layout for device type
         // replace high priority constraints
+        bottomConstraintHeight.constant = UIDevice.hasNotch ? 80 : 70
+
         if UIDevice.current.userInterfaceIdiom == .pad {
             navigationBarExtenderHeight.isActive = false
             emptyStateImageHeight.isActive = false
-            bottomConstraintHeight.constant = 100
+            bottomConstraintHeight.constant = 80
             clarifyDialogHeight.isActive = false
-            //clarifyDialogBottomConstraint.constant = 32
         }
     }
     override func viewWillAppear(_ animated: Bool) {

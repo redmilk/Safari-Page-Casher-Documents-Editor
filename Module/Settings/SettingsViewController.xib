@@ -22,6 +22,7 @@
                 <outlet property="manageSubscriptionsButton" destination="I2r-mZ-9Gp" id="ltW-Xd-OWx"/>
                 <outlet property="navigationBarExtender" destination="71K-IC-Y1G" id="rsq-yC-jb4"/>
                 <outlet property="navigationBarExtenderHeight" destination="GhJ-BV-S1e" id="xdB-FX-cDz"/>
+                <outlet property="popoverView" destination="SFO-Yh-WEM" id="dpm-pn-7fy"/>
                 <outlet property="privacyPolicyButton" destination="YoJ-lP-vpE" id="LeT-Y5-1yg"/>
                 <outlet property="shareButton" destination="lK3-iu-ceH" id="ZdG-Kf-ajf"/>
                 <outlet property="termsOfUseButton" destination="NiI-uY-qrn" id="y7E-7O-Hvm"/>
@@ -512,20 +513,28 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="98.5"/>
                     <color key="backgroundColor" red="0.11278515309999999" green="0.1184124723" blue="0.30589970950000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                 </view>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SFO-Yh-WEM">
+                    <rect key="frame" x="0.0" y="593" width="414" height="269"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <constraints>
                 <constraint firstItem="7f8-No-ca8" firstAttribute="top" secondItem="71K-IC-Y1G" secondAttribute="bottom" constant="30" id="0YO-Ua-DPN"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="SFO-Yh-WEM" secondAttribute="bottom" id="1na-oj-f8t"/>
                 <constraint firstItem="SDa-az-od4" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ClE-gx-xh2"/>
                 <constraint firstItem="71K-IC-Y1G" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="Fyi-Vw-NSf"/>
                 <constraint firstItem="71K-IC-Y1G" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="0.109933" id="GhJ-BV-S1e"/>
+                <constraint firstItem="SFO-Yh-WEM" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="0.3" id="OUI-Iz-jf9"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="SDa-az-od4" secondAttribute="trailing" id="UXW-Rz-zwi"/>
                 <constraint firstItem="RM5-HP-8LQ" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.903382" id="WjC-Xe-TJh"/>
                 <constraint firstItem="71K-IC-Y1G" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="0.07" priority="750" id="Zdt-rw-Zi1"/>
+                <constraint firstItem="SFO-Yh-WEM" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="bOI-yz-aN9"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="71K-IC-Y1G" secondAttribute="trailing" id="eOZ-P5-ghg"/>
                 <constraint firstItem="SDa-az-od4" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="gLZ-Bk-XFm"/>
                 <constraint firstAttribute="bottom" secondItem="SDa-az-od4" secondAttribute="bottom" id="rug-ue-UdM"/>
                 <constraint firstItem="71K-IC-Y1G" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="xRM-5f-Vbw"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="SFO-Yh-WEM" secondAttribute="trailing" id="zYK-BO-IIU"/>
             </constraints>
             <point key="canvasLocation" x="139" y="153"/>
         </view>
