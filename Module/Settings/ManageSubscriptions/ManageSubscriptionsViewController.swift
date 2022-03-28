@@ -181,7 +181,7 @@ private extension ManageSubscriptionsViewController {
         
         let appVersionString: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
         let buildNumber: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as! String
-        versionLabel.text = "version \(appVersionString)  build \(buildNumber)"
+        versionLabel.text = "version \(appVersionString) build \(buildNumber)"
     }
     
     private func removeMultiSubscripionPopupIfOccures() {
