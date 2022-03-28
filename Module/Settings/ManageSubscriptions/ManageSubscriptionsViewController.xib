@@ -27,6 +27,7 @@
                 <outlet property="monthlyPriceLabel" destination="pRv-8k-s1z" id="Ha3-h5-3Lx"/>
                 <outlet property="navigationBarExtender" destination="llM-ju-Cfm" id="zOQ-FO-5Sd"/>
                 <outlet property="navigationBarExtenderHeight" destination="9ag-3Q-abJ" id="3Db-lt-KPi"/>
+                <outlet property="versionLabel" destination="nvK-xp-5bh" id="EjH-FO-L4l"/>
                 <outlet property="view" destination="iN0-l3-epB" id="xVq-ga-IAq"/>
                 <outlet property="weekPlanButton" destination="dIy-Ve-9i6" id="SeX-Kx-mK8"/>
                 <outlet property="weeklyPlanTextLabel" destination="9kl-8a-a2s" id="VW1-yR-mZr"/>
@@ -249,6 +250,18 @@
                                 <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="14"/>
                             </variation>
                         </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version: " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nvK-xp-5bh">
+                            <rect key="frame" x="166.66666666666666" y="551.33333333333337" width="42" height="14"/>
+                            <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="10"/>
+                            <color key="textColor" white="1" alpha="0.16717805891238671" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                            <variation key="heightClass=regular-widthClass=compact">
+                                <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="10"/>
+                            </variation>
+                            <variation key="heightClass=regular-widthClass=regular">
+                                <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="14"/>
+                            </variation>
+                        </label>
                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jUH-dC-r64">
                             <rect key="frame" x="18.666666666666657" y="561.33333333333337" width="337.66666666666674" height="61"/>
                             <subviews>
@@ -325,6 +338,7 @@
                         <constraint firstItem="0ru-Go-B8m" firstAttribute="leading" secondItem="6BQ-qS-ekD" secondAttribute="leading" constant="4" id="3mj-zS-DZs"/>
                         <constraint firstItem="9kl-8a-a2s" firstAttribute="height" secondItem="dIy-Ve-9i6" secondAttribute="height" multiplier="0.327381" id="43E-PV-xHY"/>
                         <constraint firstItem="6BQ-qS-ekD" firstAttribute="top" secondItem="ULF-PI-pFG" secondAttribute="bottom" constant="20" id="4LC-zl-ZJa"/>
+                        <constraint firstItem="nvK-xp-5bh" firstAttribute="centerX" secondItem="LwN-QN-IY1" secondAttribute="centerX" id="6h6-vJ-fXc"/>
                         <constraint firstItem="TWA-Ny-Yls" firstAttribute="centerY" secondItem="zPF-bx-fQg" secondAttribute="centerY" id="9oQ-lk-abV"/>
                         <constraint firstItem="zPF-bx-fQg" firstAttribute="height" secondItem="1hN-bb-d8M" secondAttribute="height" id="BKH-y0-bZS"/>
                         <constraint firstItem="4QG-kC-ksV" firstAttribute="centerY" secondItem="dIy-Ve-9i6" secondAttribute="centerY" id="E7a-bj-0Fd"/>
@@ -340,6 +354,7 @@
                         <constraint firstItem="pRv-8k-s1z" firstAttribute="height" secondItem="qfm-ki-scj" secondAttribute="height" id="P5z-Fe-T9S"/>
                         <constraint firstItem="6BQ-qS-ekD" firstAttribute="centerX" secondItem="LwN-QN-IY1" secondAttribute="centerX" id="PYe-af-9DQ"/>
                         <constraint firstItem="9kl-8a-a2s" firstAttribute="leading" secondItem="dIy-Ve-9i6" secondAttribute="leading" constant="60" id="QnT-qI-hRr"/>
+                        <constraint firstItem="nvK-xp-5bh" firstAttribute="top" secondItem="u8c-77-gA7" secondAttribute="bottom" constant="10" id="Ss2-wf-8ab"/>
                         <constraint firstItem="wXm-dB-jRt" firstAttribute="leading" secondItem="qfm-ki-scj" secondAttribute="leading" constant="60" id="TfI-yq-LiO"/>
                         <constraint firstItem="xet-hv-vTU" firstAttribute="height" secondItem="1hN-bb-d8M" secondAttribute="height" id="TjW-O4-7We"/>
                         <constraint firstItem="xet-hv-vTU" firstAttribute="centerY" secondItem="1hN-bb-d8M" secondAttribute="centerY" id="ULE-LG-nHZ"/>
@@ -384,7 +399,7 @@
                 <constraint firstItem="llM-ju-Cfm" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="lm4-4u-aaJ"/>
                 <constraint firstItem="llM-ju-Cfm" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="yjc-vf-Vaw"/>
             </constraints>
-            <point key="canvasLocation" x="139" y="153"/>
+            <point key="canvasLocation" x="138.40000000000001" y="152.95566502463055"/>
         </view>
     </objects>
     <resources>

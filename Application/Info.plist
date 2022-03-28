@@ -9,7 +9,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>iPrint</string>
+	<string>AirPrint</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleGetInfoString</key>
@@ -42,7 +42,7 @@
 	<key>FacebookClientToken</key>
 	<string>1289344748202821</string>
 	<key>FacebookDisplayName</key>
-	<string>iPrint</string>
+	<string>AirPrint</string>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>LSApplicationQueriesSchemes</key>

@@ -43,8 +43,10 @@ final class ManageSubscriptionsViewController: UIViewController,
     @IBOutlet weak var yearPlanButton: UIButton!
     @IBOutlet weak var howTrialWorksButton: UIButton!
     
+    @IBOutlet weak var versionLabel: UILabel!
     @IBOutlet weak var buttonsContainerWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var navigationBarExtenderHeight: NSLayoutConstraint!
+    
     private var backButton: UIBarButtonItem!
     private let viewModel: ManageSubscriptionsViewModel
     private var bag = Set<AnyCancellable>()
@@ -176,6 +178,10 @@ private extension ManageSubscriptionsViewController {
         self.monthlyPriceLabel.text =  PurchesService.previousMonthlyPrice
         self.yearlyPriceLabel.text = PurchesService.previousYearlyPrice
         self.yearlyPriceDescriptionLabel.text = "Yearly Plan: \(PurchesService.previousYearlyPrice) / year"
+        
+        let appVersionString: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+        let buildNumber: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as! String
+        versionLabel.text = "version \(appVersionString)  build \(buildNumber)"
     }
     
     private func removeMultiSubscripionPopupIfOccures() {

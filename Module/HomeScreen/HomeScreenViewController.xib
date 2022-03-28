@@ -393,8 +393,8 @@
                                 <constraint firstItem="yxd-bP-4ZK" firstAttribute="centerX" secondItem="5Sr-pF-jf2" secondAttribute="centerX" id="YKc-pz-BnV"/>
                             </constraints>
                         </view>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="iPrint" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="co0-vw-K7C">
-                            <rect key="frame" x="62" y="62.999999999999993" width="34.333333333333343" height="19.666666666666664"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AirPrint" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="co0-vw-K7C">
+                            <rect key="frame" x="62" y="62.999999999999993" width="49" height="19.666666666666664"/>
                             <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="14"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
