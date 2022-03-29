@@ -39,6 +39,8 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>FacebookAppID</key>
 	<string>1289344748202821</string>
+	<key>FacebookClientToken</key>
+	<string>f994a5afcdaa5e30585c9e1fcc376658</string>
 	<key>FacebookAutoLogAppEventsEnabled</key>
 	<true/>
     <key>FacebookAdvertiserIDCollectionEnabled</key>
