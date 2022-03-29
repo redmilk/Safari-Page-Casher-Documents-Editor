@@ -41,6 +41,8 @@
 	<string>1289344748202821</string>
 	<key>FacebookAutoLogAppEventsEnabled</key>
 	<true/>
+    <key>FacebookAdvertiserIDCollectionEnabled</key>
+    <true/>
 	<key>FacebookDisplayName</key>
 	<string>AirPrint</string>
 	<key>LSApplicationCategoryType</key>
