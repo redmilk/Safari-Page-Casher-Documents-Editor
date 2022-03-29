@@ -37,14 +37,14 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>FacebookAdvertiserIDCollectionEnabled</key>
+	<true/>
 	<key>FacebookAppID</key>
 	<string>1289344748202821</string>
-	<key>FacebookClientToken</key>
-	<string>f994a5afcdaa5e30585c9e1fcc376658</string>
 	<key>FacebookAutoLogAppEventsEnabled</key>
 	<true/>
-    <key>FacebookAdvertiserIDCollectionEnabled</key>
-    <true/>
+	<key>FacebookClientToken</key>
+	<string>f994a5afcdaa5e30585c9e1fcc376658</string>
 	<key>FacebookDisplayName</key>
 	<string>AirPrint</string>
 	<key>LSApplicationCategoryType</key>
