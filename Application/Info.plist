@@ -31,15 +31,13 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fbsurf.devip.print</string>
+				<string>fb1289344748202821</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>FacebookAppID</key>
-	<string>surf.devip.print</string>
-	<key>FacebookClientToken</key>
 	<string>1289344748202821</string>
 	<key>FacebookDisplayName</key>
 	<string>AirPrint</string>
