@@ -14,11 +14,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var analytics: AnalyticsService!
 
-    
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
+        setupAnalyticsServices(application, launchOptions)
+        
         ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         
         ApplicationGlobalConfig().configure()
@@ -48,3 +49,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
+private extension AppDelegate {
+    func setupAnalyticsServices(_ application: UIApplication, _ launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
+        _ = FacebookProvider(application: application,
+                             launchOptions: launchOptions,
+                             trackUserProperties: true,
+                             settings: .auto)
+    }
+}

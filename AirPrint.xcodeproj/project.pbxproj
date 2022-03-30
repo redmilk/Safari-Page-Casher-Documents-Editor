@@ -115,6 +115,7 @@
 		79F913B62746501500771FFE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F913B52746501500771FFE /* SceneDelegate.swift */; };
 		79F913BD2746501900771FFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79F913BC2746501900771FFE /* Assets.xcassets */; };
 		79F913C02746501900771FFE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79F913BE2746501900771FFE /* LaunchScreen.storyboard */; };
+		A8918BF527F47C810000F369 /* FacebookProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8918BF427F47C810000F369 /* FacebookProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -260,6 +261,7 @@
 		79F913BC2746501900771FFE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		79F913BF2746501900771FFE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		79F913C12746501900771FFE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A8918BF427F47C810000F369 /* FacebookProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -381,6 +383,7 @@
 				799DA1692762CFE2003EA17F /* Onboarding.swift */,
 				79C362AF276CAB57001B1745 /* SharedActivityResults.swift */,
 				7983E3162798C5640098A2D7 /* BackgroundScheduler.swift */,
+				A8918BF427F47C810000F369 /* FacebookProvider.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -890,6 +893,7 @@
 				794F73EC2746B36900B07410 /* UICollectionView+Extensions.swift in Sources */,
 				79D102A527717CC500F3C4D5 /* SubscriptionPlanPopup.swift in Sources */,
 				7983E3152798BC310098A2D7 /* TaskBackgroundKeeper.swift in Sources */,
+				A8918BF527F47C810000F369 /* FacebookProvider.swift in Sources */,
 				79BBD8AB276319660087B1E0 /* ParticleEmitterView.swift in Sources */,
 				79F913B62746501500771FFE /* SceneDelegate.swift in Sources */,
 				7911B025276B0FEC0058CD26 /* MiscSettingsModulesViewController.swift in Sources */,
