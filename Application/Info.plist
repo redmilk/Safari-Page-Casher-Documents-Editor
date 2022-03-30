@@ -26,6 +26,15 @@
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
 	<string>$(MARKETING_VERSION)</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb1289344748202821</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>FacebookAdvertiserIDCollectionEnabled</key>
@@ -34,15 +43,6 @@
 	<string>1289344748202821</string>
 	<key>FacebookAutoLogAppEventsEnabled</key>
 	<true/>
-    <key>CFBundleURLTypes</key>
-    <array>
-      <dict>
-      <key>CFBundleURLSchemes</key>
-      <array>
-        <string>fb1289344748202821</string>
-      </array>
-      </dict>
-    </array>
 	<key>FacebookClientToken</key>
 	<string>f994a5afcdaa5e30585c9e1fcc376658</string>
 	<key>FacebookDisplayName</key>
