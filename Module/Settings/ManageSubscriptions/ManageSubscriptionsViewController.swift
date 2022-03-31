@@ -189,8 +189,17 @@ private extension ManageSubscriptionsViewController {
         }).store(in: &bag)
         yearPlanButton.publisher().receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
-                self?.analytics.eventPurchaseDidPressed(plan: "annual")
-                self?.viewModel.input.send(.subscription(.annual))
+                guard let self = self else { return }
+                guard let weeklyPrice = self.weeklyPriceLabel.text, !weeklyPrice.isEmpty,
+                        let monthlyPrice = self.monthlyPriceLabel.text, !monthlyPrice.isEmpty else {
+                    self.displayAlert(fromParentView: self.view, with: "Make sure your device is connected to the internet",
+                                      title: "No internet connection", action: {
+                        self.viewModel.input.send(.goBack)
+                    })
+                    return
+                }
+                self.analytics.eventPurchaseDidPressed(plan: "annual")
+                self.viewModel.input.send(.subscription(.annual))
         }).store(in: &bag)
         howTrialWorksButton.publisher()
             .sink(receiveValue: { [weak self] _ in
