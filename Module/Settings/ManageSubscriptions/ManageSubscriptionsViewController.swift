@@ -10,7 +10,6 @@
 import UIKit
 import Combine
 
-
 fileprivate let multiSubscriptionPopupViewTag: Int = 123
 
 // MARK: - ManageSubscriptionsViewController
@@ -31,16 +30,20 @@ final class ManageSubscriptionsViewController: UIViewController,
         case gotUpdatedPrices(String, String, String, Bool) /// w,m,y, isUserEverHadSubscr
     }
     
+    @IBOutlet weak var monthlyPlanTextLabel: UILabel!
     @IBOutlet weak var monthlyPriceLabel: UILabel!
     @IBOutlet weak var yearlyPriceLabel: UILabel!
     /// for trial case
     @IBOutlet weak var weeklyPlanTextLabel: UILabel!
     @IBOutlet weak var yearlyPriceDescriptionLabel: UILabel!
     @IBOutlet weak var weeklyPriceLabel: UILabel!
+    @IBOutlet weak var weeklyPriceIconImageView: UIImageView!
     @IBOutlet weak var navigationBarExtender: UIView!
-    @IBOutlet weak var weekPlanButton: UIButton!
-    @IBOutlet weak var monthlyPlanButton: UIButton!
-    @IBOutlet weak var yearPlanButton: UIButton!
+    @IBOutlet weak var weekPlanButton: TapAnimatedButton!
+    @IBOutlet weak var monthlyPlanButton: TapAnimatedButton!
+    @IBOutlet weak var monthlyPriceIconImageView: UIImageView!
+    @IBOutlet weak var yearPlanButton: TapAnimatedButton!
+    @IBOutlet weak var yearlyPriceIconImageView: UIImageView!
     @IBOutlet weak var howTrialWorksButton: UIButton!
     
     @IBOutlet weak var versionLabel: UILabel!
@@ -148,6 +151,13 @@ private extension ManageSubscriptionsViewController {
         yearPlanButton.addBorder(1, .systemBlue.withAlphaComponent(0.3))
         weekPlanButton.addCornerRadius(14)
         weekPlanButton.addBorder(1, .systemBlue.withAlphaComponent(0.3))
+        
+        weekPlanButton.viewListForAnimatingAccordinglyWithTranslationToRight.append(contentsOf: [weeklyPlanTextLabel, weeklyPriceIconImageView])
+        weekPlanButton.viewListForAnimatingAccordinglyWithTranslationToLeft.append(contentsOf: [weeklyPriceLabel])
+        monthlyPlanButton.viewListForAnimatingAccordinglyWithTranslationToRight.append(contentsOf: [monthlyPriceIconImageView, monthlyPlanTextLabel])
+        monthlyPlanButton.viewListForAnimatingAccordinglyWithTranslationToLeft.append(contentsOf: [monthlyPriceLabel])
+        yearPlanButton.viewListForAnimatingAccordinglyWithTranslationToRight.append(contentsOf: [yearlyPriceDescriptionLabel, yearlyPriceIconImageView])
+        yearPlanButton.viewListForAnimatingAccordinglyWithTranslationToLeft.append(contentsOf: [yearlyPriceLabel])
         
         weekPlanButton.publisher().receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] button in

@@ -23,6 +23,10 @@ class NibButton: UIButton {
 
 class TapAnimatedButton: UIButton {
     var onTouchesEnded: (() -> Void)?
+    var viewListForAnimatingAccordinglyWithTranslationToRight: [UIView] = []
+    var viewListForAnimatingAccordinglyWithTranslationToLeft: [UIView] = []
+    var translationAmount: CGFloat = 20
+    
     var shouldAnimate: Bool = false
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -32,12 +36,21 @@ class TapAnimatedButton: UIButton {
         }
         UIView.animate(withDuration: 0.2) {
             self.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+            self.viewListForAnimatingAccordinglyWithTranslationToRight.forEach {
+                $0.transform = CGAffineTransform(scaleX: 0.9, y: 0.9).concatenating(CGAffineTransform(translationX: self.translationAmount, y: 0))
+            }
+            self.viewListForAnimatingAccordinglyWithTranslationToLeft.forEach {
+                $0.transform = CGAffineTransform(scaleX: 0.9, y: 0.9).concatenating(CGAffineTransform(translationX: -self.translationAmount, y: 0))
+            }
         }
     }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
         UIView.animate(withDuration: 0.2) {
             self.transform = .identity
+            (self.viewListForAnimatingAccordinglyWithTranslationToRight + self.viewListForAnimatingAccordinglyWithTranslationToLeft).forEach {
+                $0.transform = .identity
+            }
         } completion: { [weak self] _ in
             self?.onTouchesEnded?()
         }

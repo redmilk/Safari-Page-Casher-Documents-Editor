@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -24,6 +24,8 @@
                 <outlet property="buttonsContainerWidthConstraint" destination="Kx5-V2-JeR" id="uWB-rt-F4j"/>
                 <outlet property="howTrialWorksButton" destination="aBN-o2-G3u" id="hAz-Ls-Ng2"/>
                 <outlet property="monthlyPlanButton" destination="qfm-ki-scj" id="hMH-Fa-Knv"/>
+                <outlet property="monthlyPlanTextLabel" destination="wXm-dB-jRt" id="ae3-7l-GQV"/>
+                <outlet property="monthlyPriceIconImageView" destination="0ru-Go-B8m" id="0UK-8e-F80"/>
                 <outlet property="monthlyPriceLabel" destination="pRv-8k-s1z" id="Ha3-h5-3Lx"/>
                 <outlet property="navigationBarExtender" destination="llM-ju-Cfm" id="zOQ-FO-5Sd"/>
                 <outlet property="navigationBarExtenderHeight" destination="9ag-3Q-abJ" id="3Db-lt-KPi"/>
@@ -31,9 +33,11 @@
                 <outlet property="view" destination="iN0-l3-epB" id="xVq-ga-IAq"/>
                 <outlet property="weekPlanButton" destination="dIy-Ve-9i6" id="SeX-Kx-mK8"/>
                 <outlet property="weeklyPlanTextLabel" destination="9kl-8a-a2s" id="VW1-yR-mZr"/>
+                <outlet property="weeklyPriceIconImageView" destination="W03-AC-I6d" id="gQh-ly-ebQ"/>
                 <outlet property="weeklyPriceLabel" destination="4QG-kC-ksV" id="YHV-ba-C0Z"/>
                 <outlet property="yearPlanButton" destination="1hN-bb-d8M" id="LUp-DJ-mUc"/>
                 <outlet property="yearlyPriceDescriptionLabel" destination="zPF-bx-fQg" id="7K4-lr-3pB"/>
+                <outlet property="yearlyPriceIconImageView" destination="TWA-Ny-Yls" id="geI-e7-Bdf"/>
                 <outlet property="yearlyPriceLabel" destination="xet-hv-vTU" id="fvg-CI-I6d"/>
             </connections>
         </placeholder>
