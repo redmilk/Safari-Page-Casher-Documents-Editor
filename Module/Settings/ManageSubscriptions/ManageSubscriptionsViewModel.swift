@@ -17,6 +17,7 @@ final class ManageSubscriptionsViewModel: PurchesServiceProvidable,
         case subscription(Purchase)
         case checkCurrentSubscriptionPlan
         case restoreSubscription
+        case goBack
         case viewDidLoad
     }
     
@@ -45,6 +46,8 @@ final class ManageSubscriptionsViewModel: PurchesServiceProvidable,
                 self?.highlightCurrentSubscriptionPlan()
             case .restoreSubscription:
                 self?.restoreLastSubscription()
+            case .goBack:
+                self?.coordinator.end()
             }
         })
         .store(in: &bag)

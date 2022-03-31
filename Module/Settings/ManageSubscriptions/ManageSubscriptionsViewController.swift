@@ -151,13 +151,31 @@ private extension ManageSubscriptionsViewController {
         
         weekPlanButton.publisher().receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] button in
-                self?.analytics.eventPurchaseDidPressed(plan: "weekly")
-                self?.viewModel.input.send(.subscription(.weekly))
+                guard let self = self else { return }
+                guard let weeklyPrice = self.weeklyPriceLabel.text, !weeklyPrice.isEmpty,
+                      let monthlyPrice = self.monthlyPriceLabel.text, !monthlyPrice.isEmpty else {
+                    self.displayAlert(fromParentView: self.view, with: "Make sure your device is connected to the internet",
+                                      title: "No internet connection", action: {
+                        self.viewModel.input.send(.goBack)
+                    })
+                    return
+                }
+                self.analytics.eventPurchaseDidPressed(plan: "weekly")
+                self.viewModel.input.send(.subscription(.weekly))
         }).store(in: &bag)
         monthlyPlanButton.publisher().receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] button in
-                self?.analytics.eventPurchaseDidPressed(plan: "monthly")
-                self?.viewModel.input.send(.subscription(.monthly))
+                guard let self = self else { return }
+                self.analytics.eventPurchaseDidPressed(plan: "monthly")
+                guard let weeklyPrice = self.weeklyPriceLabel.text, !weeklyPrice.isEmpty,
+                        let monthlyPrice = self.monthlyPriceLabel.text, !monthlyPrice.isEmpty else {
+                    self.displayAlert(fromParentView: self.view, with: "Make sure your device is connected to the internet",
+                                      title: "No internet connection", action: {
+                        self.viewModel.input.send(.goBack)
+                    })
+                    return
+                }
+                self.viewModel.input.send(.subscription(.monthly))
         }).store(in: &bag)
         yearPlanButton.publisher().receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in

@@ -12,7 +12,7 @@ import UIKit.UINavigationController
 import Combine
 
 protocol ManageSubscriptionsCoordinatorProtocol {
-   
+    func end()
 }
 
 final class ManageSubscriptionsCoordinator: CoordinatorProtocol, ManageSubscriptionsCoordinatorProtocol {
@@ -32,6 +32,6 @@ final class ManageSubscriptionsCoordinator: CoordinatorProtocol, ManageSubscript
     }
     
     func end() {
-
+        navigationController?.popViewController(animated: true)
     }
 }
